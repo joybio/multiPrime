@@ -1,4 +1,4 @@
-multiPrime: version 0.0.2
+multiPrime: Version 0.0.2
 # 
 # multiPrime
 
