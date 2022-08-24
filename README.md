@@ -1,5 +1,4 @@
 # multiPrime: Version 0.0.1
-# 
 
 Scripts and pipelines provided in this repository aid to design multiplex PCR primer and return a maximal primerset for multi-PCR. It contains all scripts to allow a self-assembled processing and additionally provides pipeline scripts that run the entire processing automatically.
 
