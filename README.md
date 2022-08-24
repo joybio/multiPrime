@@ -1,6 +1,6 @@
-multi_PCR_primer_design_pipeline: version 1
+multiPrime: version 0.0.2
 # 
-# multi PCR primers design processing pipeline
+# multiPrime
 
 Scripts and pipelines provided in this repository aid to design multiplex PCR primer and return a maximal primerset for multi-PCR. It contains all scripts to allow a self-assembled processing and additionally provides pipeline scripts that run the entire processing automatically.
 
@@ -32,19 +32,19 @@ To exit the environment (after finishing the usage of the pipeline), just execut
 
 # Configure input parameters
 
-The working directory contains a file named `multi_PCR_primer_design_pipeline.yaml`. It`s the central file in which all user settings, paramter values and path specifications are stored. During a run, all steps of the pipeline will retrieve their paramter values from this file. It follows the yaml syntax (find more information about yaml and it's syntax [here](http://www.yaml.org/)) what makes it easy to read and edit. The main principles are:
+The working directory contains a file named `multiPrime.yaml`. It`s the central file in which all user settings, paramter values and path specifications are stored. During a run, all steps of the pipeline will retrieve their paramter values from this file. It follows the yaml syntax (find more information about yaml and it's syntax [here](http://www.yaml.org/)) what makes it easy to read and edit. The main principles are:
   - everything that comes after a `#` symbol is considered as comment and will not be interpreted
   - paramters are given as key-value pair, with `key` being the name and `value` the value of any paramter
 
-Before starting the pipeline, open the `multi_PCR_primer_design_pipeline.yaml` configuration file and set all options according as required. This should at least include:
+Before starting the pipeline, open the `multiPrime.yaml` configuration file and set all options according as required. This should at least include:
   - **name of the input directory** - where are your input fastq files stored
-	-input_dir: ["abs_path_to"]/multi_PCR_primer_design_pipeline/test_data
+	-input_dir: ["abs_path_to"]/multiPrime/test_data
   - **name of the output directory** - where should the pipeline store the output files (the direcotry is created if not existing)
-	-results_dir: ["abs_path_to"]/multi_PCR_primer_design_pipeline/test_data/results
+	-results_dir: ["abs_path_to"]/multiPrime/test_data/results
   - **name of the log directory** - where should the pipeline store the log files
-	-log_dir: ["abs_path_to"]/multi_PCR_primer_design_pipeline/test_data/logs
+	-log_dir: ["abs_path_to"]/multiPrime/test_data/logs
   - **name of the scripts directory** - where should the pipeline store the scripts files
-	-scripts_dir: ["abs_path_to"]/multi_PCR_primer_design_pipeline/scripts
+	-scripts_dir: ["abs_path_to"]/multiPrime/scripts
   - **name(s) of your input samples** - please note: If your sample is named `sample1.fa` then `sample1` will be kept as naming scheme throughout the entire run to indicate output files that belong to this input file, e.g. the pipeline will create a file called `sample1.3pSites.noIP.bed.gz`. If you have multiple input files, just follow the given pattern with one sample name per line (and a dash that indicates another list item).
 	-virus:
 		- test
@@ -55,7 +55,7 @@ Once you set up your configuration file, running the pipeline locally on your co
 `sh run.sh`
 
 # Output
-logs: log file of the multi_PCR_primer_design_pipeline.py 
+logs: log file of the multiPrime.py 
 results: results directory
 	-Total_fa: genome file and cluster of genome file.
 	
