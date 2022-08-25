@@ -58,7 +58,9 @@ Once you set up your configuration file, running the pipeline locally on your co
 
 # Output
 logs: log file of the multiPrime.py 
+
 results: results directory
+
 	-Total_fa: genome file and cluster of genome file.
 
 	-Clusters_fa: genome file split by each cluster.
