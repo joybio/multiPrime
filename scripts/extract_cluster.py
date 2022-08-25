@@ -24,6 +24,9 @@ parser.add_option('-c','--cluster',
 parser.add_option('-o','--out',
                 dest='out',
                 help='output file: clusters information. It will be used as inputfile of snakemake pipeline')
+parser.add_option('-y','--identity',
+                dest='identity',
+                help='output file: clusters information. It will be used as inputfile of snakemake pipeline')
 parser.add_option('-m','--max',
                 dest='max',
 		default = 500,
@@ -45,7 +48,9 @@ cluster = open(options.cluster,"r")
 out = open(options.out,"w")
 directory = options.dir
 cluster_dict = defaultdict(list)
+cluster_identity = defaultdict(list)
 seq_dict = {}
+identities = open(options.identity,"w")
 for c in cluster:
 	if c.startswith(">"):
 		cluster_name = c.strip().replace(" ","_")
@@ -53,7 +58,15 @@ for c in cluster:
 		c = c.strip().split(">")
 		value = c[1].split("...")
 		cluster_dict[cluster_name].append(">" +value[0])
+		identity = c[1].split(" ")
+		cluster_identity[cluster_name].append(identity[-1])
 cluster.close()
+for i in cluster_identity.keys():
+	for j in cluster_identity[i]:
+		if j != "*":
+			identities.write(i.lstrip(">")+'\t'+j+"\n")
+identities.close()
+
 for seq in data:
 	if seq.startswith(">"):
 		if re.search(" ",seq):
@@ -73,14 +86,15 @@ for k in cluster_dict.keys():
 		for l in cluster_dict[k]:
 			f.write(str(l)+"\n" + seq_dict[l])
 	top_cluster_id = directory + "/" +k.lstrip(">")+"_"+str(len(cluster_dict[k]))+".tfa"
-	if len(cluster_dict[k]) < options.max:
+	if len(cluster_dict[k]) < int(options.max):
 		with open(top_cluster_id,"w") as t:
 			for l in cluster_dict[k]:
 				t.write(str(l)+"\n" + seq_dict[l])
 	else:
 		with open(top_cluster_id,"w") as t:
-			for n in cluster_dict[k][:options.max]:
-				t.write(str(cluster_dict[k][n])+"\n" + seq_dict[cluster_dict[k][n]])
+			for n in cluster_dict[k][:int(options.max)]:
+				#print(n)
+				t.write(str(n)+"\n" + seq_dict[n])
 	cluster_seq = directory + "/" +k.lstrip(">")+"_"+str(len(cluster_dict[k]))+".txt"
 	with open(cluster_seq,"w") as s:
 		for i in cluster_dict[k]:

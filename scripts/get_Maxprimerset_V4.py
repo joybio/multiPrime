@@ -163,7 +163,7 @@ def hairpin_check(primer):
 def Penalty_points(length, GC, d1, d2):
     return math.log((2 ** length * 2 ** GC) / ((d1 + 1) * (d2 + 1)), 10)
 
-
+loss = options.loss
 def inner_dimer_check(primer_F, primer_R):
     m, n, k = 0, 0, 0
     check = "F"
@@ -193,12 +193,13 @@ def inner_dimer_check(primer_F, primer_R):
                 end_length = len(seq)
                 end_GC = seq.count("G") + seq.count("C")
                 end_d1 = 0
-                end_d2 = len(R) - len(seq) - R.index(str(Seq(seq).reverse_complement()))
+                end_d2 = min((len(R) - len(seq) - R.index(str(Seq(seq).reverse_complement()))) \
+                         ,R.index(str(Seq(seq).reverse_complement())))
                 Loss = Penalty_points(end_length, end_GC, end_d1, end_d2)
-                if Loss > 2:
+                if Loss > loss:
                     check = "T"
                     break
-        if Loss > 2:
+        if Loss > loss:
             check = "T"
             break
     if check == "T":  
@@ -228,12 +229,13 @@ def inner_dimer_check(primer_F, primer_R):
                     middle_length = len(seq)
                     middle_GC = seq.count("G") + seq.count("C")
                     middle_d1 = middle_seq[seq]
-                    middle_d2 = len(R) - len(seq) - R.index(str(Seq(seq).reverse_complement()))
+                    middle_d2 = min((len(R) - len(seq) - R.index(str(Seq(seq).reverse_complement()))), \
+                                R.index(str(Seq(seq).reverse_complement())))
                     Loss = Penalty_points(middle_length, middle_GC, middle_d1, middle_d2)
-                    if Loss > 2:
+                    if Loss > loss:
                         check = "T"
                         break
-            if Loss > 2:
+            if Loss > loss:
                 check = "T"
                 break
 
@@ -243,18 +245,25 @@ def inner_dimer_check(primer_F, primer_R):
         current_inner_end = end_seq
         current_inner_middle = middle_seq
         return False
-loss = options.loss
+
 def outer_dimer_check(primer_F, primer_R):
     check = "F"
     global primer_set
     ###############################################################
     for end in current_inner_end:
         for primer in primer_set:
-            if re.search(str(Seq(end).reverse_complement()), primer):  # or re.search(str(Seq(seq).complement()), R):
+            if re.search(str(Seq(end).reverse_complement()), primer): #or re.search(str(Seq(end).complement()), primer):
                 end_length = len(end)
                 end_GC = end.count("G") + end.count("C")
                 end_d1 = 0
-                end_d2 = len(primer) - len(end) - primer.index(str(Seq(end).reverse_complement()))
+                if re.search(str(Seq(end).reverse_complement()), primer):
+                    end_d2 = min((len(primer) - len(end) - primer.index(str(Seq(end).reverse_complement()))) \
+                             ,primer.index(str(Seq(end).reverse_complement())))
+                    #if re.search(str(Seq(end).complement()), primer):
+                    #    tmp = len(primer) - len(end) - primer.index(str(Seq(end).complement()))
+                    #    end_d2 = min(end_d2,tmp)
+                #else:
+                    #end_d2 = len(primer) - len(end) - primer.index(str(Seq(end).complement()))
                 Loss = Penalty_points(end_length, end_GC, end_d1, end_d2)
                 if Loss > loss:
                     check = "T"
@@ -271,11 +280,18 @@ def outer_dimer_check(primer_F, primer_R):
         for end in primer_end_set:
             for primer in primer_F_R:
                 if re.search(str(Seq(end).reverse_complement()),
-                             primer):  # or re.search(str(Seq(seq).complement()), R):
+                             primer):# or re.search(str(Seq(end).complement()), primer):
                     end_length = len(end)
                     end_GC = end.count("G") + end.count("C")
                     end_d1 = 0
-                    end_d2 = len(primer) - len(end) - primer.index(str(Seq(end).reverse_complement()))
+                    if re.search(str(Seq(end).reverse_complement()),primer):
+                        end_d2 = min((len(primer) - len(end) - primer.index(str(Seq(end).reverse_complement()))) \
+                                 ,primer.index(str(Seq(end).reverse_complement())))
+                        #if re.search(str(Seq(end).complement()), primer):
+                        #    tmp = len(primer) - len(end) - primer.index(str(Seq(end).complement()))
+                        #    end_d2 = min(end_d2,tmp)
+                    #else:
+                        #end_d2 = len(primer) - len(end) - primer.index(str(Seq(end).complement())) 
                     Loss = Penalty_points(end_length, end_GC, end_d1, end_d2)
                     if Loss > loss:
                         check = "T"
@@ -292,7 +308,8 @@ def outer_dimer_check(primer_F, primer_R):
                     middle_length = len(middle)
                     middle_GC = middle.count("G") + middle.count("C")
                     middle_d1 = middle_seq[middle]
-                    middle_d2 = len(primer) - len(middle) - primer.index(str(Seq(middle).reverse_complement()))
+                    middle_d2 = min((len(primer) - len(middle) - primer.index(str(Seq(middle).reverse_complement())))
+                                ,primer.index(str(Seq(middle).reverse_complement())))
                     Loss = Penalty_points(middle_length, middle_GC, middle_d1, middle_d2)
                     if Loss > loss: # 9 bp, 2**9*2**4/((2+1)*(2+1))=16224/9;
                         #print(str(Seq(middle).reverse_complement()), primer, Loss)
@@ -311,7 +328,8 @@ def outer_dimer_check(primer_F, primer_R):
                     middle_length = len(middle)
                     middle_GC = middle.count("G") + middle.count("C")
                     middle_d1 = middle_seq[middle]
-                    middle_d2 = len(primer) - len(middle) - primer.index(str(Seq(middle).reverse_complement()))
+                    middle_d2 = min((len(primer) - len(middle) - primer.index(str(Seq(middle).reverse_complement())))
+                                ,primer.index(str(Seq(middle).reverse_complement())))
                     Loss = Penalty_points(middle_length, middle_GC, middle_d1, middle_d2)
                     if Loss > loss:
                         check = "T"
@@ -488,7 +506,7 @@ if __name__ == "__main__":
         with open(maximal_out, "w") as f:
             f.write("#primer\tprimer_rank\tPCR_product\t \
                 primer_match_by_blast [2 mismatch]\t \
-                primer_coverage_by_degePrimer_results\n" +
+                primer_position_by_degePrimer_results\n" +
                 '\n'.join(maximal_primer_list))
     else:
         max_primer_list = []

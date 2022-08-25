@@ -1,4 +1,4 @@
 #!/bin/bsh
-snakemake --configfile multi_PCR_primer_design_pipeline.yaml -s multi_PCR_primer_design_pipeline.py --cores 30
+snakemake --configfile multiPrime.yaml -s multiPrime.py --cores 30
 
 

@@ -436,18 +436,17 @@ def get_PCR_PRODUCT(blastout,output,candidate_primer_out,candidate_primer_txt):
 					last_primer_start = primer_start	
 	tb_out.sort_values(by=["pF_target_number","pR_target_number"],inplace=True,ascending=False)
 	tb_out.to_csv(output,index=False,sep="\t")
-	primer_txt = tb_out.loc[:,["primer_F:R_dege","primer_F:R_seq","pF_target_number","pR_target_number","pF_fraction","pR_fraction"]].drop_duplicates()
+	primer_txt = tb_out.loc[:,["primer_F:R_dege","primer_F:R_seq","pF_target_number","pR_target_number"]].drop_duplicates()
 	candidate_primer_txt.write(options.out)
 	for idx,row in primer_txt.iterrows():
 		product_start_end = row[0].split(":")
 		product_len = str(int(product_start_end[1]) -int(product_start_end[0]))
 		primer_sequence = row[1].split(":")
 		targets_number = str(min(row[2],row[3]))
-		targets_coverage = str(min(row[4],row[5]))
 		#file for hairpin re-check
 		candidate_primer_out.write(">" + product_start_end[0] + "_F" +"\n" + primer_sequence[0]+"\n>" + product_start_end[1] + "_R" +"\n" + primer_sequence[1]+"\n")
 		#file for multiPCR primer select
-		candidate_primer_txt.write("\t" +primer_sequence[0]+"\t" + primer_sequence[1] + "\t" + product_len + "\t" + targets_number + "\t" + targets_coverage)
+		candidate_primer_txt.write("\t" +primer_sequence[0]+"\t" + primer_sequence[1] + "\t" + product_len + "\t" + targets_number + "\t" + row[0])
 	candidate_primer_txt.write("\n")
 #primer_check
 paired = options.out.rstrip(".candidate.primers.txt") + ".paired.nt.Check"

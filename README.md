@@ -1,4 +1,5 @@
-# multiPrime: Version 0.0.1
+multiPrime: version 0.0.2
+# multi PCR primers design processing pipeline
 
 Scripts and pipelines provided in this repository aid to design multiplex PCR primer and return a maximal primerset for multi-PCR. It contains all scripts to allow a self-assembled processing and additionally provides pipeline scripts that run the entire processing automatically.
 
@@ -9,8 +10,11 @@ Download/Provide all necessary files:
 
 DEGEPRIME-1.1.0: DOI: 10.1128/AEM.01403-14; "DegePrime, a program for degenerate primer design for broad-taxonomic-range PCR in microbial ecology studies"
 		Links: https://github.com/EnvGen/DegePrime; please move this directory into scripts
+
 biopython
+
 mfeprimer-3.2.6: DOI: 10.1093/nar/gkz351; "MFEprimer-3.0: quality control for PCR primers."
+
 blast+: Links: https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastNews
 
 # snakemake
@@ -22,7 +26,7 @@ conda create -n multiPCR-snakemake -c bioconda -c conda-forge --file requirement
   ```bash
   source activate multiPCR-snakemake
   ```
-To exit the environment (after finishing the usage of the pipeline), just execute
+  To exit the environment (after finishing the usage of the pipeline), just execute
   ```bash
   source deactivate
   ```
@@ -56,7 +60,7 @@ Once you set up your configuration file, running the pipeline locally on your co
 logs: log file of the multiPrime.py 
 results: results directory
 	-Total_fa: genome file and cluster of genome file.
-	
+
 	-Clusters_fa: genome file split by each cluster.
 		--*.fa: fasta of each cluster
 		--*.tfa: top N {default: 500} fasta of each cluster
@@ -64,21 +68,21 @@ results: results directory
 		--*.db: directory of database (for blastn).
 		--*.blastout: output file of blastn of all paired primers.
 		--*.number: number of fasta in each cluster
-		
+
 	-Clusters_msa: alginment by muscle
 		--*.tmsa: muscle output of the top N {default: 500}
-		
+
 	-Clusters_trim_msa: trimmed alignment by degePrimer
 		--*.trim.tmsa: trimmed muscle by degePrimer
-		
+
 	-Clusters_primer: get_degePrimer from degePrimer out
 		--*.top.primer.out: paired primers designed by the top N {default: 500} fasta
-		
+
 	-Clusters_cprimer:
 		--*.fa: candidate primers in fa format
 		--*.txt: candidate primers in txt format (1 line)
 		--*.nt.Check: tmp file; primers filter by blastn
-		
+
 	-Primers_set
 		--candidate_primers_sets.txt: all candidate primers in each cluster
 		--sort.candidate_primers_sets.txt: sort by the number of candidate primers in each line (cluster)

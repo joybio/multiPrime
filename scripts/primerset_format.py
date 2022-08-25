@@ -35,6 +35,7 @@ with open(options.input,'r') as f:
 		else:
 			i = i.strip().split("/")
 			info = i[-1].replace(".candidate.primers.txt","").split("\t")
+			print(info)
 			out.write(">" + info[0] + "_F\n" + \
 				info[2] + "\n" + \
 				">" + info[0] + "_R\n" + \
