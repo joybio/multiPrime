@@ -1,11 +1,11 @@
-multiPrime: version 0.0.2
+multiPrime: version 0.0.3
 # multi PCR primers design processing pipeline
 
 Scripts and pipelines provided in this repository aid to design multiplex PCR primer and return a maximal primerset for multi-PCR. It contains all scripts to allow a self-assembled processing and additionally provides pipeline scripts that run the entire processing automatically.
 
 # Requirements
 
-To run this pipeline, your computer requires **40 GB of available memory (RAM)** to process larger genomes (e.g. human or mouse). Moreover, snakemake was used to facilitate the automated execution of all analysis steps. The easiest way to make use of the pipeline is to set up a python3 virtual environment and run the pipeline is this environment. 
+To run this pipeline, your computer requires **40 GB of available memory (RAM)** to process larger number of sequence (e.g. 100000). Moreover, snakemake was used to facilitate the automated execution of all analysis steps. The easiest way to make use of the pipeline is to set up a python 3.9 virtual environment and run the pipeline is this environment. 
 Download/Provide all necessary files:
 
 DEGEPRIME-1.1.0: DOI: 10.1128/AEM.01403-14; "DegePrime, a program for degenerate primer design for broad-taxonomic-range PCR in microbial ecology studies"
@@ -20,11 +20,11 @@ blast+: Links: https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastN
 # snakemake
 Snakemake is a workflow management system that helps to create and execute data processing pipelines. It requires python3 and can be most easily installed via the bioconda package of the python anaconda distribution.
 
-conda create -n multiPCR-snakemake -c bioconda -c conda-forge --file requirement.txt
+conda create -n multiPrime -c bioconda -c conda-forge --file requirement.txt
 
 # Activate the environment
   ```bash
-  source activate multiPCR-snakemake
+  source activate multiPrime
   ```
   To exit the environment (after finishing the usage of the pipeline), just execute
   ```bash
@@ -39,12 +39,12 @@ The working directory contains a file named `multiPrime.yaml`. It`s the central 
   - paramters are given as key-value pair, with `key` being the name and `value` the value of any paramter
 
 Before starting the pipeline, open the `multiPrime.yaml` configuration file and set all options according as required. This should at least include:
-  - **name of the input directory** - where are your input fastq files stored
-	-input_dir: ["abs_path_to"]/multiPrime/test_data
+  - **name of the input directory** - where are your input fasta files stored
+	-input_dir: ["abs_path_to_input_dir"]
   - **name of the output directory** - where should the pipeline store the output files (the direcotry is created if not existing)
-	-results_dir: ["abs_path_to"]/multiPrime/test_data/results
+	-results_dir: ["abs_path_to_results_dir"]
   - **name of the log directory** - where should the pipeline store the log files
-	-log_dir: ["abs_path_to"]/multiPrime/test_data/logs
+	-log_dir: ["abs_path_to_log_dir"]
   - **name of the scripts directory** - where should the pipeline store the scripts files
 	-scripts_dir: ["abs_path_to"]/multiPrime/scripts
   - **name(s) of your input samples** - please note: If your sample is named `sample1.fa` then `sample1` will be kept as naming scheme throughout the entire run to indicate output files that belong to this input file, e.g. the pipeline will create a file called `sample1.3pSites.noIP.bed.gz`. If you have multiple input files, just follow the given pattern with one sample name per line (and a dash that indicates another list item).
@@ -60,6 +60,10 @@ Once you set up your configuration file, running the pipeline locally on your co
 logs: log file of the multiPrime.py 
 
 results: results directory
+
+	-cluster.identities: identity of each sequence.
+
+	-cluster.txt: cluster information. for example: Cluster_0_222.fa, 0 ==> rank number 222 ==> sequence number.
 
 	-Total_fa: genome file and cluster of genome file.
 
@@ -93,6 +97,6 @@ results: results directory
 		--Coverage_stast.xls: coverage of all primers in primer set
 		--final_maxprimers_set.fa.dimer: dimer check by mfePrimer 
 		--final_maxprimers_set.fa.hairpin: hairpin check by mfePrimer
-		--PCR_product: PCR product for each primer
+		--PCR_product: PCR product of each primer
 
 

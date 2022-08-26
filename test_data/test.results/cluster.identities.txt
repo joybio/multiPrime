@@ -1,0 +1,6 @@
+Cluster_1	95.28%
+Cluster_1	93.23%
+Cluster_3	79.09%
+Cluster_3	95.18%
+Cluster_3	95.82%
+Cluster_3	95.76%

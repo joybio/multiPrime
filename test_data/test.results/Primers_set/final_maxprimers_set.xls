@@ -1,0 +1,5 @@
+#primer	primer_rank	PCR_product	                 primer_match_by_blast [2 mismatch]	                 primer_position_by_degePrimer_results
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_1_3.candidate.primers.txt	1	AATTAAACGGGCACCCAC	TTCCAAACAGCCCATGAC	174	3	90:264
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_3_5.candidate.primers.txt	1	ATCAATAGACTGCTCACG	GCTCAATAGACTCTTCRC	228	5	200:428
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_2_1.candidate.primers.txt	1	CAGACCACCGTTACTCCA	TTTGTTCACAGGACGGGC	151	1	31:182
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_0_1.candidate.primers.txt	1	CATAATGGCTGCAGTAGT	CCTGATAAACGAATCCTC	158	1	59:217

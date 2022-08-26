@@ -59,12 +59,6 @@ parser.add_option('-k','--kmer',
 		help='Filter param of middle dimer. This param is used to cut primer into kmers and step is 1, length of kmer is [default: 7].\n \
 		This param also control the end dimer length, max end dimer length = [kmer]-1.')
 
-parser.add_option('-l','--loss',
-                dest='loss',
-                default = 4,
-		type="int",
-                help='Filter param of hairpin, which means distance of the minimal paired bases. Default: 4. Example:(number of X) AGCT[XXXX]AGCT')
-
 parser.add_option('-a','--adaptor',
 		dest='adaptor',
 		default="0",
@@ -167,7 +161,7 @@ def dege_trans(sequence):
 	return expand_seq
 #################################################################
 distance = int(options.dist)
-#4bp revcomplement, distance = distane
+#5 bp revcomplement, distance = distane
 def hairpin_check(primer):
 	n = 0
 	check = "FALSE"
@@ -211,7 +205,7 @@ for i in degeprimer:
 		GC_content = round((list(primer).count("G") + list(primer).count("C"))/len(list(primer)),3)
 		if fraction < frac:
 			pass
-		elif re.search("AAAA|TTTT|CCCC|GGGG|AGAGAG|ATATAT|ACACAC|CTCTCT|CACACA|CGCGCG|TATATA|TCTCTC|TGTGTG|GAGAGA|GTGTGT|GCGCGC",primer):
+		elif re.search("AAAA|TTTT|CCCC|GGGG|CGCGCG|GCGCGC",primer):
 			pass
 		elif GC_content > float(gc_content[1]) or GC_content < float(gc_content[0]):
 			pass
@@ -232,11 +226,13 @@ degeprimer.close()
 #sorted(pre_primer_frac.items(), key = lambda k:k[1],reverse=True)
 #print(pre_primer_frac)
 ### PRODUCT size >= 150
+user_product_size = options.size.split(",")
+
 if bool(pre_primer_pos):
 	maxpos = max(pre_primer_pos.values())
 	minpos = min(pre_primer_pos.values())
-	if maxpos - minpos < 150:
-		print("\n****************\nthe smallest site is {} and the largest site is {} \nthe product size is smaller than 150 and exit\n****************\n".format(minpos,maxpos))
+	if maxpos - minpos < user_product_size[0]:
+		print("\n****************\nthe smallest site is {} and the largest site is {} \nthe product size is smaller than min product size and exit\n****************\n".format(minpos,maxpos,user_product_size[0]))
 	else:
 		print("Non-filter primers number:{}".format(len(pre_primer_frac)))
 		for i in pre_primer_frac.keys():
@@ -290,8 +286,7 @@ with open(options.out,'r') as primers:
 #########################  dimer check  ################################
 kmer = int(options.kmer)
 def Penalty_points(length, GC, d1, d2):
-	return math.log((2 ** length * 2 ** GC) / ((d1 + 0.2) * (d2 + 0.1)), 10)
-loss = options.loss
+	return math.log((2 ** length * 2 ** GC) / ((d1 + 0.1) * (d2 + 0.1)), 10)
 adaptor_len = options.adaptor
 #primer_end_set = set()
 def dimer_check(primer_F,primer_R): #Caution: primer_key_set must be a global var.
@@ -323,8 +318,7 @@ def dimer_check(primer_F,primer_R): #Caution: primer_key_set must be a global va
 					c_end = 10000
 				end_d2 = min(r_end,c_end)
 				Loss = Penalty_points(end_length, end_GC, end_d1, end_d2)
-				if Loss > 2: #min loss: length=4, GC=2, end_d1=0, end_d2>=4
-						#       length=5, GC=2, end_d1=0, end_d2>=7
+				if Loss > math.log(len(seq),2): 
 					check = "T"
 		if check == "T":
 			break
@@ -368,7 +362,7 @@ def dimer_check(primer_F,primer_R): #Caution: primer_key_set must be a global va
 						c_middle = 10000
 					middle_d2 = min(r_middle,c_middle)
 					Loss = Penalty_points(middle_length, middle_GC, middle_d1, middle_d2)
-					if Loss > loss: #min loss: length=7, GC=3, d1=2, d2=6
+					if Loss > math.log(len(seq),2): #min loss: length=7, GC=3, d1=2, d2=6
 							#	   length=7, GC=3, d1=3, d2=4
 						check = "T"
 						break

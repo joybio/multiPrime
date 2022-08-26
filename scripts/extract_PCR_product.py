@@ -139,8 +139,8 @@ if __name__ == "__main__":
 					i = i.strip().split("\t")
 					cluster_id = i[0].split("/")		
 					cluster_product = options.out + "/" + cluster_id[-1].rstrip(".candidate.primers.txt") + ".PCR.product.fa"
-					primer_F = i[1]
-					primer_R = i[2]
+					primer_F = i[2]
+					primer_R = i[3]
 					PCR_product = get_PCR_PRODUCT(reference,primer_F,primer_R)
 					with open(cluster_product,"w") as c:
 						for i in PCR_product.keys():

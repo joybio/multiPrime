@@ -1,4 +1,4 @@
-configfile:  "multi_PCR_primer_design_pipeline.yaml"
+configfile:  "multiPrime.yaml"
 #__version__ = "0.0.2"
 #__date__ = "2022-7-28"
 #__author__ = "Junbo Yang"
@@ -102,8 +102,8 @@ checkpoint extract_cluster_fa:
 			virus = virus)
 	output:
 		config["results_dir"] + "/cluster.txt",
-		config["results_dir"] + "/cluster.identities.txt",
-		directory(config["results_dir"] + "/Clusters_fa")
+		directory(config["results_dir"] + "/Clusters_fa"),
+		config["results_dir"] + "/cluster.identities.txt"
 	params:
 		script = config["scripts_dir"],
 		max_seq = config["max_seq"]
@@ -112,7 +112,7 @@ checkpoint extract_cluster_fa:
 	shell:
 		'''
 		python {params.script}/extract_cluster.py -i {input[0]} -c {input[1]} \
-			 -m {params.max_seq} -o {output[0]} -y {output[1]} -d {output[2]}
+			 -m {params.max_seq} -o {output[0]} -y {output[2]} -d {output[1]}
 		'''
 #-------------------------------------------------------------------------------------------
 # alignment_by_muscle rule 6: Dependency packages - None
@@ -258,7 +258,7 @@ rule get_all_PCR_product:
 	shell:
 		'''
 		python {params}/extract_PCR_product.py -i {input[1]} -p {input[0]} \
-			-o {output[0]} -s {output[1]}
+			-f xls -o {output[0]} -s {output[1]}
 		'''
 #-------------------------------------------------------------------------------------------
 # mfeprimer_check rule 13: Dependency packages - mfeprimer-3.2.6

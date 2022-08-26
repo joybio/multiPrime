@@ -1,0 +1,207 @@
+Config file multiPrime.yaml is extended by additional config specified via the command line.
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 30
+Rules claiming more threads will be scaled down.
+Job stats:
+job                            count    min threads    max threads
+---------------------------  -------  -------------  -------------
+aggregate_candidate_primers        1              1              1
+alignment_by_muscle                4              1              1
+all                                1              1              1
+degePrimer_design                  4              1              1
+degePrimer_trim                    4              1              1
+get_Maxprimerset                   1              1              1
+get_all_PCR_product                1              1              1
+get_degePrimer                     4              1              1
+mfeprimer_check                    1              1              1
+total                             21              1              1
+
+Select jobs to execute...
+
+[Fri Aug 26 13:56:09 2022]
+Job 13: Step6: alignment by muscle ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_msa/Cluster_0_1.tmsa
+
+
+[Fri Aug 26 13:56:09 2022]
+Job 21: Step6: alignment by muscle ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_msa/Cluster_2_1.tmsa
+
+
+[Fri Aug 26 13:56:09 2022]
+Job 25: Step6: alignment by muscle ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_msa/Cluster_3_5.tmsa
+
+
+[Fri Aug 26 13:56:09 2022]
+Job 17: Step6: alignment by muscle ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_msa/Cluster_1_3.tmsa
+
+[Fri Aug 26 13:56:09 2022]
+Finished job 13.
+1 of 21 steps (5%) done
+Select jobs to execute...
+
+[Fri Aug 26 13:56:09 2022]
+Job 12: Step7: trimming by degePrimer ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_trim_msa/Cluster_0_1.trim.tmsa; Input files updated by another job: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_msa/Cluster_0_1.tmsa
+
+[Fri Aug 26 13:56:09 2022]
+Finished job 21.
+2 of 21 steps (10%) done
+Select jobs to execute...
+
+[Fri Aug 26 13:56:09 2022]
+Job 20: Step7: trimming by degePrimer ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_trim_msa/Cluster_2_1.trim.tmsa; Input files updated by another job: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_msa/Cluster_2_1.tmsa
+
+[Fri Aug 26 13:56:10 2022]
+Finished job 20.
+3 of 21 steps (14%) done
+Select jobs to execute...
+
+[Fri Aug 26 13:56:10 2022]
+Job 19: Step8: design primers by degePrimer ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_primer/Cluster_2_1.top.primer.out; Input files updated by another job: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_trim_msa/Cluster_2_1.trim.tmsa
+
+[Fri Aug 26 13:56:10 2022]
+Finished job 12.
+4 of 21 steps (19%) done
+Select jobs to execute...
+
+[Fri Aug 26 13:56:10 2022]
+Job 11: Step8: design primers by degePrimer ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_primer/Cluster_0_1.top.primer.out; Input files updated by another job: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_trim_msa/Cluster_0_1.trim.tmsa
+
+[Fri Aug 26 13:56:14 2022]
+Finished job 17.
+5 of 21 steps (24%) done
+Select jobs to execute...
+
+[Fri Aug 26 13:56:14 2022]
+Job 16: Step7: trimming by degePrimer ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_trim_msa/Cluster_1_3.trim.tmsa; Input files updated by another job: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_msa/Cluster_1_3.tmsa
+
+[Fri Aug 26 13:56:14 2022]
+Finished job 16.
+6 of 21 steps (29%) done
+Select jobs to execute...
+
+[Fri Aug 26 13:56:14 2022]
+Job 15: Step8: design primers by degePrimer ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_primer/Cluster_1_3.top.primer.out; Input files updated by another job: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_trim_msa/Cluster_1_3.trim.tmsa
+
+[Fri Aug 26 13:56:18 2022]
+Finished job 25.
+7 of 21 steps (33%) done
+Select jobs to execute...
+
+[Fri Aug 26 13:56:18 2022]
+Job 24: Step7: trimming by degePrimer ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_trim_msa/Cluster_3_5.trim.tmsa; Input files updated by another job: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_msa/Cluster_3_5.tmsa
+
+[Fri Aug 26 13:56:18 2022]
+Finished job 24.
+8 of 21 steps (38%) done
+Select jobs to execute...
+
+[Fri Aug 26 13:56:18 2022]
+Job 23: Step8: design primers by degePrimer ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_primer/Cluster_3_5.top.primer.out; Input files updated by another job: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_trim_msa/Cluster_3_5.trim.tmsa
+
+[Fri Aug 26 13:57:02 2022]
+Finished job 19.
+9 of 21 steps (43%) done
+Select jobs to execute...
+
+[Fri Aug 26 13:57:02 2022]
+Job 18: Step9: choose candidate primers for each cluster (hairpin, dimer (F-R) check) ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_2_1.candidate.primers.txt; Input files updated by another job: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_primer/Cluster_2_1.top.primer.out
+
+[Fri Aug 26 13:57:22 2022]
+Finished job 11.
+10 of 21 steps (48%) done
+Select jobs to execute...
+
+[Fri Aug 26 13:57:22 2022]
+Job 10: Step9: choose candidate primers for each cluster (hairpin, dimer (F-R) check) ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_0_1.candidate.primers.txt; Input files updated by another job: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_primer/Cluster_0_1.top.primer.out
+
+[Fri Aug 26 13:57:40 2022]
+Finished job 15.
+11 of 21 steps (52%) done
+Select jobs to execute...
+
+[Fri Aug 26 13:57:40 2022]
+Job 14: Step9: choose candidate primers for each cluster (hairpin, dimer (F-R) check) ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_1_3.candidate.primers.txt; Input files updated by another job: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_primer/Cluster_1_3.top.primer.out
+
+[Fri Aug 26 13:57:47 2022]
+Finished job 23.
+12 of 21 steps (57%) done
+Select jobs to execute...
+
+[Fri Aug 26 13:57:47 2022]
+Job 22: Step9: choose candidate primers for each cluster (hairpin, dimer (F-R) check) ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_3_5.candidate.primers.txt; Input files updated by another job: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_primer/Cluster_3_5.top.primer.out
+
+[Fri Aug 26 13:58:00 2022]
+Finished job 18.
+13 of 21 steps (62%) done
+[Fri Aug 26 13:58:28 2022]
+Finished job 14.
+14 of 21 steps (67%) done
+[Fri Aug 26 13:58:44 2022]
+Finished job 10.
+15 of 21 steps (71%) done
+[Fri Aug 26 13:58:54 2022]
+Finished job 22.
+16 of 21 steps (76%) done
+Select jobs to execute...
+
+[Fri Aug 26 13:58:54 2022]
+Job 1: Step10: prepare all candidate primers for primer selection ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Primers_set/candidate_primers_sets.txt; Input files updated by another job: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_3_5.candidate.primers.txt, /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_0_1.candidate.primers.txt, /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_1_3.candidate.primers.txt, /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_2_1.candidate.primers.txt
+
+[Fri Aug 26 13:58:54 2022]
+Finished job 1.
+17 of 21 steps (81%) done
+Select jobs to execute...
+
+[Fri Aug 26 13:58:54 2022]
+Job 6: Step11: select primers ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Primers_set/final_maxprimers_set.xls; Input files updated by another job: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Primers_set/candidate_primers_sets.txt
+
+[Fri Aug 26 13:58:54 2022]
+Finished job 6.
+18 of 21 steps (86%) done
+Select jobs to execute...
+
+[Fri Aug 26 13:58:54 2022]
+Job 7: Step12: extract PCR product from the input virus sequence ..
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Primers_set/Coverage_stast.xls; Input files updated by another job: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Primers_set/final_maxprimers_set.xls
+
+
+[Fri Aug 26 13:58:54 2022]
+Job 8: Step13: hairpin and dimer check .. 
+Reason: Missing output files: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Primers_set/final_maxprimers_set.fa.dimer; Input files updated by another job: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Primers_set/final_maxprimers_set.xls
+
+[Fri Aug 26 13:58:55 2022]
+Finished job 8.
+19 of 21 steps (90%) done
+[Fri Aug 26 13:58:55 2022]
+Error in rule get_all_PCR_product:
+    jobid: 7
+    output: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Primers_set/PCR_product, /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Primers_set/Coverage_stast.xls
+    shell:
+        
+		python /share/data3/yangjunbo/git_storage/multiPrime/scripts/extract_PCR_product.py -i /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Total_fa/test.format.fa -p /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Primers_set/final_maxprimers_set.xls 			-o /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Primers_set/PCR_product -s /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Primers_set/Coverage_stast.xls
+		
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Removing output files of failed job get_all_PCR_product since they might be corrupted:
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Primers_set/PCR_product, /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Primers_set/Coverage_stast.xls
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2022-08-26T135608.505888.snakemake.log
