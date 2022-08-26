@@ -69,14 +69,14 @@ results: results directory
 
 	-Clusters_fa: genome file split by each cluster.
 		--*.fa: fasta of each cluster
-		--*.tfa: top N {default: 500 randomly selected. must contain the representative seq} fasta of each cluster
+		--*.tfa: top N {default: 500 randomly selected. Always contain the representative seq} fasta of each cluster
 		--*.txt: accession id of each cluster
 		--*.db: directory of database (for blastn).
 		--*.blastout: output file of blastn of all paired primers.
 		--*.number: number of fasta in each cluster
 
 	-Clusters_msa: alginment by muscle
-		--*.tmsa: muscle output of the top N {default: 500}
+		--*.tmsa: muscle output of the top N {default: 500 randomly selected. Always contain the representative seq}
 
 	-Clusters_trim_msa: trimmed alignment by degePrimer
 		--*.trim.tmsa: trimmed muscle by degePrimer
