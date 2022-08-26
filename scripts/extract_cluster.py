@@ -35,7 +35,7 @@ parser.add_option('-m','--max',
 parser.add_option('-d','--dir',
                 dest='dir',
                 help='directory of output fasta: clusters information.')
-
+import random
 import sys
 from sys import argv
 if len(sys.argv) == 1:
@@ -49,6 +49,7 @@ out = open(options.out,"w")
 directory = options.dir
 cluster_dict = defaultdict(list)
 cluster_identity = defaultdict(list)
+cluster_rep = {}
 seq_dict = {}
 identities = open(options.identity,"w")
 for c in cluster:
@@ -60,6 +61,8 @@ for c in cluster:
 		cluster_dict[cluster_name].append(">" +value[0])
 		identity = c[1].split(" ")
 		cluster_identity[cluster_name].append(identity[-1])
+		if identity[-1] == "*":
+			cluster_rep[cluster_name] = ">" + value[0]
 cluster.close()
 for i in cluster_identity.keys():
 	for j in cluster_identity[i]:
@@ -91,10 +94,12 @@ for k in cluster_dict.keys():
 			for l in cluster_dict[k]:
 				t.write(str(l)+"\n" + seq_dict[l])
 	else:
+		seq_list = cluster_dict[k]
+		selected_seq = random.sample(seq_list,int(options.max))
+		selected_seq.append(cluster_rep[k])
 		with open(top_cluster_id,"w") as t:
-			for n in cluster_dict[k][:int(options.max)]:
-				#print(n)
-				t.write(str(n)+"\n" + seq_dict[n])
+			for seq_id in set(selected_seq):
+				t.write(str(seq_id)+"\n" + seq_dict[seq_id])
 	cluster_seq = directory + "/" +k.lstrip(">")+"_"+str(len(cluster_dict[k]))+".txt"
 	with open(cluster_seq,"w") as s:
 		for i in cluster_dict[k]:

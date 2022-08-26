@@ -69,7 +69,7 @@ results: results directory
 
 	-Clusters_fa: genome file split by each cluster.
 		--*.fa: fasta of each cluster
-		--*.tfa: top N {default: 500} fasta of each cluster
+		--*.tfa: top N {default: 500 randomly selected. must contain the representative seq} fasta of each cluster
 		--*.txt: accession id of each cluster
 		--*.db: directory of database (for blastn).
 		--*.blastout: output file of blastn of all paired primers.
