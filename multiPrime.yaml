@@ -61,27 +61,16 @@ primer_len: 18
 #Sometimes the sequence number of some clusters is very large {> 100000}. it will take a lot of time to get output
 #You can use the top 50 sequece to represent this cluster, but use the nt_check to search candidate primers
 #Details are list in the usage of get_degePrimer.py
-
-coverage: 0.5
+coverage: 0.7
 
 #PCR PRODUCT SIZE. Filter primers by PRODUCT size.default [150,400].
-
 PRODUCT_size: 150,400
 
 #Filter primers by GC content. default [0.45,0.65].
-
 gc_content: 0.4,0.6
 
-#Filter param of middle dimer. This param is used to set sliding windows and step is 1, 
-#Length of kmer is [default: 7]. 
-#This param also control the end dimer length, max end dimer length = [kmer]-1
-
-middle_dimer: 8
-
-#Filter primers by primer distance. 
-#The minimal distance of two primer_Fs (or primer_Rs) should greater than [window]
-
-window: 5
+#Filter param of hairpin, which means distance of the minimal paired bases. Default: 4. Example:(number of X) AGCT[XXXX]AGCT
+distance: 4
 
 #Filter primers by match number: 
 #Number of sequences that match the selected primer.
@@ -90,8 +79,11 @@ window: 5
 #It wont return candidate primers, because the match rate is very small, even nearly zero. 
 #However, you can use the number of subset sequence to select candidate primers. 
 #before use this param, please also use [ -f 0 ] default: 1
-
 number: 1
+
+#Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for adaptor--primer.
+#For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT. if None, use comma.
+adaptor: ,
 
 #-------------------------------------------------------------------------------
 ## get max primer set from get_degePrimer

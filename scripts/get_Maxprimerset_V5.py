@@ -131,34 +131,6 @@ def dege_trans(sequence):
         expand_score = reduce(mul, [score_trans(x) for x in expand_seq])
     return expand_seq
 
-
-# 5 bp reverse complement, distance = distane. 
-# Its already done in the get_degePrimer.py. So we did not use this fucntion
-def hairpin_check(primer):
-    n = 0
-    check = "FALSE"
-    while n <= len(primer) - 10 - distance:
-        fragment = dege_trans(primer[n:n + 5])
-        left = dege_trans(primer[n + 5 + distance::])
-        for k in fragment:
-            for le in left:
-                if re.search(str(Seq(k).reverse_complement()), le):
-                    # complement is ok, but reverse_complement must throw away.
-                    check = "TRUE"
-                    # print(n, str(Seq(k).reverse_complement()), le)
-                    break
-            if check == "TRUE":
-                break
-        if check == "TRUE":
-            break
-        n += 1
-
-    if check == "TRUE":
-        return True
-    else:
-        return False
-
-
 def Penalty_points(length, GC, d1, d2):
     return math.log((2 ** length * 2 ** GC) / ((d1 + 0.1) * (d2 + 0.1)), 10)
 
@@ -174,13 +146,13 @@ def inner_dimer_check(primer_F, primer_R):
     primer_R_len = len(primer_R)
     global current_inner_end, current_inner_middle, middle_seq
     end_seq = set()
-    for a in range(kmer - 5):
+    for a in range(primer_F_len - 5):
         F_end_seq_forward = dege_trans(primer_F[-a - 5:])
         end_seq = end_seq.union(set(F_end_seq_forward))
 #        F_end_seq_reverse = dege_trans(primer_F[:a + 5])
 #        end_seq = end_seq.union(set(F_end_seq_reverse))
         a += 1
-    for b in range(kmer-5):
+    for b in range(primer_R_len-5):
         R_end_seq_forward = dege_trans(primer_R[-b - 5:])
         end_seq = end_seq.union(set(R_end_seq_forward))
 #        R_end_seq_reverse =dege_trans(primer_R[b + 5:])
@@ -191,7 +163,7 @@ def inner_dimer_check(primer_F, primer_R):
     primer_F_R = set(primer_F + primer_R)
     for seq in end_seq:
         for R in primer_F_R:
-            if re.search(str(Seq(seq).reverse_complement()), R):  # or re.search(str(Seq(seq).complement()), R):
+            if re.search(str(Seq(seq).reverse_complement()), R):
                 end_length = len(seq)
                 end_GC = seq.count("G") + seq.count("C")
                 end_d1 = 0

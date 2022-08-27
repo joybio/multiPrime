@@ -187,8 +187,8 @@ rule get_degePrimer:
 		fraction = config["coverage"],
 		size = config["PRODUCT_size"],
 		gc_content = config["gc_content"],
-		middle_dimer = config["middle_dimer"],
-		window = config["window"],
+		distance = config["distance"],
+		adaptor = config["adaptor"],
 		number = config["number"]
 	message:
 		"Step9: choose candidate primers for each cluster (hairpin, dimer (F-R) check) .."
@@ -196,7 +196,7 @@ rule get_degePrimer:
 		'''
 		python {params.script}/get_degePrimer.py -i {input.primer} -r {input.ref_fa} \
 			-f {params.fraction} -s {params.size} -g {params.gc_content} \
-			-k {params.middle_dimer} -w {params.window} -n {params.number} \
+			-d {params.distance} -a {params.adaptor} -n {params.number} \
 			-o {output} 2>&1 > {log}
 		'''
 
