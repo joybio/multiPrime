@@ -143,9 +143,10 @@ if __name__ == "__main__":
 					primer_R = i[3]
 					PCR_product = get_PCR_PRODUCT(reference,primer_F,primer_R)
 					with open(cluster_product,"w") as c:
-						for i in PCR_product.keys():
-							c.write(i + "\n" + PCR_product[i] + "\n")
-							seq_id.add(i)
+						for p in PCR_product.keys():
+							c.write(p + "\n" + PCR_product[p] + "\n")
+							seq_id.add(p)
+							print(i,p)
 					coverage_number.write("Number of {}:\t{}\n".format(cluster_product,target))
 					target = 0
 		elif options.format == 'fa':

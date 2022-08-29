@@ -64,7 +64,7 @@ primer_len: 18
 coverage: 0.7
 
 #PCR PRODUCT SIZE. Filter primers by PRODUCT size.default [150,400].
-PRODUCT_size: 150,400
+PRODUCT_size: 250,500
 
 #Filter primers by GC content. default [0.45,0.65].
 gc_content: 0.4,0.6
@@ -83,7 +83,7 @@ number: 1
 
 #Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for adaptor--primer.
 #For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT. if None, use comma.
-adaptor: ,
+adaptor: ","
 
 #-------------------------------------------------------------------------------
 ## get max primer set from get_degePrimer

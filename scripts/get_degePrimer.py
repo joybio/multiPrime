@@ -13,7 +13,7 @@ import optparse
 from optparse import OptionParser
 
 parser = OptionParser('Usage: %prog -i [input] -r [sequence.fa] -o [output] \n \
-			Options: {-f [fraction] -n [num; -f 0] -s [150,500] -g [0.45,0.65] -d [ditance] -a ,}. \n \
+			Options: {-f [fraction] -n [num; -f 0] -s [150,500] -g [0.45,0.65] -d [ditance] -a ","}. \n \
 			If there are too many sequence in the reference fasta. You can use the first [N;N<=50,corresponding to the param -n] sequence for the degeprimer input. \n  \
 			use degePrimer output as -i [degeprimer_output] and all sequence as -r [all.sequence.fa]. get_degePrimer.py will help you to choose the candidate primers.')
 parser.add_option('-i', '--input',
@@ -39,12 +39,12 @@ parser.add_option('-n', '--num',
 
 parser.add_option('-g', '--gc',
                   dest='gc',
-                  default="0.45,0.65",
-                  help="Filter primers by GC content. default [0.45,0.65].")
+                  default="0.4,0.6",
+                  help="Filter primers by GC content. default [0.4,0.6].")
 
 parser.add_option('-s', '--size',
                   dest='size',
-                  default="150,400",
+                  default="250,500",
                   help="Filter primers by PRODUCT size.default [150,400].")
 
 parser.add_option('-d', '--dist',
@@ -54,16 +54,28 @@ parser.add_option('-d', '--dist',
 
 parser.add_option('-a', '--adaptor',
                   dest='adaptor',
-                  default=",",
+                  default="TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT",
                   type="str",
                   help='Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for adaptor--primer. \n \
-                For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT. Default: None')
+                  For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT (default). If you dont want adaptor, use [","] ')
 
 parser.add_option('-o', '--out',
                   dest='out',
                   help='Prefix of out file: candidate primers')
 
 (options, args) = parser.parse_args()
+
+import collections
+from collections import defaultdict
+import time
+from time import strftime
+import re
+import os
+import os.path
+import pandas as pd
+import Bio
+from Bio.Seq import Seq
+
 if len(sys.argv) == 1:
     parser.print_help()
     sys.exit(1)
@@ -79,17 +91,6 @@ while count:
         os.system('pip install biopython')
         count -= 1
         continue
-
-import collections
-from collections import defaultdict
-import time
-from time import strftime
-import re
-import os
-import os.path
-import pandas as pd
-import Bio
-from Bio.Seq import Seq
 
 seqnumber = options.ref + ".number"
 os.system("grep '>' {} | wc -l | cut -f 1 > {}".format(options.ref, seqnumber))
@@ -152,7 +153,6 @@ def dege_trans(sequence):
 #################################################################
 distance = int(options.dist)
 
-
 # 5 bp revcomplement, distance = distane
 def hairpin_check(primer):
     n = 0
@@ -177,6 +177,7 @@ def hairpin_check(primer):
     else:
         return False
 
+
 ###########################################################
 # matchnumber = int(options.num)
 pre_primer_pos = {}
@@ -198,7 +199,10 @@ for i in degeprimer:
         GC_content = round((list(primer).count("G") + list(primer).count("C")) / len(list(primer)), 3)
         if fraction < frac:
             pass
-        elif re.search("AAAA|TTTT|CCCC|GGGG|CGCGCG|GCGCGC", primer):
+        elif re.search("AAAA|CCCC|GGGG|TTTT", primer):
+            pass
+        elif re.search("CCC|CCG|CGG|CGC|GCC|GCG|GGC|GGG",primer[-3:]):
+            print(primer)
             pass
         elif GC_content > float(gc_content[1]) or GC_content < float(gc_content[0]):
             pass
@@ -272,6 +276,8 @@ with open(options.out, 'r') as primers:
             key = p.lstrip(">").strip()
         else:
             primer_seq[int(key)] = p.strip()
+
+
 ###########################################################################
 # dna_seq.complement()
 # dna_seq.reverse_complement()
@@ -280,21 +286,37 @@ with open(options.out, 'r') as primers:
 def Penalty_points(length, GC, d1, d2):
     return math.log((2 ** length * 2 ** GC) / ((d1 + 0.1) * (d2 + 0.1)), 10)
 
+
 adaptor = options.adaptor.split(",")
 adaptor_len = len(adaptor[0])
 print(adaptor)
-# primer_end_set = set()
+
+
+def current_end(primer_F, primer_R):
+    primer_F_extend = adaptor[0] + primer_F
+    primer_R_extend = adaptor[1] + primer_R
+    primer_F_len = len(primer_F)
+    primer_R_len = len(primer_R)
+    end_seq = set()
+    for a in range(primer_F_len - 5):
+        F_end_seq = dege_trans(primer_F_extend[-a - 5:])
+        end_seq = end_seq.union(set(F_end_seq))
+        F_start_seq = dege_trans(primer_F_extend[:a + 5])
+        end_seq = end_seq.union(set(F_start_seq))
+        a += 1
+    for b in range(primer_R_len - 5):
+        R_end_seq = dege_trans(primer_R_extend[-b - 5:])
+        end_seq = end_seq.union(set(R_end_seq))
+        R_end_seq = dege_trans(primer_R_extend[:b + 5])
+        end_seq = end_seq.union(set(R_end_seq))
+        b += 1
+    return end_seq
+
+
 def dimer_check(primer_F, primer_R):  # Caution: primer_key_set must be a global var.
     check = "F"
     primer_F_R = set(dege_trans(primer_F)).union(set(dege_trans(primer_R)))
-    small_end_set = set()
-    n = 0
-    while n < primer_len - 4:
-        four_F_seq = dege_trans(primer_F[-n - 4:])
-        four_R_seq = dege_trans(primer_R[-n - 4:])
-        small_end_set = small_end_set.union(set(four_F_seq))
-        small_end_set = small_end_set.union(set(four_R_seq))
-        n += 1
+    small_end_set = current_end(primer_F, primer_R)
     for seq in small_end_set:
         for primer in primer_F_R:
             end_length = len(seq)
@@ -302,15 +324,16 @@ def dimer_check(primer_F, primer_R):  # Caution: primer_key_set must be a global
             end_d1 = 0
             if re.search(str(Seq(seq).reverse_complement()), primer):
                 end_d2 = min((len(primer) - len(seq) - primer.index(str(Seq(seq).reverse_complement())))
-                                , primer.index(str(Seq(seq).reverse_complement())) + adaptor_len)
+                             , primer.index(str(Seq(seq).reverse_complement())) + adaptor_len)
                 Loss = Penalty_points(end_length, end_GC, end_d1, end_d2)
             else:
+                end_d2 = "NA"
                 Loss = 0
-            if Loss > 3: 
-                print(Loss)
+            if Loss > 3:
                 check = "T"
-                print("dimer seq: {}; dimer length: {}; dimer position: {}; primer: {}".format(str(Seq(seq).reverse_complement()),
-                      str(len(str(Seq(seq).reverse_complement()))),str(end_d2),primer))
+                print("dimer seq: {}; dimer length: {}; dimer position: {}; primer: {}".format(
+                    str(Seq(seq).reverse_complement()),
+                    str(len(str(Seq(seq).reverse_complement()))), str(end_d2), primer))
                 break
         if check == "T":
             break
@@ -325,6 +348,7 @@ print("PCR PRODUCT SIZE: {} - {}".format(user_product_size[0], user_product_size
 primer2speciesID_start_dict = defaultdict(list)
 primer2specify_mismatch_dict = defaultdict(list)
 primer2speciesID_start_dict_tmp = defaultdict(list)
+
 
 def get_PCR_PRODUCT(blast, output, candidate_primer_out, candidate_primer_txt):
     global primer_len
@@ -353,9 +377,8 @@ def get_PCR_PRODUCT(blast, output, candidate_primer_out, candidate_primer_txt):
                 primer_F_seq = primer_seq[primer_start]
                 primer_R_seq = str(Seq(primer_seq[primer_end]).reverse_complement())
                 if dimer_check(primer_F_seq, primer_R_seq):  # remove dimer
-                    print("Dimer primer: {} - {}. Removing...".format(primer_F_seq,primer_R_seq))
-                    pass
-                elif hairpin_check(adaptor[0]+primer_F_seq) or hairpin_check(adaptor[1]+primer_R_seq):
+                    print("Dimer primer: {} - {}. Removing...".format(primer_F_seq, primer_R_seq))
+                elif hairpin_check(adaptor[0] + primer_F_seq) or hairpin_check(adaptor[1] + primer_R_seq):
                     pass
                 else:
                     primer_F_R_seq = primer_seq[primer_start] + ":" + str(
@@ -370,7 +393,8 @@ def get_PCR_PRODUCT(blast, output, candidate_primer_out, candidate_primer_txt):
                             primer_F_specify = len(primer2specify_mismatch_dict[(primer_start, speciesID)])
                             primer_R_specify = len(primer2specify_mismatch_dict[(primer_end, speciesID)])
                             if primer_F_specify > 1 or primer_R_specify > 1:
-                                print("More than one PCR_product in one sequence. Removing...".format(primer_F_seq,primer_R_seq))
+                                print("More than one PCR_product in one sequence. Removing...".format(primer_F_seq,
+                                                                                                      primer_R_seq))
                                 pass
                             else:
                                 product_start = int(primer_F_dict[ID])
@@ -395,11 +419,12 @@ def get_PCR_PRODUCT(blast, output, candidate_primer_out, candidate_primer_txt):
                                     "pR_target_number": primer_R_target,
                                     "f_mismatch": primer_F_mismatch,
                                     "r_mismatch": primer_R_mismatch
-                                })
-                                tb_out = pd.concat([tb_out,tb_out_local])
+                                }, index=[0])
+                                tb_out = pd.concat([tb_out, tb_out_local], axis=0, ignore_index=True)
     tb_out.sort_values(by=["pF_target_number", "pR_target_number"], inplace=True, ascending=False)
     tb_out.to_csv(output, index=False, sep="\t")
-    primer_txt = tb_out.loc[:,["primer_F:R_dege", "primer_F:R_seq", "pF_target_number", "pR_target_number"]].drop_duplicates()
+    primer_txt = tb_out.loc[:,
+                 ["primer_F:R_dege", "primer_F:R_seq", "pF_target_number", "pR_target_number"]].drop_duplicates()
     candidate_primer_txt.write(options.out)
     for idx, row in primer_txt.iterrows():
         product_start_end = row[0].split(":")

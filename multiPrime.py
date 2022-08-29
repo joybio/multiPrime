@@ -48,7 +48,19 @@ rule seq_format:
 		python {params}/seq_format.py -i {input} -o {output}
 		'''
 #-------------------------------------------------------------------------------------------
-# extract_ rule 2: Dependency packages - None
+# seq_format rule 2: Dependency packages - blast+
+#-------------------------------------------------------------------------------------------
+#rule makeblastdb:
+#	input:
+#		config["results_dir"] + "/Total_fa/{virus}.format.fa"
+#	output:
+#		directory(config["results_dir"]) + "/Total_fa/{virus}.format.fa.db"
+#	shell:
+#		'''
+#		makeblastdb -dbtype nucl -in {input} -out {output}
+#		'''
+#-------------------------------------------------------------------------------------------
+# extract_ rule 3: Dependency packages - None
 #-------------------------------------------------------------------------------------------
 #rule extract__seq:
 #	input:
