@@ -37,8 +37,8 @@ parser.add_option('-s', '--step',
                   type="int",
                   help='distance between primers; column number of primer1_F to primer2_F.')
 
-parser.add_option('-m', '--maxi',
-                  dest='maxi',
+parser.add_option('-m', '--method',
+                  dest='method',
                   default="T",
                   type="str",
                   help='which method: maximal or maximum. If -m [T] use maximal; else maximum')
@@ -286,7 +286,7 @@ if __name__ == "__main__":
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit(1)
-    method = options.maxi
+    method = options.method
     step = options.step
     primers_file = open(options.input, "r")
     primers = primers_file.readlines()

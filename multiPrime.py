@@ -248,7 +248,7 @@ rule get_Maxprimerset:
 		"Step11: select primers .."
 	shell:
 		'''
-		python {params.script}/get_Maxprimerset_V4.py -i {input} -s {params.step} \
+		python {params.script}/get_Maxprimerset.py -i {input} -s {params.step} \
 			-m {params.method} -d {params.distance} -l {params.loss} -k {params.kmer} -o {output} \
 			 2>&1 > {log}
 		'''

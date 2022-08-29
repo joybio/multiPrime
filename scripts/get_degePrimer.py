@@ -258,15 +258,15 @@ else:
 
 blast_out = options.ref + ".blastout"
 
-print("INFO {}: blastn with 2 mismatich (degenerate);\n\nPrimer length is: {}.\nPerfect match len: {}.\n".format(
-    time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())), primer_len, primer_len - 2))
+print("INFO {}: blastn with 1 mismatich (degenerate);\n\nPrimer length is: {}.\nPerfect match len: {}.\n".format(
+    time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())), primer_len, primer_len - 1))
 
 if os.path.isfile(blast_out):
     print("\nBlast is done! Please check your blastout file, make sure blastout is ok!!!\n")
 else:
     os.system(
         "blastn -task megablast -word_size {} -outfmt '6 qseqid qlen qstart qend saccver slen sstart send bitscore length pident' -query {} -db {} -num_threads 20 -out {} -max_target_seqs 20000000".format(
-            primer_len - 2, options.out, db, blast_out))
+            primer_len - 1, options.out, db, blast_out))
 
 ######################### primerID : primerSeq ###########################
 primer_seq = {}

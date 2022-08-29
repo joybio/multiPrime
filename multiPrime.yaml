@@ -83,6 +83,9 @@ number: 1
 
 #Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for adaptor--primer.
 #For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT. if None, use comma.
+#If you don't know which adaptor will be used, and you really need an adaptor for sequencing. you can use the example sequence to instead.
+#because adaptor sequence will not form dimer with primers generally.
+#If you don't need adaptor for the next step. set adaptor: ",".
 adaptor: ","
 
 #-------------------------------------------------------------------------------
