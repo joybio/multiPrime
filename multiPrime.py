@@ -30,8 +30,8 @@ rule all:
 		config["results_dir"] + "/Primers_set/final_maxprimers_set.xls",
 		config["results_dir"] + "/Primers_set/Coverage_stast.xls",
 		config["results_dir"] + "/Primers_set/final_maxprimers_set.fa.dimer",
-		config["results_dir"] + "/Core_primers_set/Coverage_stast.xls",
-		config["results_dir"] + "/Core_primers_set/final_maxprimers_set.fa.dimer"
+		config["results_dir"] + "/Core_primers_set/core_Coverage_stast.xls",
+		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa.dimer"
 
 #-------------------------------------------------------------------------------------------
 # seq_format rule 1: Dependency packages - python
