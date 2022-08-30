@@ -201,9 +201,9 @@ for i in degeprimer:
             pass
         elif re.search("AAAA|CCCC|GGGG|TTTT", primer):
             pass
-        elif re.search("CCC|CCG|CGG|CGC|GCC|GCG|GGC|GGG",primer[-3:]):
-            print(primer)
-            pass
+        #elif re.search("CCC|CCG|CGG|CGC|GCC|GCG|GGC|GGG",primer[-3:]):
+           # print(primer)
+            #pass
         elif GC_content > float(gc_content[1]) or GC_content < float(gc_content[0]):
             pass
         else:
@@ -259,14 +259,14 @@ else:
 blast_out = options.ref + ".blastout"
 
 print("INFO {}: blastn with 1 mismatich (degenerate);\n\nPrimer length is: {}.\nPerfect match len: {}.\n".format(
-    time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())), primer_len, primer_len - 1))
+    time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())), primer_len, primer_len - 2))
 
 if os.path.isfile(blast_out):
     print("\nBlast is done! Please check your blastout file, make sure blastout is ok!!!\n")
 else:
     os.system(
         "blastn -task megablast -word_size {} -outfmt '6 qseqid qlen qstart qend saccver slen sstart send bitscore length pident' -query {} -db {} -num_threads 20 -out {} -max_target_seqs 20000000".format(
-            primer_len - 1, options.out, db, blast_out))
+            primer_len - 2, options.out, db, blast_out))
 
 ######################### primerID : primerSeq ###########################
 primer_seq = {}

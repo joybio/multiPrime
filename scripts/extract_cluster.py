@@ -94,8 +94,8 @@ for k in cluster_dict.keys():
 			for l in cluster_dict[k]:
 				t.write(str(l)+"\n" + seq_dict[l])
 	else:
-		seq_list = cluster_dict[k]
-		selected_seq = random.sample(seq_list,int(options.max))
+		cluster_dict[k].remove(cluster_rep[k])
+		selected_seq = random.sample(cluster_dict[k],int(options.max)-1)
 		selected_seq.append(cluster_rep[k])
 		with open(top_cluster_id,"w") as t:
 			for seq_id in set(selected_seq):

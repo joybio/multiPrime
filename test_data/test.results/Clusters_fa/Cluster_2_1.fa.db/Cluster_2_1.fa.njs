@@ -6,7 +6,7 @@
   "description": "/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_fa/Cluster_2_1.fa",
   "number-of-letters": 8251,
   "number-of-sequences": 1,
-  "last-updated": "2022-08-27T17:51:00",
+  "last-updated": "2022-08-29T09:46:00",
   "number-of-volumes": 1,
   "bytes-total": 39229,
   "bytes-to-cache": 2264,
