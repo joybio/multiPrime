@@ -43,6 +43,7 @@ for i in data:
 	else:
 		i = i.strip()
 		out.write(i)
+out.write("\n")
 data.close()
 out.close()
 

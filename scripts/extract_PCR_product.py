@@ -146,7 +146,6 @@ if __name__ == "__main__":
 						for p in PCR_product.keys():
 							c.write(p + "\n" + PCR_product[p] + "\n")
 							seq_id.add(p)
-							print(i,p)
 					coverage_number.write("Number of {}:\t{}\n".format(cluster_product,target))
 					target = 0
 		elif options.format == 'fa':

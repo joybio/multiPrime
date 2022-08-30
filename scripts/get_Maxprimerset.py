@@ -15,7 +15,7 @@ import optparse
 from optparse import OptionParser
 
 parser = OptionParser('Usage: %prog -i [input] -o [output] \n \
-                        Options: {-s [step] -m [T] -k [kmer]}', version="%prog 0.0.4")
+                        Options: {-s [step] -m [T]}', version="%prog 0.0.4")
 parser.add_option('-i', '--input',
                   dest='input',
                   help='Input file: primers')
