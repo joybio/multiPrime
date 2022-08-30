@@ -89,7 +89,7 @@ results: results directory
 		--*.txt: candidate primers in txt format (1 line)
 		--*.nt.Check: tmp file; primers filter by blastn
 
-	-Primers_set
+	-Primers_set:
 		--candidate_primers_sets.txt: all candidate primers in each cluster
 		--sort.candidate_primers_sets.txt: sort by the number of candidate primers in each line (cluster)
 		--final_maxprimers_set.fa: fasta format of primers set for multiPCR
@@ -98,5 +98,16 @@ results: results directory
 		--final_maxprimers_set.fa.dimer: dimer check by mfePrimer 
 		--final_maxprimers_set.fa.hairpin: hairpin check by mfePrimer
 		--PCR_product: PCR product of each primer
+
+	-Core_primers_set:
+		--core_candidate_primers_sets.txt: core candidate primers in each cluster
+		--sort.core_candidate_primers_sets.txt: sort by the number of core candidate primers in each line (cluster)
+		--core_final_maxprimers_set.fa: fasta format of primers set for multiPCR
+		--core_final_maxprimers_set.xls: primers information of primers set
+		--core_Coverage_stast.xls: coverage of all primers in primer set
+		--core_final_maxprimers_set.fa.dimer: dimer check by mfePrimer
+		--core_final_maxprimers_set.fa.hairpin: hairpin check by mfePrimer
+		--core_PCR_product: PCR product of each primer
+
 
 
