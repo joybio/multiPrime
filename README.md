@@ -84,7 +84,7 @@ results: results directory
 	-Clusters_primer: get_degePrimer from degePrimer out
 		--*.top.primer.out: paired primers designed by the top N {default: 500} fasta
 
-	-Clusters_cprimer:
+	-Clusters_cprimer: candidate primers for each cluster.
 		--*.fa: candidate primers in fa format
 		--*.txt: candidate primers in txt format (1 line)
 		--*.nt.Check: tmp file; primers filter by blastn
