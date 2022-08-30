@@ -29,7 +29,9 @@ rule all:
 		config["results_dir"] + "/Primers_set/candidate_primers_sets.txt",
 		config["results_dir"] + "/Primers_set/final_maxprimers_set.xls",
 		config["results_dir"] + "/Primers_set/Coverage_stast.xls",
-		config["results_dir"] + "/Primers_set/final_maxprimers_set.fa.dimer"
+		config["results_dir"] + "/Primers_set/final_maxprimers_set.fa.dimer",
+		config["results_dir"] + "/Core_primers_set/Coverage_stast.xls",
+		config["results_dir"] + "/Core_primers_set/final_maxprimers_set.fa.dimer"
 
 #-------------------------------------------------------------------------------------------
 # seq_format rule 1: Dependency packages - python
@@ -215,7 +217,6 @@ rule get_degePrimer:
 #-------------------------------------------------------------------------------------------
 # aggregate_candidate_primers rule 10: Dependency packages - None
 #-------------------------------------------------------------------------------------------
-
 rule aggregate_candidate_primers:
 	input:
 		aggregate_input
@@ -240,42 +241,96 @@ rule get_Maxprimerset:
 	params:
 		script = config["scripts_dir"],
 		step = config["step"],
-		distance = config["distance"],
-		kmer = config["kmer"],
-		method = config["method"],
-		loss = config["loss"]
+		method = config["method"]
 	message:
-		"Step11: select primers .."
+		"Step11: extract Max_primer_set..."
 	shell:
 		'''
 		python {params.script}/get_Maxprimerset.py -i {input} -s {params.step} \
-			-m {params.method} -d {params.distance} -l {params.loss} -k {params.kmer} -o {output} \
+			-m {params.method} -o {output} \
 			 2>&1 > {log}
 		'''
 #-------------------------------------------------------------------------------------------
-# get_all_PCR_product rule 12: Dependency packages - python
+# get_core_primer_set rule 12: Dependency packages - python
+#-------------------------------------------------------------------------------------------
+rule get_core_primer_set:
+	input:
+		config["results_dir"] + "/Primers_set/candidate_primers_sets.txt"
+	output:
+		config["results_dir"] + "/Core_primers_set/core_candidate_primers_sets.txt"
+	message:
+		"step12: extract core primer set..."
+	params:
+		script = config["scripts_dir"],
+		number = config["core_number"]
+	shell:
+		"""
+		python {params.script}/core_primerset_extraction.py -i {input} -o {output} -n {params.number}
+		"""
+#-------------------------------------------------------------------------------------------
+# get_core_Maxprimerset rule 13: Dependency packages - python
+#-------------------------------------------------------------------------------------------
+rule get_core_Maxprimerset:
+	input:
+		config["results_dir"] + "/Core_primers_set/core_candidate_primers_sets.txt"
+	output:
+		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.xls"
+	message:
+		"step13: extract core Max_primer_set..."
+	params:
+		script = config["scripts_dir"],
+		step = config["step"],
+		method = config["method"]
+	log:
+		config["log_dir"] + "/get_core_Maxprimerset.log"
+	shell:
+		"""
+		python {params.script}/get_Maxprimerset.py -i {input} -s {params.step} \
+			-m {params.method} -o {output} \
+			 2>&1 > {log}
+		"""
+#-------------------------------------------------------------------------------------------
+# get_all_PCR_product rule 14: Dependency packages - python
 #-------------------------------------------------------------------------------------------
 rule get_all_PCR_product:
 	input:
 		config["results_dir"] + "/Primers_set/final_maxprimers_set.xls",
-		expand(config["results_dir"] + "/Total_fa/{virus}.format.fa"
-			,virus = virus)
+		expand(config["results_dir"] + "/Total_fa/{virus}.format.fa",virus = virus)
 	output:
 		directory(config["results_dir"] + "/Primers_set/PCR_product"),
 		config["results_dir"] + "/Primers_set/Coverage_stast.xls"
 	params:
 		config["scripts_dir"]
 	message:
-		"Step12: extract PCR product from the input virus sequence .."
+		"Step14: extract PCR product from the input virus sequence .."
 	shell:
 		'''
 		python {params}/extract_PCR_product.py -i {input[1]} -p {input[0]} \
 			-f xls -o {output[0]} -s {output[1]}
 		'''
 #-------------------------------------------------------------------------------------------
-# mfeprimer_check rule 13: Dependency packages - mfeprimer-3.2.6
+# get_core_PCR_product rule 15: Dependency packages - python
 #-------------------------------------------------------------------------------------------
-rule mfeprimer_check:
+rule get_core_PCR_product:
+	input:
+		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.xls",
+		expand(config["results_dir"] + "/Total_fa/{virus}.format.fa",virus = virus)
+	output:
+		directory(config["results_dir"] + "/Core_primers_set/core_PCR_product"),
+		config["results_dir"] + "/Core_primers_set/core_Coverage_stast.xls"
+	params:
+		config["scripts_dir"]
+	message:
+		"Step15: extract core PCR product from the input virus sequence .."
+	shell:
+		'''
+		python {params}/extract_PCR_product.py -i {input[1]} -p {input[0]} \
+			-f xls -o {output[0]} -s {output[1]}
+		'''
+#-------------------------------------------------------------------------------------------
+# mfeprimer_check rule 16: Dependency packages - mfeprimer-3.2.6
+#-------------------------------------------------------------------------------------------
+rule all_mfeprimer_check:
 	input:
 		config["results_dir"] + "/Primers_set/final_maxprimers_set.xls"
 	output:
@@ -285,8 +340,28 @@ rule mfeprimer_check:
 	params:
 		config["scripts_dir"]
 	message:
-		"Step13: hairpin and dimer check .. "
+		"Step16: hairpin and dimer check .. "
 	
+	shell:
+		"""
+		python {params}/primerset_format.py -i {input} -o {output[0]}
+		{params}/mfeprimer-3.2.6 hairpin -i {output[0]} -o {output[1]}
+		{params}/mfeprimer-3.2.6 dimer -i {output[0]} -o {output[2]}
+		"""
+#-------------------------------------------------------------------------------------------
+# core_mfeprimer_check rule 17: Dependency packages - mfeprimer-3.2.6
+#-------------------------------------------------------------------------------------------
+rule core_mfeprimer_check:
+	input:
+		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.xls"
+	output:
+		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa",
+		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa.hairpin",
+		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa.dimer"
+	params:
+		config["scripts_dir"]
+	message:
+		"Step17: hairpin and dimer check .. "
 	shell:
 		"""
 		python {params}/primerset_format.py -i {input} -o {output[0]}

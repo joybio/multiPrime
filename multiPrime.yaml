@@ -87,6 +87,10 @@ number: 1
 #because adaptor sequence will not form dimer with primers generally.
 #If you don't need adaptor for the next step. set adaptor: ",".
 adaptor: ","
+#-------------------------------------------------------------------------------
+#### get core primer set
+####-------------------------------------------------------------------------------
+core_number: 10
 
 #-------------------------------------------------------------------------------
 ## get max primer set from get_degePrimer
