@@ -193,7 +193,10 @@ for i in degeprimer:
         i = i.strip().split("\t")
         position = int(i[0])
         number_match = int(i[6])
-        fraction = float(number_match / seq_number)
+        if seq_number <= 500:
+                fraction = float(number_match / seq_number)
+        else:
+                fraction = float(number_match / 500)
         primer = i[5]
         primer_len = len(primer)
         GC_content = round((list(primer).count("G") + list(primer).count("C")) / len(list(primer)), 3)
