@@ -63,7 +63,7 @@ results: results directory
 
 	-cluster.identities: identity of each sequence.
 
-	-cluster.txt: cluster information. for example: Cluster_0_222.fa, 0 ==> rank number 222 ==> sequence number.
+	-cluster.txt: cluster information. for example: Cluster_0_222.fa, 0 ==> rank; 222 ==> sequence number.
 
 	-Total_fa: genome file and cluster of genome file.
 
