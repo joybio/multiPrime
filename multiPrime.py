@@ -201,6 +201,7 @@ rule get_degePrimer:
 		script = config["scripts_dir"],
 		fraction = config["coverage"],
 		size = config["PRODUCT_size"],
+		maxseq=config["max_seq"]
 		gc_content = config["gc_content"],
 		distance = config["distance"],
 		adaptor = config["adaptor"],
@@ -211,7 +212,7 @@ rule get_degePrimer:
 		'''
 		python {params.script}/get_degePrimer.py -i {input.primer} -r {input.ref_fa} \
 			-f {params.fraction} -s {params.size} -g {params.gc_content} \
-			-d {params.distance} -a {params.adaptor} -n {params.number} \
+			-d {params.distance} -a {params.adaptor} -n {params.number} -m {params.maxseq}\
 			-o {output} 2>&1 > {log}
 		'''
 

@@ -59,6 +59,12 @@ parser.add_option('-a', '--adaptor',
                   help='Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for adaptor--primer. \n \
                   For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT (default). If you dont want adaptor, use [","] ')
 
+parser.add_option('-m', '--maxseq',
+                  dest='maxseq',
+                  default=500,
+		  type="int"
+                  help='Limit of sequence number')
+
 parser.add_option('-o', '--out',
                   dest='out',
                   help='Prefix of out file: candidate primers')
@@ -193,10 +199,10 @@ for i in degeprimer:
         i = i.strip().split("\t")
         position = int(i[0])
         number_match = int(i[6])
-        if seq_number <= 500:
+        if seq_number <= options.maxseq:
                 fraction = float(number_match / seq_number)
         else:
-                fraction = float(number_match / 500)
+                fraction = float(number_match / options.maxseq)
         primer = i[5]
         primer_len = len(primer)
         GC_content = round((list(primer).count("G") + list(primer).count("C")) / len(list(primer)), 3)
