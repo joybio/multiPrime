@@ -446,7 +446,7 @@ def get_PCR_PRODUCT(blast, output, candidate_primer_out, candidate_primer_txt):
 
 
 # primer_check
-paired = options.out.rstrip(".candidate.primers.txt") + ".paired.nt.Check"
+paired = options.out.rstrip(".candidate.primers.txt") + ".paired.Check"
 paired_primer = open(paired, "w")
 # blastn output
 blast_results = open(blast_out, "r")

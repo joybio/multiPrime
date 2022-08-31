@@ -87,7 +87,7 @@ results: results directory
 	-Clusters_cprimer: candidate primers for each cluster.
 		--*.fa: candidate primers in fa format
 		--*.txt: candidate primers in txt format (1 line)
-		--*.nt.Check: tmp file; primers filter by blastn
+		--*.Check: tmp file; primers filter by blastn
 
 	-Primers_set:
 		--candidate_primers_sets.txt: all candidate primers in each cluster
