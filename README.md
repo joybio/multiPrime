@@ -105,6 +105,8 @@ results: results directory
 		--core_final_maxprimers_set.fa: fasta format of core primers set for multiPCR
 		--core_final_maxprimers_set.xls: primers information of core primers set
 		--core_Coverage_stast.xls: coverage of all primers in core primer set
+		--core_candidate_primers_sets.fa: core primer set fasta
+		--core_candidate_primers_sets.number: candidate primer number of each core cluster
 		--core_final_maxprimers_set.fa.dimer: dimer check by mfePrimer
 		--core_final_maxprimers_set.fa.hairpin: hairpin check by mfePrimer
 		--core_PCR_product: core PCR product of each primer
