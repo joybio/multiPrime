@@ -1,0 +1,63 @@
+#!/bin/python
+#!/share/data3/yangjunbo/miniconda3/bin/python
+__date__ = "2022-8-31"
+__author__ = "Junbo Yang"
+__email__ = "yang_junbo_hi@126.com"
+__license__ = "yangjunbo"
+
+import os
+import time
+from time import strftime
+import optparse
+from optparse import OptionParser
+import pandas as pd
+
+parser = OptionParser('Usage: %prog -i [input] -o [output] \n return a binary dict, which can loaded by pickle')
+parser.add_option('-i','--input',
+                dest='input',
+                help='Input dir: list of accession number.')
+parser.add_option('-s','--step',
+                dest='step',
+		default="5",
+		type="int",
+                help='Step length. Step between Primer_1_F : Primer_2_F')
+parser.add_option('-o','--out',
+                dest='out',
+                help='Output directory')
+parser.add_option('-n','--number',
+                dest='num',
+                help='Primer number of each cluster.')
+
+(options,args) = parser.parse_args()
+import sys
+from sys import argv
+import math
+if len(sys.argv) == 1:
+	parser.print_help()
+	sys.exit(1)
+
+Input = open(options.input,"r")
+output = options.out
+number = open(options.num,"w")
+if os.path.isdir(output):
+	print("Output directory is OK!!!\n")
+else:
+	os.system("mkdir {}".format(output))
+
+step = options.step
+for i in Input:
+	i = i.strip().split("\t")
+	n = 1
+	primer_number = 1
+	primer = i[0].split("/")[-1].strip(".candidate.primers.txt")
+	primer_out = options.out + "/" + primer + ".candidate.primers.fa"
+	with open(primer_out,"w") as f:
+		while n < len(i):
+			start_stop = i[n+4].split(":")
+			f.write(">"+primer + "_"+start_stop[0] + "_F\n"+i[n]+"\n>"+primer + "_"+start_stop[1]+ "_R\n"+i[n+1]+"\n")
+			n += step
+			primer_number += 1
+	number.write(primer+ "\t" + str(primer_number) + "\n")
+Input.close()
+number.close()
+

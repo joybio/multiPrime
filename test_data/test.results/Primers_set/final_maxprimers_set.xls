@@ -1,0 +1,5 @@
+#Primer	Primer_rank	Primer_F	Primer_R	PCR_product	Primer target by blast+ [2 mismatch]	Primer position (representative sequence)	Primer target number by blast+ [2 mismatch]
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_3_5.candidate.primers.txt	1	GTCTTGATCAAGCACTTC	GGACTACTAACTAGCTCA	277		164:441	5
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_1_3.candidate.primers.txt	1	AGGAATTAAACGGGCACC	AGCCTTAAGGGAGAAAGA	253		87:340	3
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_2_1.candidate.primers.txt	1	CAGACCACCGTTACTCCA	CGACTTCCAGGTGCATCA	250		31:281	1
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_0_1.candidate.primers.txt	811	ATAATGGCTGCAGTAGTG	TCCAATCCCGATCCAATT	250		60:310	1

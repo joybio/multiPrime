@@ -64,7 +64,7 @@ primer_len: 18
 coverage: 0.7
 
 #PCR PRODUCT SIZE. Filter primers by PRODUCT size.default [150,400].
-PRODUCT_size: 250,500
+PRODUCT_size: 200,500
 
 #Filter primers by GC content. default [0.45,0.65].
 gc_content: 0.4,0.6
@@ -86,13 +86,11 @@ number: 1
 #If you don't know which adaptor will be used, and you really need an adaptor for sequencing. you can use the example sequence to instead.
 #because adaptor sequence will not form dimer with primers generally.
 #If you don't need adaptor for the next step. set adaptor: ",".
-adaptor: ","
+adaptor: "TCTTTCCCTACACGACGCTCTTCCGATCT,TGGAGTTCAGACGTGTGCTCTTCCGATCT"
 #-------------------------------------------------------------------------------
-#### get core primer set
-####-------------------------------------------------------------------------------
-#Core_numbre means min sequence number in each cluster not cluster number. 
+### get core primer set
+###-------------------------------------------------------------------------------
 core_number: 10
-
 #-------------------------------------------------------------------------------
 ## get max primer set from get_degePrimer
 ##-------------------------------------------------------------------------------
@@ -107,18 +105,7 @@ core_number: 10
 
 step: 5
 
-#Filter param of hairpin. If you dont add adapter to primers, this param is useless
-
-distance: 5
-
-#Filter param of middle dimer. This param is used to set sliding windows and step is 1,
-##Length of kmer is [default: 7].
-##This param also control the end dimer length, max end dimer length = [kmer]-1
-
-kmer: 9
-
-loss: 2
-
+#maximal maximum
 method: T
 
 

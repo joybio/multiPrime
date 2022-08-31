@@ -31,7 +31,8 @@ rule all:
 		config["results_dir"] + "/Primers_set/Coverage_stast.xls",
 		config["results_dir"] + "/Primers_set/final_maxprimers_set.fa.dimer",
 		config["results_dir"] + "/Core_primers_set/core_Coverage_stast.xls",
-		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa.dimer"
+		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa.dimer",
+		config["results_dir"] + "/Core_primers_set/core_candidate_primers_sets.number"
 
 #-------------------------------------------------------------------------------------------
 # seq_format rule 1: Dependency packages - python
@@ -290,7 +291,23 @@ rule get_core_Maxprimerset:
 			 2>&1 > {log}
 		"""
 #-------------------------------------------------------------------------------------------
-# get_all_PCR_product rule 14: Dependency packages - python
+# format_transition rule 14: Dependency packages - python
+#-------------------------------------------------------------------------------------------
+rule format_transition:
+	input:
+		config["results_dir"] + "/Core_primers_set/core_candidate_primers_sets.txt"
+	output:
+		directory(config["results_dir"] + "/Core_primers_set/core_candidate_primers_sets.fa"),
+		config["results_dir"] + "/Core_primers_set/core_candidate_primers_sets.number"
+	params:
+		script = config["scripts_dir"],
+		step = config["step"]
+	shell:
+		"""
+		python {params.script}/candidate_primer_txt2fa.py -i {input} -s {params.step} -o {output[0]} -n {output[1]}
+		"""
+#-------------------------------------------------------------------------------------------
+# get_all_PCR_product rule 15: Dependency packages - python
 #-------------------------------------------------------------------------------------------
 rule get_all_PCR_product:
 	input:
@@ -309,7 +326,7 @@ rule get_all_PCR_product:
 			-f xls -o {output[0]} -s {output[1]}
 		'''
 #-------------------------------------------------------------------------------------------
-# get_core_PCR_product rule 15: Dependency packages - python
+# get_core_PCR_product rule 16: Dependency packages - python
 #-------------------------------------------------------------------------------------------
 rule get_core_PCR_product:
 	input:
@@ -328,7 +345,7 @@ rule get_core_PCR_product:
 			-f xls -o {output[0]} -s {output[1]}
 		'''
 #-------------------------------------------------------------------------------------------
-# mfeprimer_check rule 16: Dependency packages - mfeprimer-3.2.6
+# mfeprimer_check rule 17: Dependency packages - mfeprimer-3.2.6
 #-------------------------------------------------------------------------------------------
 rule all_mfeprimer_check:
 	input:
@@ -349,7 +366,7 @@ rule all_mfeprimer_check:
 		{params}/mfeprimer-3.2.6 dimer -i {output[0]} -o {output[2]}
 		"""
 #-------------------------------------------------------------------------------------------
-# core_mfeprimer_check rule 17: Dependency packages - mfeprimer-3.2.6
+# core_mfeprimer_check rule 18: Dependency packages - mfeprimer-3.2.6
 #-------------------------------------------------------------------------------------------
 rule core_mfeprimer_check:
 	input:
