@@ -62,7 +62,7 @@ parser.add_option('-a', '--adaptor',
 parser.add_option('-m', '--maxseq',
                   dest='maxseq',
                   default=500,
-		  type="int"
+		  type="int",
                   help='Limit of sequence number')
 
 parser.add_option('-o', '--out',

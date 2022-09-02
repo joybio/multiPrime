@@ -201,7 +201,7 @@ rule get_degePrimer:
 		script = config["scripts_dir"],
 		fraction = config["coverage"],
 		size = config["PRODUCT_size"],
-		maxseq=config["max_seq"]
+		maxseq=config["max_seq"],
 		gc_content = config["gc_content"],
 		distance = config["distance"],
 		adaptor = config["adaptor"],

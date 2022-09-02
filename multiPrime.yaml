@@ -24,7 +24,6 @@ scripts_dir: /share/data3/yangjunbo/git_storage/multiPrime/scripts
 # this name is used throughout the entire pipeline as name for the output samples
 virus:
   - test
-
 ################################################################################
 # preprocessing
 ################################################################################
