@@ -1,4 +1,0 @@
-Config file multiPrime.yaml is extended by additional config specified via the command line.
-Building DAG of jobs...
-Nothing to be done (all requested files are present and up to date).
-Complete log: .snakemake/log/2022-08-31T153839.893253.snakemake.log
