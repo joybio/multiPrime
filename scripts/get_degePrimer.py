@@ -436,7 +436,8 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt,dege
                             primer_R_fraction = round(len(primer_R_dict) / seq_number, 2)
                             primer_F_target = len(primer_F_dict)
                             primer_R_target = len(primer_R_dict)
-                            bed_file.write(speciesID + "\t" + str(product_start) + "\t" + str(product_stop) +"\n")
+                            bed_file.write(speciesID + "\t" + str(product_start) + "\t" + str(product_stop) +
+                                           "\t" + primer_F_R_seq + "\n")
                             tb_out_local = pd.DataFrame({
                                 "speciesID": speciesID,
                                 "primer_F:R_dege": primer_F_R,
