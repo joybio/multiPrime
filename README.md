@@ -1,5 +1,6 @@
-multiPrime: version 0.0.3
+multiPrime: version 1.0.0
 # multi PCR primers design processing pipeline
+multiPrime was developed to design primers for large-scale sequences, identifying the core primers and optimized primer sets.
 
 Scripts and pipelines provided in this repository aid to design multiplex PCR primer and return a maximal primerset for multi-PCR. It contains all scripts to allow a self-assembled processing and additionally provides pipeline scripts that run the entire processing automatically.
 
