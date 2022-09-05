@@ -92,7 +92,7 @@ results: results directory
 
 	-Primers_set:
 		--candidate_primers_sets.txt: all candidate primers in each cluster
-		--sort.candidate_primers_sets.txt: sort by the number of candidate primers in each line (cluster)
+		--sort.candidate_primers_sets.txt: sorted by the number of candidate primers in each line (cluster)
 		--final_maxprimers_set.fa: fasta format of primers set for multiPCR
 		--final_maxprimers_set.xls: primers information of primers set
 		--Coverage_stast.xls: coverage of all primers in primer set
@@ -102,7 +102,7 @@ results: results directory
 
 	-Core_primers_set:
 		--core_candidate_primers_sets.txt: core candidate primers in each cluster
-		--sort.core_candidate_primers_sets.txt: sort by the number of core candidate primers in each line (cluster)
+		--sort.core_candidate_primers_sets.txt: sorted by the number of core candidate primers in each line (cluster)
 		--core_final_maxprimers_set.fa: fasta format of core primers set for multiPCR
 		--core_final_maxprimers_set.xls: primers information of core primers set
 		--core_Coverage_stast.xls: coverage of all primers in core primer set
