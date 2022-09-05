@@ -1,5 +1,5 @@
 #!/share/data3/yangjunbo/miniconda3/bin/python
-'''extract PCR product by primers (degenerate is also ok!) and raw input fasta file.'''
+'''extract perfect PCR product by primers (degenerate is also ok!) with raw input fasta file.'''
 import re
 import sys
 from sys import argv

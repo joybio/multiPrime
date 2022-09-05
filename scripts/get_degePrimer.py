@@ -197,7 +197,7 @@ def GC_fraction(sequence):
 
 ###########################################################
 
-def pre_filter(degeprimer, GC, maxseq, frac, rank_number):
+def pre_filter(degeprimer, GC, maxseq, frac, rank_number,tmp):
     # primers pre-filter.
     pre_primer_pos = {}
     global pre_primer_frac
@@ -246,14 +246,14 @@ def pre_filter(degeprimer, GC, maxseq, frac, rank_number):
             raise SystemExit()
         else:
             print("\n Non-filter primers number: {}. \n".format(len(pre_primer_frac)))
-            with open("pre_filter_primers.fa", "w") as out:
+            with open(tmp, "w") as out:
                 for i in pre_primer_frac.keys():
                     out.write(">" + str(pre_primer_pos[i]) + "\n" + i + "\n")
     else:
         print("Non-cancidate primer for the input sequence.\n")
         raise SystemExit()
     ###### check primer #####
-    size = os.path.getsize("pre_filter_primers.fa")
+    size = os.path.getsize(tmp)
     try:
         1 / size
     except:
@@ -273,14 +273,14 @@ def map(path_2_ref, tmp_expand, sam_out, sam_for_out):
         os.system("mkdir -p {}".format(db))
         print("INFO {}: Indexing......\n".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))))
         os.system("bowtie2-build {} {}/{}".format(path_2_ref, db, title[-1]))
-
+    db_title = db + "/" + title[-1]
     if os.path.isfile(sam_out):
         print("Mapping is done! Please check your map file, make sure sam_out is ok!!!\n")
     else:
         os.system(
             # -L  length of seed substrings
             "bowtie2 -N 1 -L 31 -a -x {} -f -U {} -S {}".format(
-                db, tmp_expand, sam_out))
+                db_title, tmp_expand, sam_out))
         os.system(
             # remove primer which matched to the reverse strand
             "samtools view -F 16 {} > {}".format(
@@ -358,7 +358,7 @@ def dimer_check(primer_F, primer_R):  # Caution: primer_key_set must be a global
 
 #########################  paired primers  ################################
 
-def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt,dege_pos):
+def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt,dege_pos,bed_file):
     primer2speciesID_start_dict = defaultdict(list)
     primer2specify_mismatch_dict = {}
     tb_out = pd.DataFrame(columns=["speciesID", "primer_F:R_dege", "primer_F:R_seq", "pF_start", "pR_end",
@@ -366,7 +366,11 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt,dege
                                    "pR_target_number", "f_mismatch_position", "r_mismatch_position"])
     #### primer information ####
     results = pd.read_table(sam, header=None)
-    # print(results.iloc[1])
+    # print(results.iloc[0])
+    for rank in range(11,len(results.iloc[0])):
+        # print(results.iloc[0][rank])
+        if re.search("MD:Z:", results.iloc[0][rank]):
+            p_rank = rank
     # mismatch_pattern = re.compile('XM:i:(\d+)')
     position_pattern = re.compile("[A-Z]?(\d+)")
     for idx, row in results.iterrows():
@@ -375,7 +379,7 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt,dege
         product_start = int(row[3])
         # XM:i mismatch number
         # mismatch = mismatch_pattern.search(row[14]).group(1)
-        position = position_pattern.search(row[18][-2:]).group(1)
+        position = position_pattern.search(row[p_rank][-2:]).group(1)
         # distance between mismatch position and 3' term must greater than 8
         if int(position) < mismatch_position:
             pass
@@ -422,17 +426,17 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt,dege
                             pass
                         else:
                             speciesID = ID
-                            product_start = int(primer_F_dict[ID])
-                            product_stop = int(primer_R_dict[ID]) + len(primer_seq[primer_end])
+                            product_start = int(primer_F_dict[ID])-1
+                            product_stop = int(primer_R_dict[ID]) + len(primer_seq[primer_end])-1
                             product_size = int(primer_R_dict[ID]) + len(primer_seq[primer_end]) - int(
                                 primer_F_dict[ID]) + 1
                             primer_F_mismatch = primer2specify_mismatch_dict[(primer_start, speciesID)]
                             primer_R_mismatch = primer2specify_mismatch_dict[(primer_end, speciesID)]
                             primer_F_fraction = round(len(primer_F_dict) / seq_number, 2)
                             primer_R_fraction = round(len(primer_R_dict) / seq_number, 2)
-                            primer_F_target = len(primer_F_dict) -1
-                            # remove None
-                            primer_R_target = len(primer_R_dict) -1
+                            primer_F_target = len(primer_F_dict)
+                            primer_R_target = len(primer_R_dict)
+                            bed_file.write(speciesID + "\t" + str(product_start) + "\t" + str(product_stop) +"\n")
                             tb_out_local = pd.DataFrame({
                                 "speciesID": speciesID,
                                 "primer_F:R_dege": primer_F_R,
@@ -449,11 +453,11 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt,dege
                             }, index=[0])
                             tb_out = pd.concat([tb_out, tb_out_local], axis=0, ignore_index=True)
     tb_out.sort_values(by=["pF_target_number", "pR_target_number"], inplace=True, ascending=[False, False])
-    print(tb_out)
+    # print(tb_out)
     tb_out.to_csv(output, index=False, sep="\t")
     primer_txt = tb_out.loc[:,["primer_F:R_dege", "primer_F:R_seq", "pF_target_number", "pR_target_number"]].drop_duplicates()
     primer_txt.sort_values(by=["pF_target_number", "pR_target_number"],inplace=True,ascending=[False, False])
-    print(primer_txt)
+    # print(primer_txt)
     candidate_primer_txt.write(options.out)
     for idx, row in primer_txt.iterrows():
         product_start_end = row[0].split(":")
@@ -552,11 +556,11 @@ if __name__ == "__main__":
 
     #### pre_filter ####
     pre_primer_frac = {}
-    pre_filter(options.input, GC, max_seq, frac, rank_number)
+    tmp = options.out.rstrip(".candidate.primers.txt") + ".pre_filter_primers.fa"
+    pre_filter(options.input, GC, max_seq, frac, rank_number,tmp)
 
     #### tmp file ####
-    tmp = "pre_filter_primers.fa"
-    tmp_expand = "pre_filter_primers.expand.fa"
+    tmp_expand = options.out.rstrip(".candidate.primers.txt") + ".pre_filter_primers.expand.fa"
     fa_dege_trans(tmp, tmp_expand)
     primer_seq = primerSeq(tmp)
 
@@ -572,11 +576,15 @@ if __name__ == "__main__":
     candidate_primer = options.out.rstrip(".candidate.primers.txt") + ".candidate.primers.fa"
     candidate_primer_fa = open(candidate_primer, "w")
     candidate_primer_txt = open(options.out, "w")
-    get_PCR_PRODUCT(sam_results, paired_primer, candidate_primer_fa, candidate_primer_txt,dege_pos)
+    bed_file = options.out.rstrip(".candidate.primers.txt") + ".bed"
+    bed = open(bed_file,"w")
+    get_PCR_PRODUCT(sam_results, paired_primer, candidate_primer_fa, candidate_primer_txt,dege_pos,bed)
+    bed.close()
     sam_results.close()
     paired_primer.close()
     candidate_primer_fa.close()
     candidate_primer_txt.close()
+    os.system("rm {} {}".format(sam_out,sam_for_out))
     print("INFO {}: Done!!!\n".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))))
 
 #########################  Done!  ################################
