@@ -205,7 +205,7 @@ rule get_degePrimer:
 		gc_content = config["gc_content"],
 		distance = config["distance"],
 		adaptor = config["adaptor"],
-		number = config["number"]
+		number = config["rank_number"]
 	message:
 		"Step9: choose candidate primers for each cluster (hairpin, dimer (F-R) check) .."
 	shell:

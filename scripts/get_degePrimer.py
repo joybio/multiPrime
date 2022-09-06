@@ -24,10 +24,10 @@ parser.add_option('-r', '--ref',
 
 parser.add_option('-n', '--num',
                   dest='num',
-                  default="500",
+                  default=200,
                   type="int",
                   help='Filter primers by match rank: sort candidate primers by match number and select top {N} for '
-                       'next steps. Default: 500.')
+                       'next steps. Default: 200.')
 
 parser.add_option('-g', '--gc',
                   dest='gc',

@@ -78,7 +78,7 @@ distance: 4
 #It wont return candidate primers, because the match rate is very small, even nearly zero. 
 #However, you can use the number of subset sequence to select candidate primers. 
 #before use this param, please also use [ -f 0 ] default: 1
-number: 1
+rank_number: 200
 
 #Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for adaptor--primer.
 #For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT. if None, use comma.
