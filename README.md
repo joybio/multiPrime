@@ -9,7 +9,7 @@ Scripts and pipelines provided in this repository aid to design multiplex PCR pr
 To run this pipeline, your computer requires **40 GB of available memory (RAM)** to process larger number of sequence (e.g. 100000). Moreover, snakemake was used to facilitate the automated execution of all analysis steps. The easiest way to make use of the pipeline is to set up a python 3.9 virtual environment and run the pipeline is this environment. 
 Download/Provide all necessary files:
 
-DEGEPRIME-1.1.0: DOI: 10.1128/AEM.01403-14; "DegePrime, a program for degenerate primer design for broad-taxonomic-range PCR in microbial ecology studies"
+DEGEPRIME-1.1.0: DOI: 10.1128/AEM.01403-14; "DegePrime, a program for degenerate primer design for broad-taxonomic-range PCR in microbial ecology studies."
 		Links: https://github.com/EnvGen/DegePrime; please move this directory into scripts
 
 biopython
@@ -18,6 +18,8 @@ mfeprimer-3.2.6: DOI: 10.1093/nar/gkz351; "MFEprimer-3.0: quality control for PC
 
 blast+: Links: https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastNews
 
+bowtie2: DOI:10.1038/nmeth.1923; "Fast gapped-read alignment with Bowtie 2."
+		Links: https://www.nature.com/articles/nmeth.1923
 # snakemake
 Snakemake is a workflow management system that helps to create and execute data processing pipelines. It requires python3 and can be most easily installed via the bioconda package of the python anaconda distribution.
 

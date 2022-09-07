@@ -11,62 +11,74 @@ import re
 import os
 import sys
 from sys import argv
-import optparse
+from Bio.Seq import Seq
 from optparse import OptionParser
-
-parser = OptionParser('Usage: %prog -i [input] -o [output] \n \
-                        Options: {-s [step] -m [T]}', version="%prog 0.0.4")
-parser.add_option('-i', '--input',
-                  dest='input',
-                  help='Input file: primers')
-
-parser.add_option('-a', '--adaptor',
-                  dest='adaptor',
-                  default=",",
-                  type="str",
-                  help='Adaptor sequence, which is used for NGS next (if not for NGS next, forget this parameter). \n \
-                  If you are not sure which adaptor will be used, \n \
-                  You can use the example sequence for dimer detection,  \n \
-                  because adaptor sequence will not form dimer with primers generally. \n \
-                  For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT. \n \
-                  Default: None. ')
-
-parser.add_option('-s', '--step',
-                  dest='step',
-                  default=4,
-                  type="int",
-                  help='distance between primers; column number of primer1_F to primer2_F.')
-
-parser.add_option('-m', '--method',
-                  dest='method',
-                  default="T",
-                  type="str",
-                  help='which method: maximal or maximum. If -m [T] use maximal; else maximum')
-
-parser.add_option('-o', '--out',
-                  dest='out',
-                  help='Prefix of out file: candidate primers')
-(options, args) = parser.parse_args()
-
 import re
 import math
 from operator import mul
 from functools import reduce
 import pandas as pd
+import numpy as np
 
-count = 3  # times for the packages install
-while count:
-    try:
-        import Bio  #
+def argsParse():
+    parser = OptionParser('Usage: %prog -i [input] -o [output] \n \
+                            Options: {-s [step] -m [T]}', version="%prog 0.0.4")
+    parser.add_option('-i', '--input',
+                      dest='input',
+                      help='Input file: primers')
 
-        print('Dependent package Biopython is OK.\nDpendent module Bio is OK.')
-        break
-    except:
-        print('Dependent package Biopython is not found!!! \n Start intalling ....')
-        os.system('pip install Bio')
-        count -= 1
-        continue
-from Bio.Seq import Seq
+    parser.add_option('-a', '--adaptor',
+                      dest='adaptor',
+                      default="TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT",
+                      type="str",
+                      help='Adaptor sequence, which is used for NGS next (if not for NGS next, forget this parameter). \n \
+                      If you are not sure which adaptor will be used, \n \
+                      You can use the example sequence for dimer detection,  \n \
+                      because adaptor sequence will not form dimer with primers generally. \n \
+                      For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT. \n \
+                      Default: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT. ')
+
+    parser.add_option('-s', '--step',
+                      dest='step',
+                      default=5,
+                      type="int",
+                      help='distance between primers; column number of primer1_F to primer2_F.')
+
+    parser.add_option('-m', '--method',
+                      dest='method',
+                      default="T",
+                      type="str",
+                      help='which method: maximal or maximum. If -m [T] use maximal; else maximum')
+
+    parser.add_option('-o', '--out',
+                      dest='out',
+                      help='Prefix of out file: candidate primers')
+    (options, args) = parser.parse_args()
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(1)
+    elif options.input is None:
+        parser.print_help()
+        print("Input file must be specified !!!")
+        sys.exit(1)
+    elif options.out is None:
+        parser.print_help()
+        print("No output file provided !!!")
+        sys.exit(1)
+    count = 3  # times for the packages install
+    while count:
+        try:
+            import Bio  #
+
+            print('Dependent package Biopython is OK.\nDependent module Bio is OK.')
+            break
+        except:
+            print('Dependent package Biopython is not found!!! \n Start installing ....')
+            os.system('pip install biopython')
+            count -= 1
+            continue
+    return parser.parse_args()
+
 
 degenerate_pair = {"R": ["A", "G"], "Y": ["C", "T"], "M": ["A", "C"], "K": ["G", "T"],
                    "S": ["G", "C"], "W": ["A", "T"], "H": ["A", "T", "C"], "B": ["G", "T", "C"],
@@ -109,10 +121,6 @@ def Penalty_points(length, GC, d1, d2):
     return math.log((2 ** length * 2 ** GC) / ((d1 + 0.1) * (d2 + 0.1)), 10)
 
 
-adaptor = options.adaptor.split(",")
-adaptor_len = len(adaptor[0])
-
-
 def current_end(primer_F, primer_R):
     primer_F_extend = adaptor[0] + primer_F
     primer_R_extend = adaptor[1] + primer_R
@@ -120,16 +128,16 @@ def current_end(primer_F, primer_R):
     primer_R_len = len(primer_R)
     end_seq = set()
     for a in range(primer_F_len - 5):
-        F_end_seq = dege_trans(primer_F_extend[-a - 5:])
-        end_seq = end_seq.union(set(F_end_seq))
-        F_start_seq = dege_trans(primer_F_extend[:a + 5])
-        end_seq = end_seq.union(set(F_start_seq))
+        F_end_seq = set(dege_trans(primer_F_extend[-a - 5:]))
+        end_seq = end_seq.union(F_end_seq)
+        #F_start_seq = dege_trans(primer_F_extend[:a + 5])
+        #end_seq = end_seq.union(set(F_start_seq))
         a += 1
     for b in range(primer_R_len - 5):
-        R_end_seq = dege_trans(primer_R_extend[-b - 5:])
-        end_seq = end_seq.union(set(R_end_seq))
-        R_end_seq = dege_trans(primer_R_extend[:b + 5])
-        end_seq = end_seq.union(set(R_end_seq))
+        R_end_seq = set(dege_trans(primer_R_extend[-b - 5:]))
+        end_seq = end_seq.union(R_end_seq)
+        #R_end_seq = dege_trans(primer_R_extend[:b + 5])
+        #end_seq = end_seq.union(set(R_end_seq))
         b += 1
     return end_seq
 
@@ -144,15 +152,14 @@ def dimer_check(primer_F, primer_R):
                 end_length = len(end)
                 end_GC = end.count("G") + end.count("C")
                 end_d1 = 0
-                if re.search(str(Seq(end).reverse_complement()), primer):
-                    end_d2 = min((len(primer) - len(end) - primer.index(str(Seq(end).reverse_complement()))),
-                                 primer.index(str(Seq(end).reverse_complement())) + adaptor_len)
-                    Loss = Penalty_points(end_length, end_GC, end_d1, end_d2)
-                else:
-                    Loss = 0
-                if Loss > 3:
-                    check = "T"
-                    break
+                #if re.search(str(Seq(end).reverse_complement()), primer):
+                end_d2 = len(primer) - len(end) - primer.index(str(Seq(end).reverse_complement()))
+                Loss = Penalty_points(end_length, end_GC, end_d1, end_d2)
+            else:
+                Loss = 0
+            if Loss > 3:
+                check = "T"
+                break
         if check == "T":
             break
     if check == "T":
@@ -162,9 +169,6 @@ def dimer_check(primer_F, primer_R):
 
 
 ###############################################################
-primer_end_set = set()
-primer_set = set()
-
 def greedy_primers(primers, row_num, output):
     global primer_end_set, primer_set
     jdict = {}
@@ -219,8 +223,12 @@ def greedy_primers(primers, row_num, output):
     with open(output, "w") as greedy_primers_out:
         clique.to_csv(greedy_primers_out, index=False, sep="\t")
 
+def nan_removing(pre_list):
+    while np.nan in pre_list:
+        pre_list.remove(np.nan)
+    return pre_list
 
-def greedy_maximal_primers(primers, row_num, output):
+def greedy_maximal_primers(primers, row_num, output,next_candidate):
     global primer_end_set, primer_set
     jdict = {}
     primer_end_dict = {}
@@ -232,7 +240,7 @@ def greedy_maximal_primers(primers, row_num, output):
                                    "Primer target by blast+ [2 mismatch]", "Primer position (representative sequence)"])
     while row_pointer < row_num:
         if len(primers[row_pointer]) <= 1:
-            print("virus {} missing!".format(primers[row_pointer][0]))
+            print("Non primers: virus {} missing!".format(primers[row_pointer][0]))
             row_pointer += 1
             blank_row += 1
         else:
@@ -244,7 +252,12 @@ def greedy_maximal_primers(primers, row_num, output):
                         clique_local = pd.DataFrame({"#Primer": primers[row_pointer][0]}, index=[0])
                         clique = pd.concat([clique, clique_local], axis=0, ignore_index=True)
                         print("virus {} missing!".format(primers[row_pointer][0]))
+                        next_virus = nan_removing(list(primers[row_pointer]))
+                        next_candidate.write("\t".join(next_virus) + "\n")
                         row_pointer += 1
+                        column_pointer = 1
+                        break
+                    
                 else:
                     clique_local = pd.DataFrame({
                         "#Primer": primers[row_pointer][0],
@@ -283,9 +296,11 @@ def filter_len(l_element):  # useless
 
 
 if __name__ == "__main__":
-    if len(sys.argv) == 1:
-        parser.print_help()
-        sys.exit(1)
+    (options, args) = argsParse()
+    adaptor = options.adaptor.split(",")
+    adaptor_len = len(adaptor[0])
+    primer_end_set = set()
+    primer_set = set()
     method = options.method
     step = options.step
     primers_file = open(options.input, "r")
@@ -303,7 +318,10 @@ if __name__ == "__main__":
             f.write(str_i + "\n")
     if method == "T":
         maximal_out = options.out
-        greedy_maximal_primers(primers, row_num, maximal_out)
+        next_candidate = options.out.rstrip(".xls") + ".next.xls"
+        next_candidate_txt = open(next_candidate,"w")
+        greedy_maximal_primers(primers, row_num, maximal_out,next_candidate_txt)
+        next_candidate_txt.close()
     else:
         maximum_out = options.out
         greedy_primers(primers, row_num, maximum_out)

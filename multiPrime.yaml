@@ -35,9 +35,10 @@ virus:
 #If the identity of sequences in your input file is very high, you can set this param as 0.9.
 #BUG (dont use 1): If you set this param as 1. It will generate primers by no-cluster methods.
 identity: 0.7
-#max number of each cluster used in muscle. 
+#Max sequence number of each cluster used in multi-alignment {muscle}. 
+#We randomly choose {maxseq} sequences in cluster for next steps.
 #It wont affect the calculation of primer coverage in the final primer set, 
-#cause we used all sequence in cluster to check the final primer coverage. 
+#cause we used all sequence in cluster to check the final coverage. 
 max_seq: 500
 
 #-------------------------------------------------------------------------------
@@ -49,16 +50,15 @@ dege_number: 2
 primer_len: 18
 
 #-------------------------------------------------------------------------------
-## get candidate primers from degePrimer out
+## get candidate primers from degePrimer output
 ##-------------------------------------------------------------------------------
 #param of get_degePrimer.
 #Filter primers by match rate: 
 #[Number of sequences that match the selected primer] / [Number of sequences that span the selected primer].
-#Only primers with fraction [> frac] will retain. default: 0.9.
+#Only primers with fraction [> frac] will retain. default: 0.6.
 #Sometimes the sequence number of some clusters is less than 10.
 #coverage threshold [0.6] is not suitable. you can reset this threshold.
-#Sometimes the sequence number of some clusters is very large {> 100000}. it will take a lot of time to get output
-#You can use the top 50 sequece to represent this cluster, but use the nt_check to search candidate primers
+#If sequence number of some clusters is very large {> 100000}. it will take {500} sequences randomly to get output
 #Details are list in the usage of get_degePrimer.py
 coverage: 0.7
 
@@ -71,24 +71,20 @@ gc_content: 0.4,0.6
 #Filter param of hairpin, which means distance of the minimal paired bases. Default: 4. Example:(number of X) AGCT[XXXX]AGCT
 distance: 4
 
-#Filter primers by match number: 
-#Number of sequences that match the selected primer.
-#Sometimes, the input sequence is too many, and a subset of the total input sequences is used. 
-#Under this condition, if you use the fraction param, 
-#It wont return candidate primers, because the match rate is very small, even nearly zero. 
-#However, you can use the number of subset sequence to select candidate primers. 
-#before use this param, please also use [ -f 0 ] default: 1
+#Filter primers by rank number (match number): 
+#Number of sequences from degePrime.
 rank_number: 200
 
 #Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for adaptor--primer.
 #For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT. if None, use comma.
-#If you don't know which adaptor will be used, and you really need an adaptor for sequencing. you can use the example sequence to instead.
-#because adaptor sequence will not form dimer with primers generally.
+#If you don't know which adaptor will be used, and you really need an adaptor for next sequencing. you can use the example sequence to instead.
+#because adaptor sequence will not affect primer set generally.
 #If you don't need adaptor for the next step. set adaptor: ",".
 adaptor: "TCTTTCCCTACACGACGCTCTTCCGATCT,TGGAGTTCAGACGTGTGCTCTTCCGATCT"
 #-------------------------------------------------------------------------------
 ### get core primer set
 ###-------------------------------------------------------------------------------
+# min sequence in each cluster. 
 core_number: 10
 #-------------------------------------------------------------------------------
 ## get max primer set from get_degePrimer

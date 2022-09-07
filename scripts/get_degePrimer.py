@@ -1,90 +1,5 @@
-#!/bin/python
-"""
-Selcet candidate primers from degePrimer results.
-"""
-__date__ = "2022-6-20"
-__author__ = "Junbo Yang"
-__email__ = "yang_junbo_hi@126.com"
-__license__ = "yangjunbo"
-
-import sys
-from sys import argv
-import optparse
 from optparse import OptionParser
-
-parser = OptionParser('Usage: %prog -i [input] -r [sequence.fa] -o [output] \n \
-			Options: {-f -n [num] -s [250,500] -g [0.4,0.6] -d [ditance] -a ","}.')
-parser.add_option('-i', '--input',
-                  dest='input',
-                  help='Input file: degeprimer out.')
-
-parser.add_option('-r', '--ref',
-                  dest='ref',
-                  help='Reference sequence file: all the sequence in 1 fasta, for example: (Cluster_96_171.fa).')
-
-parser.add_option('-n', '--num',
-                  dest='num',
-                  default=200,
-                  type="int",
-                  help='Filter primers by match rank: sort candidate primers by match number and select top {N} for '
-                       'next steps. Default: 200.')
-
-parser.add_option('-g', '--gc',
-                  dest='gc',
-                  default="0.4,0.65",
-                  help="Filter primers by GC content. Default [0.4,0.6].")
-
-parser.add_option('-f', '--fraction',
-                  dest='fraction',
-                  default="0.6",
-                  type="float",
-                  help="Filter primers by match fraction. Default: 0.6.")
-
-parser.add_option('-t', '--term',
-                  dest='term',
-                  default="3",
-                  type="int",
-                  help="Filter primers by degenerate base position. e.g. [-t 4] means I dont want degenerate base "
-                       "appear at the term four base when primer pre-filter. Default: 4.")
-
-parser.add_option('-p', '--position',
-                  dest='position',
-                  default="9",
-                  type="int",
-                  help="Filter primers by mismatch position. e.g. [-p 8] means I dont want mismatch appear  at the "
-                       "term eight base when primer checking. Default: 8.")
-
-parser.add_option('-s', '--size',
-                  dest='size',
-                  default="250,500",
-                  help="Filter primers by PRODUCT size. Default [250,500].")
-
-parser.add_option('-d', '--dist',
-                  dest='dist',
-                  default=4,
-                  help='Filter param of hairpin, which means distance of the minimal paired bases. Default: 4. '
-                       'Example:(number of X) AGCT[XXXX]AGCT.')
-
-parser.add_option('-a', '--adaptor',
-                  dest='adaptor',
-                  default="TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT",
-                  type="str",
-                  help='Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for adaptor--primer. '
-                       '\n \ For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT (Default). If '
-                       'you dont want adaptor, use [","] ')
-
-parser.add_option('-m', '--maxseq',
-                  dest='maxseq',
-                  default=500,
-                  type="int",
-                  help='Limit of sequence number. Default: 500')
-
-parser.add_option('-o', '--out',
-                  dest='out',
-                  help='Prefix of out file: candidate primers')
-
-(options, args) = parser.parse_args()
-
+import sys
 import collections
 from collections import defaultdict
 import time
@@ -93,33 +8,120 @@ import re
 import os
 import os.path
 import pandas as pd
-import Bio
 from Bio.Seq import Seq
 from statistics import mean
-# import operator
+import numpy as np
+import math
+from functools import reduce
+from operator import mul  #
 
-if len(sys.argv) == 1:
-    parser.print_help()
-    sys.exit(1)
-count = 3  # times for the packages install
-while count:
-    try:
-        import Bio  #
+def argsParse():
+    parser = OptionParser('Usage: %prog -i [input] -r [sequence.fa] -o [output] \n \
+                Options: {-f [0.6] -m [500] -n [200] -t [3] -p [9] -s [250,500] -g [0.4,0.6] -d [4] -a ","}.')
+    parser.add_option('-i', '--input',
+                      dest='input',
+                      help='Input file: degeprimer out.')
 
-        print('Dependent package Biopython is OK.\nDpendent module Bio is OK.')
-        break
-    except:
-        print('Dependent package Biopython is not found!!! \n Start intalling ....')
-        os.system('pip install biopython')
-        count -= 1
-        continue
+    parser.add_option('-r', '--ref',
+                      dest='ref',
+                      help='Reference sequence file: all the sequence in 1 fasta, for example: (Cluster_96_171.fa).')
+
+    parser.add_option('-n', '--num',
+                      dest='num',
+                      default=200,
+                      type="int",
+                      help='Filter primers by match rank: sort candidate primers by match number and select top {N} for '
+                           'next steps. Default: 200.')
+
+    parser.add_option('-g', '--gc',
+                      dest='gc',
+                      default="0.4,0.65",
+                      help="Filter primers by GC content. Default [0.4,0.65].")
+
+    parser.add_option('-f', '--fraction',
+                      dest='fraction',
+                      default="0.6",
+                      type="float",
+                      help="Filter primers by match fraction. Default: 0.6.")
+
+    parser.add_option('-t', '--term',
+                      dest='term',
+                      default="3",
+                      type="int",
+                      help="Filter primers by degenerate base position. e.g. [-t 4] means I dont want degenerate base "
+                           "appear at the term four bases when primer pre-filter. Default: 4.")
+
+    parser.add_option('-p', '--position',
+                      dest='position',
+                      default="9",
+                      type="int",
+                      help="Filter primers by mismatch position. e.g. [-p 9] means I dont want mismatch appear  at the "
+                           "term eight bases when primer checking. Default: 9.")
+
+    parser.add_option('-s', '--size',
+                      dest='size',
+                      default="250,500",
+                      help="Filter primers by PRODUCT size. Default [250,500].")
+
+    parser.add_option('-d', '--dist',
+                      dest='dist',
+                      default=4,
+                      help='Filter param of hairpin, which means distance of the minimal paired bases. Default: 4. '
+                           'Example:(number of X) AGCT[XXXX]AGCT.')
+
+    parser.add_option('-a', '--adaptor',
+                      dest='adaptor',
+                      default="TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT",
+                      type="str",
+                      help='Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for [adaptor--primer]. '
+                           '\n \ For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT (Default). If '
+                           'you dont want adaptor, use [","] ')
+
+    parser.add_option('-m', '--maxseq',
+                      dest='maxseq',
+                      default=500,
+                      type="int",
+                      help='Limit of sequence number. Default: 500.'
+                           'This param should consistent with [max_seq] in multi-alignment [muscle].')
+
+    parser.add_option('-o', '--out',
+                      dest='out',
+                      help='Output file: candidate primers. e.g. [*].candidate.primers.txt.')
+    (options, args) = parser.parse_args()
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(1)
+    elif options.input is None:
+        parser.print_help()
+        print("Input file must be specified !!!")
+        sys.exit(1)
+    elif options.ref is None:
+        parser.print_help()
+        print("Reference file must be specified !!!")
+        sys.exit(1)
+    elif options.out is None:
+        parser.print_help()
+        print("No output file provided !!!")
+        sys.exit(1)
+    count = 3  # times for the packages install
+    while count:
+        try:
+            import Bio  #
+
+            print('Dependent package Biopython is OK.\nDependent module Bio is OK.')
+            break
+        except:
+            print('Dependent package Biopython is not found!!! \n Start installing ....')
+            os.system('pip install biopython')
+            count -= 1
+            continue
+    return parser.parse_args()
+
 
 ########################## step1 screen #############################
 #########################################################################################
 # replace degenerate base to [A,C,G,T].
-import math  # 
-from functools import reduce
-from operator import mul  # 
+
 
 '''
 def get_dict_key(d_dict, value):
@@ -139,6 +141,7 @@ def score_trans(sequence):
 
 
 def dege_trans(sequence):
+
     expand_seq = [sequence]
     expand_score = reduce(mul, [score_trans(x) for x in expand_seq])
     while expand_score > 1:
@@ -206,6 +209,7 @@ def pre_filter(degeprimer, GC, maxseq, frac, rank_number,tmp):
     gc_content = GC
     with open(degeprimer, "r") as degeprimer:
         degeprimer_results = pd.read_table(degeprimer, header="infer")
+        degeprimer_results.fillna(0)
         degeprimer_results.sort_values(by=["NumberMatching"], inplace=True, ascending=False)
         # loc []; iloc [). Suggestion: label selection use loc, index selection use iloc.
         degeprimer_filter = pd.DataFrame(degeprimer_results.iloc[0:rank_number])
@@ -214,26 +218,29 @@ def pre_filter(degeprimer, GC, maxseq, frac, rank_number,tmp):
         # print(degeprimer_filter.shape)
         for idx, row in degeprimer_filter.iterrows():
             position = int(row[0])
-            number_match = int(row[6])
-            if seq_number <= maxseq:
-                fraction = float(number_match / seq_number)
-            else:
-                fraction = float(number_match / maxseq)
-            primer = row[5]
-            GC_content = GC_fraction(primer)
-            if fraction < frac:
-                pass
-            elif re.search("AAAA|CCCC|GGGG|TTTT", primer):
-                pass
-            # elif re.search("CCC|CCG|CGG|CGC|GCC|GCG|GGC|GGG",primer[-3:]):
-            # pass
-            elif GC_content > float(gc_content[1]) or GC_content < float(gc_content[0]):
+            if int(row[6]) < 1:
                 pass
             else:
-                pre_primer_match[primer] = number_match
-                pre_primer_pos[primer] = position
-                pre_primer_frac[primer] = fraction
-                pre_primer_GC[primer] = GC_content
+                number_match = int(float(row[6]))
+                if seq_number <= maxseq:
+                    fraction = float(number_match / seq_number)
+                else:
+                    fraction = float(number_match / maxseq)
+                primer = row[5]
+                GC_content = GC_fraction(primer)
+                if fraction < frac:
+                    pass
+                elif re.search("AAAA|CCCC|GGGG|TTTT", primer):
+                    pass
+                # elif re.search("CCC|CCG|CGG|CGC|GCC|GCG|GGC|GGG",primer[-3:]):
+                # pass
+                elif GC_content > float(gc_content[1]) or GC_content < float(gc_content[0]):
+                    pass
+                else:
+                    pre_primer_match[primer] = number_match
+                    pre_primer_pos[primer] = position
+                    pre_primer_frac[primer] = fraction
+                    pre_primer_GC[primer] = GC_content
 
     ##### check PRODUCT size #####
     if bool(pre_primer_pos):
@@ -314,13 +321,9 @@ def current_end(primer_F, primer_R):
     for a in range(primer_F_len - 5):
         F_end_seq = dege_trans(primer_F_extend[-a - 5:])
         end_seq = end_seq.union(set(F_end_seq))
-        F_start_seq = dege_trans(primer_F_extend[:a + 5])
-        end_seq = end_seq.union(set(F_start_seq))
         a += 1
     for b in range(primer_R_len - 5):
         R_end_seq = dege_trans(primer_R_extend[-b - 5:])
-        end_seq = end_seq.union(set(R_end_seq))
-        R_end_seq = dege_trans(primer_R_extend[:b + 5])
         end_seq = end_seq.union(set(R_end_seq))
         b += 1
     return end_seq
@@ -355,6 +358,10 @@ def dimer_check(primer_F, primer_R):  # Caution: primer_key_set must be a global
     else:
         return False
 
+def nan_removing(pre_list):
+    while np.nan in pre_list:
+        pre_list.remove(np.nan)
+    return pre_list
 
 #########################  paired primers  ################################
 
@@ -367,11 +374,7 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt,dege
     #### primer information ####
     results = pd.read_table(sam, header=None)
     # print(results.iloc[0])
-    for rank in range(11,len(results.iloc[0])):
-        # print(results.iloc[0][rank])
-        if re.search("MD:Z:", results.iloc[0][rank]):
-            p_rank = rank
-    # mismatch_pattern = re.compile('XM:i:(\d+)')
+    position_pattern_1 = re.compile('MD:Z:(\w+)')
     position_pattern = re.compile("[A-Z]?(\d+)")
     for idx, row in results.iterrows():
         primerID = int(row[0].split("_")[0])
@@ -379,7 +382,12 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt,dege
         product_start = int(row[3])
         # XM:i mismatch number
         # mismatch = mismatch_pattern.search(row[14]).group(1)
-        position = position_pattern.search(row[p_rank][-2:]).group(1)
+        # print(list(row[14:]))
+        # if nan in list, removing
+        candidate_MD = nan_removing(list(row[14:]))
+        string = str('\t'.join(candidate_MD))
+        position_1 = position_pattern_1.search(string).group(1)
+        position = position_pattern.search(position_1[-2:]).group(1)
         # distance between mismatch position and 3' term must greater than 8
         if int(position) < mismatch_position:
             pass
@@ -511,7 +519,7 @@ def dege_filter_in_term_N_bp(sequence, term):
 #########################  main  ################################
 
 if __name__ == "__main__":
-    #### hairpin distance ####
+    (options, args) = argsParse()
     distance = int(options.dist)
     print("Hairpin distance: {}. \n".format(distance))
     #### adaptor ####
@@ -589,3 +597,5 @@ if __name__ == "__main__":
     print("INFO {}: Done!!!\n".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))))
 
 #########################  Done!  ################################
+
+
