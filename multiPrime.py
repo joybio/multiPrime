@@ -29,6 +29,7 @@ rule all:
 		config["results_dir"] + "/Primers_set/candidate_primers_sets.txt",
 		config["results_dir"] + "/Primers_set/final_maxprimers_set.xls",
 		config["results_dir"] + "/Primers_set/Coverage_stast.xls",
+		config["results_dir"] + "/Primers_set/candidate_primers_sets.number",
 		config["results_dir"] + "/Primers_set/final_maxprimers_set.fa.dimer",
 		config["results_dir"] + "/Core_primers_set/core_Coverage_stast.xls",
 		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa.dimer",
@@ -205,15 +206,17 @@ rule get_degePrimer:
 		gc_content = config["gc_content"],
 		distance = config["distance"],
 		adaptor = config["adaptor"],
-		number = config["rank_number"]
+		number = config["rank_number"],
+		end = config["end"],
+		Tm = config["Tm"]
 	message:
 		"Step9: choose candidate primers for each cluster (hairpin, dimer (F-R) check) .."
 	shell:
 		'''
 		python {params.script}/get_degePrimer.py -i {input.primer} -r {input.ref_fa} \
-			-f {params.fraction} -s {params.size} -g {params.gc_content} \
+			-f {params.fraction} -s {params.size} -g {params.gc_content} -e {params.end} \
 			-d {params.distance} -a {params.adaptor} -n {params.number} -m {params.maxseq}\
-			-o {output} 2>&1 > {log}
+			-t {params.Tm} -o {output} 2>&1 > {log}
 		'''
 
 #-------------------------------------------------------------------------------------------
@@ -230,6 +233,25 @@ rule aggregate_candidate_primers:
 		'''
 		cat {input} > {output}
 		'''
+#-------------------------------------------------------------------------------------------
+# get_candidate_primer_fa rule 12: Dependency packages - None
+#-------------------------------------------------------------------------------------------
+rule get_candidate_primer_fa:
+	input:
+		config["results_dir"] + "/Primers_set/candidate_primers_sets.txt"
+	output:
+		config["results_dir"] + "/Primers_set/candidate_primers_sets.number",
+		directory(config["results_dir"] + "/Primers_set/candidate_primers_sets")
+	params:
+		script = config["scripts_dir"],
+		step = config["step"]
+
+	shell:
+		'''
+		python {params.script}/candidate_primer_txt2fa.py -i {input} -s {params.step} \
+			-n {output[0]} -o {output[1]}
+		'''
+
 #-------------------------------------------------------------------------------------------
 # get_Maxprimerset rule 11: Dependency packages - python, pandas, biopython
 #-------------------------------------------------------------------------------------------
@@ -267,7 +289,8 @@ rule get_core_primer_set:
 		number = config["core_number"]
 	shell:
 		"""
-		python {params.script}/core_primerset_extraction.py -i {input} -o {output} -n {params.number}
+		python {params.script}/core_primerset_extraction.py -i {input} -o {output} \
+			-n {params.number}
 		"""
 #-------------------------------------------------------------------------------------------
 # get_core_Maxprimerset rule 13: Dependency packages - python
@@ -298,14 +321,15 @@ rule format_transition:
 	input:
 		config["results_dir"] + "/Core_primers_set/core_candidate_primers_sets.txt"
 	output:
-		directory(config["results_dir"] + "/Core_primers_set/core_candidate_primers_sets.fa"),
+		directory(config["results_dir"] + "/Core_primers_set/core_candidate_primers_sets"),
 		config["results_dir"] + "/Core_primers_set/core_candidate_primers_sets.number"
 	params:
 		script = config["scripts_dir"],
 		step = config["step"]
 	shell:
 		"""
-		python {params.script}/candidate_primer_txt2fa.py -i {input} -s {params.step} -o {output[0]} -n {output[1]}
+		python {params.script}/candidate_primer_txt2fa.py -i {input} -s {params.step} \
+			-o {output[0]} -n {output[1]}
 		"""
 #-------------------------------------------------------------------------------------------
 # get_all_PCR_product rule 15: Dependency packages - python

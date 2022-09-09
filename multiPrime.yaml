@@ -63,7 +63,7 @@ primer_len: 18
 coverage: 0.7
 
 #PCR PRODUCT SIZE. Filter primers by PRODUCT size.default [150,400].
-PRODUCT_size: 200,500
+PRODUCT_size: 300,700
 
 #Filter primers by GC content. default [0.45,0.65].
 gc_content: 0.4,0.6
@@ -73,7 +73,12 @@ distance: 4
 
 #Filter primers by rank number (match number): 
 #Number of sequences from degePrime.
-rank_number: 200
+rank_number: 1000
+#Filter primers by degenerate base position. e.g. [-t 4] means I dont want degenerate base
+#appear at the end four bases when primer pre-filter. Default: 4.
+end: 4
+#Filter primers by Tm. Default [55,70]
+Tm: 55,70
 
 #Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for adaptor--primer.
 #For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT. if None, use comma.

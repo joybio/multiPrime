@@ -18,7 +18,7 @@ from operator import mul  #
 
 def argsParse():
     parser = OptionParser('Usage: %prog -i [input] -r [sequence.fa] -o [output] \n \
-                Options: {-f [0.6] -m [500] -n [200] -t [3] -p [9] -s [250,500] -g [0.4,0.6] -d [4] -a ","}.')
+                Options: {-f [0.6] -m [500] -n [200] -t [55,70] -e [4] -p [9] -s [250,500] -g [0.4,0.6] -d [4] -a ","}.')
     parser.add_option('-i', '--input',
                       dest='input',
                       help='Input file: degeprimer out.')
@@ -29,35 +29,41 @@ def argsParse():
 
     parser.add_option('-n', '--num',
                       dest='num',
-                      default=200,
+                      default=1000,
                       type="int",
                       help='Filter primers by match rank: sort candidate primers by match number and select top {N} for '
-                           'next steps. Default: 200.')
+                           'next steps. Default: 1000.')
 
     parser.add_option('-g', '--gc',
                       dest='gc',
-                      default="0.4,0.65",
-                      help="Filter primers by GC content. Default [0.4,0.65].")
+                      default="0.4,0.6",
+                      help="Filter primers by GC content. Default [0.4,0.6].")
+
+    parser.add_option('-t', '--temperature',
+                      dest='temperature',
+                      default="55,70",
+                      help="Filter primers by Tm. Default [55,70].")
 
     parser.add_option('-f', '--fraction',
                       dest='fraction',
                       default="0.6",
                       type="float",
-                      help="Filter primers by match fraction. Default: 0.6.")
+                      help="Filter primers by match fraction. Default: 0.6. \n"
+                           "Sometimes you need a small fraction to get output.")
 
-    parser.add_option('-t', '--term',
-                      dest='term',
-                      default="3",
+    parser.add_option('-e', '--end',
+                      dest='end',
+                      default="4",
                       type="int",
                       help="Filter primers by degenerate base position. e.g. [-t 4] means I dont want degenerate base "
-                           "appear at the term four bases when primer pre-filter. Default: 4.")
+                           "appear at the end four bases when primer pre-filter. Default: 4.")
 
     parser.add_option('-p', '--position',
                       dest='position',
                       default="9",
                       type="int",
                       help="Filter primers by mismatch position. e.g. [-p 9] means I dont want mismatch appear  at the "
-                           "term eight bases when primer checking. Default: 9.")
+                           "end eight bases when primer checking. Default: 9.")
 
     parser.add_option('-s', '--size',
                       dest='size',
@@ -74,15 +80,15 @@ def argsParse():
                       dest='adaptor',
                       default="TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT",
                       type="str",
-                      help='Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for [adaptor--primer]. '
-                           '\n \ For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT (Default). If '
+                      help='Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for [adaptor--primer].'
+                           '\n \ For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT (Default). ''If '
                            'you dont want adaptor, use [","] ')
 
     parser.add_option('-m', '--maxseq',
                       dest='maxseq',
                       default=500,
                       type="int",
-                      help='Limit of sequence number. Default: 500.'
+                      help='Limit of sequence number. Default: 500.\n'
                            'This param should consistent with [max_seq] in multi-alignment [muscle].')
 
     parser.add_option('-o', '--out',
@@ -230,13 +236,22 @@ def di_nucleotide(primer):
 
 ###########################################################
 def GC_clamp(primer):
-    term_5_nucleotide = primer[-5:]
-    GC_percentage = GC_fraction(term_5_nucleotide)
+    end_5_nucleotide = primer[-5:]
+    GC_percentage = GC_fraction(end_5_nucleotide)
     if GC_percentage > 0.6:
         return True
     else:
         return False
 
+def Tm_filter(primer):
+    sequence_expand = dege_trans(primer)
+    Tm_list = []
+    for seq in sequence_expand:
+        Tm_list.append((list(seq).count("G") + list(seq).count("C")) * 4 + \
+                  (list(seq).count("A") + list(seq).count("T")) * 2)
+    Tm_average = mean(Tm_list)
+    print(Tm_average)
+    return Tm_average
 
 ###########################################################
 
@@ -275,6 +290,8 @@ def pre_filter(degeprimer, GC, maxseq, frac, rank_number, tmp):
                 elif GC_clamp(primer):
                     pass
                 elif GC_content > float(gc_content[1]) or GC_content < float(gc_content[0]):
+                    pass
+                elif Tm_filter(primer) > float(Tm[1]) or Tm_filter(primer) < float(Tm[0]):
                     pass
                 else:
                     pre_primer_match[primer] = number_match
@@ -430,7 +447,7 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt, deg
         string = str('\t'.join(candidate_MD))
         position_1 = position_pattern_1.search(string).group(1)
         position = position_pattern.search(position_1[-2:]).group(1)
-        # distance between mismatch position and 3' term must greater than 8
+        # distance between mismatch position and 3' end must greater than 8
         if int(position) < mismatch_position:
             pass
         else:
@@ -461,7 +478,7 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt, deg
                 primer_F_seq = primer_seq[primer_start]
                 primer_R_seq = str(Seq(primer_seq[primer_end]).reverse_complement())
                 if dege_filter_in_term_N_bp(primer_F_seq, dege_pos) or dege_filter_in_term_N_bp(primer_R_seq, dege_pos):
-                    print("Degenerate base detected in the term {} nucleotides. removing...".format(dege_pos))
+                    print("Degenerate base detected in the  {} 3'end nucleotides. removing...".format(dege_pos))
                 elif dimer_check(primer_F_seq, primer_R_seq):  # remove dimer
                     print("Dimer primer detected: {} - {}. Removing...".format(primer_F_seq, primer_R_seq))
                 elif hairpin_check(adaptor[0] + primer_F_seq) or hairpin_check(adaptor[1] + primer_R_seq):
@@ -508,7 +525,8 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt, deg
     tb_out.to_csv(output, index=False, sep="\t")
     primer_txt = tb_out.loc[:,
                  ["primer_F:R_dege", "primer_F:R_seq", "pF_target_number", "pR_target_number"]].drop_duplicates()
-    primer_txt.sort_values(by=["pF_target_number", "pR_target_number"], inplace=True, ascending=[False, False])
+    primer_txt["target_number"] = primer_txt.loc[:,["pF_target_number", "pR_target_number"]].min(axis=1)
+    primer_txt.sort_values(by=["target_number"], inplace=True, ascending=False)
     # print(primer_txt)
     candidate_primer_txt.write(options.out)
     for idx, row in primer_txt.iterrows():
@@ -582,8 +600,12 @@ if __name__ == "__main__":
     print("Max sequence number: {}.\n".format(max_seq))
 
     #### degenerate position ####
-    dege_pos = options.term
+    dege_pos = options.end
     print("Users dont want degenerate base appear at: {}.\n".format(dege_pos))
+
+    #### Tm ####
+    Tm = options.temperature.split(",")
+    print("Range of Tm: {} - {}.\n".format(Tm[0], Tm[1]))
 
     #### GC content ####
     GC = options.gc.split(",")
@@ -595,7 +617,7 @@ if __name__ == "__main__":
 
     #### mismatch position ####
     mismatch_position = options.position
-    print("Mismatch position should not located at term {} bp when primer checking.\n".format(mismatch_position))
+    print("Mismatch position should not located at {} bp away 3'end when primer checking.\n".format(mismatch_position))
 
     #### stastic of seq_number ####
     sequence_number = options.ref + ".number"
