@@ -66,7 +66,7 @@ results: results directory
 
 	-cluster.identities: identity of each sequence.
 
-	-cluster.txt: cluster information. for example: Cluster_0_222.fa, 0 ==> rank; 222 ==> sequence number.
+	-cluster.txt: cluster information. for example: Cluster_0_222.fa, 0 ==> cluster rank; 222 ==> sequence number.
 
 	-Total_fa: genome file and cluster of genome file.
 
@@ -74,8 +74,7 @@ results: results directory
 		--*.fa: fasta of each cluster
 		--*.tfa: top N {default: 500 randomly selected. Always contain the representative seq} fasta of each cluster
 		--*.txt: accession id of each cluster
-		--*.db: directory of database (for blastn).
-		--*.blastout: output file of blastn of all paired primers.
+		--*.db: directory of database (for bowtie2).
 		--*.number: number of fasta in each cluster
 
 	-Clusters_msa: alginment by muscle
@@ -88,25 +87,30 @@ results: results directory
 		--*.top.primer.out: paired primers designed by the top N {default: 500} fasta
 
 	-Clusters_cprimer: candidate primers for each cluster.
+		--*.bed: candidate PCR product (1 mismatch and mismatch position must 9bp away from 3'end at least.)
 		--*.fa: candidate primers in fa format
 		--*.txt: candidate primers in txt format (1 line)
-		--*.Check: tmp file; primers filter by blastn
+		--*.Check: tmp file; primers filter by bowtie2 (1 mismatch and mismatch position must 9bp away from 3'end at least.)
 
 	-Primers_set:
 		--candidate_primers_sets.txt: all candidate primers in each cluster
+		--candidate_primers_sets: directory contain all candidate primers in fasta
 		--sort.candidate_primers_sets.txt: sorted by the number of candidate primers in each line (cluster)
 		--final_maxprimers_set.fa: fasta format of primers set for multiPCR
 		--final_maxprimers_set.xls: primers information of primers set
+		--final_maxprimers_set.next.xls: primer set 2
 		--Coverage_stast.xls: coverage of all primers in primer set
 		--final_maxprimers_set.fa.dimer: dimer check by mfePrimer 
 		--final_maxprimers_set.fa.hairpin: hairpin check by mfePrimer
-		--PCR_product: PCR product of each primer
+		--PCR_product: perfect PCR product of each primer
 
 	-Core_primers_set:
 		--core_candidate_primers_sets.txt: core candidate primers in each cluster
+		--core_candidate_primers_sets:  directory contain all core candidate primers in fasta
 		--sort.core_candidate_primers_sets.txt: sorted by the number of core candidate primers in each line (cluster)
 		--core_final_maxprimers_set.fa: fasta format of core primers set for multiPCR
 		--core_final_maxprimers_set.xls: primers information of core primers set
+		--core_final_maxprimers_set.next.xls: primer set 2
 		--core_Coverage_stast.xls: coverage of all primers in core primer set
 		--core_candidate_primers_sets.fa: core primer set fasta
 		--core_candidate_primers_sets.number: candidate primer number of each core cluster
