@@ -15,6 +15,7 @@ import math
 from functools import reduce
 from operator import mul  #
 
+
 def argsParse():
     parser = OptionParser('Usage: %prog -i [input] -r [sequence.fa] -o [output] \n \
                 Options: {-f [0.6] -m [500] -n [200] -t [3] -p [9] -s [250,500] -g [0.4,0.6] -d [4] -a ","}.')
@@ -141,7 +142,6 @@ def score_trans(sequence):
 
 
 def dege_trans(sequence):
-
     expand_seq = [sequence]
     expand_score = reduce(mul, [score_trans(x) for x in expand_seq])
     while expand_score > 1:
@@ -199,8 +199,48 @@ def GC_fraction(sequence):
 
 
 ###########################################################
+di_nucleotides = set()
+bases = ["A", "C", "G", "T"]
+for i in bases:
+    single = i * 4
+    di_nucleotides.add(single)
+    for j in bases:
+        if i != j:
+            di = (i + j) * 4
+            di_nucleotides.add(di)
 
-def pre_filter(degeprimer, GC, maxseq, frac, rank_number,tmp):
+
+def di_nucleotide(primer):
+    Check = "False"
+    primers = dege_trans(primer)
+    for m in primers:
+        for n in di_nucleotides:
+            if re.search(n, m):
+                Check = "True"
+                break
+            else:
+                pass
+        if Check == "True":
+            break
+    if Check == "True":
+        return True
+    else:
+        return False
+
+
+###########################################################
+def GC_clamp(primer):
+    term_5_nucleotide = primer[-5:]
+    GC_percentage = GC_fraction(term_5_nucleotide)
+    if GC_percentage > 0.6:
+        return True
+    else:
+        return False
+
+
+###########################################################
+
+def pre_filter(degeprimer, GC, maxseq, frac, rank_number, tmp):
     # primers pre-filter.
     pre_primer_pos = {}
     global pre_primer_frac
@@ -230,10 +270,10 @@ def pre_filter(degeprimer, GC, maxseq, frac, rank_number,tmp):
                 GC_content = GC_fraction(primer)
                 if fraction < frac:
                     pass
-                elif re.search("AAAA|CCCC|GGGG|TTTT", primer):
+                elif di_nucleotide(primer):
                     pass
-                # elif re.search("CCC|CCG|CGG|CGC|GCC|GCG|GGC|GGG",primer[-3:]):
-                # pass
+                elif GC_clamp(primer):
+                    pass
                 elif GC_content > float(gc_content[1]) or GC_content < float(gc_content[0]):
                     pass
                 else:
@@ -358,14 +398,16 @@ def dimer_check(primer_F, primer_R):  # Caution: primer_key_set must be a global
     else:
         return False
 
+
 def nan_removing(pre_list):
     while np.nan in pre_list:
         pre_list.remove(np.nan)
     return pre_list
 
+
 #########################  paired primers  ################################
 
-def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt,dege_pos,bed_file):
+def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt, dege_pos, bed_file):
     primer2speciesID_start_dict = defaultdict(list)
     primer2specify_mismatch_dict = {}
     tb_out = pd.DataFrame(columns=["speciesID", "primer_F:R_dege", "primer_F:R_seq", "pF_start", "pR_end",
@@ -400,7 +442,7 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt,dege
                     primer2specify_mismatch_dict[mis_key] = position
                     primer2speciesID_start_dict[primerID].append(value)
                 else:
-                    primer2speciesID_start_dict[primerID].insert(0,value)
+                    primer2speciesID_start_dict[primerID].insert(0, value)
             else:
                 primer2speciesID_start_dict[primerID].append(value)
                 primer2specify_mismatch_dict[mis_key] = position
@@ -418,7 +460,7 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt,dege
                 primer_F_R = str(primer_start) + ":" + str(primer_end + len(primer_seq[primer_end]))
                 primer_F_seq = primer_seq[primer_start]
                 primer_R_seq = str(Seq(primer_seq[primer_end]).reverse_complement())
-                if dege_filter_in_term_N_bp(primer_F_seq,dege_pos) or dege_filter_in_term_N_bp(primer_R_seq,dege_pos):
+                if dege_filter_in_term_N_bp(primer_F_seq, dege_pos) or dege_filter_in_term_N_bp(primer_R_seq, dege_pos):
                     print("Degenerate base detected in the term {} nucleotides. removing...".format(dege_pos))
                 elif dimer_check(primer_F_seq, primer_R_seq):  # remove dimer
                     print("Dimer primer detected: {} - {}. Removing...".format(primer_F_seq, primer_R_seq))
@@ -434,8 +476,8 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt,dege
                             pass
                         else:
                             speciesID = ID
-                            product_start = int(primer_F_dict[ID])-1
-                            product_stop = int(primer_R_dict[ID]) + len(primer_seq[primer_end])-1
+                            product_start = int(primer_F_dict[ID]) - 1
+                            product_stop = int(primer_R_dict[ID]) + len(primer_seq[primer_end]) - 1
                             product_size = int(primer_R_dict[ID]) + len(primer_seq[primer_end]) - int(
                                 primer_F_dict[ID]) + 1
                             primer_F_mismatch = primer2specify_mismatch_dict[(primer_start, speciesID)]
@@ -464,8 +506,9 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt,dege
     tb_out.sort_values(by=["pF_target_number", "pR_target_number"], inplace=True, ascending=[False, False])
     # print(tb_out)
     tb_out.to_csv(output, index=False, sep="\t")
-    primer_txt = tb_out.loc[:,["primer_F:R_dege", "primer_F:R_seq", "pF_target_number", "pR_target_number"]].drop_duplicates()
-    primer_txt.sort_values(by=["pF_target_number", "pR_target_number"],inplace=True,ascending=[False, False])
+    primer_txt = tb_out.loc[:,
+                 ["primer_F:R_dege", "primer_F:R_seq", "pF_target_number", "pR_target_number"]].drop_duplicates()
+    primer_txt.sort_values(by=["pF_target_number", "pR_target_number"], inplace=True, ascending=[False, False])
     # print(primer_txt)
     candidate_primer_txt.write(options.out)
     for idx, row in primer_txt.iterrows():
@@ -482,6 +525,7 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt,dege
             "\t" + primer_sequence[0] + "\t" + primer_sequence[1] + "\t" + product_len + "\t" + targets_number + "\t" +
             row[0])
     candidate_primer_txt.write("\n")
+
 
 #########################  degenerate primers  ################################
 
@@ -503,6 +547,7 @@ def fa_dege_trans(fa, output):
                     out.write(ID + "\n" + expand_seq[0] + "\n")
     out.close()
 
+
 #########################  degenerate position filter  ################################
 
 def dege_filter_in_term_N_bp(sequence, term):
@@ -515,6 +560,7 @@ def dege_filter_in_term_N_bp(sequence, term):
         return True
     else:
         return False
+
 
 #########################  main  ################################
 
@@ -566,7 +612,7 @@ if __name__ == "__main__":
     #### pre_filter ####
     pre_primer_frac = {}
     tmp = options.out.rstrip(".candidate.primers.txt") + ".pre_filter_primers.fa"
-    pre_filter(options.input, GC, max_seq, frac, rank_number,tmp)
+    pre_filter(options.input, GC, max_seq, frac, rank_number, tmp)
 
     #### tmp file ####
     tmp_expand = options.out.rstrip(".candidate.primers.txt") + ".pre_filter_primers.expand.fa"
@@ -586,16 +632,14 @@ if __name__ == "__main__":
     candidate_primer_fa = open(candidate_primer, "w")
     candidate_primer_txt = open(options.out, "w")
     bed_file = options.out.rstrip(".candidate.primers.txt") + ".bed"
-    bed = open(bed_file,"w")
-    get_PCR_PRODUCT(sam_results, paired_primer, candidate_primer_fa, candidate_primer_txt,dege_pos,bed)
+    bed = open(bed_file, "w")
+    get_PCR_PRODUCT(sam_results, paired_primer, candidate_primer_fa, candidate_primer_txt, dege_pos, bed)
     bed.close()
     sam_results.close()
     paired_primer.close()
     candidate_primer_fa.close()
     candidate_primer_txt.close()
-    os.system("rm {} {}".format(sam_out,sam_for_out))
+    os.system("rm {} {}".format(sam_out, sam_for_out))
     print("INFO {}: Done!!!\n".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))))
 
 #########################  Done!  ################################
-
-

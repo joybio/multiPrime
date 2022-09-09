@@ -124,9 +124,12 @@ def get_primer_set(primers):
         for i in f:
             i = i.strip().split("\t")
             primer_set.add(i[1])
-            primer_set.add(i[3])
             primer_dict[i[1]] = i[0]
-            primer_dict[i[3]] = i[2]
+            if len(i) == 2:
+                pass
+            elif len(i) == 4:
+                primer_set.add(i[3])
+                primer_dict[i[3]] = i[2]
     return primer_set
 
 
@@ -206,11 +209,16 @@ if __name__ == "__main__":
     for i in primers:
         i = i.strip().split("\t")
         t = []
-        t.append(threading.Thread(target=dimer_check, args=(i[1], primer_set)))
-        t.append(threading.Thread(target=dimer_check, args=(i[3], primer_set)))
+        if len(i) == 2:
+            t.append(threading.Thread(target=dimer_check, args=(i[1], primer_set)))
+        elif len(i) == 4:
+            t.append(threading.Thread(target=dimer_check, args=(i[1], primer_set)))
+            t.append(threading.Thread(target=dimer_check, args=(i[3], primer_set)))
         for t1 in t:
             t1.start()
         for t1 in t:
             t1.join()
     matrix.to_csv(output, index=False, sep="\t")
     output.close()
+    
+    
