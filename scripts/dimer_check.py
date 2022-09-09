@@ -29,7 +29,8 @@ parser.add_option('-a', '--adaptor',
                   You can use the example sequence for dimer detection,  \n \
                   because adaptor sequence will not form dimer with primers generally. \n \
                   For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT. \n \
-                  Default: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT. ')
+                  Default: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT. \n \
+                  If your sequence already have adapters, set -a ",".')
 
 parser.add_option('-f', '--form',
                   dest='form',
@@ -219,6 +220,13 @@ if __name__ == "__main__":
         for t1 in t:
             t1.join()
     matrix.to_csv(output, index=False, sep="\t")
+    tmp = options.out + ".dimer_number"
+    with open(tmp,"w") as t:
+        primer_count = pd.DataFrame(matrix.value_counts("Primer_ID"))
+        primer_count.columns = ["number"]
+        primer_count.sort_values(by="number",ascending=False)
+        primer_count.to_csv(t,index=True,sep="\t")
+        
     output.close()
     
     
