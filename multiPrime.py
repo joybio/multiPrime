@@ -207,8 +207,7 @@ rule get_degePrimer:
 		distance = config["distance"],
 		adaptor = config["adaptor"],
 		number = config["rank_number"],
-		end = config["end"],
-		Tm = config["Tm"]
+		end = config["end"]
 	message:
 		"Step9: choose candidate primers for each cluster (hairpin, dimer (F-R) check) .."
 	shell:
@@ -216,7 +215,7 @@ rule get_degePrimer:
 		python {params.script}/get_degePrimer.py -i {input.primer} -r {input.ref_fa} \
 			-f {params.fraction} -s {params.size} -g {params.gc_content} -e {params.end} \
 			-d {params.distance} -a {params.adaptor} -n {params.number} -m {params.maxseq}\
-			-t {params.Tm} -o {output} 2>&1 > {log}
+			-o {output} 2>&1 > {log}
 		'''
 
 #-------------------------------------------------------------------------------------------

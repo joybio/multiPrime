@@ -1,4 +1,4 @@
-#
+#!/bin/python
 import pandas as pd
 
 """Calculate delta G of primer or kmer."""
@@ -20,9 +20,9 @@ def argsParse():
                       help='Input file.')
     parser.add_option('-g', '--gini',
                       dest='gini',
-                      default="unified",
+                      default="H_bonds",
                       type="str",
-                      help='method used to calculate delta G. [unidfied] or [H_bonds]. Default:unified.\n'
+                      help='method used to calculate delta G. [unidfied] or [H_bonds]. Default: H_bonds.\n'
                            'NN model: nearest neighbor model')
     parser.add_option('-p', '--position',
                       dest='position',
@@ -31,8 +31,8 @@ def argsParse():
                       help='which column is sequence. Default: [0]')
     parser.add_option('-f', '--format',
                       dest='format',
-                      help='Format of primer file: xls or fa or seq; default: xls. \n \
-    				 fa: fasta format. \n seq: sequence format, e.g. ATGCTGATGCATCGT.')
+                      help='Format of primer file: xls [dataframe], fa [fasta] or seq; default: xls. \n'
+    				 'fa: fasta format. \n seq: sequence format, e.g. ATGCTGATGCATCGT.')
 
     parser.add_option('-o', '--out',
                       dest='out',
@@ -176,7 +176,7 @@ if __name__ == "__main__":
                         else:
                             sequence = i.strip()
                             Delta_G = delta_G(sequence, options.gini)
-                            output.write(i + "\t" + str(Delta_G) + "\n")
+                            output.write(sequence + "\t" + str(Delta_G) + "\n")
             else:
                 print("Check your input!!!")
             f.close()

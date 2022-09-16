@@ -28,22 +28,24 @@ def argsParse():
 					  dest='out',
 					  default="cluster.txt",
 					  type="str",
-					  help='output file: clusters information. It will be used as input file of snakemake pipeline')
+					  help='output file: clusters information. Default: cluster.txt. \
+						It will be used as input file of snakemake pipeline')
 	parser.add_option('-y', '--identity',
 					  dest='identity',
 					  default="cluster.identities.txt",
 					  type="str",
-					  help='output file: clusters information. It will be used as input file of snakemake pipeline')
+					  help='output file: clusters information. Default: cluster.identities.txt. \
+						It will be used as input file of snakemake pipeline')
 	parser.add_option('-m', '--max',
 					  dest='max',
 					  default=500,
 					  type="int",
-					  help='max sequence number in 1 cluster.')
+					  help='max sequence number in 1 cluster. Default: 500.')
 	parser.add_option('-d', '--dir',
 					  dest='dir',
 					  default="Cluster_fa",
 					  type="str",
-					  help='directory of output fasta: clusters information.')
+					  help='directory of output fasta: clusters information. Default: Cluster_fa.')
 	(options, args) = parser.parse_args()
 	import sys
 	if len(sys.argv) == 1:

@@ -77,8 +77,6 @@ rank_number: 1000
 #Filter primers by degenerate base position. e.g. [-t 4] means I dont want degenerate base
 #appear at the end four bases when primer pre-filter. Default: 4.
 end: 4
-#Filter primers by Tm. Default [55,70]
-Tm: 55,70
 
 #Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for adaptor--primer.
 #For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT. if None, use comma.

@@ -53,6 +53,7 @@ def seq_format(Input,Output):
 				else:
 					i = i.strip()
 					Out.write(i)
+			Out.write("\n")
 
 if __name__ == "__main__":
 	(options, args) = argsParse()

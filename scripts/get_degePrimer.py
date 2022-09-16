@@ -18,7 +18,7 @@ from operator import mul  #
 
 def argsParse():
     parser = OptionParser('Usage: %prog -i [input] -r [sequence.fa] -o [output] \n \
-                Options: {-f [0.6] -m [500] -n [200] -t [55,70] -e [4] -p [9] -s [250,500] -g [0.4,0.6] -d [4] -a ","}.')
+                Options: {-f [0.6] -m [500] -n [200] -e [4] -p [9] -s [250,500] -g [0.4,0.6] -d [4] -a ","}.')
     parser.add_option('-i', '--input',
                       dest='input',
                       help='Input file: degeprimer out.')
@@ -38,11 +38,6 @@ def argsParse():
                       dest='gc',
                       default="0.4,0.6",
                       help="Filter primers by GC content. Default [0.4,0.6].")
-
-    parser.add_option('-t', '--temperature',
-                      dest='temperature',
-                      default="55,70",
-                      help="Filter primers by Tm. Default [55,70].")
 
     parser.add_option('-f', '--fraction',
                       dest='fraction',
@@ -148,7 +143,7 @@ def score_trans(sequence):
 
 
 def dege_trans(sequence):
-    expand_seq = [sequence]
+    expand_seq = [sequence.upper()]
     expand_score = reduce(mul, [score_trans(x) for x in expand_seq])
     while expand_score > 1:
         for seq in expand_seq:
@@ -243,22 +238,12 @@ def GC_clamp(primer):
     else:
         return False
 
-def Tm_filter(primer):
-    sequence_expand = dege_trans(primer)
-    Tm_list = []
-    for seq in sequence_expand:
-        Tm_list.append((list(seq).count("G") + list(seq).count("C")) * 4 + \
-                  (list(seq).count("A") + list(seq).count("T")) * 2)
-    Tm_average = mean(Tm_list)
-    print(Tm_average)
-    return Tm_average
-
 ###########################################################
 
 def pre_filter(degeprimer, GC, maxseq, frac, rank_number, tmp):
     # primers pre-filter.
     pre_primer_pos = {}
-    global pre_primer_frac
+    global pre_primer_frac,seq_number
     pre_primer_match = {}
     pre_primer_GC = {}
     gc_content = GC
@@ -277,6 +262,7 @@ def pre_filter(degeprimer, GC, maxseq, frac, rank_number, tmp):
                 pass
             else:
                 number_match = int(float(row[6]))
+                # print(seq_number,maxseq)
                 if seq_number <= maxseq:
                     fraction = float(number_match / seq_number)
                 else:
@@ -290,8 +276,6 @@ def pre_filter(degeprimer, GC, maxseq, frac, rank_number, tmp):
                 elif GC_clamp(primer):
                     pass
                 elif GC_content > float(gc_content[1]) or GC_content < float(gc_content[0]):
-                    pass
-                elif Tm_filter(primer) > float(Tm[1]) or Tm_filter(primer) < float(Tm[0]):
                     pass
                 else:
                     pre_primer_match[primer] = number_match
@@ -602,10 +586,6 @@ if __name__ == "__main__":
     #### degenerate position ####
     dege_pos = options.end
     print("Users dont want degenerate base appear at: {}.\n".format(dege_pos))
-
-    #### Tm ####
-    Tm = options.temperature.split(",")
-    print("Range of Tm: {} - {}.\n".format(Tm[0], Tm[1]))
 
     #### GC content ####
     GC = options.gc.split(",")
