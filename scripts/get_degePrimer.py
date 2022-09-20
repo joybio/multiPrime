@@ -238,12 +238,13 @@ def GC_clamp(primer):
     else:
         return False
 
+
 ###########################################################
 
 def pre_filter(degeprimer, GC, maxseq, frac, rank_number, tmp):
     # primers pre-filter.
     pre_primer_pos = {}
-    global pre_primer_frac,seq_number
+    global pre_primer_frac, seq_number
     pre_primer_match = {}
     pre_primer_GC = {}
     gc_content = GC
@@ -309,9 +310,9 @@ def pre_filter(degeprimer, GC, maxseq, frac, rank_number, tmp):
         raise SystemExit()
 
 
-######################### MAP: bowtie2 ###########################
+######################### MAP: bowtie ###########################
 def map(path_2_ref, tmp_expand, sam_out, sam_for_out):
-    # path_2_ref is used to build bowtie2 index
+    # path_2_ref is used to build bowtie index
     # path_2_out is used to output samfile
     title = path_2_ref.split("/")
     db = path_2_ref + ".db/"
@@ -320,14 +321,14 @@ def map(path_2_ref, tmp_expand, sam_out, sam_for_out):
     else:
         os.system("mkdir -p {}".format(db))
         print("INFO {}: Indexing......\n".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))))
-        os.system("bowtie2-build {} {}/{}".format(path_2_ref, db, title[-1]))
+        os.system("bowtie-build {} {}/{}".format(path_2_ref, db, title[-1]))
     db_title = db + "/" + title[-1]
     if os.path.isfile(sam_out):
         print("Mapping is done! Please check your map file, make sure sam_out is ok!!!\n")
     else:
         os.system(
             # -L  length of seed substrings
-            "bowtie2 -N 1 -L 31 -a -x {} -f -U {} -S {}".format(
+            "bowtie -f -v 0 -n 1 -a -p 20 --best --strata {} {} -S {}".format(
                 db_title, tmp_expand, sam_out))
         os.system(
             # remove primer which matched to the reverse strand
@@ -415,7 +416,7 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt, deg
                                    "product_size", "pF_fraction", "pR_fraction", "pF_target_number",
                                    "pR_target_number", "f_mismatch_position", "r_mismatch_position"])
     #### primer information ####
-    results = pd.read_table(sam, header=None)
+    results = pd.read_csv(sam, header=None, sep='\s+')
     # print(results.iloc[0])
     position_pattern_1 = re.compile('MD:Z:(\w+)')
     position_pattern = re.compile("[A-Z]?(\d+)")
@@ -427,7 +428,7 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt, deg
         # mismatch = mismatch_pattern.search(row[14]).group(1)
         # print(list(row[14:]))
         # if nan in list, removing
-        candidate_MD = nan_removing(list(row[14:]))
+        candidate_MD = nan_removing(list(row[11:]))
         string = str('\t'.join(candidate_MD))
         position_1 = position_pattern_1.search(string).group(1)
         position = position_pattern.search(position_1[-2:]).group(1)
@@ -509,7 +510,7 @@ def get_PCR_PRODUCT(sam, output, candidate_primer_out, candidate_primer_txt, deg
     tb_out.to_csv(output, index=False, sep="\t")
     primer_txt = tb_out.loc[:,
                  ["primer_F:R_dege", "primer_F:R_seq", "pF_target_number", "pR_target_number"]].drop_duplicates()
-    primer_txt["target_number"] = primer_txt.loc[:,["pF_target_number", "pR_target_number"]].min(axis=1)
+    primer_txt["target_number"] = primer_txt.loc[:, ["pF_target_number", "pR_target_number"]].min(axis=1)
     primer_txt.sort_values(by=["target_number"], inplace=True, ascending=False)
     # print(primer_txt)
     candidate_primer_txt.write(options.out)
@@ -621,7 +622,7 @@ if __name__ == "__main__":
     fa_dege_trans(tmp, tmp_expand)
     primer_seq = primerSeq(tmp)
 
-    #### mapping with bowtie2 ####
+    #### mapping with bowtie ####
     sam_out = options.out + ".sam"
     sam_for_out = options.out + ".for.sam"
     map(options.ref, tmp_expand, sam_out, sam_for_out)

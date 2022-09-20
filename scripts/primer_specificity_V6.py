@@ -1,4 +1,5 @@
 #!/bin/python
+#coding:utf-8
 """
 Output off-target PCR results. 
 """
@@ -10,7 +11,8 @@ __license__ = "yangjunbo"
 import sys
 from collections import defaultdict
 import os
-import threading
+import multiprocessing
+from multiprocessing import Process
 import time
 import pandas as pd
 from optparse import OptionParser
@@ -18,6 +20,7 @@ from pathlib import Path
 import math
 from functools import reduce
 from operator import mul  #
+from bisect import bisect_left  # 二分法
 
 
 # Path(path).parent, Path(path).name, Path(path).suffix, Path(path).stem, Path(path).iterdir(), Path(path).joinpath()
@@ -25,7 +28,7 @@ from operator import mul  #
 
 
 def argsParse():
-    parser = OptionParser('Usage: %prog -i [input] -f [forward.sam] -r [reverse.sam] -p [50,2000]-o [output]')
+    parser = OptionParser('Usage: %prog -i [input] -r [bowtie index] -l [150,2000] -p [10]-o [output]')
 
     parser.add_option('-i', '--input',
                       dest='input',
@@ -35,10 +38,16 @@ def argsParse():
                       dest='ref',
                       help='reference file: bowtie index.')
 
-    parser.add_option('-p', '--product',
-                      dest='product',
+    parser.add_option('-l', '--len',
+                      dest='len',
                       default="150,2000",
                       help='Length of PCR product, default: [150,2000].')
+
+    parser.add_option('-p', '--proc',
+                      dest='proc',
+                      default="10",
+                      type="int",
+                      help='number of process.')
 
     parser.add_option('-o', '--out',
                       dest='out',
@@ -105,28 +114,37 @@ def get_term9(fa, out):
                     o.write(i + "\n")
 
 
-def bowtie2_map(fa, ref_index, out, for_out, rev_out):
+def bowtie_map(fa, ref_index, out, for_out, rev_out):
     # os.system("bowtie2 -p 20 -f -N 0 -a -x {} -f -U {} -S {}".format(ref_index, fa, out))
-    os.system("/share/data3/yangjunbo/miniconda3/bin/bowtie -f -v 0 -n 1 -a -p 20 --best --strata {} {} -S {}".format(ref_index, fa, out))
+    os.system("bowtie -f -v 0 -n 1 -a -p 20 --best --strata {} {} -S {}".format(ref_index, fa, out))
     os.system("samtools view -F 16 {} > {}".format(out, for_out))
     os.system("samtools view -f 16 {} > {}".format(out, rev_out))
 
 
-def build_dict(Input, Input_dict):
+def build_dict(Input):
+    Input_dict = defaultdict(list)
     with open(Input, "r") as f:
         for i in f:
             i = i.strip().split("\t")
             primer = i[0]
             gene = i[2]
             primer_match_start = int(i[3]) - 1
-            # Input_dict[gene].append([primer, primer_match_start])
-            Input_dict[gene].append((primer_match_start, primer))
+            Input_dict[gene].append([primer, primer_match_start])
+    return Input_dict
 
 
-def PCR_prediction(F_dict, R_dict):
-    global prediction
+def closest(my_list, my_number1, my_number2):
+    index_left = bisect_left(my_list, my_number1)
+    # find the first element index in my_list which greater than my_number.
+    if my_number2 > my_list[-1]:
+        index_right = len(my_list) - 1  # This is index.
+    else:
+        index_right = bisect_left(my_list, my_number2)
+    return index_left, index_right
+
+
+def PCR_prediction(target_gene, F_dict, R_dict, out):
     # print(len(F_dict), len(R_dict))
-    target_gene = set(F_dict.keys()).intersection(R_dict.keys())
     # print(len(target_gene))
     for gene in target_gene:
         primer_F = dict(F_dict[gene])
@@ -134,25 +152,34 @@ def PCR_prediction(F_dict, R_dict):
         primer_R = dict(R_dict[gene])
         position_stop = sorted(primer_R.keys())
         # print(position_stop, position_start)
-        if int(position_stop[0]) - int(position_start[-1]) > int(product_len[1]):
-            break
-        elif int(position_stop[-1]) - int(position_start[0]) < int(product_len[0]):
-            break
+        if int(primer_R[position_stop[0]]) - int(primer_F[position_start[-1]]) > int(product_len[1]):
+            # print("min product length is: {}; next ...".format(int(position_stop[0]) - int(position_start[-1])))
+            pass
+        elif int(primer_R[position_stop[-1]]) - int(primer_F[position_start[0]]) < int(product_len[0]):
+            # print("max product length is: {}; next ...".format(int(position_stop[-1]) - int(position_start[0])))
+            pass
         else:
-            for start in position_start:
-                for stop in position_stop:
-                    distance = int(stop) - int(start) + 1
-                    if distance > int(product_len[1]):
-                        break
-                    elif int(product_len[0]) < distance < int(product_len[1]):
-                        offtarget = pd.DataFrame({"Primer_F": primer_F[start],
-                                                  "Primer_R": primer_R[stop],
-                                                  "Product length": distance,
-                                                  "Chrom (or Genes)": gene,
-                                                  "Start": int(start) - 1,
-                                                  "Stop": int(stop) - 1
-                                                  }, index=[0])
-                        prediction = pd.concat([prediction, offtarget], axis=0, ignore_index=True)
+            for start in range(len(position_start)):
+                stop_index_start, stop_index_stop = closest(sorted(primer_R.values()),
+                                                            primer_F[position_start[start]] + int(product_len[0]),
+                                                            primer_F[position_start[start]] + int(product_len[1]))
+                if stop_index_start > stop_index_stop:  # caution: all(var) > stop_index_start in bisect_left,
+                    # you need to stop immediately when stop_index_start > Product length
+                    break
+                else:
+                    for stop in range(stop_index_start, stop_index_stop + 1):
+                        distance = int(primer_R[position_stop[stop]]) - int(primer_F[position_start[start]]) + 1
+                        if distance > int(product_len[1]):
+                            break
+                        elif int(product_len[0]) < distance < int(product_len[1]):
+                            offtarget = {"Primer_F": position_start[start],
+                                         "Primer_R": position_stop[stop],
+                                         "Product length": distance,
+                                         "Chrom (or Genes)": gene,
+                                         "Start": int(primer_F[position_start[start]]),
+                                         "Stop": int(primer_R[position_stop[stop]])
+                                         }
+                            out.append(offtarget)
 
 
 def get_dict_key(d_dict, value):
@@ -182,12 +209,21 @@ def fa_dege_trans(fa, output):
             out.write('|'.join(seq_ID[seq]) + "\n" + seq + "\n")
 
 
+def split_list_average(list_in, number):
+    result_list = []
+    step = math.ceil(len(list_in) / number)
+    for i in range(0, len(list_in), step):
+        result_list.append(list_in[i:i + step])
+    return result_list
+
+
 if __name__ == '__main__':
     (options, args) = argsParse()
     print("INFO {} Start: Load file ...".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))))
-    product_len = options.product.split(",")
+    product_len = options.len.split(",")
     print("off-targets length: {} - {}".format(product_len[0], product_len[1]))
     fasta = options.input
+    e1 = time.time()
     term9_fasta_tmp = Path(options.out).parent.joinpath(Path(options.input).stem).with_suffix(".9.fa")
     # term9_fasta = str(Path(options.out).parent) + "/" + os.path.basename(options.input).rstrip("fa") + "9.fa"
     get_term9(fasta, term9_fasta_tmp)
@@ -200,22 +236,33 @@ if __name__ == '__main__':
     # sam_file = str(Path(options.out).parent) + "/" + os.path.basename(options.input).rstrip("fa") + "sam"
     # sam_for_file = str(Path(options.out).parent) + "/" + os.path.basename(options.input).rstrip("fa") + "for.sam"
     # sam_rev_file = str(Path(options.out).parent) + "/" + os.path.basename(options.input).rstrip("fa") + "rev.sam"
-    if sam_for_file.exists():
+    if sam_for_file.exists() and sam_rev_file.exists():
         pass
     else:
-        bowtie2_map(term9_fasta, path_2_ref, sam_file, sam_for_file, sam_rev_file)
-    forward_dict = defaultdict(list)
-    reverse_dict = defaultdict(list)
-    t = [threading.Thread(target=build_dict, args=(sam_for_file, forward_dict)),
-         threading.Thread(target=build_dict, args=(sam_rev_file, reverse_dict))]
-    for t1 in t:
-        t1.start()
-    for t1 in t:
-        t1.join()
-    # print(forward_dict)
-    prediction = pd.DataFrame(columns=["Primer_F", "Primer_R", "Product length", "Chrom (or Genes)", "Start", "Stop"])
-    PCR_prediction(forward_dict, reverse_dict)
-    # print(prediction)
+        bowtie_map(term9_fasta, path_2_ref, sam_file, sam_for_file, sam_rev_file)
+    m = multiprocessing.Manager()
+    pool = multiprocessing.Pool()
+    # pool.apply_async(build_dict, kwds={sam_for_file, sam_rev_file})
+    # 如果子进程有返回值，且返回值需要集中处理，则建议采用map方式, #map方法只允许1个参数
+    # 如果子进程活动具有多个参数，则不能直接使用map方式，需采用starmap方式：result = pool.starmap_async(f, ((a0, b0), (a1, b1), ...)).get()
+    forward_dict, reverse_dict = pool.map_async(build_dict, (sam_for_file, sam_rev_file)).get()
+    pool.close()
+    pool.join()
+    print(len(forward_dict), len(reverse_dict))
+    target_gene = list(set(forward_dict.keys()).intersection(reverse_dict.keys()))
+    gene_list = split_list_average(target_gene, options.proc)
+    # pool.apply_async(PCR_prediction, args=(a,), kwds={b: value})
+    prediction = m.list()
+    pool2 = multiprocessing.Pool()
+    for i in gene_list:
+        pool2.apply_async(PCR_prediction, args=(i, forward_dict, reverse_dict, prediction))
+    pool2.close()
+    pool2.join()
+    print(len(prediction))
     with open(options.out, "w") as f:
+        prediction = pd.DataFrame(list(prediction))
         prediction.to_csv(f, index=False, sep="\t")
     print("INFO {} Done...".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))))
+    e2 = time.time()
+    print("INFO {} Total times: {}".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
+                                           round(float(e2 - e1), 2)))

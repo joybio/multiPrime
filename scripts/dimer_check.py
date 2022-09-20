@@ -129,7 +129,6 @@ def current_end(primer):
     for a in range(10):
         end_seq_primary = set(dege_trans(primer_extend[-a - 5:]))
         end_seq = end_seq.union(end_seq_primary)
-        a += 1
     return end_seq
 
 
@@ -198,17 +197,14 @@ def dimer_check(primer, primer_set):
 #####################################################################################
 def file_format(fasta, txt):
     out = open(txt, "w")
+    n = 1
     with open(fasta, "r") as f:
         for i in f:
-            if i.startswith(">"):
-                primer_ID = i.strip()
+            if n%4 == 0:
+                out.write(i)
             else:
-                if primer_ID.endswith("R"):
-                    primer_seq = i
-                else:
-                    primer_seq = i
-                out.write(primer_ID + "\t" + primer_seq)
-
+                out.write(i.strip() + "\t")
+            n += 1
     out.close()
 
 
@@ -239,10 +235,10 @@ def delta_G_check(sequence):
     # 1   0%    25%    50%    75%   100%
     # 2 -13.61  -9.94  -9.06  -8.24  -5.90
     i = 0
-    Delta_G = 0
     expand_seq = dege_trans(sequence[-9:])
     Delta_G_list = []
     for seq in expand_seq:
+        Delta_G = 0
         while i < len(seq) - 1:
             Delta_G += (freedom_of_H_37_table.loc[seq[i + 1], seq[i]] * H_bonds_number.loc[
                 seq[i + 1], seq[i]]) + \
@@ -253,6 +249,7 @@ def delta_G_check(sequence):
         Delta_G += adjust[start] + adjust[stop]
         Delta_G_list.append(Delta_G)
     return round(max(Delta_G_list), 2)
+
 
 #####################################################################################
 if __name__ == "__main__":
@@ -285,10 +282,9 @@ if __name__ == "__main__":
             t = [threading.Thread(target=dimer_check, args=(i[1], primer_set)),
                  threading.Thread(target=dimer_check, args=(i[3], primer_set))]
         else:
-            pass
+            break
         for t1 in t:
             t1.start()
-        for t1 in t:
             t1.join()
     matrix.to_csv(output, index=False, sep="\t")
     output.close()
