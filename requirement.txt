@@ -12,5 +12,4 @@ blast=2.13.0
 pandas
 operator
 functools
-math
 
