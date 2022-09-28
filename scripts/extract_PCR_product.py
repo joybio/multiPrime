@@ -74,6 +74,7 @@ def get_PCR_PRODUCT(ref, F, R):
 	Fseq = dege_trans(F)
 	Rseq = dege_trans(R)
 	product_dict = {}
+	Non_targets_dict = {}
 	global target
 	with open(ref, "r") as r:
 		for i in r:
@@ -96,10 +97,12 @@ def get_PCR_PRODUCT(ref, F, R):
 								pass
 						if value:
 							break
+						else:
+							Non_targets_dict[key] = i.strip()
 					else:
-						pass
+						Non_targets_dict[key] = i.strip()
 
-	return product_dict
+	return product_dict,Non_targets_dict
 
 
 if __name__ == "__main__":
@@ -112,16 +115,20 @@ if __name__ == "__main__":
 	coverage_number = open(options.stast, "w")
 	if options.format == 'seq':
 		seq_product = options.out + "/" + "PCR.product.fa"
+		seq_non_product = options.out + "/" + "Non_PCR.product.fa"
 		primers = options.primer.split(",")
 		primer_F = primers[0]
 		primer_R = primers[1]
-		PCR_product = get_PCR_PRODUCT(reference, primer_F, primer_R)
+		PCR_product, Non_Primer_seq = get_PCR_PRODUCT(reference, primer_F, primer_R)
 		with open(seq_product, "w") as s:
 			for i in PCR_product.keys():
 				s.write(i + "\n" + PCR_product[i] + "\n")
 				seq_id.add(i)
 			coverage_number.write("Number of {}:\t{}\n".format(options.primer, target))
 			target = 0
+		with open(seq_non_product, "w") as n:
+			for i in Non_Primer_seq.keys():
+				n.write(i + "\n" + Non_Primer_seq[i] + "\n")
 	else:
 		primer = open(options.primer, "r")
 		if options.format == 'xls':
@@ -134,15 +141,20 @@ if __name__ == "__main__":
 					cluster_id = i[0].split("/")
 					cluster_product = options.out + "/" + cluster_id[-1].rstrip(
 						".candidate.primers.txt") + ".PCR.product.fa"
+					cluster_non_product = options.out + "/" + cluster_id[-1].rstrip(
+						".candidate.primers.txt") + ".non_PCR.product.fa"
 					primer_F = i[2]
 					primer_R = i[3]
-					PCR_product = get_PCR_PRODUCT(reference, primer_F, primer_R)
+					PCR_product, Non_Primer_seq = get_PCR_PRODUCT(reference, primer_F, primer_R)
 					with open(cluster_product, "w") as c:
 						for p in PCR_product.keys():
 							c.write(p + "\n" + PCR_product[p] + "\n")
 							seq_id.add(p)
 					coverage_number.write("Number of {}:\t{}\n".format(cluster_product, target))
 					target = 0
+					with open(cluster_non_product, "w") as n:
+						for i in Non_Primer_seq.keys():
+							n.write(i + "\n" + Non_Primer_seq[i] + "\n")
 		elif options.format == 'fa':
 			primer_info = pd.read_table(primer, header=None)
 			for idx, row in primer_info.iterrows():
@@ -152,15 +164,19 @@ if __name__ == "__main__":
 					primer_F = row[0]
 				elif idx % 4 == 2:
 					fa_product = primer_F_info + "_" + row[0].lstrip(">") + ".PCR.product.fa"
+					non_product = primer_F_info + "_" + row[0].lstrip(">") + ".non_PCR.product.fa"
 				elif idx % 4 == 3:
 					primer_R = row[0]
-					PCR_product = get_PCR_PRODUCT(reference, primer_F, primer_R)
+					PCR_product,Non_Primer_seq = get_PCR_PRODUCT(reference, primer_F, primer_R)
 					with open(fa_product, "w") as f:
 						for i in PCR_product.keys():
 							f.write(i + "\n" + PCR_product[i] + "\n")
 							seq_id.add(i)
 					coverage_number.write("Number of {}:\t{}\n".format(fa_product, target))
 					target = 0
+					with open(non_product, "w") as n:
+						for i in Non_Primer_seq.keys():
+							n.write(i + "\n" + Non_Primer_seq[i] + "\n")
 		else:
 			print("Please check you primer format!")
 			sys.exit(1)

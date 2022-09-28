@@ -50,6 +50,8 @@ def seq_format(Input,Output):
 			for i in In:
 				if i.startswith(">"):
 					Out.write("\n" + i)
+				elif i == "--\n":
+					pass
 				else:
 					i = i.strip()
 					Out.write(i)
