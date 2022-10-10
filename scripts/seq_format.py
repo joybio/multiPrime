@@ -1,10 +1,35 @@
 #!/bin/python
 """genome format"""
 #caution the chrom column of the position file must contain chr
-__date__ = "2022-6-1"
+
+__date__ = "2022-10-8"
 __author__ = "Junbo Yang"
 __email__ = "yang_junbo_hi@126.com"
-__license__ = "yangjunbo"
+__license__ = "MIT"
+
+"""
+The MIT License (MIT)
+
+Copyright (c) 2022 Junbo Yang <yang_junbo_hi@126.com> <1806389316@pku.edu.cn>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+"""
 
 import optparse
 from optparse import OptionParser
@@ -42,6 +67,12 @@ def argsParse():
 		sys.exit(1)
 	return parser.parse_args()
 
+TRANS = str.maketrans("U", "T")
+
+
+def Trans(seq):
+	return seq.translate(TRANS)
+
 def seq_format(Input,Output):
 	with open(Input,"r") as In:
 		head = In.readline()
@@ -54,7 +85,7 @@ def seq_format(Input,Output):
 					pass
 				else:
 					i = i.strip()
-					Out.write(i)
+					Out.write(Trans(i.upper()))
 			Out.write("\n")
 
 if __name__ == "__main__":

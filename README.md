@@ -1,4 +1,4 @@
-multiPrime: version 1.0.0
+multiPrime: version 1.0.1
 # multi PCR primers design processing pipeline
 multiPrime was developed to design primers for large-scale sequences, identifying the core primers and optimized primer sets.
 

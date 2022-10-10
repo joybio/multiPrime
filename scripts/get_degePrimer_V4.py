@@ -1,3 +1,34 @@
+#!/bin/python
+
+__date__ = "2022-10-8"
+__author__ = "Junbo Yang"
+__email__ = "yang_junbo_hi@126.com"
+__license__ = "MIT"
+
+"""
+The MIT License (MIT)
+
+Copyright (c) 2022 Junbo Yang <yang_junbo_hi@126.com> <1806389316@pku.edu.cn>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+"""
+
 import math
 import os
 import argparse
@@ -46,12 +77,11 @@ def argsParse():
                       help="Filter primers by degenerate base position. e.g. [-t 4] means I dont want degenerate base "
                            "appear at the end four bases when primer pre-filter. Default: 4.")
 
-    parser.add_option('-p', '--position',
-                      dest='position',
-                      default="9",
+    parser.add_option('-p', '--proc',
+                      dest='proc',
+                      default="10",
                       type="int",
-                      help="Filter primers by mismatch position. e.g. [-p 9] means I dont want mismatch appear  at the "
-                           "end eight bases when primer checking. Default: 9.")
+                      help="Number of process to launch.  default: 10.")
 
     parser.add_option('-s', '--size',
                       dest='size',
@@ -191,8 +221,9 @@ class Primers_filter(object):
                     i = i.strip().split("\t")
                     position = int(i[0])
                     primer_seq = i[5]
+                    number = int(i[6])
                     fraction = round(int(i[6]) / self.number, 2)
-                    primer_dict[position] = [primer_seq, fraction]
+                    primer_dict[position] = [primer_seq, fraction, number]
         return primer_dict
 
     ################# get_number #####################
@@ -202,7 +233,7 @@ class Primers_filter(object):
         with open(self.Input_file, encoding="utf-8") as f:
             buf_gen = takewhile(lambda x: x, (f.read(buffer) for _ in repeat(None)))
             seq_number = int(sum(buf.count("\n") for buf in buf_gen) / 2)
-            if seq_number > self.rep_seq_number:
+            if seq_number > self.rep_seq_number != 0:
                 print(seq_number, self.rep_seq_number)
                 return self.rep_seq_number
             else:
@@ -429,14 +460,11 @@ class Primers_filter(object):
                                         pass
                                     else:
                                         # primer_pairs.append((candidate_position[start], candidate_position[stop]))
-                                        line = (candidate_position[start],
-                                                candidate_position[stop],
-                                                self.primers[candidate_position[start]][0],
-                                                reversecomplement(self.primers[candidate_position[stop]][0]),
-                                                self.primers[candidate_position[start]][1],
-                                                self.primers[candidate_position[stop]][1],
-                                                min(self.primers[candidate_position[start]][1],
-                                                    self.primers[candidate_position[stop]][1]))
+                                        line = (self.primers[candidate_position[start]][0],
+                                                reversecomplement(self.primers[candidate_position[stop]][0]), distance,
+                                                min(self.primers[candidate_position[start]][2],
+                                                    self.primers[candidate_position[stop]][2]),
+                                                str(candidate_position[start])+":"+str(candidate_position[stop]))
                                         primer_pairs.append(line)
         #                                 self.resQ.put(line)
         # self.resQ.put(None)
@@ -459,13 +487,16 @@ class Primers_filter(object):
         p.submit(
             self.primer_pairs(primer_pairs))  # This will submit all tasks to one place without blocking, and then each
         # thread in the thread pool will fetch tasks.
+        ID = str(self.outfile)
         with open(self.outfile, "w") as fo:
-            headers = ["Product_start", "Product_stop", "Primer_F_seq", "Primer_R_seq",
-                       "Primer_F_fraction", "Primer_R_fraction", "Min_coverage"]
-            fo.write("\t".join(headers) + "\n")
+            # headers = ["Primer_F_seq", "Primer_R_seq", "Product length", "Target number", "Primer_start_end"]
+            # fo.write(ID + "\t" + "\t".join(headers) + "\t")
+            fo.write(ID + "\t")
             for i in primer_pairs:
-                fo.write("\t".join(map(str, i)) + "\n")
+                fo.write("\t".join(map(str, i)) + "\t")
             # get results before shutdown. Synchronous call mode: call, wait for the return value, decouple, but slow.
+            fo.write("\n")
+            fo.close()
         p.shutdown()
         # After I run the main, I don't care whether the sub thread is alive or dead. With this parameter, after all
         # the sub threads are executed, the main function is executed get results after shutdown.
@@ -476,7 +507,8 @@ def main():
     options, args = argsParse()
     primer_pairs = Primers_filter(ref_file=options.ref, primer_file=options.input, adaptor=options.adaptor,
                                   rep_seq_number=options.maxseq, distance=options.dist, outfile=options.out,
-                                  size=options.size, position=options.position, fraction=options.fraction, nproc=10)
+                                  size=options.size, position=options.end, fraction=options.fraction,
+                                  nproc=options.proc)
     primer_pairs.run()
 
 
