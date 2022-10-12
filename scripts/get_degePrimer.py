@@ -416,7 +416,7 @@ class Primers_filter(object):
         if my_number2 > my_list[-1]:
             index_right = len(my_list) - 1  # This is index.
         else:
-            index_right = bisect_left(my_list, my_number2) # - 1
+            index_right = bisect_left(my_list, my_number2) - 1
         return index_left, index_right
 
     def primer_pairs(self, primer_pairs):
@@ -440,9 +440,8 @@ class Primers_filter(object):
                 else:
                     start_index, stop_index = self.closest(candidate_position, candidate_position[start]
                                                            + min_len, candidate_position[start] + max_len)
-                    if start_index > stop_index:  # caution: all(var) > stop_index_start in bisect_left,
-                        # you must stop immediately when stop_index_start > Product length
-                        break
+                    if start_index > stop_index:
+                        continue
                     else:
                         for stop in range(start_index, stop_index + 1):
                             primerR_extend = adaptor[1] + reversecomplement(self.primers[candidate_position[stop]][0])
