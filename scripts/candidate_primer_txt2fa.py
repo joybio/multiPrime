@@ -26,6 +26,8 @@ def argsParse():
                       help='Output directory')
     parser.add_option('-n', '--number',
                       dest='num',
+                      default="candidate_primers_sets.number",
+                      type="str",
                       help='Primer number of each cluster.')
 
     (options, args) = parser.parse_args()
@@ -59,7 +61,7 @@ def cal_number(Input, number):
                         f.write(">" + primer + "_" + start_stop[0] + "_F\n" + i[n] + "\n>" + primer + "_" + start_stop[
                             1] + "_R\n" + i[n + 1] + "\n")
                         n += step
-                    primer_number += 1
+                        primer_number += 1
                 out.write(primer + "\t" + str(primer_number) + "\n")
 
 

@@ -188,7 +188,7 @@ def process_dict(dict1, dict2):
     for k2 in dict2_uniq_keys:
         out_dict[k2] = dict2[k2]
     for c in common_keys:
-        out_dict[c] = dict1[c] + "|" + dict1[c]
+        out_dict[c] = dict1[c] + "|" + dict2[c]
     return [d1_uniq_dict, out_dict]
 
 

@@ -206,7 +206,6 @@ rule get_degePrimer:
 		gc_content = config["gc_content"],
 		distance = config["distance"],
 		adaptor = config["adaptor"],
-		number = config["rank_number"],
 		end = config["end"]
 	message:
 		"Step9: choose candidate primers for each cluster (hairpin, dimer (F-R) check) .."
@@ -214,7 +213,7 @@ rule get_degePrimer:
 		'''
 		python {params.script}/get_degePrimer.py -i {input.primer} -r {input.ref_fa} \
 			-f {params.fraction} -s {params.size} -g {params.gc_content} -e {params.end} \
-			-d {params.distance} -a {params.adaptor} -n {params.number} -m {params.maxseq}\
+			-d {params.distance} -a {params.adaptor} -m {params.maxseq}\
 			-o {output} 2>&1 > {log}
 		'''
 
@@ -346,7 +345,7 @@ rule get_all_PCR_product:
 		"Step14: extract PCR product from the input virus sequence .."
 	shell:
 		'''
-		python {params}/extract_PCR_product.py -i {input[1]} -p {input[0]} \
+		python {params}/extract_PCR_product.py -i {input[0]} -r {input[1]} -p 10 \
 			-f xls -o {output[0]} -s {output[1]}
 		'''
 #-------------------------------------------------------------------------------------------
@@ -365,7 +364,7 @@ rule get_core_PCR_product:
 		"Step15: extract core PCR product from the input virus sequence .."
 	shell:
 		'''
-		python {params}/extract_PCR_product.py -i {input[1]} -p {input[0]} \
+		python {params}/extract_PCR_product.py -i {input[0]} -r {input[1]} -p 10 \
 			-f xls -o {output[0]} -s {output[1]}
 		'''
 #-------------------------------------------------------------------------------------------

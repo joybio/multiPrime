@@ -1,8 +1,7 @@
 #!/bin/python
-# coding:utf-8
-'''extract perfect PCR product by primers (degenerate is also ok!) with raw input fasta file.'''
+"""extract perfect PCR product by primers (degenerate is also ok!) with raw input fasta file."""
 
-__date__ = "2022-9_27"
+__date__ = "2022-10-8"
 __author__ = "Junbo Yang"
 __email__ = "yang_junbo_hi@126.com"
 __license__ = "MIT"
@@ -31,9 +30,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 
-
 import re
 import sys
+import time
 from collections import defaultdict
 from itertools import product
 from multiprocessing import Manager
@@ -178,6 +177,10 @@ class Product(object):
                 cs = ""
         if cs:
             seq.append([cs])
+        # return ("".join(i) for i in product(*seq)) # This is a generator, just once when iteration
+        # d = [x for x in range(12)]
+        # g = (x for i in range(12))
+        # The result of list derivation returns a list, and the tuple derivation returns a generator
         return ["".join(i) for i in product(*seq)]
 
     def get_PCR_PRODUCT(self, primerinfo, F, R, ref):
@@ -206,7 +209,7 @@ class Product(object):
                         product_dict[key] = value
                     else:
                         Non_targets_dict[key] = i.strip()
-        self.resQ.put([primerinfo, product_dict, Non_targets_dict])
+        self.resQ.put([primerinfo, product_dict, Non_targets_dict, F, R])
         self.resQ.put(None)
 
     def run(self):
@@ -228,7 +231,9 @@ class Product(object):
             PCR_non_product = Path(self.output_file).joinpath(res[0]).with_suffix(
                 ".non_PCR.product.fa")
             with open(self.coverage, "a+") as c:
-                c.write("Number of Product/non_Product {}:\t{}/{}\n".format(res[0], len(res[1].keys()), len(res[2].keys())))
+                c.write(
+                    "Number of Product/non_Product, primer-F and primer-R {}:"
+                    "\t{}\t{}\t{}\t{}\n".format(res[0], len(res[1].keys()), len(res[2].keys()), res[3], res[4]))
                 with open(PCR_product, "w") as p:
                     for result in res[1].keys():
                         Product_seq_id.add(result)
@@ -251,7 +256,7 @@ class Product(object):
                 "Total number of sequences:\t{}\n"
                 "Coveraged number of sequence:\t{}\n"
                 "Rate of coverage:\t> {}\n".format(seq_number, len(Product_seq_id),
-                                                 round(float(len(Product_seq_id)) / seq_number, 2)))
+                                                   round(float(len(Product_seq_id)) / seq_number, 2)))
         c.close()
 
 
@@ -263,4 +268,8 @@ def main():
 
 
 if __name__ == "__main__":
+    e1 = time.time()
     main()
+    e2 = time.time()
+    print("INFO {} Total times: {}".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
+                                           round(float(e2 - e1), 2)))
