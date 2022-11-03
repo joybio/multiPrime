@@ -141,6 +141,9 @@ degenerate_base = {"R": ["A", "G"], "Y": ["C", "T"], "M": ["A", "C"], "K": ["G",
 score_table = {"A": 1, "G": 1.1, "C": 1.2, "T": 1.4, "R": 2.1, "Y": 2.6, "M": 2.2,
                "K": 2.5, "S": 2.3, "W": 2.4, "H": 3.6, "B": 3.7, "V": 3.3, "D": 3.5, "N": 4.7}
 
+# Martin Zacharias* "Base-Pairing and Base-Stacking Contributions to Double-Stranded DNA Formation"
+# J. Phys. Chem. B 2020, 124, 46, 10345-10352
+
 freedom_of_H_37_table = [[-0.7, -0.81, -0.65, -0.65],
                          [-0.67, -0.72, -0.8, -0.65],
                          [-0.69, -0.87, -0.72, -0.81],
