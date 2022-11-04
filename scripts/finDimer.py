@@ -103,6 +103,25 @@ def parseArg():
     return parser.parse_args()
 
 
+TRANS_c = str.maketrans("ATCG", "TAGC")
+
+
+def complement(seq):
+    return seq.translate(TRANS_c)[::-1]
+
+
+def symmetry(seq):
+    if len(seq) % 2 == 1:
+        return False
+    else:
+        F = seq[:int(len(seq) / 2)]
+        R = complement(seq[int(len(seq) / 2):][::-1])
+        if F == R:
+            return True
+        else:
+            return False
+
+
 class Dimer(object):
 
     def __init__(self, primer_file="", outfile="", nproc=10):
@@ -160,7 +179,7 @@ class Dimer(object):
                 Delta_G += adjust_initiation[seq[0]] + adjust_initiation[seq[-1]]
             # adjust by concentration of Na+
             Delta_G -= (0.175 * math.log(Na / 1000, math.e) + 0.20) * len(seq)
-            if seq == seq[::-1]:
+            if symmetry(seq):
                 Delta_G += symmetry_correction
             Delta_G_list.append(Delta_G)
         return round(max(Delta_G_list), 2)

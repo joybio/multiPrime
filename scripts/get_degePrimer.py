@@ -91,7 +91,6 @@ def argsParse():
     parser.add_option('-d', '--dist',
                       dest='dist',
                       default=4,
-                      type="int",
                       help='Filter param of hairpin, which means distance of the minimal paired bases. Default: 4. '
                            'Example:(number of X) AGCT[XXXX]AGCT.')
 
@@ -131,6 +130,23 @@ def argsParse():
         sys.exit(1)
     return parser.parse_args()
 
+TRANS_c = str.maketrans("ATCG", "TAGC")
+
+
+def complement(seq):
+    return seq.translate(TRANS_c)[::-1]
+
+
+def symmetry(seq):
+    if len(seq) % 2 == 1:
+        return False
+    else:
+        F = seq[:int(len(seq) / 2)]
+        R = complement(seq[int(len(seq) / 2):][::-1])
+        if F == R:
+            return True
+        else:
+            return False
 
 TRANS = str.maketrans("ATGCRYMKSWHBVDN", "TACGYRKMSWDVBHN")
 
@@ -140,9 +156,8 @@ degenerate_base = {"R": ["A", "G"], "Y": ["C", "T"], "M": ["A", "C"], "K": ["G",
 
 score_table = {"A": 1, "G": 1.1, "C": 1.2, "T": 1.4, "R": 2.1, "Y": 2.6, "M": 2.2,
                "K": 2.5, "S": 2.3, "W": 2.4, "H": 3.6, "B": 3.7, "V": 3.3, "D": 3.5, "N": 4.7}
-
 # Martin Zacharias* "Base-Pairing and Base-Stacking Contributions to Double-Stranded DNA Formation"
-# J. Phys. Chem. B 2020, 124, 46, 10345-10352
+# J. Phys. Chem. B 2020, 124, 46, 10345–10352
 
 freedom_of_H_37_table = [[-0.7, -0.81, -0.65, -0.65],
                          [-0.67, -0.72, -0.8, -0.65],
@@ -159,14 +174,18 @@ H_bonds_number = [[2, 2.5, 2.5, 2],
                   [2.5, 3, 3, 2.5],
                   [2, 2.5, 2.5, 2]]
 
-adjust = {"A": 0.98, "T": 0.98, "C": 1.03, "G": 1.03}
-
-adjust_initiation = {"A": 2.8, "T": 2.8, "C": 1.82, "G": 1.82}
-
+# adjust = {"A": 0.98, "T": 0.98, "C": 1.03, "G": 1.03}
+#
+# adjust_initiation = {"A": 2.8, "T": 2.8, "C": 1.82, "G": 1.82}
+#
+# adjust_terminal_TA = 0.4
+#
+# symmetry_correction = 0.4
+adjust_initiation = {"A": 0.98, "T": 0.98, "C": 1.03, "G": 1.03}
 adjust_terminal_TA = 0.4
-
+# Symmetry correction applies only to self-complementary sequences.
+# symmetry_correction = 0.4
 symmetry_correction = 0.4
-
 base2bit = {"A": 0, "C": 1, "G": 2, "T": 3}
 
 di_nucleotides = set()
@@ -294,6 +313,7 @@ class Primers_filter(object):
     ################# Free energy #####################
     def deltaG(self, sequence):
         Delta_G_list = []
+        Na = 50
         for seq in self.degenerate_seq(sequence):
             Delta_G = 0
             for n in range(len(seq) - 1):
@@ -301,9 +321,12 @@ class Primers_filter(object):
                 Delta_G += freedom_of_H_37_table[i][j] * H_bonds_number[i][j] + penalty_of_H_37_table[i][j]
             term5 = sequence[-2:]
             if term5 == "TA":
-                Delta_G += adjust_initiation[seq[0]] + adjust_terminal_TA + symmetry_correction
+                Delta_G += adjust_initiation[seq[0]] + adjust_terminal_TA
             else:
-                Delta_G += adjust_initiation[seq[0]] + symmetry_correction
+                Delta_G += adjust_initiation[seq[0]]
+            Delta_G -= (0.175 * math.log(Na / 1000, math.e) + 0.20) * len(seq)
+            if symmetry(seq):
+                Delta_G += symmetry_correction
             Delta_G_list.append(Delta_G)
         return round(max(Delta_G_list), 2)
 
@@ -409,7 +432,6 @@ class Primers_filter(object):
                 pass
             else:
                 candidate_primers_position.append(primer_position)
-        # print(len(candidate_primers_position))
         return sorted(candidate_primers_position)
 
     @staticmethod
@@ -427,7 +449,6 @@ class Primers_filter(object):
         min_len = int(size_list[0])
         max_len = int(size_list[1])
         candidate_position = self.pre_filter_primers
-        # print(candidate_position)
         adaptor = self.adaptor.split(",")
         if int(candidate_position[-1]) - int(candidate_position[0]) < min_len:
             pass
@@ -469,7 +490,7 @@ class Primers_filter(object):
                                                 reversecomplement(self.primers[candidate_position[stop]][0]), distance,
                                                 min(self.primers[candidate_position[start]][2],
                                                     self.primers[candidate_position[stop]][2]),
-                                                str(candidate_position[start])+":"+str(candidate_position[stop]))
+                                                str(candidate_position[start]) + ":" + str(candidate_position[stop]))
                                         primer_pairs.append(line)
         #                                 self.resQ.put(line)
         # self.resQ.put(None)
