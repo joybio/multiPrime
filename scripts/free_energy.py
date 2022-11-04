@@ -121,11 +121,12 @@ adjust_initiation = {"A": 0.98, "T": 0.98, "C": 1.03, "G": 1.03}
 
 adjust_terminal_TA = 0.4
 # Symmetry correction applies only to self-complementary sequences.
-# symmetry_correction = 0.4
-symmetry_correction = 0
+symmetry_correction = 0.4
 #############################################################################
 base2bit = {"A": 0, "C": 1, "G": 2, "T": 3}
 
+# In duplex DNA there are 10 such unique doublets.
+# These are 5 - 3 AA=TT; AG=CT; AC=GT; GA=TC; GG=CC; TG=CA, CG, GC, AT, and TA
 freedom_of_degree_37_table_unified = pd.DataFrame({"A": [-1.00, -1.44, -1.28, -0.88],
                                                    "C": [-1.45, -1.84, -2.17, -1.28],
                                                    "G": [-1.30, -2.24, -1.84, -1.44],
@@ -164,6 +165,8 @@ def delta_G(sequence, gini):
                 Delta_G += adjust_initiation[seq[0]] + adjust_initiation[seq[-1]]
             # adjust by concentration of Na+
             Delta_G -= (0.175 * math.log(Na / 1000, math.e) + 0.20) * len(seq)
+            if seq == seq[::-1]:
+                Delta_G += symmetry_correction
             Delta_G_list.append(Delta_G)
 
     elif gini == "H_bonds":
@@ -177,6 +180,8 @@ def delta_G(sequence, gini):
             else:
                 Delta_G += adjust_initiation[seq[0]] + adjust_initiation[seq[-1]]
             Delta_G -= (0.175 * math.log(Na / 1000, math.e) + 0.20) * len(seq)
+            if seq == seq[::-1]:
+                Delta_G += symmetry_correction
             Delta_G_list.append(Delta_G)
 
     return round(max(Delta_G_list), 2)

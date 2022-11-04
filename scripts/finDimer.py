@@ -78,10 +78,9 @@ adjust_initiation = {"A": 0.98, "T": 0.98, "C": 1.03, "G": 1.03}
 adjust_terminal_TA = 0.4
 # Symmetry correction applies only to self-complementary sequences.
 # symmetry_correction = 0.4
-symmetry_correction = 0
+symmetry_correction = 0.4
 #############################################################################
 base2bit = {"A": 0, "C": 1, "G": 2, "T": 3}
-
 
 
 def reversecomplement(seq):
@@ -161,6 +160,8 @@ class Dimer(object):
                 Delta_G += adjust_initiation[seq[0]] + adjust_initiation[seq[-1]]
             # adjust by concentration of Na+
             Delta_G -= (0.175 * math.log(Na / 1000, math.e) + 0.20) * len(seq)
+            if seq == seq[::-1]:
+                Delta_G += symmetry_correction
             Delta_G_list.append(Delta_G)
         return round(max(Delta_G_list), 2)
 
