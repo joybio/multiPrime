@@ -44,6 +44,7 @@ def argsParse():
 
     parser.add_option('-o', '--out',
                       dest='out',
+                      default="Tm.out",
                       help='Output file.')
     (options, args) = parser.parse_args()
     if len(sys.argv) == 1:
@@ -53,10 +54,10 @@ def argsParse():
         parser.print_help()
         print("Input file must be specified !!!")
         sys.exit(1)
-    elif options.out is None:
-        parser.print_help()
-        print("No output file provided !!!")
-        sys.exit(1)
+#    elif options.out is None:
+#        parser.print_help()
+#        print("No output file provided !!!")
+#        sys.exit(1)
     return parser.parse_args()
 
 
