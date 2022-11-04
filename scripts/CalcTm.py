@@ -16,7 +16,7 @@ def argsParse():
     parser = OptionParser('Usage: %prog .')
     parser.add_option('-i', '--input',
                       dest='input',
-                      help='Input file: degeprimer out.')
+                      help='Input sequence: for example: "ATCTTCTCTC".')
 
     parser.add_option('-p', '--primer_conc',
                       dest='primer_conc',
