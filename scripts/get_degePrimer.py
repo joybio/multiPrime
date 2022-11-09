@@ -91,6 +91,7 @@ def argsParse():
     parser.add_option('-d', '--dist',
                       dest='dist',
                       default=4,
+                      type="int",
                       help='Filter param of hairpin, which means distance of the minimal paired bases. Default: 4. '
                            'Example:(number of X) AGCT[XXXX]AGCT.')
 
