@@ -47,7 +47,7 @@ def argsParse():
     parser = OptionParser('Usage: %prog -i [input] -v ["IVC"] -s [primer set] -p [20] -o  [output].')
     parser.add_option('-i', '--input',
                       dest='input',
-                      help='Input file: degeprimer out.')
+                      help='Input file: fastq or fasta or fq.gz or fa.gz.')
 
     parser.add_option('-s', '--set',
                       dest='set',
@@ -99,6 +99,9 @@ degenerate_base = {"R": ["A", "G"], "Y": ["C", "T"], "M": ["A", "C"], "K": ["G",
                    "S": ["G", "C"], "W": ["A", "T"], "H": ["A", "T", "C"], "B": ["G", "T", "C"],
                    "V": ["G", "A", "C"], "D": ["G", "A", "T"], "N": ["A", "T", "G", "C"]}
 
+TRANS = str.maketrans("ATGCRYMKSWHBVDN", "TACGYRKMSWDVBHN")
+def RC(seq):
+    return seq.translate(TRANS)[::-1]
 
 # def build_blast_database_if_needed(seqs):  # 判断blastn所需要的db文件是否存在
 #     if not os.path.exists(seqs + '.nin'):
@@ -173,6 +176,7 @@ class ONTprimer(object):
                         for j in range(len(seq)):
                             f.write(ID + " | " + str(j) + "\n" + seq[j] + "\n")
                             expand_dict[seq[j]] = ID + " | " + str(j)
+                            expand_dict[RC(seq[j])] = ID + " | " + str(j)
         p.close()
         f.close()
         return expand_dict
