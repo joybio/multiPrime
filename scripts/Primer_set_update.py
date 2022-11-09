@@ -93,10 +93,10 @@ def argsParse():
         parser.print_help()
         print("New primer file must be specified !!!")
         sys.exit(1)
-    elif options.ref is None:
-        parser.print_help()
-        print("reference file (bowite index) must be specified !!!")
-        sys.exit(1)
+#    elif options.ref is None:
+#        parser.print_help()
+#        print("reference file (bowite index) must be specified !!!")
+#        sys.exit(1)
     elif options.out is None:
         parser.print_help()
         print("No output file provided !!!")

@@ -1,12 +1,14 @@
 #!/bin/bash
-if [ $# != 2 ];then
-echo -e "primer_filter.sh <new primer.fa> <core primer set.fa>"
+# select candidate primers for core primerset from new primer set. dependency: findimer or Primer_set_update.py
+if [ $# != 3 ];then
+echo -e "primer_filter.sh <Path to Primer_set_update.py> <new primer.fa> <core primer set.fa>"
 exit
 fi
-new=$1
-core=$2
+script=$1
+new=$2
+core=$3
 
-python /share/data3/yangjunbo/git_storage/multiPrime/scripts/Primer_set_update.py -c $core -n $new -r /share/data3/yangjunbo/database/T2T_gtf/T2T_bowtie2.len300 -p 10 -f D -o ${new%.fa}
+python $script -c $core -n $new -p 10 -f D -o ${new%.fa}
 
 awk '{if($1!~/Cluster/){print $8"\t"$1}else if($8!~/Cluster/){print $1"\t"$8}}' ${new%.fa}.dimer | sort > ${new%.fa}.dimer.filter.sort
 
