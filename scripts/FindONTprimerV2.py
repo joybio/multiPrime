@@ -197,6 +197,7 @@ class ONTprimer(object):
             else:
                 primer = "NA"
             primer_F_R_list.append(primer)
+        primer_F_R_list.sort()
         self.resQ.put("\t".join(primer_F_R_list))
         # 给get_primer传输一个空的数据, 使get_primer模块运行结束.
         # Found a None, you can rest now
@@ -249,7 +250,7 @@ class ONTprimer(object):
                         seq_number += 1
                         # print(seq_number)
         else:
-            print("Please command line! only fa or fq is accepted!")
+            print("Please check your command line! -f (only fa or fq) is accepted!")
             sys.exit(1)
         n = 0
         primer_pair_sum = defaultdict(int)
@@ -268,7 +269,6 @@ class ONTprimer(object):
             # # print(res)
             primer_pair_sum[res] += 1
             n += 1
-            # print(n)
         # try:
         #     res = self.resQ.get()
         # except self.resQ.empty():

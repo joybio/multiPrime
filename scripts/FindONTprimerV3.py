@@ -197,6 +197,7 @@ class ONTprimer(object):
             else:
                 primer = "NA"
             primer_F_R_list.append(primer)
+        primer_F_R_list.sort()
         self.resL.append("\t".join(primer_F_R_list))
         # Found a None, you can rest now
 
@@ -235,7 +236,7 @@ class ONTprimer(object):
                         Primer_F_R = [line[:self.primer_len], line[-self.primer_len:]]
                         p.submit(self.get_primer, Primer_F_R)
         else:
-            print("Please command line! only fa or fq is accepted!")
+            print("Please check your command line! -f (only fa or fq) is accepted!")
             sys.exit(1)
         p.shutdown()
         # After I run the main, I don't care whether the sub thread is alive or dead. With this parameter, after all
