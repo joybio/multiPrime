@@ -51,11 +51,16 @@ def argsParse():
 	parser.add_option('-o','--out',
 			dest='out',
 			help='Out file: format.fa')
+	parser.add_option('-c','--c',
+                        dest='complete',
+			default="T",
+			type='str',
+                        help='Only complete CDS or genome is used, defalut: T. use other word (F), if you dont want this param.')
 	parser.add_option('-l','--length',
 			dest='length',
 			default=300,
 			type="int",
-			help='Filter fasta by length. Default: 250')
+			help='Filter fasta by length. Default: 250.')
 
 
 	(options,args) = parser.parse_args()
@@ -75,17 +80,20 @@ def argsParse():
 	return parser.parse_args()
 
 TRANS = str.maketrans("U", "T")
-
+import re
 
 def Trans(seq):
 	return seq.translate(TRANS)
 seq_dict = defaultdict(str)
 seq_lenght_dict = defaultdict(int)
 def seq_format(Input):
+	complete_number = 0
 	with open(Input,"r") as In:
 		for i in In:
 			if i.startswith(">"):
 				key = i
+				if re.search("complete", key):
+					complete_number += 1
 			elif i == "--\n":
 				pass
 			else:
@@ -93,16 +101,32 @@ def seq_format(Input):
 				seq_dict[key] += i
 				seq_lenght_dict[key] += len(i)
 	In.close()
-	return seq_dict, seq_lenght_dict
+	return seq_dict, seq_lenght_dict, complete_number
 
 if __name__ == "__main__":
 	(options, args) = argsParse()
-	seq, length = seq_format(options.input)
+	seq, length, c_number = seq_format(options.input)
 	with open(options.out,"w") as Out:
-		for i in length.keys():
-			if length[i] < options.length:
-				pass
+		# if ID dont have string complete, then use all.
+		if c_number == 0:
+			for i in length.keys():
+				if length[i] < options.length:
+					pass
+				else:
+					Out.write(i + seq[i] + "\n")
+		else:
+			if options.complete == "T":
+				for i in length.keys():
+					if re.search('complete', i):
+						if length[i] < options.length:
+							pass
+						else:
+							Out.write(i + seq[i] + "\n")
 			else:
-				Out.write(i + seq[i] + "\n")
+				for i in length.keys():
+					if length[i] < options.length:
+						pass
+					else:
+						Out.write(i + seq[i] + "\n")
 	Out.close()
 
