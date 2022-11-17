@@ -33,6 +33,7 @@ THE SOFTWARE.
 
 import optparse
 from optparse import OptionParser
+from collections import defaultdict
 def argsParse():
 	parser = OptionParser('Usage: %prog -i [input.fa] -o [output.fa] \n \
 		Before: \n \
@@ -45,11 +46,17 @@ def argsParse():
 		> ID1\n \
 		AATTCTTTCTTATCCTTCATCTATCATCGCAGTCTACGTACG...')
 	parser.add_option('-i','--input',
-					dest='input',
-					help='Input file: raw.fa')
+			dest='input',
+			help='Input file: raw.fa')
 	parser.add_option('-o','--out',
-					dest='out',
-					help='Out file: format.fa')
+			dest='out',
+			help='Out file: format.fa')
+	parser.add_option('-l','--length',
+			dest='length',
+			default=300,
+			type="int",
+			help='Filter fasta by length. Default: 250')
+
 
 	(options,args) = parser.parse_args()
 	import sys
@@ -72,24 +79,30 @@ TRANS = str.maketrans("U", "T")
 
 def Trans(seq):
 	return seq.translate(TRANS)
-
-def seq_format(Input,Output):
+seq_dict = defaultdict(str)
+seq_lenght_dict = defaultdict(int)
+def seq_format(Input):
 	with open(Input,"r") as In:
-		head = In.readline()
-		with open(Output,"w") as Out:
-			Out.write(head)
-			for i in In:
-				if i.startswith(">"):
-					Out.write("\n" + i)
-				elif i == "--\n":
-					pass
-				else:
-					i = i.strip()
-					Out.write(Trans(i.upper()))
-			Out.write("\n")
+		for i in In:
+			if i.startswith(">"):
+				key = i
+			elif i == "--\n":
+				pass
+			else:
+				i = i.strip()
+				seq_dict[key] += i
+				seq_lenght_dict[key] += len(i)
+	In.close()
+	return seq_dict, seq_lenght_dict
 
 if __name__ == "__main__":
 	(options, args) = argsParse()
-	seq_format(options.input,options.out)
-
+	seq, length = seq_format(options.input)
+	with open(options.out,"w") as Out:
+		for i in length.keys():
+			if length[i] < options.length:
+				pass
+			else:
+				Out.write(i + seq[i] + "\n")
+	Out.close()
 
