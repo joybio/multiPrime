@@ -1,4 +1,4 @@
-#!/share/data3/yangjunbo/miniconda3/bin/python
+#!/bin/python
 
 from optparse import OptionParser
 import sys
