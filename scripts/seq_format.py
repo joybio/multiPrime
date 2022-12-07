@@ -98,7 +98,7 @@ def seq_format(Input):
 				pass
 			else:
 				i = i.strip()
-				seq_dict[key] += i
+				seq_dict[key] += i.replace("N","")
 				seq_lenght_dict[key] += len(i)
 	In.close()
 	return seq_dict, seq_lenght_dict, complete_number

@@ -191,9 +191,11 @@ class ONTprimer(object):
                 ratio = round(difflib.SequenceMatcher(None, seq, expand_list[j]).ratio(), 2)
                 expand_ratio_list.append(ratio)
             max_ratio = max(expand_ratio_list)
+            # print(max_ratio)
             max_ratio_idx = expand_ratio_list.index(max_ratio)
             if max_ratio > self.min_ident:
                 primer = self.expand_dict[expand_list[max_ratio_idx]].split(" | ")[0]
+                # print(seq, primer)
             else:
                 primer = "NA"
             primer_F_R_list.append(primer)
@@ -227,13 +229,14 @@ class ONTprimer(object):
                         s = line.decode().strip()  # 读取之后要进行解码
                         # print(s)
                         Primer_F_R = [s[:self.primer_len], s[-self.primer_len:]]
-                        # print(Primer_F_R)
+                        #print(Primer_F_R)
                         p.submit(self.get_primer, Primer_F_R)
             else:
                 f = open(self.input_file, 'r')
                 for idx, line in enumerate(f.readlines()):  # 按行进行读取
                     if idx % 2 == 1:
                         Primer_F_R = [line[:self.primer_len], line[-self.primer_len:]]
+                        #print(Primer_F_R)
                         p.submit(self.get_primer, Primer_F_R)
         else:
             print("Please check your command line! -f (only fa or fq) is accepted!")

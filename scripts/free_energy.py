@@ -47,7 +47,7 @@ def argsParse():
                       dest='gini',
                       default="H_bonds",
                       type="str",
-                      help='method used to calculate delta G. [unidfied] or [H_bonds]. Default: H_bonds.\n'
+                      help='method used to calculate delta G. [unified] or [H_bonds]. Default: H_bonds.\n'
                            'NN model: nearest neighbor model')
     parser.add_option('-p', '--position',
                       dest='position',
