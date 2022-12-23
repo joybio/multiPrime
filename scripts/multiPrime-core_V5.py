@@ -1,4 +1,7 @@
 #!/bin/python
+# bug fixed. Sometimes, positons have no bases except "-", and columns in frequency array become [0,0,0,0],
+# which is not proper for primer design, especially for Tm calculation,
+# we set delta H and delta S to 0 in this situation to continue Tm calculation.
 
 __date__ = "2022-10-8"
 __author__ = "Junbo Yang"
@@ -171,7 +174,7 @@ H_bonds_number = [[2, 2.5, 2.5, 2],
                   [2.5, 3, 3, 2.5],
                   [2, 2.5, 2.5, 2]]
 ##############################################################################################
-base2bit = {"A": 0, "C": 1, "G": 2, "T": 3}
+base2bit = {"A": 0, "C": 1, "G": 2, "T": 3, "#": 4}
 TRANS = str.maketrans("ATCG", "TAGC")
 
 
@@ -181,21 +184,21 @@ def complement(seq):
 
 ##############################################################################################
 # 37°C and 1 M NaCl
-Htable2 = [[-7.9, -8.5, -8.2, -7.2],
-           [-8.4, -8, -9.8, -8.2],
-           [-7.8, -10.6, -8, -8.5],
-           [-7.2, -7.8, -8.4, -7.9]]
-
-Stable2 = [[-22.2, -22.7, -22.2, -21.3],
-           [-22.4, -19.9, -24.4, -22.2],
-           [-21, -27.2, -19.9, -22.7],
-           [-20.4, -21, -22.4, -22.2]]
-
-Gtable2 = [[-1, -1.45, -1.3, -0.58],
-           [-1.44, -1.84, -2.24, -1.3],
-           [-1.28, -2.17, -1.84, -1.45],
-           [-0.88, -1.28, -1.44, -1]]
-
+Htable2 = [[-7.9, -8.5, -8.2, -7.2, 0],
+           [-8.4, -8, -9.8, -8.2, 0],
+           [-7.8, -10.6, -8, -8.5, 0],
+           [-7.2, -7.8, -8.4, -7.9, 0],
+            [0, 0, 0, 0, 0]]
+Stable2 = [[-22.2, -22.7, -22.2, -21.3, 0],
+           [-22.4, -19.9, -24.4, -22.2, 0],
+           [-21, -27.2, -19.9, -22.7, 0],
+           [-20.4, -21, -22.4, -22.2, 0],
+            [0, 0, 0, 0, 0]]
+Gtable2 = [[-1, -1.45, -1.3, -0.58, 0],
+           [-1.44, -1.84, -2.24, -1.3, 0],
+           [-1.28, -2.17, -1.84, -1.45, 0],
+           [-0.88, -1.28, -1.44, -1, 0],
+            [0, 0, 0, 0, 0]]
 H_adjust_initiation = {"A": 2.3, "T": 2.3, "C": 0.1, "G": 0.1}
 S_adjust_initiation = {"A": 4.1, "T": 4.1, "C": -2.8, "G": -2.8}
 G_adjust_initiation = {"A": 1.03, "T": 1.03, "C": 0.98, "G": 0.98}
@@ -285,6 +288,7 @@ def Calc_deltaH_deltaS(seq):
         i, j = base2bit[seq[n + 1]], base2bit[seq[n]]
         Delta_H += Htable2[i][j]
         Delta_S += Stable2[i][j]
+    seq = seq.replace("#", '')
     Delta_H += H_adjust_initiation[seq[0]] + H_adjust_initiation[seq[-1]]
     Delta_S += S_adjust_initiation[seq[0]] + S_adjust_initiation[seq[-1]]
     if symmetry(seq):
