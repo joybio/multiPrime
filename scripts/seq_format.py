@@ -53,7 +53,7 @@ def argsParse():
 			help='Out file: format.fa')
 	parser.add_option('-c','--c',
                         dest='complete',
-			default="T",
+			default="F",
 			type='str',
                         help='Only complete CDS or genome is used, defalut: T. use other word (F), if you dont want this param.')
 	parser.add_option('-l','--length',
@@ -126,6 +126,8 @@ if __name__ == "__main__":
 				for i in length.keys():
 					if length[i] < options.length:
 						pass
+				#	elif re.search("partial", i):
+				#		pass
 					else:
 						Out.write(i + seq[i] + "\n")
 	Out.close()
