@@ -88,8 +88,8 @@ def reversecomplement(seq):
 
 
 def Penalty_points(length, GC, d1, d2):
-    # return log10((2 ** length * 2 ** GC) / ((d1 + 0.1) * (d2 + 0.1)))
-    return log10((2 ** length * 2 ** GC) / ((2 ** d1 - 0.9) * (2 ** d2 - 0.9)))
+    return log10((2 ** length * 2 ** GC) / ((d1 + 0.1) * (d2 + 0.1)))
+
 
 def parseArg():
     parser = argparse.ArgumentParser(
@@ -98,8 +98,6 @@ def parseArg():
                         help="input fasta primer file", metavar="<file>")
     parser.add_argument("-n", "--num", type=int, default=5,
                         help='number of cpu process, 5 by default', metavar="<int>")
-    parser.add_argument("-t", "--threshold", type=float, default=3.6,
-                        help='threshold of loss function. Default: 3.96', metavar="<int>")
     parser.add_argument("-o", "--output", type=str, required=True,
                         help='output file', metavar="<file>")
     return parser.parse_args()
@@ -126,10 +124,9 @@ def symmetry(seq):
 
 class Dimer(object):
 
-    def __init__(self, primer_file="", outfile="", threshold=3.96, nproc=10):
+    def __init__(self, primer_file="", outfile="", nproc=10):
         self.nproc = nproc
         self.primers_file = primer_file
-        self.threshold = threshold
         self.outfile = os.path.abspath(outfile)
         self.primers = self.parse_primers()
         self.resQ = Manager().Queue()
@@ -203,7 +200,7 @@ class Dimer(object):
                         Loss = Penalty_points(
                             end_length, end_GC, end_d1, end_d2)
                         delta_G = self.deltaG(end)
-                        if Loss >= self.threshold or delta_G < -5:
+                        if Loss > 3 or delta_G < -5:
                             line = (self.primers[primer], primer,
                                     end, delta_G, end_length, end_d1,
                                     end_GC, self.primers[ps],

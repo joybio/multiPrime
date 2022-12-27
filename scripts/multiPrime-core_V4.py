@@ -1,9 +1,6 @@
 #!/bin/python
-# bug fixed. Sometimes, positons have no bases except "-", and columns in frequency array become [0,0,0,0],
-# which is not proper for primer design, especially for Tm calculation,
-# we set delta H and delta S to 0 in this situation to continue Tm calculation.
 
-__date__ = "2022-12-27"
+__date__ = "2022-10-8"
 __author__ = "Junbo Yang"
 __email__ = "yang_junbo_hi@126.com"
 __license__ = "MIT"
@@ -53,7 +50,6 @@ from optparse import OptionParser
 import sys
 import numpy as np
 from itertools import repeat
-
 
 # Melting temperature between 55-80◦C reduces the occurrence of hairpins
 # Runs of three or more Cs or Gs at the 3'-ends of primers may promote mispriming at G or C-rich sequences
@@ -175,7 +171,7 @@ H_bonds_number = [[2, 2.5, 2.5, 2],
                   [2.5, 3, 3, 2.5],
                   [2, 2.5, 2.5, 2]]
 ##############################################################################################
-base2bit = {"A": 0, "C": 1, "G": 2, "T": 3, "#": 4}
+base2bit = {"A": 0, "C": 1, "G": 2, "T": 3}
 TRANS = str.maketrans("ATCG", "TAGC")
 
 
@@ -185,21 +181,21 @@ def complement(seq):
 
 ##############################################################################################
 # 37°C and 1 M NaCl
-Htable2 = [[-7.9, -8.5, -8.2, -7.2, 0],
-           [-8.4, -8, -9.8, -8.2, 0],
-           [-7.8, -10.6, -8, -8.5, 0],
-           [-7.2, -7.8, -8.4, -7.9, 0],
-           [0, 0, 0, 0, 0]]
-Stable2 = [[-22.2, -22.7, -22.2, -21.3, 0],
-           [-22.4, -19.9, -24.4, -22.2, 0],
-           [-21, -27.2, -19.9, -22.7, 0],
-           [-20.4, -21, -22.4, -22.2, 0],
-           [0, 0, 0, 0, 0]]
-Gtable2 = [[-1, -1.45, -1.3, -0.58, 0],
-           [-1.44, -1.84, -2.24, -1.3, 0],
-           [-1.28, -2.17, -1.84, -1.45, 0],
-           [-0.88, -1.28, -1.44, -1, 0],
-           [0, 0, 0, 0, 0]]
+Htable2 = [[-7.9, -8.5, -8.2, -7.2],
+           [-8.4, -8, -9.8, -8.2],
+           [-7.8, -10.6, -8, -8.5],
+           [-7.2, -7.8, -8.4, -7.9]]
+
+Stable2 = [[-22.2, -22.7, -22.2, -21.3],
+           [-22.4, -19.9, -24.4, -22.2],
+           [-21, -27.2, -19.9, -22.7],
+           [-20.4, -21, -22.4, -22.2]]
+
+Gtable2 = [[-1, -1.45, -1.3, -0.58],
+           [-1.44, -1.84, -2.24, -1.3],
+           [-1.28, -2.17, -1.84, -1.45],
+           [-0.88, -1.28, -1.44, -1]]
+
 H_adjust_initiation = {"A": 2.3, "T": 2.3, "C": 0.1, "G": 0.1}
 S_adjust_initiation = {"A": 4.1, "T": 4.1, "C": -2.8, "G": -2.8}
 G_adjust_initiation = {"A": 1.03, "T": 1.03, "C": 0.98, "G": 0.98}
@@ -289,7 +285,6 @@ def Calc_deltaH_deltaS(seq):
         i, j = base2bit[seq[n + 1]], base2bit[seq[n]]
         Delta_H += Htable2[i][j]
         Delta_S += Stable2[i][j]
-    seq = seq.replace("#", '')
     Delta_H += H_adjust_initiation[seq[0]] + H_adjust_initiation[seq[-1]]
     Delta_S += S_adjust_initiation[seq[0]] + S_adjust_initiation[seq[-1]]
     if symmetry(seq):
@@ -646,21 +641,6 @@ class NN_degenerate(object):
         for seq_id in sequence_dict.keys():
             # sequence
             sequence = sequence_dict[seq_id][primer_start:primer_start + self.primer_length]
-            # replace "-" which in start or stop position with nucleotides
-            if sequence.startswith("-"):
-                sequence_narrow = sequence.lstrip("-")
-                append_base_length = len(sequence) - len(sequence_narrow)
-                left_seq = sequence_dict[seq_id][0:primer_start].replace("-", "")
-                if len(left_seq) >= append_base_length:
-                    sequence = left_seq[len(left_seq) - append_base_length:] + sequence_narrow
-            elif sequence.endswith("-"):
-                sequence_narrow = sequence.rstrip("-")
-                append_base_length = len(sequence) - len(sequence_narrow)
-                right_seq = sequence_dict[seq_id][primer_start + self.primer_length:].replace("-", "")
-                if len(right_seq) >= append_base_length:
-                    sequence = sequence_narrow + right_seq[0:append_base_length]
-            # print(sequence_narrow)
-            # print(sequence)
             # gap number. number of gap > 2
             if list(sequence).count("-") > self.variation:
                 gap_sequence[sequence] += 1
@@ -738,10 +718,7 @@ class NN_degenerate(object):
             if len(cover_for_MM) != 0:
                 optimal_primer_index_NM = self.get_optimal_primer_by_viterbi(freq_matrix, NN_matrix)
                 optimal_primer_index_MM = self.get_optimal_primer_by_MM(cover_for_MM)
-                # print(optimal_primer_index_NM.tolist()) # array
-                # print(optimal_primer_index_MM) # list
-                #  if (optimal_primer_index_NM == optimal_primer_index_MM).all():
-                if optimal_primer_index_NM.tolist() == optimal_primer_index_MM:
+                if (optimal_primer_index_NM == optimal_primer_index_MM).all():
                     optimal_primer_index = optimal_primer_index_NM
                     row_names = np.array(freq_matrix.index.values).reshape(1, -1)
                     # build a list to store init base information in each position.
@@ -775,17 +752,15 @@ class NN_degenerate(object):
                                                          optimal_primer_list_MM, cover_primer_set, non_gap_seq_id,
                                                          F_non_cover_MM, R_non_cover_MM)
                     if (F_mis_cover_NM + R_mis_cover_NM) > (F_mis_cover_MM + R_mis_cover_MM):
-                        optimal_primer_current, F_mis_cover, R_mis_cover, information, optimal_coverage_init, \
+                        optimal_primer_current, F_mis_cover, R_mis_cover, information, optimal_coverage_init,\
                         F_non_cover, R_non_cover, NN_matrix = optimal_primer_current_NM, F_mis_cover_NM, \
-                                                              R_mis_cover_NM, information_NM, optimal_coverage_init_NM, \
+                                                              R_mis_cover_NM, information_NM, optimal_coverage_init_NM,\
                                                               F_non_cover_NM, R_non_cover_NM, NN_matrix_NM
                     else:
                         optimal_primer_current, F_mis_cover, R_mis_cover, information, optimal_coverage_init, \
                         F_non_cover, R_non_cover, NN_matrix = optimal_primer_current_MM, F_mis_cover_MM, \
-                                                              R_mis_cover_MM, information_MM, optimal_coverage_init_MM, \
+                                                              R_mis_cover_MM, information_MM, optimal_coverage_init_MM,\
                                                               F_non_cover_MM, R_non_cover_MM, NN_matrix_MM
-                    # print(F_mis_cover)
-                    # print(R_mis_cover)
             else:
                 optimal_primer_index_NM = self.get_optimal_primer_by_viterbi(freq_matrix, NN_matrix)
                 F_non_cover_NM, R_non_cover_NM, F_non_cover_MM, R_non_cover_MM = {}, {}, {}, {}
@@ -804,15 +779,12 @@ class NN_degenerate(object):
                                          optimal_coverage_init_NM, F_non_cover_NM, R_non_cover_NM, NN_matrix_NM
         nonsense_primer_number = len(set(self.degenerate_seq(optimal_primer_current)) - set(cover.keys()))
         primer_degenerate_number = dege_number(optimal_primer_current)
-        Tm, coverage = [], []
+        Tm = []
         for seq in self.degenerate_seq(optimal_primer_current):
             Tm.append(Calc_Tm_v2(seq))
-            coverage.append(cover[seq])
         Tm_average = round(mean(Tm), 2)
-        perfect_coverage = sum(coverage)
-        # print(optimal_coverage_init)
         mismatch_coverage = [primer_start, [optimal_primer_current, primer_degenerate_number,
-                                            nonsense_primer_number, perfect_coverage, F_mis_cover,
+                                            nonsense_primer_number, optimal_coverage_init, F_mis_cover,
                                             R_mis_cover, Tm_average, information]]
         non_cov_primer_info = [primer_start, [F_non_cover, R_non_cover]]
         return mismatch_coverage, non_cov_primer_info
@@ -853,9 +825,6 @@ class NN_degenerate(object):
         R_non_cover.update(R_non_cover_in_cover)
         F_mis_cover = optimal_coverage_init + F_mis_cover_cover
         R_mis_cover = optimal_coverage_init + R_mis_cover_cover
-        # print(optimal_coverage_init)
-        # print(F_mis_cover_cover)
-        # print(R_mis_cover_cover)
         return optimal_primer_current, F_mis_cover, R_mis_cover, information, F_non_cover, R_non_cover
 
     def refine_by_NN_array(self, optimal_primer_list, optimal_coverage_init, cover,
@@ -1039,7 +1008,6 @@ class NN_degenerate(object):
                 R_non_cover[uncover_primer] = non_gap_seq_id[uncover_primer]
             # if len(Y_dist) <= self.variation:
             else:
-                # print(Y_dist)
                 if min(Y_dist) < self.position:
                     # record sequence and acc_ID which will never mis-coverage.
                     # mismatch position located in start region!
@@ -1059,8 +1027,6 @@ class NN_degenerate(object):
                     else:
                         F_mis_cover += cover[uncover_primer]
                         R_mis_cover += cover[uncover_primer]
-        # print(F_mis_cover)
-        # print(R_mis_cover)
         return F_mis_cover, F_non_cover, R_mis_cover, R_non_cover
 
     ################# get_primers #####################
