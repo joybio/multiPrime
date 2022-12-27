@@ -3,7 +3,7 @@
 # which is not proper for primer design, especially for Tm calculation,
 # we set delta H and delta S to 0 in this situation to continue Tm calculation.
 
-__date__ = "2022-10-8"
+__date__ = "2022-12-27"
 __author__ = "Junbo Yang"
 __email__ = "yang_junbo_hi@126.com"
 __license__ = "MIT"

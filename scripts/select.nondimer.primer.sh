@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ $# != 2 ];then
-echo -e "selct.sh <query fa> <dimer>
+echo -e "selct.sh <query fa / primer set> <dimer out>
 # select primer by dimerzation"
 exit
 fi

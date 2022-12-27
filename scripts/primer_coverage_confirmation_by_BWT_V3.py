@@ -4,7 +4,7 @@
 Output mapping results of primer.
 """
 
-__date__ = "2022-10-8"
+__date__ = "2022-12-27"
 __author__ = "Junbo Yang"
 __email__ = "yang_junbo_hi@126.com"
 __license__ = "MIT"
