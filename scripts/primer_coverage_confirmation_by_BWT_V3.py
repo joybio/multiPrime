@@ -1,10 +1,10 @@
 #!/bin/python
 # coding:utf-8
 """
-Output mapping results of primer. 
+Output mapping results of primer.
 """
 
-__date__ = "2022-12-27"
+__date__ = "2022-10-8"
 __author__ = "Junbo Yang"
 __email__ = "yang_junbo_hi@126.com"
 __license__ = "MIT"
@@ -71,9 +71,9 @@ def argsParse():
 
     parser.add_option('-l', '--len',
                       dest='len',
-                      default=9,
+                      default=18,
                       type="int",
-                      help='Length of primer term, which is used for blast. Default:9')
+                      help='Length of primer, which is used for mapping. Default: 18')
 
     parser.add_option('-t', '--term',
                       dest='term',
@@ -89,9 +89,9 @@ def argsParse():
 
     parser.add_option('-p', '--proc',
                       dest='proc',
-                      default="10",
+                      default="20",
                       type="int",
-                      help='number of process.')
+                      help='Number of process. Default: 20')
 
     parser.add_option('-b', '--bowtie',
                       dest='bowtie',
