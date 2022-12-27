@@ -55,7 +55,7 @@ def argsParse():
                         dest='complete',
 			default="F",
 			type='str',
-                        help='Only complete CDS or genome is used, defalut: T. use other word (F), if you dont want this param.')
+                        help='Only complete CDS or genome is used, defalut: F. use other word (T), if you want to filter sequence.')
 	parser.add_option('-l','--length',
 			dest='length',
 			default=300,

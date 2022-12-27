@@ -526,7 +526,8 @@ class Primers_filter(object):
             # headers = ["Primer_F_seq", "Primer_R_seq", "Product length", "Target number", "Primer_start_end"]
             # fo.write(ID + "\t" + "\t".join(headers) + "\t")
             fo.write(ID + "\t")
-            for i in primer_pairs:
+            primer_pairs_sort = sorted(primer_pairs, key=lambda k:k[3], reverse=True)
+            for i in primer_pairs_sort:
                 fo.write("\t".join(map(str, i)) + "\t")
             # get results before shutdown. Synchronous call mode: call, wait for the return value, decouple, but slow.
             fo.write("\n")
