@@ -60,8 +60,8 @@ def argsParse():
 
     parser.add_option('-g', '--gc',
                       dest='gc',
-                      default="0.4,0.6",
-                      help="Filter primers by GC content. Default [0.4,0.6].")
+                      default="0.2,0.7",
+                      help="Filter primers by GC content. Default [0.2,0.7].")
 
     parser.add_option('-f', '--fraction',
                       dest='fraction',
@@ -213,7 +213,7 @@ def reversecomplement(seq):
 
 
 def Penalty_points(length, GC, d1, d2):
-    return log10((2 ** length * 2 ** GC) / ((d1 + 0.1) * (d2 + 0.1)))
+    return log10((2 ** length * 2 ** GC) / ((2 ** d1 - 0.9) * (2 ** d2 - 0.9)))
 
 
 class Primers_filter(object):
@@ -244,10 +244,12 @@ class Primers_filter(object):
                 else:
                     i = i.strip().split("\t")
                     position = int(i[0])
-                    primer_seq = i[5]
-                    number = int(i[6])
-                    fraction = round(int(i[6]) / self.number, 2)
-                    primer_dict[position] = [primer_seq, fraction, number]
+                    primer_seq = i[1]
+                    F_coverage = int(i[5])
+                    R_coverage = int(i[6])
+                    fraction = round(int(i[5]) / self.number, 2)
+                    primer_dict[position] = [primer_seq, fraction, F_coverage, R_coverage]
+        # print(primer_dict)
         return primer_dict
 
     ################# get_number #####################
@@ -258,7 +260,6 @@ class Primers_filter(object):
             buf_gen = takewhile(lambda x: x, (f.read(buffer) for _ in repeat(None)))
             seq_number = int(sum(buf.count("\n") for buf in buf_gen) / 2)
             if seq_number > self.rep_seq_number != 0:
-                print(seq_number, self.rep_seq_number)
                 return self.rep_seq_number
             else:
                 return seq_number
@@ -429,8 +430,6 @@ class Primers_filter(object):
                 pass
             elif self.di_nucleotide(primer):
                 pass
-            elif coverage < min_cov:
-                pass
             else:
                 candidate_primers_position.append(primer_position)
         return sorted(candidate_primers_position)
@@ -452,15 +451,20 @@ class Primers_filter(object):
         candidate_position = self.pre_filter_primers
         adaptor = self.adaptor.split(",")
         if int(candidate_position[-1]) - int(candidate_position[0]) < min_len:
+            print("min len!")
             pass
         else:
             for start in range(len(candidate_position)):
+                print(self.primers[candidate_position[start]])
                 primerF_extend = adaptor[0] + self.primers[candidate_position[start]][0]
                 if self.hairpin_check(primerF_extend):
+                    print("hairpin!")
                     pass
                 elif self.dege_filter_in_term_N_bp(self.primers[candidate_position[start]][0]):
+                    print("term N!")
                     pass
                 elif self.GC_clamp(self.primers[candidate_position[start]][0]):
+                    print("GC_clamp!")
                     pass
                 else:
                     start_index, stop_index = self.closest(candidate_position, candidate_position[start]
@@ -471,6 +475,7 @@ class Primers_filter(object):
                         for stop in range(start_index, stop_index + 1):
                             primerR_extend = adaptor[1] + reversecomplement(self.primers[candidate_position[stop]][0])
                             if self.hairpin_check(primerR_extend):
+                                print("self hairpin")
                                 pass
                             elif self.dege_filter_in_term_N_bp(
                                     reversecomplement(self.primers[candidate_position[stop]][0])):
@@ -480,17 +485,19 @@ class Primers_filter(object):
                             else:
                                 distance = int(candidate_position[stop]) - int(candidate_position[start]) + 1
                                 if distance > int(max_len):
+                                    print("error")
                                     break
                                 elif int(min_len) <= distance <= int(max_len):
                                     if self.dimer_check(self.primers[candidate_position[start]][0],
                                                         reversecomplement(self.primers[candidate_position[stop]][0])):
+                                        print("dimer")
                                         pass
                                     else:
                                         # primer_pairs.append((candidate_position[start], candidate_position[stop]))
                                         line = (self.primers[candidate_position[start]][0],
                                                 reversecomplement(self.primers[candidate_position[stop]][0]), distance,
                                                 min(self.primers[candidate_position[start]][2],
-                                                    self.primers[candidate_position[stop]][2]),
+                                                    self.primers[candidate_position[stop]][3]),
                                                 str(candidate_position[start]) + ":" + str(candidate_position[stop]))
                                         primer_pairs.append(line)
         #                                 self.resQ.put(line)
@@ -519,7 +526,8 @@ class Primers_filter(object):
             # headers = ["Primer_F_seq", "Primer_R_seq", "Product length", "Target number", "Primer_start_end"]
             # fo.write(ID + "\t" + "\t".join(headers) + "\t")
             fo.write(ID + "\t")
-            for i in primer_pairs:
+            primer_pairs_sort = sorted(primer_pairs, key=lambda k:k[3], reverse=True)
+            for i in primer_pairs_sort:
                 fo.write("\t".join(map(str, i)) + "\t")
             # get results before shutdown. Synchronous call mode: call, wait for the return value, decouple, but slow.
             fo.write("\n")
