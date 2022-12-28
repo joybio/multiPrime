@@ -57,17 +57,37 @@ Before starting the pipeline, open the `multiPrime.yaml` configuration file and 
 # Start a run
 
 Once you set up your configuration file, running the pipeline locally on your computer is as easy as invoking:
-`sh run.sh`
+  ```bash
+  sh run.sh
+  ```
 
 # Start a run independently
 If you want to run *.py independently, running the script locally on your computer is as easy as invoking:
-`python {path to script}/{target}.py --help`
+  ```bash
+  python {path to script}/{target}.py --help
+  ```
+or 
+  ```bash
+  python {path to script}/{target}.py
+  ```
 For example:
-`python scripts/multiPrime-core.py`  or `python scripts/multiPrime-core.py --help` This is used for DPD (degenerate primer design)
-`python scripts/FindONTprimerV3.py` or `python scripts/FindONTprimerV3.py --help` This is used to extract primers from ONT reads. Input file format can be "fasta", "fastq", "fa.gz", and "fq.gz"
-`python scripts/extract_PCR_product.py` or `python scripts/extract_PCR_product.py --help` This is used to extract PCR products with perfect match
-`python scripts/primer_coverage_confirmation_by_BWT_V3.py` or `python scripts/primer_coverage_confirmation_by_BWT_V3.py --help` This is used to output PCR products with mismatch
-...
+  DPD (degenerate primer design):
+  ```bash
+  python scripts/multiPrime-core.py
+  ```
+  Extract primers from ONT reads. Input file format can be "fasta", "fastq", "fa.gz", and "fq.gz":
+  ```bash
+  python scripts/FindONTprimerV3.py
+  ```
+  Extract PCR products with perfect match:
+  ```bash
+  python scripts/extract_PCR_product.py
+  ```
+  Get informatiopn of PCR products with mismatch
+  ```bash
+  python scripts/primer_coverage_confirmation_by_BWT_V3.py
+  ```
+  ...
 
 # Output
 logs: log file of the multiPrime.py 
