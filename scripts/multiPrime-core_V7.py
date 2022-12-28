@@ -62,8 +62,8 @@ from itertools import repeat
 # Runs of three or more Cs or Gs at the 3'-ends of primers may promote mispriming at G or C-rich sequences
 # (because of stability of annealing), and should be avoided.
 def argsParse():
-    parser = OptionParser('Usage: %prog -i input -o output \n \
-                Options: { -l 18 -n 2 -d 6 -v 2 -g 0.2,0.7 -f 0.8 -c 4 -p 10 -a 4 }')
+    parser = OptionParser('Usage: %prog -i input -o output -p 10\n \
+                Options: { -l [18] -n [4] -d [10] -v [1] -g [0.2,0.7] -f [0.8] -c [4] -p [10] -a [4] }')
     parser.add_option('-i', '--input',
                       dest='input',
                       help='Input file: multi-alignment output (muscle or others).')
@@ -78,7 +78,7 @@ def argsParse():
                       dest='dnum',
                       default=4,
                       type="int",
-                      help='Number of degenerate. Default: 2.')
+                      help='Number of degenerate. Default: 4.')
 
     parser.add_option('-d', '--degeneracy',
                       dest='degeneracy',
@@ -115,7 +115,7 @@ def argsParse():
                       type="int",
                       help="Mismatch index is not allowed to locate in start or stop. "
                            "otherwise, it won't be regard as the mis-coverage. "
-                           "With this param, you can control the index of Y-distance (position of mismatch) "
+                           "With this param, you can control the index of Y-distance (number=variation and position of mismatch) "
                            "when calculate coverage with error."
                            "Default: 4.")
 

@@ -77,15 +77,15 @@ For example:
   python scripts/multiPrime-core.py
   ```
   ```bash
-  Usage: multiPrime-core.py -i input -o output
-                 Options: { -l 18 -n 2 -d 6 -v 2 -g 0.2,0.7 -f 0.8 -c 4 -p 10 -a 4 }
+  Usage: multiPrime-core.py -i input -o output -p 20
+                 Options: { -l [18] -n [4] -d [10] -v [1] -g [0.2,0.7] -f [0.8] -c [4] -p [10] -a [4] }
 
   Options:
   -h, --help            show this help message and exit
   -i INPUT, --input=INPUT
                         Input file: multi-alignment output (muscle or others).
   -l PLEN, --plen=PLEN  Length of primer. Default: 18.
-  -n DNUM, --dnum=DNUM  Number of degenerate. Default: 2.
+  -n DNUM, --dnum=DNUM  Number of degenerate. Default: 4.
   -d DEGENERACY, --degeneracy=DEGENERACY
                         degeneracy of primer. Default: 10.
   -v VARIATION, --variation=VARIATION
@@ -98,7 +98,7 @@ For example:
                         Mismatch index is not allowed to locate in start or
                         stop. otherwise, it won't be regard as the mis-
                         coverage. With this param, you can control the index
-                        of Y-distance (position of mismatch) when calculate
+                        of Y-distance (number=variation and position of mismatch) when calculate
                         coverage with error.Default: 4.
   -p PROC, --proc=PROC  Number of process to launch. Default: 20.
   -a AWAY, --away=AWAY  Filter hairpin structure, which means distance of the
