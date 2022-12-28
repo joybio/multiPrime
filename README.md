@@ -110,7 +110,7 @@ For example:
   -o OUT, --out=OUT     Output file: candidate primers. e.g.
                         [*].candidate.primers.txt.
   ```
-  Extract primers from ONT reads. Input file format can be "fasta", "fastq", "fa.gz", and "fq.gz":
+  Extract primers from ONT reads. FindONTprimerV2.py = FindONTprimerV3.py:
   ```bash
   python scripts/FindONTprimerV3.py
   ```
