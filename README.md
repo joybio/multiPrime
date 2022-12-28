@@ -50,7 +50,7 @@ Before starting the pipeline, open the `multiPrime.yaml` configuration file and 
 	-log_dir: ["abs_path_to_log_dir"]
   - **name of the scripts directory** - where should the pipeline store the scripts files
 	-scripts_dir: ["abs_path_to"]/multiPrime/scripts
-  - **name(s) of your input samples** - please note: If your sample is named `sample1.fa` then `sample1` will be kept as naming scheme throughout the entire run to indicate output files that belong to this input file, e.g. the pipeline will create a file called `sample1.3pSites.noIP.bed.gz`. If you have multiple input files, just follow the given pattern with one sample name per line (and a dash that indicates another list item).
+  - **name(s) of your input samples** - please note: If your sample is named `sample1.fa` then `sample1` will be kept as naming scheme throughout the entire run to indicate output files that belong to this input file, e.g. the pipeline will create a file called `sample1.fa`. If you have multiple input files, just follow the given pattern with one sample name per line (and a dash that indicates another list item).
 	-virus:
 		- test
 
@@ -58,6 +58,16 @@ Before starting the pipeline, open the `multiPrime.yaml` configuration file and 
 
 Once you set up your configuration file, running the pipeline locally on your computer is as easy as invoking:
 `sh run.sh`
+
+# Start a run independently
+If you want to run *.py independently, running the script locally on your computer is as easy as invoking:
+`python {path to script}/{target}.py --help`
+For example:
+`python scripts/multiPrime-core.py`  or `python scripts/multiPrime-core.py --help` This is used for DPD (degenerate primer design)
+`python scripts/FindONTprimerV3.py` or `python scripts/FindONTprimerV3.py --help` This is used to extract primers from ONT reads. Input file format can be "fasta", "fastq", "fa.gz", and "fq.gz"
+`python scripts/extract_PCR_product.py` or `python scripts/extract_PCR_product.py --help` This is used to extract PCR products with perfect match
+`python scripts/primer_coverage_confirmation_by_BWT_V3.py` or `python scripts/primer_coverage_confirmation_by_BWT_V3.py --help` This is used to output PCR products with mismatch
+...
 
 # Output
 logs: log file of the multiPrime.py 
