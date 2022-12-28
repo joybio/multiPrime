@@ -110,21 +110,86 @@ For example:
   -o OUT, --out=OUT     Output file: candidate primers. e.g.
                         [*].candidate.primers.txt.
   ```
-  
-  
   Extract primers from ONT reads. Input file format can be "fasta", "fastq", "fa.gz", and "fq.gz":
   ```bash
   python scripts/FindONTprimerV3.py
+  ```
+  ```bash
+  Usage: FindONTprimerV3.py -i [input] -v ["IVC"] -s [primer set] -p [20] -o  [output].
+
+  Options:
+  -h, --help            show this help message and exit
+  -i INPUT, --input=INPUT
+                        Input file: fastq or fasta or fq.gz or fa.gz.
+  -s SET, --set=SET     primer set file.
+  -p NPROC, --nproc=NPROC
+                        Primer set file. option. Default: 10
+  -l LEN, --len=LEN     Primer length. Default: 18
+  -m MIN_IDENT, --min_ident=MIN_IDENT
+                        min identity. Default: 0.6
+  -f FORMAT, --format=FORMAT
+                        Input format, Default: fastq
+  -o OUT, --out=OUT     Output file: candidate primers. e.g.
+                        [*].candidate.primers.txt.
   ```
   Extract PCR products with perfect match:
   ```bash
   python scripts/extract_PCR_product.py
   ```
+  ```
+  Usage: extract_PCR_product.py -i [input] -p [primerF,primerR] -f [format] -o [output]
+
+  Options:
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+  -r REF, --ref=REF     referebce file: template fasta or reference fasta.
+  -i INPUT, --input=INPUT
+                        Primer file. One of the followed three types:
+                        final_maxprimers_set.xls   primer.fa
+                        primer_F,primer_R.
+  -f FORMAT, --format=FORMAT
+                        Format of primer file: xls or fa or seq; default: xls.
+                        xls: final_primer_set.xls, output of multiPrime.  fa:
+                        fasta format.  seq: sequence format, comma seperate.
+                        e.g. primer_F,Primer_R.
+  -o OUT, --out=OUT     Output_dir. default: PCR_product.
+  -p PROCESS, --process=PROCESS
+                        Number of process to launch.  default: 10.
+  -s STAST, --stast=STAST
+                        Stast information: number of coverage and total.
+                        default: Coverage.xls
+  ```
   Get primer information of PCR products with mismatch
   ```bash
   python scripts/primer_coverage_confirmation_by_BWT_V3.py
   ```
+  ```
+  Usage: primer_coverage_confirmation_by_BWT_V3.py -i [input] -r [bowtie index] -l [150,2000] -p [10]-o [output]
+
+  Options:
+  -h, --help            show this help message and exit
+  -i INPUT_FILE, --input=INPUT_FILE
+                        input file: primer.fa.
+  -r REF, --ref=REF     reference file: bowtie index.
+  -l LEN, --len=LEN     Length of primer, which is used for mapping. Default:
+                        18
+  -t TERM, --term=TERM  Position of mismatch is not allowed in the 3 term of
+                        primer. Default: 4
+  -s SIZE, --s=SIZE     Length of PCR product, default: 150,2000.
+  -p PROC, --proc=PROC  Number of process. Default: 20
+  -b BOWTIE, --bowtie=BOWTIE
+                        bowtie or bowtie2 was employed for mapping. Default:
+                        bowtie2
+  -m SEEDMMS, --seedmms=SEEDMMS
+                        Bowtie: Mismatches in seed (can be 0 - 3, default: -n
+                        1).Bowtie2: Gap or mismatches in seed (can be 0 - 1,
+                        default: -n 1).
+  -o OUT, --out=OUT     Prediction of off-targets PCR product.
+
+  ```
+  ```
   ...
+  ```
 
 # Output
 logs: log file of the multiPrime.py 
