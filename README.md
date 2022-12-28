@@ -62,7 +62,7 @@ Once you set up your configuration file, running the pipeline locally on your co
   ```
 
 # Start a run independently
-If you want to run *.py locally on your computer independently. It is as easy as invoking:
+If you want to run python script locally on your computer independently. It is as easy as invoking:
   ```bash
   python {path to script}/{target}.py --help
   ```
@@ -76,6 +76,42 @@ For example:
   ```bash
   python scripts/multiPrime-core.py
   ```
+  ```bash
+  Usage: multiPrime-core.py -i input -o output
+                 Options: { -l 18 -n 2 -d 6 -v 2 -g 0.2,0.7 -f 0.8 -c 4 -p 10 -a 4 }
+
+  Options:
+  -h, --help            show this help message and exit
+  -i INPUT, --input=INPUT
+                        Input file: multi-alignment output (muscle or others).
+  -l PLEN, --plen=PLEN  Length of primer. Default: 18.
+  -n DNUM, --dnum=DNUM  Number of degenerate. Default: 2.
+  -d DEGENERACY, --degeneracy=DEGENERACY
+                        degeneracy of primer. Default: 10.
+  -v VARIATION, --variation=VARIATION
+                        Max mismatch number of primer. Default: 1.
+  -g GC, --gc=GC        Filter primers by GC content. Default [0.2,0.7].
+  -s SIZE, --size=SIZE  Filter primers by mini PRODUCT size. Default 100.
+  -f FRACTION, --fraction=FRACTION
+                        Filter primers by match fraction. Default: 0.8.
+  -c COORDINATE, --coordinate=COORDINATE
+                        Mismatch index is not allowed to locate in start or
+                        stop. otherwise, it won't be regard as the mis-
+                        coverage. With this param, you can control the index
+                        of Y-distance (position of mismatch) when calculate
+                        coverage with error.Default: 4.
+  -p PROC, --proc=PROC  Number of process to launch. Default: 20.
+  -a AWAY, --away=AWAY  Filter hairpin structure, which means distance of the
+                        minimal paired bases. Default: 4. Example:(number of
+                        X) AGCT[XXXX]AGCT. Primers should not have
+                        complementary sequences (no consecutive 4 bp
+                        complementarities),otherwise the primers themselves
+                        will fold into hairpin structure.
+  -o OUT, --out=OUT     Output file: candidate primers. e.g.
+                        [*].candidate.primers.txt.
+  ```
+  
+  
   Extract primers from ONT reads. Input file format can be "fasta", "fastq", "fa.gz", and "fq.gz":
   ```bash
   python scripts/FindONTprimerV3.py
