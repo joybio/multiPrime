@@ -110,6 +110,45 @@ For example:
   -o OUT, --out=OUT     Output file: candidate primers. e.g.
                         [*].candidate.primers.txt.
   ```
+  Get candidate degenerate primer with high (error) coverage:
+  ```bash
+  python scripts/get_multiPrime.py
+  ```
+  ```bash
+  Usage: get_multiPrime.py -i input -r sequence.fa -o output
+                 Options: {-f [0.6] -m [500] -n [200] -e [4] -p [9] -s [250,500] -g [0.4,0.6] -d [4] -a ","}.
+
+  Options:
+  -h, --help            show this help message and exit
+  -i INPUT, --input=INPUT
+                        Input file: degeprimer out.
+  -r REF, --ref=REF     Reference sequence file: all the sequence in 1 fasta,
+                        for example: (Cluster_96_171.fa).
+  -g GC, --gc=GC        Filter primers by GC content. Default [0.2,0.7].
+  -f FRACTION, --fraction=FRACTION
+                        Filter primers by match fraction. Default: 0.6.
+                        Sometimes you need a small fraction to get output.
+  -e END, --end=END     Filter primers by degenerate base position. e.g. [-t
+                        4] means I dont want degenerate base appear at the end
+                        four bases when primer pre-filter. Default: 4.
+  -p PROC, --proc=PROC  Number of process to launch.  default: 10.
+  -s SIZE, --size=SIZE  Filter primers by PRODUCT size. Default [250,500].
+  -d DIST, --dist=DIST  Filter param of hairpin, which means distance of the
+                        minimal paired bases. Default: 4. Example:(number of
+                        X) AGCT[XXXX]AGCT.
+  -a ADAPTOR, --adaptor=ADAPTOR
+                        Adaptor sequence, which is used for NGS next. Hairpin
+                        or dimer detection for [adaptor--primer]. For example: 
+                        TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT 
+                        (Default). If you dont want adaptor,
+                        use [","]
+  -m MAXSEQ, --maxseq=MAXSEQ
+                        Limit of sequence number. Default: 500. If 0, then all
+                        sequence will take into account. This param should
+                        consistent with [max_seq] in multi-alignment [muscle].
+  -o OUT, --out=OUT     Output file: candidate primers. e.g.
+                        [*].candidate.primers.txt.
+  ```
   Extract primers from ONT reads. FindONTprimerV2.py = FindONTprimerV3.py:
   ```bash
   python scripts/FindONTprimerV3.py

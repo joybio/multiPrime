@@ -48,7 +48,7 @@ import sys
 
 
 def argsParse():
-    parser = OptionParser('Usage: %prog -i [input] -r [sequence.fa] -o [output] \n \
+    parser = OptionParser('Usage: %prog -i input -r sequence.fa -o output \n \
                 Options: {-f [0.6] -m [500] -n [200] -e [4] -p [9] -s [250,500] -g [0.4,0.6] -d [4] -a ","}.')
     parser.add_option('-i', '--input',
                       dest='input',
@@ -100,7 +100,7 @@ def argsParse():
                       default="TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT",
                       type="str",
                       help='Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for [adaptor--primer].'
-                           '\n \ For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT (Default). ''If '
+                           '\nFor example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT (Default). ''If '
                            'you dont want adaptor, use [","] ')
 
     parser.add_option('-m', '--maxseq',
