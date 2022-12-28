@@ -44,7 +44,7 @@ THE SOFTWARE.
 
 
 def argsParse():
-    parser = OptionParser('Usage: %prog -i [input] -v ["IVC"] -s [primer set] -p [20] -o  [output].')
+    parser = OptionParser('Usage: %prog -i [input] -s [primer set] -p [20] -l [primer length] -m [0.6] -f [fq] -o [output].')
     parser.add_option('-i', '--input',
                       dest='input',
                       help='Input file: fastq or fasta or fq.gz or fa.gz.')
@@ -75,7 +75,7 @@ def argsParse():
                       dest='format',
                       default="fq",
                       type="str",
-                      help='Input format, Default: fastq')
+                      help='Input format can be fasta, fastq, fa.gz and fq.gz. Default: fastq')
 
     parser.add_option('-o', '--out',
                       dest='out',

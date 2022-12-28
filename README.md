@@ -115,7 +115,7 @@ For example:
   python scripts/FindONTprimerV3.py
   ```
   ```bash
-  Usage: FindONTprimerV3.py -i [input] -v ["IVC"] -s [primer set] -p [20] -o  [output].
+  Usage: FindONTprimerV3.py -i [input] -s [primer set] -p [20] -l [primer length] -m [0.6] -f [fq] -o [output].
 
   Options:
   -h, --help            show this help message and exit
@@ -128,7 +128,7 @@ For example:
   -m MIN_IDENT, --min_ident=MIN_IDENT
                         min identity. Default: 0.6
   -f FORMAT, --format=FORMAT
-                        Input format, Default: fastq
+                        Input format can be fasta, fastq, fa.gz and fq.gz. Default: fastq
   -o OUT, --out=OUT     Output file: candidate primers. e.g.
                         [*].candidate.primers.txt.
   ```
@@ -184,7 +184,7 @@ For example:
                         Bowtie: Mismatches in seed (can be 0 - 3, default: -n
                         1).Bowtie2: Gap or mismatches in seed (can be 0 - 1,
                         default: -n 1).
-  -o OUT, --out=OUT     Prediction of off-targets PCR product.
+  -o OUT, --out=OUT     Prodcut of PCR product with primers.
 
   ```
   ```
