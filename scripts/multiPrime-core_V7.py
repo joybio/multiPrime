@@ -662,8 +662,11 @@ class NN_degenerate(object):
                 right_seq = sequence_dict[seq_id][primer_start + self.primer_length:].replace("-", "")
                 if len(right_seq) >= append_base_length:
                     sequence = sequence_narrow + right_seq[0:append_base_length]
-            # print(sequence_narrow)
-            # print(sequence)
+            if len(sequence) < self.primer_length:
+                append_base_length = self.primer_length - len(sequence)
+                left_seq = sequence_dict[seq_id][0:primer_start].replace("-", "")
+                if len(left_seq) >= append_base_length:
+                    sequence = left_seq[len(left_seq) - append_base_length:] + sequence
             # gap number. number of gap > 2
             if list(sequence).count("-") > self.variation:
                 gap_sequence[sequence] += 1
@@ -918,25 +921,26 @@ class NN_degenerate(object):
                     refine_row_arg_sort = np.argsort(refine_min, axis=0)[::-1]
                     # Return the minimum of an array or maximum along an axis. axis=0: column , axis=1: row
                     new_primer = optimal_list
-                    for idx in refine_row_arg_sort:
-                        # We must ensure that there are no double counting.
-                        # position 1.
-                        if idx != column:
-                            init_score += score_table[bases[idx]]
-                            # Calculate coverage after refine
-                            new_primer[i + 1] = bases[idx]
-                            for new_primer_update in self.degenerate_seq("".join(new_primer)):
-                                if new_primer_update in cover.keys():
-                                    coverage_renew += cover["".join(new_primer_update)]
-                            new_primer[i + 1] = trans_score_table[round(init_score, 2)]
-                            # reset NN_array. column + (column idx) of layer i and row + (row idx) of layer i+1.
-                            NN_array_tmp[i, :, column] += NN_array_tmp[i, :, idx]
-                            NN_array_tmp[i, :, idx] -= NN_array_tmp[i, :, idx]
-                            NN_array_tmp[i + 1, next_row, :] += NN_array_tmp[i + 1, idx, :]
-                            NN_array_tmp[i + 1, idx, :] -= NN_array_tmp[i + 1, idx, :]
-                            optimal_NN_coverage_tmp[i] = NN_array_tmp[i, row, column]
-                            optimal_NN_coverage_tmp[i + 1] = NN_array_tmp[i + 1, next_row, next_column]
-                            break
+                    if len(np.where(refine_min > 0)[0]) > 1:
+                        for idx in refine_row_arg_sort:
+                            # We must ensure that there are no double counting.
+                            # position 1.
+                            if idx != column:
+                                init_score += score_table[bases[idx]]
+                                # Calculate coverage after refine
+                                new_primer[i + 1] = bases[idx]
+                                for new_primer_update in self.degenerate_seq("".join(new_primer)):
+                                    if new_primer_update in cover.keys():
+                                        coverage_renew += cover["".join(new_primer_update)]
+                                new_primer[i + 1] = trans_score_table[round(init_score, 2)]
+                                # reset NN_array. column + (column idx) of layer i and row + (row idx) of layer i+1.
+                                NN_array_tmp[i, :, column] += NN_array_tmp[i, :, idx]
+                                NN_array_tmp[i, :, idx] -= NN_array_tmp[i, :, idx]
+                                NN_array_tmp[i + 1, next_row, :] += NN_array_tmp[i + 1, idx, :]
+                                NN_array_tmp[i + 1, idx, :] -= NN_array_tmp[i + 1, idx, :]
+                                optimal_NN_coverage_tmp[i] = NN_array_tmp[i, row, column]
+                                optimal_NN_coverage_tmp[i + 1] = NN_array_tmp[i + 1, next_row, next_column]
+                                break
                     # primer update
                     optimal_list_update = optimal_list
                     optimal_list_update[i + 1] = trans_score_table[round(init_score, 2)]
