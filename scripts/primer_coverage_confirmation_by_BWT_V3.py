@@ -108,7 +108,7 @@ def argsParse():
 
     parser.add_option('-o', '--out',
                       dest='out',
-                      help='Prediction of off-targets PCR product.')
+                      help='Prodcut of PCR product with primers.')
 
     (options, args) = parser.parse_args()
     if len(sys.argv) == 1:
