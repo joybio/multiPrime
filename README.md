@@ -71,6 +71,7 @@ or
   python {path to script}/{target}.py
   ```
 For example:
+  
   DPD (degenerate primer design):
   ```bash
   python scripts/multiPrime-core.py
