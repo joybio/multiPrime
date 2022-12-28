@@ -62,7 +62,7 @@ Once you set up your configuration file, running the pipeline locally on your co
   ```
 
 # Start a run independently
-If you want to run *.py independently, running the script locally on your computer is as easy as invoking:
+If you want to run *.py locally on your computer independently. It is as easy as invoking:
   ```bash
   python {path to script}/{target}.py --help
   ```
