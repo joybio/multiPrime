@@ -137,12 +137,12 @@ For example:
   python scripts/extract_PCR_product.py
   ```
   ```
-  Usage: extract_PCR_product.py -i [input] -p [primerF,primerR] -f [format] -o [output]
+  Usage: extract_PCR_product.py -i [input] -r [reference] -p [10] -f [format] -o [output]
 
   Options:
   --version             show program's version number and exit
   -h, --help            show this help message and exit
-  -r REF, --ref=REF     referebce file: template fasta or reference fasta.
+  -r REF, --ref=REF     reference file: template fasta or reference fasta.
   -i INPUT, --input=INPUT
                         Primer file. One of the followed three types:
                         final_maxprimers_set.xls   primer.fa
