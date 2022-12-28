@@ -84,7 +84,7 @@ For example:
   ```bash
   python scripts/extract_PCR_product.py
   ```
-  Get informatiopn of PCR products with mismatch
+  Get primer information of PCR products with mismatch
   ```bash
   python scripts/primer_coverage_confirmation_by_BWT_V3.py
   ```
