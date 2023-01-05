@@ -1,4 +1,4 @@
-configfile:  "multiPrime.yaml"
+configfile:  "multiPrime2.yaml"
 #__version__ = "0.0.2"
 #__date__ = "2022-7-28"
 #__author__ = "Junbo Yang"
@@ -119,7 +119,8 @@ checkpoint extract_cluster_fa:
 	output:
 		config["results_dir"] + "/cluster.txt",
 		directory(config["results_dir"] + "/Clusters_fa"),
-		config["results_dir"] + "/cluster.identities.txt"
+		config["results_dir"] + "/cluster.identities.txt",
+		config["results_dir"] + "/history.txt"
 	params:
 		script = config["scripts_dir"],
 		max_seq = config["max_seq"]
@@ -127,9 +128,28 @@ checkpoint extract_cluster_fa:
 		"Step5: extract fasta in each cluster from cd-hit results .."
 	shell:
 		'''
-		python {params.script}/extract_cluster.py -i {input[0]} -c {input[1]} \
-			 -m {params.max_seq} -o {output[0]} -y {output[2]} -d {output[1]}
+		python {params.script}/extract_cluster_V3.py -i {input[0]} -c {input[1]} \
+			 -m {params.max_seq} -o {output[0]} -y {output[2]} -d {output[1]};
+
+		python {params.script}/merge_cluster_by_ANI.py -i {output[0]} -p 20 -t 20 \
+			-o {output[3]}
 		'''
+
+#-------------------------------------------------------------------------------------------
+# merge_cluster 6: Dependency packages - fastANI
+#-------------------------------------------------------------------------------------------
+#rule merge_cluster:
+#	input:
+#		config["results_dir"] + "/cluster.txt"
+#	output:
+#		config["results_dir"] + "/history.txt"
+#	message:
+#		"Step6: Merging cluster by ANI.."
+#	shell:
+#		'''
+#		python {params.script}/merge_cluster_by_ANI.py -i {input} -p 20 -t 20 -o {output}
+#		'''
+
 #-------------------------------------------------------------------------------------------
 # alignment_by_muscle rule 6: Dependency packages - None
 #-------------------------------------------------------------------------------------------
@@ -150,7 +170,6 @@ rule alignment_by_muscle:
 rule multiPrime:
 	input:
 		rules.alignment_by_muscle.output
-		#config["results_dir"] + "/Clusters_msa/{i}.msa"
 	output:
 		config["results_dir"] + "/Clusters_primer/{i}.top.primer.out"
 	log:
@@ -158,11 +177,11 @@ rule multiPrime:
 	params:
 		script = config["scripts_dir"],
 		dege_number = config["dege_number"],
-		degeneracy = config["degeneracy"]
-		primer_len = config["primer_len"]
-		min_PCR_size = config["PRODUCT_size"].split(",")[0]
-		variation = config["variation"]
-		coordinate = config["coordinate"]
+		degeneracy = config["degeneracy"],
+		primer_len = config["primer_len"],
+		min_PCR_size = config["PRODUCT_size"].split(",")[0],
+		variation = config["variation"],
+		coordinate = config["coordinate"],
 		GC = config["gc_content"]
 	message:
 		"Step8: design primers by multiPrime .."
@@ -179,7 +198,7 @@ rule multiPrime:
 rule get_multiPrime:
 	input:
 		primer = config["results_dir"] + "/Clusters_primer/{i}.top.primer.out",
-		ref_fa = config["results_dir"] + "/Clusters_fa/{i}.fa"
+		ref_fa = config["results_dir"] + "/Clusters_fa/{i}.tfa"
 	output:
 		config["results_dir"] + "/Clusters_cprimer/{i}.candidate.primers.txt"
 	log:

@@ -1,15 +1,16 @@
 # This file may be used to create an environment using:
 # $ conda create --name snakemake-tutorial -c bioconda --file <this file>
-bowtie2=2.2.5
+bowtie=1.0.0
 snakemake=7.8.1
 cd-hit=4.8.1
 muscle=3.8.1551
 bowtie2=2.2.5
-bedtools=2.30.0
-biopython=1.79
+bowtie=1.0.0
+# bedtools=2.30.0
+#biopython=1.79
 python=3.9.9
 blast=2.13.0
-pandas
-operator
-functools
-
+fastANI=1.33
+#pandas
+#operator
+#functools

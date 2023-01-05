@@ -656,7 +656,7 @@ class NN_degenerate(object):
                 left_seq = sequence_dict[seq_id][0:primer_start].replace("-", "")
                 if len(left_seq) >= append_base_length:
                     sequence = left_seq[len(left_seq) - append_base_length:] + sequence_narrow
-            elif sequence.endswith("-"):
+            if sequence.endswith("-"):
                 sequence_narrow = sequence.rstrip("-")
                 append_base_length = len(sequence) - len(sequence_narrow)
                 right_seq = sequence_dict[seq_id][primer_start + self.primer_length:].replace("-", "")

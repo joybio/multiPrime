@@ -4,14 +4,14 @@
 ################################################################################
 # directory, where is/are the input virus fasta file(s) located
 # absolute path
-input_dir: /share/data3/yangjunbo/git_storage/multiPrime/test_data
+input_dir: /share/data3/yangjunbo/multiPCR/multiPrime2/all
 
 # directory, in which the pipeline writes all output files (relative to current directory)
 # (this also includes the summary files)
-results_dir: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results
+results_dir: /share/data3/yangjunbo/multiPCR/multiPrime2/all/all2.results
 
 # directory to write the log-files, created during processing, to 
-log_dir: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.logs
+log_dir: /share/data3/yangjunbo/multiPCR/multiPrime2/all/all2.logs
 
 # directory of scripts.
 scripts_dir: /share/data3/yangjunbo/git_storage/multiPrime/scripts
@@ -23,7 +23,7 @@ scripts_dir: /share/data3/yangjunbo/git_storage/multiPrime/scripts
 # please type here: sample1
 # this name is used throughout the entire pipeline as name for the output samples
 virus:
-  - test
+  - all
 ################################################################################
 # preprocessing
 ################################################################################
@@ -34,7 +34,7 @@ virus:
 #Params in cd-hit -c {}. Suggestion: 0.7. minimum: 0.65 
 #If the identity of sequences in your input file is very high, you can set this param as 0.9.
 #BUG (dont use 1): If you set this param as 1. It will generate primers by no-cluster methods.
-identity: 0.65
+identity: 0.7
 #Max sequence number of each cluster used in multi-alignment {muscle}. 
 #We randomly choose {maxseq} sequences in cluster for next steps.
 #It wont affect the calculation of primer coverage in the final primer set, 
@@ -51,9 +51,9 @@ degeneracy: 10
 #param in multiPrime-core -l {}. length of the degenerate primers
 primer_len: 18
 #variation. max mis-match in the calculation of mis-coverage
-variation: 2
+variation: 1
 #coordinate:. mis-match position is not allowed in the term -c {} in the calculation of mis-coverage
-coordinate: 2
+coordinate: 3
 
 #-------------------------------------------------------------------------------
 ## get candidate primers from degePrimer output

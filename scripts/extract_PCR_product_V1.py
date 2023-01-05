@@ -147,10 +147,13 @@ class Product(object):
                             pass
                         else:
                             i = i.strip().split("\t")
-                            cluster_id = i[0].split("/")
+                            cluster_id = i[0].split("/")[-1].split(".")[0]
                             primer_F = i[2]
                             primer_R = i[3]
-                            res[cluster_id] = [primer_F, primer_R]
+                            start = i[6].split(":")[0]
+                            stop = i[6].split(":")[1]
+                            key = cluster_id + "_" + str(start) + "_F_" + cluster_id + "_" + str(stop)
+                            res[key] = [primer_F, primer_R]
                 elif self.file_format == "fa":
                     primer_info = pd.read_table(f, header=None)
                     for idx, row in primer_info.iterrows():
