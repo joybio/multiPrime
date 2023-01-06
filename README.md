@@ -6,13 +6,13 @@ Scripts and pipelines provided in this repository aid to design multiplex PCR pr
 
 # Requirements
 
-To run this pipeline, your computer requires **40 GB of available memory (RAM)** to process larger number of sequence (e.g. 100000). Moreover, snakemake was used to facilitate the automated execution of all analysis steps. The easiest way to make use of the pipeline is to set up a python 3.9 virtual environment and run the pipeline is this environment. 
+To run this pipeline, your computer requires **30 GB of available memory (RAM)** to process larger number of sequence (e.g. 100000). We don't suggest that Input sequences contains those sequences whose length is greater than 10K,  if necessary, you'd better set the Maxseq in yaml file as small as possible, but do not smaller than 100. Snakemake was used to facilitate the automated execution of all analysis steps. The easiest way to make use of the pipeline is to set up a python 3.9 virtual environment and run the pipeline is this environment. 
 Download/Provide all necessary files:
 
 DEGEPRIME-1.1.0: DOI: 10.1128/AEM.01403-14; "DegePrime, a program for degenerate primer design for broad-taxonomic-range PCR in microbial ecology studies."
 		Links: https://github.com/EnvGen/DegePrime; please move this directory into scripts
 
-biopython: Not required in v1.0.1
+biopython: Not required in v1.0.1 and the subsequent version
 
 mfeprimer-3.2.6: DOI: 10.1093/nar/gkz351; "MFEprimer-3.0: quality control for PCR primers."
 
@@ -21,9 +21,11 @@ blast+: Links: https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastN
 bowtie2: DOI:10.1038/nmeth.1923; "Fast gapped-read alignment with Bowtie 2."
 		Links: https://www.nature.com/articles/nmeth.1923
 # snakemake
-Snakemake is a workflow management system that helps to create and execute data processing pipelines. It requires python3 and can be most easily installed via the bioconda package of the python anaconda distribution.
+Snakemake is a workflow management system that helps to create and execute data processing pipelines. It requires python3 and dependent environment (multiPrime == multiPrime2) can be most easily installed via the bioconda package of the python anaconda distribution. 
 
-conda create -n multiPrime -c bioconda -c conda-forge --file requirement.txt
+  ```bash
+  conda create -n multiPrime -c bioconda -c conda-forge --file requirement.txt
+  ```
 
 # Activate the environment
   ```bash
@@ -37,7 +39,7 @@ conda create -n multiPrime -c bioconda -c conda-forge --file requirement.txt
 
 # Configure input parameters
 
-The working directory contains a file named `multiPrime.yaml`. It`s the central file in which all user settings, paramter values and path specifications are stored. During a run, all steps of the pipeline will retrieve their paramter values from this file. It follows the yaml syntax (find more information about yaml and it's syntax [here](http://www.yaml.org/)) what makes it easy to read and edit. The main principles are:
+The working directory contains a file named `multiPrime.yaml` and `multiPrime2.yaml`. These are the central file in which all user settings, paramter values and path specifications are stored. `multiPrime.yaml` use DEGEPRIME-1.1.0 for maximum coverage degenerate primer design (MD-DPD), `multiPrime2.yaml` use multiPrime-core.py for MD-DPD or MD-DPD with error. During a run, all steps of the pipeline will retrieve their paramter values from these file. It follows the yaml syntax (find more information about yaml and it's syntax [here](http://www.yaml.org/)) what makes it easy to read and edit. The main principles are:
   - everything that comes after a `#` symbol is considered as comment and will not be interpreted
   - paramters are given as key-value pair, with `key` being the name and `value` the value of any paramter
 
@@ -62,6 +64,15 @@ Once you set up your configuration file, running the pipeline locally on your co
   ```bash
   sh run.sh
   ```
+  or
+  ```bash
+  snakemake --configfile multiPrime.yaml -s multiPrime.py --cores 30
+  ```
+  or
+  ```bash
+  snakemake --configfile multiPrime2.yaml -s multiPrime2.py --cores 30
+  ```
+
 
 # Start a run independently
 If you want to run python script locally on your computer independently. It is as easy as invoking:
@@ -74,7 +85,7 @@ or
   ```
 For example:
   
-  DPD (degenerate primer design):
+  MD-DPD (--variation 0) or MD-DPD with error (--variation 1 or 2, we do not suggest you set --variation greater than 2, because amplification efficiency was severely inhibited when there is 3 mismathes):
   ```bash
   python scripts/multiPrime-core.py
   ```
@@ -118,7 +129,7 @@ For example:
   ```
   ```bash
   Usage: get_multiPrime.py -i input -r sequence.fa -o output
-                 Options: {-f [0.6] -m [500] -n [200] -e [4] -p [9] -s [250,500] -g [0.4,0.6] -d [4] -a ","}.
+                 Options: {-f [0.6] -m [500] -n [200] -e [4] -p [9] -s [250,500] -g [0.2,0.7] -d [4] -a ","}.
 
   Options:
   -h, --help            show this help message and exit
@@ -202,10 +213,10 @@ For example:
   ```
   Get primer information of PCR products with mismatch
   ```bash
-  python scripts/primer_coverage_confirmation_by_BWT_V3.py
+  python scripts/primer_coverage_confirmation_by_BWT.py
   ```
   ```
-  Usage: primer_coverage_confirmation_by_BWT_V3.py -i [input] -r [bowtie index] -l [150,2000] -p [10]-o [output]
+  Usage: primer_coverage_confirmation_by_BWT.py -i [input] -r [bowtie index] -l [150,2000] -p [10]-o [output]
 
   Options:
   -h, --help            show this help message and exit
@@ -229,7 +240,7 @@ For example:
 
   ```
   ```
-  ...
+  Others ...
   ```
 
 # Output
