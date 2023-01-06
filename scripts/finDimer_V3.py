@@ -98,8 +98,8 @@ def parseArg():
                         help="input fasta primer file", metavar="<file>")
     parser.add_argument("-n", "--num", type=int, default=5,
                         help='number of cpu process, 5 by default', metavar="<int>")
-    parser.add_argument("-t", "--threshold", type=float, default=3.6,
-                        help='threshold of loss function. Default: 3.6', metavar="<float>")
+    parser.add_argument("-t", "--threshold", type=float, default=3.96,
+                        help='threshold of loss function. Default: 3.96', metavar="<int>")
     parser.add_argument("-o", "--output", type=str, required=True,
                         help='output file', metavar="<file>")
     return parser.parse_args()
@@ -281,7 +281,7 @@ class Dimer(object):
 
 def main():
     args = parseArg()
-    dimer_app = Dimer(primer_file=args.input,
+    dimer_app = Dimer(primer_file=args.input, threshold=args.threshold,
                       outfile=args.output, nproc=args.num)
     dimer_app.run()
 

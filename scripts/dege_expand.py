@@ -10,7 +10,7 @@ __license__ = "yangjunbo"
 import sys
 from sys import argv
 from optparse import OptionParser
-from get_degePrimer import fa_dege_trans
+from get_degePrimer import dege_trans
 parser = OptionParser('Usage: %prog -i [input] -o [output]')
 parser.add_option('-i', '--input',
                   dest='input',
@@ -33,9 +33,23 @@ elif options.out is None:
     print("No output file provided !!!")
     sys.exit(1)
 
+def fa_dege_trans(fa, output):
+    out = open(output, "w")
+    with open(fa, "r") as dege_fa:
+        for i in dege_fa:
+            if i.startswith(">"):
+                Id = i.strip()
+            else:
+                sequence = i.strip()
+                expand_seq = dege_trans(sequence)
+                for j,k in enumerate(expand_seq):
+                        ID = Id + "_" + str(j)
+                        out.write(ID + "\n" + k + "\n")
+    out.close()
 
 if __name__ == "__main__":
     tmp = options.input
     tmp_expand = options.out
-    fa_dege_trans(tmp, tmp_expand)
-
+    fa_dege_trans(tmp,tmp_expand)
+        
+       

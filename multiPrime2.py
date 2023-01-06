@@ -207,7 +207,7 @@ rule get_multiPrime:
 		script = config["scripts_dir"],
 		fraction = config["coverage"],
 		size = config["PRODUCT_size"],
-		maxseq=config["max_seq"],
+		# maxseq=config["max_seq"],
 		gc_content = config["gc_content"],
 		distance = config["distance"],
 		adaptor = config["adaptor"],
@@ -218,7 +218,7 @@ rule get_multiPrime:
 		'''
 		python {params.script}/get_multiPrime.py -i {input.primer} -r {input.ref_fa} \
 			-f {params.fraction} -s {params.size} -g {params.gc_content} -e {params.end} \
-			-d {params.distance} -a {params.adaptor} -m {params.maxseq}\
+			-d {params.distance} -a {params.adaptor} -m 0\
 			-o {output} 2>&1 > {log}
 		'''
 
