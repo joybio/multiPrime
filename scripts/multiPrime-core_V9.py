@@ -92,6 +92,13 @@ def argsParse():
                       type="int",
                       help='Max mismatch number of primer. Default: 1.')
 
+    parser.add_option('-e', '--entropy',
+                      dest='entropy',
+                      default=3.6,
+                      type="float",
+                      help='Entropy is actually a measure of disorder. This parameter is used to judge whether the '
+                           'window is conservation. Entropy of primer-length window. Default: 3.6.')
+
     parser.add_option('-g', '--gc',
                       dest='gc',
                       default="0.2,0.7",
@@ -107,7 +114,10 @@ def argsParse():
                       dest='fraction',
                       default="0.8",
                       type="float",
-                      help="Filter primers by match fraction. Default: 0.8.")
+                      help="Filter primers by match fraction. If you set -s lower than 0.8, make sure that "
+                           "--entropy greater than 3.6, because disorder region (entropy > 3.6) will not be processed "
+                           "in multiPrime. Even these regions can design coverage with error greater than your "
+                           "threshold, it wont be processed. Default: 0.8.")
 
     parser.add_option('-c', '--coordinate',
                       dest='coordinate',
@@ -380,7 +390,8 @@ def Calc_Tm_v2(seq):
 
 class NN_degenerate(object):
     def __init__(self, seq_file, primer_length=18, coverage=0.8, number_of_dege_bases=18, score_of_dege_bases=1000,
-                 product_len=250, position=4, variation=2, distance=4, GC="0.4,0.6", nproc=10, outfile=""):
+                 product_len=250, position=4, variation=2, entropy_threshold=3.6, distance=4, GC="0.4,0.6", nproc=10,
+                 outfile=""):
         self.primer_length = primer_length  # primer length
         self.coverage = coverage  # min coverage
         self.number_of_dege_bases = number_of_dege_bases
@@ -390,6 +401,7 @@ class NN_degenerate(object):
         self.variation = variation  # coverage of n-nt variation and max_gap_number
         self.distance = distance  # haripin
         self.GC = GC.split(",")
+        self.entropy_threshold = entropy_threshold
         self.nproc = nproc  # GC content
         self.seq_dict, self.total_sequence_number = self.parse_seq(seq_file)
         self.start_position = self.seq_attribute(self.seq_dict)[0]
@@ -611,6 +623,15 @@ class NN_degenerate(object):
         # Return the maximum of an array or maximum along an axis. axis=0 代表列 , axis=1 代表行
         return best_primer_index
 
+    def entropy(self, cover, cover_number, gap_sequence, gap_sequence_number):
+        cBit = 0
+        for c in cover.keys():
+            cBit += (cover[c] / cover_number) * math.log((cover[c] / cover_number), 2)
+        tBit = cBit
+        for t in gap_sequence.keys():
+            tBit += (gap_sequence[t] / gap_sequence_number) * math.log((gap_sequence[t] / gap_sequence_number), 2)
+        return round(-cBit, 2), round(-tBit, 2)
+
     # Sequence processing. Return a list contains sequence length, start and stop position of each sequence.
     def seq_attribute(self, Input_dict):
         start_dict = {}
@@ -622,10 +643,11 @@ class NN_degenerate(object):
             start_dict[acc_id] = pattern_start.search(Input_dict[acc_id]).span()[0]
             stop_dict[acc_id] = pattern_stop.search(Input_dict[acc_id]).span()[0] - 1
         # start position should contain [coverage] sequences at least.
-        start = np.quantile(np.array(list(start_dict.values())).reshape(1, -1), self.coverage, interpolation="higher")
+        start = np.quantile(np.array(list(start_dict.values())).reshape(1, -1), self.coverage, method="higher")
+        # for python 3.9.9
         # start = np.quantile(np.array(list(start_dict.values())).reshape(1, -1), self.coverage, method="higher")
         # stop position should contain [coverage] sequences at least.
-        stop = np.quantile(np.array(list(stop_dict.values())).reshape(1, -1), self.coverage, interpolation="lower")
+        stop = np.quantile(np.array(list(stop_dict.values())).reshape(1, -1), self.coverage, method="lower")
         # stop = np.quantile(np.array(list(stop_dict.values())).reshape(1, -1), self.coverage, method="lower")
         if stop - start < int(self.product):
             print("Error: max length of PCR product is shorter than the default min Product length with {} "
@@ -692,28 +714,34 @@ class NN_degenerate(object):
         elif len(cover) < 1:
             self.resQ.put(None)
         else:
-            primers_db = pd.DataFrame(primers_db)
-            # frequency matrix
-            freq_matrix = self.state_matrix(primers_db)
-            a, b = freq_matrix.shape
-            # a < 4 means base composition of this region is less than 4 (GC bias).
-            # It's not a proper region for primer design.
-            if a < 4:
+            cBit, tBit = self.entropy(cover, cover_number, gap_sequence, gap_sequence_number)
+            if tBit > self.entropy_threshold:
+                # This window is not a conserved region, and not proper to design primers
                 self.resQ.put(None)
             else:
-                gap_seq_id_info = [primer_start, gap_seq_id]
-                mismatch_coverage, non_cov_primer_info = \
-                    self.degenerate_by_NN_algorithm(primer_start, freq_matrix, cover, non_gap_seq_id,
-                                                    cover_for_MM, cover_number)
-                # self.resQ.put([mismatch_coverage, non_cov_primer_info, gap_seq_id_info])
-                F, R = mismatch_coverage[1][4], mismatch_coverage[1][5]
-                if F < cover_number * 0.5 or R < cover_number * 0.5:
+                primers_db = pd.DataFrame(primers_db)
+                # frequency matrix
+                freq_matrix = self.state_matrix(primers_db)
+                a, b = freq_matrix.shape
+                # a < 4 means base composition of this region is less than 4 (GC bias).
+                # It's not a proper region for primer design.
+                if a < 4:
                     self.resQ.put(None)
                 else:
+                    gap_seq_id_info = [primer_start, gap_seq_id]
+                    mismatch_coverage, non_cov_primer_info = \
+                        self.degenerate_by_NN_algorithm(primer_start, freq_matrix, cover, non_gap_seq_id,
+                                                        cover_for_MM, cover_number, cBit, tBit)
+                    # self.resQ.put([mismatch_coverage, non_cov_primer_info, gap_seq_id_info])
+                    # F, R = mismatch_coverage[1][6], mismatch_coverage[1][7]
                     self.resQ.put([mismatch_coverage, non_cov_primer_info, gap_seq_id_info])
+                    # if F < cover_number * 0.5 or R < cover_number * 0.5:
+                    #     self.resQ.put(None)
+                    # else:
+                    #     self.resQ.put([mismatch_coverage, non_cov_primer_info, gap_seq_id_info])
 
     def degenerate_by_NN_algorithm(self, primer_start, freq_matrix, cover, non_gap_seq_id, cover_for_MM,
-                                   cover_number):
+                                   cover_number, cBit, tBit):
         # full degenerate primer
         full_degenerate_primer = self.full_degenerate_primer(freq_matrix)
         # unique covered primers, which is used to calculate coverage and
@@ -819,11 +847,11 @@ class NN_degenerate(object):
         Tm_average = round(mean(Tm), 2)
         perfect_coverage = sum(coverage)
         # print(optimal_coverage_init)
-        mismatch_coverage = [primer_start, [optimal_primer_current, primer_degenerate_number,
-                                            nonsense_primer_number, perfect_coverage, F_mis_cover,
-                                            R_mis_cover, Tm_average, information]]
+        out_mismatch_coverage = [primer_start, [cBit, tBit, optimal_primer_current, primer_degenerate_number,
+                                                nonsense_primer_number, perfect_coverage, F_mis_cover,
+                                                R_mis_cover, Tm_average, information]]
         non_cov_primer_info = [primer_start, [F_non_cover, R_non_cover]]
-        return mismatch_coverage, non_cov_primer_info
+        return out_mismatch_coverage, non_cov_primer_info
 
     def coverage_stast(self, cover, optimal_primer_index, NN_matrix, optimal_coverage_init, cover_number,
                        optimal_primer_list, cover_primer_set, non_gap_seq_id, F_non_cover, R_non_cover):
@@ -1088,8 +1116,9 @@ class NN_degenerate(object):
         n = 0
         candidate_list, non_cov_primer_out, gap_seq_id_out = [], [], []
         with open(self.outfile, "w") as fo:
-            headers = ["Position", "Optimal_primer", "primer_degenerate_number", "nonsense_primer_number",
-                       "Optimal_coverage", "Mis-F-coverage", "Mis-R-coverage", "Tm", "Information"]
+            headers = ["Position", "Entropy of cover (bit)", "Entropy of total (bit)", "Optimal_primer", "primer_degenerate_number",
+                       "nonsense_primer_number", "Optimal_coverage", "Mis-F-coverage", "Mis-R-coverage", "Tm",
+                       "Information"]
             fo.write("\t".join(map(str, headers)) + "\n")
             while n < stop_primer - start_primer - self.primer_length:
                 res = self.resQ.get()
@@ -1124,8 +1153,9 @@ def main():
     options, args = argsParse()
     NN_APP = NN_degenerate(seq_file=options.input, primer_length=options.plen, coverage=options.fraction,
                            number_of_dege_bases=options.dnum, score_of_dege_bases=options.degeneracy,
-                           product_len=options.size, position=options.coordinate, variation=options.variation,
-                           distance=options.away, GC=options.gc, nproc=options.proc, outfile=options.out)
+                           entropy_threshold=options.entropy, product_len=options.size, position=options.coordinate,
+                           variation=options.variation, distance=options.away, GC=options.gc, nproc=options.proc,
+                           outfile=options.out)
     NN_APP.run()
 
 

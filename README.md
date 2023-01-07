@@ -1,6 +1,6 @@
 multiPrime: version 2.0.0
 # multi PCR primers design processing pipeline
-multiPrime was developed to design primers for large-scale sequences, identifying the core primers and optimized primer sets.
+multiPrime was developed to design primer set for large-scale sequences (MD-EDPD). It can identify the core primers and optimize primer sets.
 
 Scripts and pipelines provided in this repository aid to design multiplex PCR primer and return a minimal primerset for multi-PCR. It contains all scripts to allow a self-assembled processing and additionally provides pipeline scripts that run the entire processing automatically.
 
@@ -84,7 +84,7 @@ or
   ```
 For example:
   
-  MD-DPD (--variation 0) or MD-DPD with error (--variation 1 or 2, we do not suggest you set --variation greater than 2, because amplification efficiency was severely inhibited when there is 3 mismathes):
+  MD-DPD (--variation 0) or MD-EDPD (--variation 1 or 2, we do not suggest you set --variation greater than 2, because amplification efficiency was severely inhibited when there is 3 mismathes):
   ```bash
   python scripts/multiPrime-core.py
   ```
