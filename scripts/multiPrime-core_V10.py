@@ -643,11 +643,11 @@ class NN_degenerate(object):
             start_dict[acc_id] = pattern_start.search(Input_dict[acc_id]).span()[0]
             stop_dict[acc_id] = pattern_stop.search(Input_dict[acc_id]).span()[0] - 1
         # start position should contain [coverage] sequences at least.
-        start = np.quantile(np.array(list(start_dict.values())).reshape(1, -1), self.coverage, method="higher")
+        start = np.quantile(np.array(list(start_dict.values())).reshape(1, -1), self.coverage, interpolation="higher")
         # for python 3.9.9
         # start = np.quantile(np.array(list(start_dict.values())).reshape(1, -1), self.coverage, method="higher")
         # stop position should contain [coverage] sequences at least.
-        stop = np.quantile(np.array(list(stop_dict.values())).reshape(1, -1), self.coverage, method="lower")
+        stop = np.quantile(np.array(list(stop_dict.values())).reshape(1, -1), self.coverage, interpolation="lower")
         # stop = np.quantile(np.array(list(stop_dict.values())).reshape(1, -1), self.coverage, method="lower")
         if stop - start < int(self.product):
             print("Error: max length of PCR product is shorter than the default min Product length with {} "
