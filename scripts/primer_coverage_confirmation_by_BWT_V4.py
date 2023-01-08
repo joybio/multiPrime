@@ -242,14 +242,14 @@ class off_targets(object):
     def get_term(self):
         Output = Path(self.primer_file).parent.joinpath(Path(self.primer_file).stem).with_suffix(".term.fa")
         Input = self.primer_file
-        length = self.term_len
+        l = self.term_len
         term_list = defaultdict(list)
         seq_ID = defaultdict(list)
-        l = length
         with open(Input, "r") as f:
             for i in f:
                 if i.startswith(">"):
-                    value = i.strip()
+                    value = i.strip().lstrip(">")
+                    print(value)
                 else:
                     key = i.strip()[-l:]
                     term_list[key].append(value)
@@ -257,7 +257,7 @@ class off_targets(object):
         for k in term_list.keys():
             sequence = k
             term_set = set(term_list[k])
-            Id = "|".join(list(term_set))
+            Id = "_".join(list(term_set))
             expand_seq = self.degenerate_seq(sequence)
             if len(expand_seq) > 1:
                 for j in range(len(expand_seq)):
@@ -268,7 +268,9 @@ class off_targets(object):
                 seq_ID[sequence].append(ID)
         with open(Output, "w") as fo:
             for seq in seq_ID.keys():
-                fo.write('|'.join(seq_ID[seq]) + "\n" + seq + "\n")
+                # print(">" + '_'.join(seq_ID[seq]))
+                # print(seq)
+                fo.write(">" + '_'.join(seq_ID[seq]) + "\n" + seq + "\n")
         return seq_ID
 
     def build_dict(self, Input):
@@ -304,12 +306,12 @@ class off_targets(object):
             pass
         else:
             if self.bowtie == 'bowtie2':
-                os.system("bowtie2 -p 20 -f -N {} -L 8 -a -x {} -f -U {} -S {}".format(self.mismatch_num, ref_index,
-                                                                                       fa, out))
+                os.system("bowtie2 -p {} -f -N {} -L 8 -a -x {} -f -U {} -S {}".format(self.nproc, self.mismatch_num,
+                                                                                       ref_index, fa, out))
             elif self.bowtie == 'bowtie':
                 os.system(
-                    "bowtie -f -n {} -l 8 -a -p {} --best --strata {} {} -S {}".format(self.mismatch_num, nproc,
-                                                                                       ref_index, fa, out))
+                    "bowtie -p {} -f -n {} -l 8 -a -p {} --best --strata {} {} -S {}".format(self.nproc, self.mismatch_num,
+                                                                                             nproc, ref_index, fa, out))
             else:
                 print("mapping software must be bowtie or bowtie2 !")
                 sys.exit(1)
@@ -384,6 +386,7 @@ class off_targets(object):
         n = 0
         primer_pair_id = defaultdict(int)
         primer_pair_acc = defaultdict(list)
+        acc_id = set()
         # primer_reverse_id = defaultdict(int)
         with open(self.outfile, "w") as fo:
             headers = ["Chrom (or Genes)", "Start", "Stop", "Primer_F", "Primer_R", "Product length"]
@@ -400,6 +403,7 @@ class off_targets(object):
                     continue
                 primer_pair_id[res[3] + "\t" + res[4]] += 1
                 primer_pair_acc[res[3] + "\t" + res[4]].append(res[0])
+                acc_id.add(res[0])
                 fo.write("\t".join(map(str, res)) + "\n")
                 # get results before shutdown. Synchronous call mode: call, wait for the return value, decouple,
                 # but slow.
@@ -410,7 +414,8 @@ class off_targets(object):
             for k in primer_pair_id_sort:
                 primer_pair_acc_set = set(primer_pair_acc[k[0]])
                 fo.write(k[0] + "\t" + str(k[1]) + "\t" + str(len(primer_pair_acc_set)) + "\n")
-
+        with open(self.outfile + ".total.acc.num", "w") as fo2:
+            fo2.write("total coverage of primer set (PS) is: {}".format(len(acc_id)))
 
 def main():
     options, args = argsParse()

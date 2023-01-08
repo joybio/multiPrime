@@ -70,10 +70,10 @@ def argsParse():
 
     parser.add_option('-t', '--threshold',
                       dest='threshold',
-                      default="20",
+                      default="0",
                       type="int",
                       help="Those cluster sequence number less than threshold will try to merge to other clasters by ANI."
-                           "Default: 20. "
+                           "Default: 0. "
                            "set -t 0, then all cluster will process."
                            "set -t 1, then no cluster will process.")
 
@@ -130,7 +130,7 @@ class merge_clstr(object):
             ref_ID = self.work_dir + "/" + self.cluster[i][0] + "_" + str(self.cluster[i][1])
             ref_file = ref_ID + ".txt"
             out_file = processing_ID + "_" + self.cluster[i][0] + "_" + str(self.cluster[i][1])
-            if cluster_info[position][0] != self.cluster[i][0]:
+            if cluster_info[position][1] < self.cluster[i][1]:
                 os.system("fastANI --ql {} --rl {} -o {}".format(processing_file, ref_file, out_file))
                 ###### check primer #####
                 size = os.path.getsize(out_file)
@@ -154,10 +154,7 @@ class merge_clstr(object):
             if self.threshold == 0:
                 p.submit(self.merge_cluster_app, position, cluster_info)
             elif self.threshold == 1:
-                if cluster_info[position][1] < self.threshold:
-                    p.submit(self.merge_cluster_app, position, cluster_info)
-                else:
-                    break
+                break
             else:
                 print("Abundunce: {}".format(cluster_info[position][1]))
                 if cluster_info[position][1] <= self.threshold:

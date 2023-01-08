@@ -10,6 +10,7 @@ __license__ = "yangjunbo"
 import re
 import os
 import sys
+from itertools import product
 from sys import argv
 from Bio.Seq import Seq
 from optparse import OptionParser
@@ -66,17 +67,17 @@ def argsParse():
         print("No output file provided !!!")
         sys.exit(1)
     count = 3  # times for the packages install
-    while count:
-        try:
-            import Bio  #
-
-            print('Dependent package Biopython is OK.\nDependent module Bio is OK.')
-            break
-        except:
-            print('Dependent package Biopython is not found!!! \n Start installing ....')
-            os.system('pip install biopython')
-            count -= 1
-            continue
+    # while count:
+    #     try:
+    #         import Bio  #
+    #
+    #         print('Dependent package Biopython is OK.\nDependent module Bio is OK.')
+    #         break
+    #     except:
+    #         print('Dependent package Biopython is not found!!! \n Start installing ....')
+    #         os.system('pip install biopython')
+    #         count -= 1
+    #         continue
     return parser.parse_args()
 
 
@@ -87,85 +88,172 @@ degenerate_pair = {"R": ["A", "G"], "Y": ["C", "T"], "M": ["A", "C"], "K": ["G",
 degenerate_table = {"A": 1, "G": 1.1, "C": 1.2, "T": 1.4, "R": 2.1, "Y": 2.6, "M": 2.2,
                     "K": 2.5, "S": 2.3, "W": 2.4, "H": 3.6, "B": 3.7, "V": 3.3, "D": 3.5, "N": 4.7}
 
-'''
-def get_dict_key(d_dict, value):
-    d_key = list(d_dict.keys())[list(d_dict.values()).index(value)]  
-    return d_key
-'''
+# Martin Zacharias* "Base-Pairing and Base-Stacking Contributions to Double-Stranded DNA Formation"
+# J. Phys. Chem. B 2020, 124, 46, 10345–10352
 
+freedom_of_H_37_table = [[-0.7, -0.81, -0.65, -0.65],
+                         [-0.67, -0.72, -0.8, -0.65],
+                         [-0.69, -0.87, -0.72, -0.81],
+                         [-0.61, -0.69, -0.67, -0.7]]
+
+penalty_of_H_37_table = [[0.4, 0.575, 0.33, 0.73],
+                         [0.23, 0.32, 0.17, 0.33],
+                         [0.41, 0.45, 0.32, 0.575],
+                         [0.33, 0.41, 0.23, 0.4]]
+
+H_bonds_number = [[2, 2.5, 2.5, 2],
+                  [2.5, 3, 3, 2.5],
+                  [2.5, 3, 3, 2.5],
+                  [2, 2.5, 2.5, 2]]
+#############################################################################
+# Improved Nearest-Neighbor Parameters for Predicting DNA Duplex Stability
+# adjust_initiation = {"A": 2.8, "T": 2.8, "C": 1.82, "G": 1.82}
+# deltaG(total) = Σ(deltaG(i)) + deltaG(initiation with terminal GC) + deltaG(initiation with terminal AT) -
+# (0.175 * ln(Na) + 0.2) * len(sequence)
+# This work suggested that oligonucleotides with terminal 5-T-A-3 base pairs should have a penalty of 0.4 kcal/mol
+# but that no penalty should be given for terminal 5-A-T-3 pairs
+adjust_initiation = {"A": 0.98, "T": 0.98, "C": 1.03, "G": 1.03}
+
+adjust_terminal_TA = 0.4
+# Symmetry correction applies only to self-complementary sequences.
+# symmetry_correction = 0.4
+symmetry_correction = 0.4
+#############################################################################
+base2bit = {"A": 0, "C": 1, "G": 2, "T": 3}
+
+TRANS = str.maketrans("ATGCRYMKSWHBVDN", "TACGYRKMSWDVBHN")
+
+def RC(seq):
+    return seq.translate(TRANS)[::-1]
 
 def score_trans(sequence):
     return reduce(mul, [math.floor(degenerate_table[x]) for x in list(sequence)])
 
+def symmetry(seq):
+    if len(seq) % 2 == 1:
+        return False
+    else:
+        F = seq[:int(len(seq) / 2)]
+        R = RC(seq[int(len(seq) / 2):][::-1])
+        if F == R:
+            return True
+        else:
+            return False
 
-def dege_trans(sequence):
-    expand_seq = [sequence]
-    expand_score = reduce(mul, [score_trans(x) for x in expand_seq])
-    while expand_score > 1:
-        for seq in expand_seq:
-            if score_trans(seq) == 1:
-                pass
-            else:
-                expand_seq.remove(seq)
-                for nt in range(len(seq)):
-                    if math.floor(degenerate_table[seq[nt]]) > 1:
-                        for v in degenerate_pair[seq[nt]]:
-                            expand_seq.append(seq[0:nt] + v + seq[nt + 1:])
-                        # print(expand_seq)
-                        break
-        expand_score = reduce(mul, [score_trans(x) for x in expand_seq])
-    return expand_seq
-
+def dege_trans(primer):
+    seq = []
+    cs = ""
+    for s in primer:
+        if s not in degenerate_pair:
+            cs += s
+        else:
+            seq.append([cs + i for i in degenerate_pair[s]])
+            cs = ""
+    if cs:
+        seq.append([cs])
+    return ["".join(i) for i in product(*seq)]
 
 def Penalty_points(length, GC, d1, d2):
-    return math.log((2 ** length * 2 ** GC) / ((d1 + 0.1) * (d2 + 0.1)), 10)
+    # return log10((2 ** length * 2 ** GC) / ((d1 + 0.1) * (d2 + 0.1)))
+    return math.log10((2 ** length * 2 ** GC) / ((2 ** d1 - 0.9) * (2 ** d2 - 0.9)))
 
 
-def current_end(primer_F, primer_R):
+def current_end(primer_F, primer_R, num=5, length=14):
     primer_F_extend = adaptor[0] + primer_F
     primer_R_extend = adaptor[1] + primer_R
-    primer_F_len = len(primer_F)
-    primer_R_len = len(primer_R)
-    end_seq = set()
-    for a in range(primer_F_len - 5):
-        F_end_seq = set(dege_trans(primer_F_extend[-a - 5:]))
-        end_seq = end_seq.union(F_end_seq)
-        #F_start_seq = dege_trans(primer_F_extend[:a + 5])
-        #end_seq = end_seq.union(set(F_start_seq))
-        a += 1
-    for b in range(primer_R_len - 5):
-        R_end_seq = set(dege_trans(primer_R_extend[-b - 5:]))
-        end_seq = end_seq.union(R_end_seq)
-        #R_end_seq = dege_trans(primer_R_extend[:b + 5])
-        #end_seq = end_seq.union(set(R_end_seq))
-        b += 1
-    return end_seq
+    end_seq = []
+    for a in range(num, (num + length)):
+        F_end_seq = dege_trans(primer_F_extend[-a:])
+        end_seq.extend(F_end_seq)
+    for b in range(num, (num + length)):
+        R_end_seq = set(dege_trans(primer_R_extend[-b:]))
+        end_seq.extend(R_end_seq)
+    return set(end_seq)
 
+
+def degenerate_seq(primer):
+    seq = []
+    cs = ""
+    for s in primer:
+        if s not in degenerate_pair:
+            cs += s
+        else:
+            seq.append([cs + i for i in degenerate_pair[s]])
+            cs = ""
+    if cs:
+        seq.append([cs])
+    return ["".join(i) for i in product(*seq)]
+
+def deltaG(sequence):
+    Delta_G_list = []
+    Na = 50
+    for seq in degenerate_seq(sequence):
+        Delta_G = 0
+        for n in range(len(seq) - 1):
+            i, j = base2bit[seq[n + 1]], base2bit[seq[n]]
+            Delta_G += freedom_of_H_37_table[i][j] * H_bonds_number[i][j] + penalty_of_H_37_table[i][j]
+        term5 = sequence[-2:]
+        if term5 == "TA":
+            Delta_G += adjust_initiation[seq[0]] + adjust_initiation[seq[-1]] + adjust_terminal_TA
+        else:
+            Delta_G += adjust_initiation[seq[0]] + adjust_initiation[seq[-1]]
+        # adjust by concentration of Na+
+        Delta_G -= (0.175 * math.log(Na / 1000, math.e) + 0.20) * len(seq)
+        if symmetry(seq):
+            Delta_G += symmetry_correction
+        Delta_G_list.append(Delta_G)
+    return round(max(Delta_G_list), 2)
 
 def dimer_check(primer_F, primer_R):
     check = "F"
     global primer_set
     current_end_set = current_end(primer_F, primer_R)
-    for end in current_end_set:
+    print(current_end_set)
+    current_end_list = sorted(list(current_end_set), key=lambda i: len(i), reverse=True)
+    for end in current_end_list:
         for primer in primer_set:
-            if re.search(str(Seq(end).reverse_complement()), primer):
+            idx = primer.find(RC(end))
+            if idx >= 0:
                 end_length = len(end)
                 end_GC = end.count("G") + end.count("C")
                 end_d1 = 0
-                #if re.search(str(Seq(end).reverse_complement()), primer):
-                end_d2 = len(primer) - len(end) - primer.index(str(Seq(end).reverse_complement()))
-                Loss = Penalty_points(end_length, end_GC, end_d1, end_d2)
-            else:
-                Loss = 0
-            if Loss > 3:
-                check = "T"
-                break
+                end_d2 = len(primer) - len(end) - idx
+                Loss = Penalty_points(
+                    end_length, end_GC, end_d1, end_d2)
+                delta_G = deltaG(end)
+                if Loss >= 3 or (delta_G < -5 and (end_d1 == end_d2)):
+                    check = "T"
+                    break
         if check == "T":
             break
     if check == "T":
         return True
     else:
-        return False
+        set_end_seq = set()
+        for primer in primer_set:
+            for a in range(5, 19):
+                tmp_end_seq = set(dege_trans(primer[-a:]))
+                set_end_seq = set_end_seq.union(tmp_end_seq)
+        for end in set_end_seq:
+            for primer in [primer_F, primer_R]:
+                idx = primer.find(RC(end))
+                if idx >= 0:
+                    end_length = len(end)
+                    end_GC = end.count("G") + end.count("C")
+                    end_d1 = 0
+                    end_d2 = len(primer) - len(end) - idx
+                    Loss = Penalty_points(
+                        end_length, end_GC, end_d1, end_d2)
+                    delta_G = deltaG(end)
+                    if Loss >= 3 or (delta_G < -5 and (end_d1 == end_d2)):
+                        check = "T"
+                        break
+            if check == "T":
+                break
+        if check == "T":
+            return True
+        else:
+            return False
 
 
 ###############################################################
@@ -319,7 +407,7 @@ if __name__ == "__main__":
     if method == "T":
         maximal_out = options.out
         next_candidate = options.out.rstrip(".xls") + ".next.xls"
-        next_candidate_txt = open(next_candidate,"w")
+        next_candidate_txt = open(next_candidate, "w")
         greedy_maximal_primers(primers, row_num, maximal_out,next_candidate_txt)
         next_candidate_txt.close()
     else:

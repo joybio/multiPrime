@@ -156,7 +156,7 @@ class Dimer(object):
                 cs = ""
         if cs:
             seq.append([cs])
-        return ("".join(i) for i in product(*seq))
+        return ["".join(i) for i in product(*seq)]
 
     def current_end(self, primer, adaptor="", num=5, length=14):
         primer_extend = adaptor + primer
@@ -203,7 +203,7 @@ class Dimer(object):
                         Loss = Penalty_points(
                             end_length, end_GC, end_d1, end_d2)
                         delta_G = self.deltaG(end)
-                        if Loss >= self.threshold or (delta_G < -5 and Loss >= (self.threshold * 2/3)):
+                        if Loss >= self.threshold or (delta_G < -5 and (end_d1 == end_d2)):
                             line = (self.primers[primer], primer,
                                     end, delta_G, end_length, end_d1,
                                     end_GC, self.primers[ps],

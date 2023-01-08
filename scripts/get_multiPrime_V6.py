@@ -114,9 +114,9 @@ def argsParse():
 
     parser.add_option('-m', '--maxseq',
                       dest='maxseq',
-                      default=500,
+                      default=0,
                       type="int",
-                      help='Limit of sequence number. Default: 500. If 0, then all sequence will take into account.\n'
+                      help='Limit of sequence number. Default: 0. If 0, then all sequence will take into account.\n'
                            'This param should consistent with [max_seq] in multi-alignment [muscle].')
 
     parser.add_option('-o', '--out',
@@ -446,12 +446,13 @@ class Primers_filter(object):
             return False
 
     ################# current_end #####################
-    def current_end(self, primer, num=5, length=14):
-        end_seq = set()
+    def current_end(self, primer, adaptor="", num=5, length=14):
+        primer_extend = adaptor + primer
+        end_seq = []
         for i in range(num, (num + length)):
-            s = primer[-i:]
+            s = primer_extend[-i:]
             if s:
-                end_seq.union(set(self.degenerate_seq(s)))
+                end_seq.extend(self.degenerate_seq(s))
         return end_seq
 
     ################# Free energy #####################
@@ -476,7 +477,7 @@ class Primers_filter(object):
 
     ################# Dimer #####################
     def dimer_check(self, primer_F, primer_R):
-        current_end_set = self.current_end(primer_F).union(self.current_end(primer_R))
+        current_end_set = set(self.current_end(primer_F)).union(set(self.current_end(primer_R)))
         primer_pairs = [primer_F, primer_R]
         dimer = False
         for pp in primer_pairs:
@@ -492,12 +493,14 @@ class Primers_filter(object):
                             end_length, end_GC, end_d1, end_d2)
                         delta_G = self.deltaG(end)
                         # threshold = 3 or 3.6 or 3.96
-                        if Loss > 3.6 or delta_G < -5:
+                        if Loss > 3.6 or (delta_G < -5 and (end_d1 == end_d2)):
                             dimer = True
                             if dimer:
                                 break
                 if dimer:
                     break
+            if dimer:
+                break
         if dimer:
             return True
         else:
@@ -587,7 +590,7 @@ class Primers_filter(object):
             index_right = bisect_left(my_list, my_number2) - 1
         return index_left, index_right
 
-    def primer_pairs(self, start, adaptor, min_len, max_len, candidate_position, primer_pairs):
+    def primer_pairs(self, start, adaptor, min_len, max_len, candidate_position, primer_pairs, threshold):
         primerF_extend = adaptor[0] + self.primers[candidate_position[start]][0]
         if self.hairpin_check(primerF_extend):
             # print("hairpin!")
@@ -620,6 +623,8 @@ class Primers_filter(object):
                             print("Error! PCR product greater than max length !")
                             break
                         elif int(min_len) <= distance <= int(max_len):
+                            # print(self.primers[candidate_position[start]][0],
+                            #                     reversecomplement(self.primers[candidate_position[stop]][0]))
                             if self.dimer_check(self.primers[candidate_position[start]][0],
                                                 reversecomplement(self.primers[candidate_position[stop]][0])):
                                 print("Dimer detection between Primer-F and Primer-R!")
@@ -646,7 +651,7 @@ class Primers_filter(object):
                                     for n in list(dict(self.non_cover_id[stop_pos][1]).values()):
                                         un_cover_list.extend(set(n))
                                     all_non_cover_number = len(set(un_cover_list))
-                                    if all_non_cover_number/self.number > 1- self.fraction:
+                                    if all_non_cover_number/self.number > threshold:
                                         pass
                                     else:
                                         all_coverage = self.number - all_non_cover_number
@@ -683,18 +688,29 @@ class Primers_filter(object):
         adaptor = self.adaptor.split(",")
         primer_pairs = Manager().list()
         # print(candidate_position)
+        coverage_threshold = 1 - self.fraction
         if int(candidate_position[-1]) - int(candidate_position[0]) < min_len:
             # print("min len!")
             pass
         else:
             for start in range(len(candidate_position)):
-                p.submit(self.primer_pairs(start, adaptor, min_len, max_len, candidate_position, primer_pairs))
+                p.submit(self.primer_pairs(start, adaptor, min_len, max_len, candidate_position, primer_pairs,
+                                           coverage_threshold))
                 # This will submit all tasks to one place without blocking, and then each
                 # thread in the thread pool will fetch tasks.
             p.shutdown()
             # After I run the main, I don't care whether the sub thread is alive or dead. With this parameter,
             # after all the sub threads are executed, the main function is executed get results after shutdown.
             # Asynchronous call mode: only call, unequal return values, coupling may exist, but the speed is fast.
+            if len(primer_pairs) < 10:
+                new_p = ProcessPoolExecutor(self.nproc)
+                coverage_threshold += 0.1
+                for start in range(len(candidate_position)):
+                    new_p.submit(self.primer_pairs(start, adaptor, min_len, max_len, candidate_position, primer_pairs,
+                                               coverage_threshold))
+                    # This will submit all tasks to one place without blocking, and then each
+                    # thread in the thread pool will fetch tasks.
+                new_p.shutdown()
             ID = str(self.outfile)
             with open(self.outfile, "w") as fo:
                 # headers = ["Primer_F_seq", "Primer_R_seq", "Product length:Tm:coverage_percentage",

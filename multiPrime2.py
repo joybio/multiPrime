@@ -120,10 +120,11 @@ checkpoint extract_cluster_fa:
 		config["results_dir"] + "/cluster.txt",
 		directory(config["results_dir"] + "/Clusters_fa"),
 		config["results_dir"] + "/cluster.identities.txt",
-		config["results_dir"] + "/history.txt"
+		config["results_dir"] + "/history.txt",
 	params:
 		script = config["scripts_dir"],
 		max_seq = config["max_seq"]
+		threshold =  config["seq_number_ANI"]
 	message:
 		"Step5: extract fasta in each cluster from cd-hit results .."
 	shell:
@@ -131,7 +132,7 @@ checkpoint extract_cluster_fa:
 		python {params.script}/extract_cluster_V3.py -i {input[0]} -c {input[1]} \
 			 -m {params.max_seq} -o {output[0]} -y {output[2]} -d {output[1]};
 
-		python {params.script}/merge_cluster_by_ANI.py -i {output[0]} -p 20 -t 20 \
+		python {params.script}/merge_cluster_by_ANI.py -i {output[0]} -p 20 -t threshold \
 			-o {output[3]}
 		'''
 
@@ -202,7 +203,7 @@ rule get_multiPrime:
 	output:
 		config["results_dir"] + "/Clusters_cprimer/{i}.candidate.primers.txt"
 	log:
-		config["log_dir"] + "/get_degePrimer_{i}.log"
+		config["log_dir"] + "/get_multiPrime_{i}.log"
 	params:
 		script = config["scripts_dir"],
 		fraction = config["coverage"],
@@ -213,7 +214,7 @@ rule get_multiPrime:
 		adaptor = config["adaptor"],
 		end = config["end"]
 	message:
-		"Step9: choose candidate primers for each cluster (hairpin, dimer (F-R) check) .."
+		"Step9: choose candidate primeri pairs for each cluster (hairpin, dimer (F-R) check) .."
 	shell:
 		'''
 		python {params.script}/get_multiPrime.py -i {input.primer} -r {input.ref_fa} \
