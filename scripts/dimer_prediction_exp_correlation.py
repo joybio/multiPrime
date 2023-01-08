@@ -11,8 +11,7 @@ import time
 import sys
 
 def argsParse():
-    parser = OptionParser('Usage: %prog -i input -o output \n \
-                Options: { -l 18 -n 2 -d 6 -v 2 -g 0.2,0.7 -f 0.8 -c 4 -p 10 -a 4 }')
+    parser = OptionParser('Usage: %prog -i input -e experiment -o output')
     parser.add_option('-i', '--input',
                       dest='input',
                       help='Input file: prediction of primer-dimer.')

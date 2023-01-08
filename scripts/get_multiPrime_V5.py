@@ -379,11 +379,11 @@ class Primers_filter(object):
                 else:
                     i = i.strip().split("\t")
                     position = int(i[0])
-                    primer_seq = i[1]
-                    F_coverage = int(i[5])
-                    R_coverage = int(i[6])
-                    fraction = round(int(i[5]) / self.number, 2)
-                    Tm =  round(float(i[7]), 2)
+                    primer_seq = i[3]
+                    F_coverage = int(i[7])
+                    R_coverage = int(i[8])
+                    fraction = round(int(i[6]) / self.number, 2)
+                    Tm = round(float(i[9]), 2)
                     primer_dict[position] = [primer_seq, fraction, F_coverage, R_coverage, Tm]
         # print(primer_dict)
         with open(self.primer_file + ".gap_seq_id_json") as g:
@@ -682,6 +682,7 @@ class Primers_filter(object):
         candidate_position = self.pre_filter_primers
         adaptor = self.adaptor.split(",")
         primer_pairs = Manager().list()
+        # print(candidate_position)
         if int(candidate_position[-1]) - int(candidate_position[0]) < min_len:
             # print("min len!")
             pass

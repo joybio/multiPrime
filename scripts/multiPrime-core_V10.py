@@ -161,9 +161,9 @@ def argsParse():
     return parser.parse_args()
 
 
-degenerate_base = {"A": ["A"], "G": ["G"], "C": ["C"], "T": ["T"], "R": ["A", "G"], "Y": ["C", "T"], "M": ["A", "C"],
-                   "K": ["G", "T"], "S": ["G", "C"], "W": ["A", "T"], "H": ["A", "T", "C"], "B": ["G", "T", "C"],
-                   "V": ["G", "A", "C"], "D": ["G", "A", "T"], "N": ["A", "T", "G", "C"]}
+degenerate_base = {"-": ["-"], "A": ["A"], "G": ["G"], "C": ["C"], "T": ["T"], "R": ["A", "G"], "Y": ["C", "T"],
+                   "M": ["A", "C"], "K": ["G", "T"], "S": ["G", "C"], "W": ["A", "T"], "H": ["A", "T", "C"],
+                   "B": ["G", "T", "C"], "V": ["G", "A", "C"], "D": ["G", "A", "T"], "N": ["A", "T", "G", "C"]}
 
 score_table = {"-": 100, "#": 0, "A": 1, "G": 1.11, "C": 1.21, "T": 1.4, "R": 2.11, "Y": 2.61, "M": 2.21,
                "K": 2.51, "S": 2.32, "W": 2.4, "H": 3.61, "B": 3.72, "V": 3.32, "D": 3.51, "N": 4.72}
@@ -522,7 +522,7 @@ class NN_degenerate(object):
                         i = i.strip().split(" ")
                         acc_id = i[0]
                     else:
-                        sequence = re.sub("[^ACGT]", "-", i.strip().upper())
+                        sequence = re.sub("[^ACGTRYMKSWHBVDN]", "-", i.strip().upper())
                         seq_dict[acc_id] += sequence
         return seq_dict, len(seq_dict)
 
@@ -672,7 +672,7 @@ class NN_degenerate(object):
         primers_db = []
         for seq_id in sequence_dict.keys():
             # sequence
-            sequence = sequence_dict[seq_id][primer_start:primer_start + self.primer_length]
+            sequence = sequence_dict[seq_id][primer_start:primer_start + self.primer_length].upper()
             # replace "-" which in start or stop position with nucleotides
             if sequence.startswith("-"):
                 sequence_narrow = sequence.lstrip("-")
@@ -696,18 +696,22 @@ class NN_degenerate(object):
                 gap_sequence[sequence] += 1
                 gap_sequence_number += 1
                 # record acc ID of gap sequences
-                gap_seq_id[sequence].append(seq_id)
+                expand_sequence = self.degenerate_seq(sequence)
+                for i in expand_sequence:
+                    gap_seq_id[i].append(seq_id)
             # # accepted gap, number of gap <= variation
             else:
-                cover[sequence] += 1
+                expand_sequence = self.degenerate_seq(sequence)
                 cover_number += 1
-                primers_db.append(list(sequence))
-                # record acc ID of non gap sequences, which is potential mis-coverage
-                non_gap_seq_id[sequence].append(seq_id)
-                if re.search("-", sequence):
-                    pass
-                else:
-                    cover_for_MM[sequence] += 1
+                for i in expand_sequence:
+                    cover[i] += 1
+                    primers_db.append(list(i))
+                    # record acc ID of non gap sequences, which is potential mis-coverage
+                    non_gap_seq_id[i].append(seq_id)
+                    if re.search("-", i):
+                        pass
+                    else:
+                        cover_for_MM[i] += 1
         # number of sequences with too many gaps greater than (1 - self.coverage)
         if round(gap_sequence_number / self.total_sequence_number, 2) >= (1 - self.coverage):
             self.resQ.put(None)
@@ -1040,6 +1044,7 @@ class NN_degenerate(object):
                             NN_array_tmp[i + 1, idx, :] -= NN_array_tmp[i + 1, idx, :]
                             optimal_NN_coverage_tmp[i] = NN_array_tmp[i, row, column]
                             optimal_NN_coverage_tmp[i + 1] = NN_array_tmp[i + 1, next_row, next_column]
+
                             break
                 # primer update
                 optimal_list_update = optimal_list
