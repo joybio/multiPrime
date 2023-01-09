@@ -164,9 +164,9 @@ def Penalty_points(length, GC, d1, d2):
     return math.log10((2 ** length * 2 ** GC) / ((2 ** d1 - 0.9) * (2 ** d2 - 0.9)))
 
 
-def current_end(primer, num=5, length=14):
+def current_end(primer, num=5):
     end_seq = []
-    for a in range(num, (num + length)):
+    for a in range(num, len(primer)):
         tmp_end_seq = dege_trans(primer[-a:])
         end_seq.extend(tmp_end_seq)
     return set(end_seq)

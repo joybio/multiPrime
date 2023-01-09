@@ -32,6 +32,7 @@ THE SOFTWARE.
 """
 
 import optparse
+import re
 from optparse import OptionParser
 from collections import defaultdict
 def argsParse():
@@ -94,11 +95,11 @@ def seq_format(Input):
 				key = i
 				if re.search("complete", key):
 					complete_number += 1
-			elif i == "--\n":
+			elif i == "^--\n":
 				pass
 			else:
-				i = i.strip()
-				seq_dict[key] += i.replace("N","")
+				value = re.sub("[^ACGTRYMKSWHBVDN]", "", i.strip().upper())
+				seq_dict[key] += value
 				seq_lenght_dict[key] += len(i)
 	In.close()
 	return seq_dict, seq_lenght_dict, complete_number

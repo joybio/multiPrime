@@ -249,7 +249,6 @@ class off_targets(object):
             for i in f:
                 if i.startswith(">"):
                     value = i.strip().lstrip(">")
-                    print(value)
                 else:
                     key = i.strip()[-l:]
                     term_list[key].append(value)
