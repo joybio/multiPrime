@@ -21,6 +21,7 @@ from functools import reduce
 import pandas as pd
 import numpy as np
 
+
 def argsParse():
     parser = OptionParser('Usage: %prog -i [input] -o [output] \n \
                             Options: {-s [step] -m [T]}', version="%prog 0.0.4")
@@ -123,11 +124,14 @@ base2bit = {"A": 0, "C": 1, "G": 2, "T": 3}
 
 TRANS = str.maketrans("ATGCRYMKSWHBVDN", "TACGYRKMSWDVBHN")
 
+
 def RC(seq):
     return seq.translate(TRANS)[::-1]
 
+
 def score_trans(sequence):
     return reduce(mul, [math.floor(degenerate_table[x]) for x in list(sequence)])
+
 
 def symmetry(seq):
     if len(seq) % 2 == 1:
@@ -139,6 +143,7 @@ def symmetry(seq):
             return True
         else:
             return False
+
 
 def dege_trans(primer):
     seq = []
@@ -153,21 +158,17 @@ def dege_trans(primer):
         seq.append([cs])
     return ["".join(i) for i in product(*seq)]
 
+
 def Penalty_points(length, GC, d1, d2):
     # return log10((2 ** length * 2 ** GC) / ((d1 + 0.1) * (d2 + 0.1)))
     return math.log10((2 ** length * 2 ** GC) / ((2 ** d1 - 0.9) * (2 ** d2 - 0.9)))
 
 
-def current_end(primer_F, primer_R, num=5, length=14):
-    primer_F_extend = adaptor[0] + primer_F
-    primer_R_extend = adaptor[1] + primer_R
+def current_end(primer, num=5, length=14):
     end_seq = []
     for a in range(num, (num + length)):
-        F_end_seq = dege_trans(primer_F_extend[-a:])
-        end_seq.extend(F_end_seq)
-    for b in range(num, (num + length)):
-        R_end_seq = set(dege_trans(primer_R_extend[-b:]))
-        end_seq.extend(R_end_seq)
+        tmp_end_seq = dege_trans(primer[-a:])
+        end_seq.extend(tmp_end_seq)
     return set(end_seq)
 
 
@@ -183,6 +184,7 @@ def degenerate_seq(primer):
     if cs:
         seq.append([cs])
     return ["".join(i) for i in product(*seq)]
+
 
 def deltaG(sequence):
     Delta_G_list = []
@@ -204,14 +206,18 @@ def deltaG(sequence):
         Delta_G_list.append(Delta_G)
     return round(max(Delta_G_list), 2)
 
-def dimer_check(primer_F, primer_R):
+
+def dimer_examination(primer_F, primer_R, primer_list):
     check = "F"
-    global primer_set
-    current_end_set = current_end(primer_F, primer_R)
-    print(current_end_set)
-    current_end_list = sorted(list(current_end_set), key=lambda i: len(i), reverse=True)
+    current_primer = set(degenerate_seq(primer_F) + degenerate_seq(primer_R))
+    Total_P_set = current_primer.union(primer_list)
+    tmp_current_end_list = []
+    for cp in Total_P_set:
+        tmp_current_end_list.extend(list(current_end(cp)))
+    # print(tmp_current_end_list)
+    current_end_list = sorted(list(set(tmp_current_end_list)), key=lambda i: len(i), reverse=True)
     for end in current_end_list:
-        for primer in primer_set:
+        for primer in Total_P_set:
             idx = primer.find(RC(end))
             if idx >= 0:
                 end_length = len(end)
@@ -229,31 +235,32 @@ def dimer_check(primer_F, primer_R):
     if check == "T":
         return True
     else:
-        set_end_seq = set()
-        for primer in primer_set:
-            for a in range(5, 19):
-                tmp_end_seq = set(dege_trans(primer[-a:]))
-                set_end_seq = set_end_seq.union(tmp_end_seq)
-        for end in set_end_seq:
-            for primer in [primer_F, primer_R]:
-                idx = primer.find(RC(end))
-                if idx >= 0:
-                    end_length = len(end)
-                    end_GC = end.count("G") + end.count("C")
-                    end_d1 = 0
-                    end_d2 = len(primer) - len(end) - idx
-                    Loss = Penalty_points(
-                        end_length, end_GC, end_d1, end_d2)
-                    delta_G = deltaG(end)
-                    if Loss >= 3 or (delta_G < -5 and (end_d1 == end_d2)):
-                        check = "T"
-                        break
-            if check == "T":
-                break
-        if check == "T":
-            return True
-        else:
-            return False
+        return False
+        # list_end_seq = []
+        # for primer in primer_set:
+        #     for a in range(5, 19):
+        #         tmp_end_seq = dege_trans(primer[-a:])
+        #         list_end_seq.extend(tmp_end_seq)
+        # for end in set(list_end_seq):
+        #     for primer in [primer_F, primer_R]:
+        #         idx = primer.find(RC(end))
+        #         if idx >= 0:
+        #             end_length = len(end)
+        #             end_GC = end.count("G") + end.count("C")
+        #             end_d1 = 0
+        #             end_d2 = len(primer) - len(end) - idx
+        #             Loss = Penalty_points(
+        #                 end_length, end_GC, end_d1, end_d2)
+        #             delta_G = deltaG(end)
+        #             if Loss >= 3 or (delta_G < -5 and (end_d1 == end_d2)):
+        #                 check = "T"
+        #                 break
+        #     if check == "T":
+        #         break
+        # if check == "T":
+        #     return True
+        # else:
+        #     return False
 
 
 ###############################################################
@@ -273,8 +280,8 @@ def greedy_primers(primers, row_num, output):
             blank_row += 1
         else:
             while column_pointer <= len(primers[row_pointer]) - step:
-                if dimer_check(primers[row_pointer][column_pointer],
-                               primers[row_pointer][column_pointer + 1]):
+                if dimer_examination(primers[row_pointer][column_pointer],
+                                     primers[row_pointer][column_pointer + 1], primer_set):
                     column_pointer += step
                     while column_pointer > len(primers[row_pointer]) - step:
                         row_pointer -= 1
@@ -299,8 +306,8 @@ def greedy_primers(primers, row_num, output):
                     clique = pd.concat([clique, clique_local], axis=0, ignore_index=True)
                     primer_end_dict[row_pointer] = primer_end_set
                     primer_dict[row_pointer] = primer_set
-                    current_end_set = current_end(primers[row_pointer][column_pointer],
-                                                  primers[row_pointer][column_pointer + 1])
+                    current_end_set = current_end(primers[row_pointer][column_pointer]) + \
+                                      current_end(primers[row_pointer][column_pointer + 1])
                     primer_end_set = primer_end_set.union(current_end_set)
                     primer_set = primer_set.union(set(dege_trans(primers[row_pointer][column_pointer]) +
                                                       dege_trans(primers[row_pointer][column_pointer + 1])))
@@ -311,12 +318,14 @@ def greedy_primers(primers, row_num, output):
     with open(output, "w") as greedy_primers_out:
         clique.to_csv(greedy_primers_out, index=False, sep="\t")
 
+
 def nan_removing(pre_list):
     while np.nan in pre_list:
         pre_list.remove(np.nan)
     return pre_list
 
-def greedy_maximal_primers(primers, row_num, output,next_candidate):
+
+def greedy_maximal_primers(primers, row_num, output, next_candidate):
     global primer_end_set, primer_set
     jdict = {}
     primer_end_dict = {}
@@ -333,8 +342,8 @@ def greedy_maximal_primers(primers, row_num, output,next_candidate):
             blank_row += 1
         else:
             while column_pointer <= len(primers[row_pointer]) - step:
-                if dimer_check(primers[row_pointer][column_pointer],
-                               primers[row_pointer][column_pointer + 1]):
+                if dimer_examination(primers[row_pointer][column_pointer],
+                                     primers[row_pointer][column_pointer + 1], primer_set):
                     column_pointer += step
                     if column_pointer > len(primers[row_pointer]) - step:
                         clique_local = pd.DataFrame({"#Primer": primers[row_pointer][0]}, index=[0])
@@ -345,7 +354,7 @@ def greedy_maximal_primers(primers, row_num, output,next_candidate):
                         row_pointer += 1
                         column_pointer = 1
                         break
-                    
+
                 else:
                     clique_local = pd.DataFrame({
                         "#Primer": primers[row_pointer][0],
@@ -359,8 +368,8 @@ def greedy_maximal_primers(primers, row_num, output,next_candidate):
                     clique = pd.concat([clique, clique_local], axis=0, ignore_index=True)
                     primer_end_dict[row_pointer] = primer_end_set
                     primer_dict[row_pointer] = primer_set
-                    current_end_set = current_end(primers[row_pointer][column_pointer],
-                                                  primers[row_pointer][column_pointer + 1])
+                    current_end_set = current_end(primers[row_pointer][column_pointer]).union(
+                                      current_end(primers[row_pointer][column_pointer + 1]))
                     primer_end_set = primer_end_set.union(current_end_set)
                     primer_set = primer_set.union(set(dege_trans(primers[row_pointer][column_pointer]) +
                                                       dege_trans(primers[row_pointer][column_pointer + 1])))
@@ -408,7 +417,7 @@ if __name__ == "__main__":
         maximal_out = options.out
         next_candidate = options.out.rstrip(".xls") + ".next.xls"
         next_candidate_txt = open(next_candidate, "w")
-        greedy_maximal_primers(primers, row_num, maximal_out,next_candidate_txt)
+        greedy_maximal_primers(primers, row_num, maximal_out, next_candidate_txt)
         next_candidate_txt.close()
     else:
         maximum_out = options.out

@@ -123,7 +123,7 @@ checkpoint extract_cluster_fa:
 		config["results_dir"] + "/history.txt",
 	params:
 		script = config["scripts_dir"],
-		max_seq = config["max_seq"]
+		max_seq = config["max_seq"],
 		threshold =  config["seq_number_ANI"]
 	message:
 		"Step5: extract fasta in each cluster from cd-hit results .."
@@ -382,7 +382,8 @@ rule all_mfeprimer_check:
 	output:
 		config["results_dir"] + "/Primers_set/final_maxprimers_set.fa",
 		config["results_dir"] + "/Primers_set/final_maxprimers_set.fa.hairpin",
-		config["results_dir"] + "/Primers_set/final_maxprimers_set.fa.dimer"	
+		config["results_dir"] + "/Primers_set/final_maxprimers_set.fa.dimer",
+		config["results_dir"] + "/Primers_set/final_maxprimers_set.fa.findimer"
 	params:
 		config["scripts_dir"]
 	message:
@@ -393,6 +394,7 @@ rule all_mfeprimer_check:
 		python {params}/primerset_format.py -i {input} -o {output[0]}
 		{params}/mfeprimer-3.2.6 hairpin -i {output[0]} -o {output[1]}
 		{params}/mfeprimer-3.2.6 dimer -i {output[0]} -o {output[2]}
+		python {params}/finDimer.py -i {output[0]} -o {output[3]}
 		"""
 #-------------------------------------------------------------------------------------------
 # core_mfeprimer_check rule 18: Dependency packages - mfeprimer-3.2.6
@@ -403,7 +405,8 @@ rule core_mfeprimer_check:
 	output:
 		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa",
 		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa.hairpin",
-		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa.dimer"
+		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa.dimer",
+		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa.findimer"
 	params:
 		config["scripts_dir"]
 	message:
@@ -413,6 +416,7 @@ rule core_mfeprimer_check:
 		python {params}/primerset_format.py -i {input} -o {output[0]}
 		{params}/mfeprimer-3.2.6 hairpin -i {output[0]} -o {output[1]}
 		{params}/mfeprimer-3.2.6 dimer -i {output[0]} -o {output[2]}
+		python {params}/finDimer.py -i {output[0]} -o {output[3]}
 		"""
 #-------------------------------------------------------------------------------------------
 # Done!
