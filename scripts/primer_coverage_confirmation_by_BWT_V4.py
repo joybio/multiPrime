@@ -83,9 +83,9 @@ def argsParse():
 
     parser.add_option('-s', '--s',
                       dest='size',
-                      default="150,2000",
+                      default="100,1500",
                       type="str",
-                      help='Length of PCR product, default: 150,2000.')
+                      help='Length of PCR product, default: 100,1500.')
 
     parser.add_option('-p', '--proc',
                       dest='proc',
