@@ -302,4 +302,10 @@ results: results directory
 		--core_PCR_product: core PCR product of each primer
 
 
+# Contact
+Please send comments, suggestions, bug reports and bug fixes to 1806389316@pku.edu.cn
+
+# Todo
+More functions will be improved in the future. A new update is comming.
+
 
