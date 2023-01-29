@@ -1,12 +1,13 @@
 multiPrime: version 2.0.0
-# multi PCR primers design processing pipeline
-multiPrime was developed to design primer set for large-scale sequences (MD-EDPD). It can identify the core primers and optimize primer sets.
+
+# multi PCR primer pairs design processing pipeline
+multiPrime was developed to design primer set for large-scale sequences (MD-EDPD). It can identify the core primer pairs and optimize primer sets.
 
 Scripts and pipelines provided in this repository aid to design multiplex PCR primer and return a minimal primerset for multi-PCR. It contains all scripts to allow a self-assembled processing and additionally provides pipeline scripts that run the entire processing automatically.
 
 # Requirements
 
-To run this pipeline, your computer requires **30 GB of available memory (RAM)** to process larger number of sequence (e.g. 100000). We don't suggest that Input sequences contains those sequences whose length is greater than 10K,  if necessary, you'd better set the Maxseq in yaml file as small as possible, but do not smaller than 100. Snakemake was used to facilitate the automated execution of all analysis steps. The easiest way to make use of the pipeline is to set up a python 3.9 virtual environment and run the pipeline is this environment. 
+To run this pipeline, your computer requires **30 GB of available memory (RAM)** to process larger number of sequence (e.g. 1,000,000). We don't suggest that Input sequences contains those sequences whose length is greater than 100K,  if necessary, you'd better set the Maxseq in yaml file as small as possible, but do not smaller than 200. Snakemake was used to facilitate the automated execution of all analysis steps. The easiest way to make use of the pipeline is to set up a python 3.9 virtual environment and run the pipeline is this environment. 
 Download/Provide all necessary files:
 
 DEGEPRIME-1.1.0: DOI: 10.1128/AEM.01403-14; "DegePrime, a program for degenerate primer design for broad-taxonomic-range PCR in microbial ecology studies."
@@ -63,11 +64,11 @@ Once you set up your configuration file, running the pipeline locally on your co
   ```bash
   sh run.sh
   ```
-  or
+  MD-DPD:
   ```bash
   snakemake --configfile multiPrime.yaml -s multiPrime.py --cores 30
   ```
-  or
+  MD-EDPD or MD-DPD:
   ```bash
   snakemake --configfile multiPrime2.yaml -s multiPrime2.py --cores 30
   ```
