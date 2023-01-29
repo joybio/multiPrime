@@ -54,9 +54,7 @@ Before starting the pipeline, open the `multiPrime.yaml` configuration file and 
   - **name of the scripts directory** - where should the pipeline store the scripts files
 	-scripts_dir: ["abs_path_to"]/multiPrime/scripts
   - **name(s) of your input samples** - please note: If your sample is named `sample1.fa` then `sample1` will be kept as naming scheme throughout the entire run to indicate output files that belong to this input file, e.g. the pipeline will create a file called `sample1.fa`. If you have multiple input files, just follow the given pattern with one sample name per line (and a dash that indicates another list item).
-	
-  - virus:
-      "- test"
+  - **identity** - threshold for classification. please note: If you set 1, multiPrime will design candidate primer pairs for each fasta in input files. Suggestion: 0.7-0.8. 
 
 # Start a run
 
