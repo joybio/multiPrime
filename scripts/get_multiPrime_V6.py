@@ -88,8 +88,8 @@ def argsParse():
 
     parser.add_option('-s', '--size',
                       dest='size',
-                      default="250,500",
-                      help="Filter primers by PRODUCT size. Default [250,500].")
+                      default="250,1000",
+                      help="Filter primers by PRODUCT size. Default [250,1000].")
 
     parser.add_option('-d', '--dist',
                       dest='dist',
