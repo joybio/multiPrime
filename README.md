@@ -305,6 +305,6 @@ results: results directory
 Please send comments, suggestions, bug reports and bug fixes to 1806389316@pku.edu.cn
 
 # Todo
-This repository is updated frequently. Expect breaking changes. More functions will be improved in the future. A new version is comming.
+This repository is updated frequently. Expect breaking changes. More functions will be improved in the future and a new version is comming.
 
 
