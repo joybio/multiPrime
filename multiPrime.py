@@ -10,7 +10,7 @@ import os
 virus = config["virus"]
 
 def aggregate_input(wildcards):
-	checkpoint_output = checkpoints.extract_cluster_fa.get(**wildcards).output[1]
+	checkpoint_output = checkpoints.extract_cluster_V2_fa.get(**wildcards).output[1]
 	return expand(config["results_dir"] + "/Clusters_cprimer/{i}.candidate.primers.txt",
 		i=glob_wildcards(os.path.join(checkpoint_output, "{i}.fa")).i)
 #Here a new directory will be created for each sample by the checkpoint. 
@@ -108,9 +108,9 @@ rule cluster_by_identity:
 		cd-hit -M 0 -T 0 -i {input} -o {output[0]} -c {params.identity}
 		'''
 #-------------------------------------------------------------------------------------------
-# extract_cluster_fa rule 5: Dependency packages - None
+# extract_cluster_V2_fa rule 5: Dependency packages - None
 #-------------------------------------------------------------------------------------------
-checkpoint extract_cluster_fa:
+checkpoint extract_cluster_V2_fa:
 	input:
 		expand(config["results_dir"] + "/Total_fa/{virus}.format.rmdup.cluster.fa",
 			virus = virus),
@@ -127,7 +127,7 @@ checkpoint extract_cluster_fa:
 		"Step5: extract fasta in each cluster from cd-hit results .."
 	shell:
 		'''
-		python {params.script}/extract_cluster.py -i {input[0]} -c {input[1]} \
+		python {params.script}/extract_cluster_V2.py -i {input[0]} -c {input[1]} \
 			 -m {params.max_seq} -o {output[0]} -y {output[2]} -d {output[1]}
 		'''
 #-------------------------------------------------------------------------------------------

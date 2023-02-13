@@ -132,7 +132,7 @@ checkpoint extract_cluster_fa:
 		python {params.script}/extract_cluster_V3.py -i {input[0]} -c {input[1]} \
 			 -m {params.max_seq} -o {output[0]} -y {output[2]} -d {output[1]};
 
-		python {params.script}/merge_cluster_by_ANI.py -i {output[0]} -p 20 -t threshold \
+		python {params.script}/merge_cluster_by_ANI.py -i {output[0]} -p 20 -t {params.threshold} \
 			-o {output[3]}
 		'''
 
