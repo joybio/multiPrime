@@ -18,17 +18,19 @@ DEGEPRIME-1.1.0: DOI: 10.1128/AEM.01403-14; "DegePrime, a program for degenerate
 
 biopython: Not required in v1.0.1 and the subsequent version
 
-mfeprimer-3.2.6: DOI: 10.1093/nar/gkz351; Please cite: "MFEprimer-3.0: quality control for PCR primers."
+mfeprimer-3.2.6: DOI: 10.1093/nar/gkz351; Please cite: "MFEprimer-3.0: quality control for PCR primers." please move this it into scripts
 
-MUSCLE: v3.8.1551. http://www.drive5.com/muscle This software is donated to the public domain. Please cite: Edgar, R.C. Nucleic Acids Res 32(5), 1792-97.
+Programs we employed:
 
-MAFFT: v7.508 (2022/Sep/07) Please cite: "MAFFT multiple sequence alignment software version 7: improvements in performance and usability"
+MUSCLE: It is already in the requirement.txt. version=v3.8.1551. http://www.drive5.com/muscle This software is donated to the public domain. Please cite: Edgar, R.C. Nucleic Acids Res 32(5), 1792-97.
 
-fastANI: version 1.33 Please cite: "FastANI, Mash and Dashing equally differentiate between Klebsiella species." 
+MAFFT: It is already in the requirement.txt. version=v7.508 (2022/Sep/07). Please cite: "MAFFT multiple sequence alignment software version 7: improvements in performance and usability"
 
-blast+: Links: https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastNews
+fastANI: It is already in the requirement.txt. version=version 1.33. Please cite: "FastANI, Mash and Dashing equally differentiate between Klebsiella species." 
 
-bowtie2: DOI:10.1038/nmeth.1923; Please cite: "Fast gapped-read alignment with Bowtie 2."
+blast+: It is already in the requirement.txt. version=BLAST 2.13.0+. Links: https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastNews
+
+bowtie2: It is already in the requirement.txt. version=version 2.2.5. DOI:10.1038/nmeth.1923; Please cite: "Fast gapped-read alignment with Bowtie 2."
 		Links: https://www.nature.com/articles/nmeth.1923
 # snakemake
 Snakemake is a workflow management system that helps to create and execute data processing pipelines. It requires python3 and dependent environment (multiPrime == multiPrime2) can be most easily installed via the bioconda package of the python anaconda distribution. 
