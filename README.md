@@ -9,6 +9,8 @@ Scripts and pipelines provided in this repository aid to design multiplex PCR pr
 
 To run this pipeline, your computer requires **30 GB of available memory (RAM)** to process larger number of sequence (e.g. 1,000,000). We don't suggest that Input sequences contains those sequences whose length is greater than 100K,  if necessary, you'd better set the Maxseq in yaml file as small as possible, but do not smaller than 200. Snakemake was used to facilitate the automated execution of all analysis steps. The easiest way to make use of the pipeline is to set up a python 3.9 virtual environment and run the pipeline is this environment. 
 
+Please note: MUSCLE always collapse when sequence length is greater than 10K and sequence number is greater than 50. In such situation, use MAFFT instead.
+
 Download/Provide all necessary files:
 
 DEGEPRIME-1.1.0: DOI: 10.1128/AEM.01403-14; "DegePrime, a program for degenerate primer design for broad-taxonomic-range PCR in microbial ecology studies."
@@ -16,17 +18,17 @@ DEGEPRIME-1.1.0: DOI: 10.1128/AEM.01403-14; "DegePrime, a program for degenerate
 
 biopython: Not required in v1.0.1 and the subsequent version
 
-mfeprimer-3.2.6: DOI: 10.1093/nar/gkz351; "MFEprimer-3.0: quality control for PCR primers."
+mfeprimer-3.2.6: DOI: 10.1093/nar/gkz351; Please cite: "MFEprimer-3.0: quality control for PCR primers."
 
 MUSCLE: v3.8.1551. http://www.drive5.com/muscle This software is donated to the public domain. Please cite: Edgar, R.C. Nucleic Acids Res 32(5), 1792-97.
 
-MAFFT: v7.508 (2022/Sep/07)
+MAFFT: v7.508 (2022/Sep/07) Please cite: "MAFFT multiple sequence alignment software version 7: improvements in performance and usability"
 
-fastANI: version 1.33
+fastANI: version 1.33 Please cite: "FastANI, Mash and Dashing equally differentiate between Klebsiella species." 
 
 blast+: Links: https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastNews
 
-bowtie2: DOI:10.1038/nmeth.1923; "Fast gapped-read alignment with Bowtie 2."
+bowtie2: DOI:10.1038/nmeth.1923; Please cite: "Fast gapped-read alignment with Bowtie 2."
 		Links: https://www.nature.com/articles/nmeth.1923
 # snakemake
 Snakemake is a workflow management system that helps to create and execute data processing pipelines. It requires python3 and dependent environment (multiPrime == multiPrime2) can be most easily installed via the bioconda package of the python anaconda distribution. 
