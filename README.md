@@ -281,7 +281,7 @@ results: results directory
 		--final_maxprimers_set.fa: fasta format of primers set for multiPCR
 		--final_maxprimers_set.xls: primers information of primers set
 		--final_maxprimers_set.next.xls: primer set 2
-		--Coverage_stast.xls: coverage of all primers in primer set
+		--Coverage_stast.xls: coverage of all primers in primer set (perfect match)
 		--final_maxprimers_set.fa.dimer: dimer check by mfePrimer 
 		--final_maxprimers_set.fa.hairpin: hairpin check by mfePrimer
 		--PCR_product: perfect PCR product of each primer
@@ -293,7 +293,7 @@ results: results directory
 		--core_final_maxprimers_set.fa: fasta format of core primers set for multiPCR
 		--core_final_maxprimers_set.xls: primers information of core primers set
 		--core_final_maxprimers_set.next.xls: primer set 2
-		--core_Coverage_stast.xls: coverage of all primers in core primer set
+		--core_Coverage_stast.xls: coverage of all primers in core primer set (perfect match)
 		--core_candidate_primers_sets.fa: core primer set fasta
 		--core_candidate_primers_sets.number: candidate primer number of each core cluster
 		--core_final_maxprimers_set.fa.dimer: dimer check by mfePrimer
