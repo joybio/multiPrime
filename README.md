@@ -8,6 +8,7 @@ Scripts and pipelines provided in this repository aid to design multiplex PCR pr
 # Requirements
 
 To run this pipeline, your computer requires **30 GB of available memory (RAM)** to process larger number of sequence (e.g. 1,000,000). We don't suggest that Input sequences contains those sequences whose length is greater than 100K,  if necessary, you'd better set the Maxseq in yaml file as small as possible, but do not smaller than 200. Snakemake was used to facilitate the automated execution of all analysis steps. The easiest way to make use of the pipeline is to set up a python 3.9 virtual environment and run the pipeline is this environment. 
+
 Download/Provide all necessary files:
 
 DEGEPRIME-1.1.0: DOI: 10.1128/AEM.01403-14; "DegePrime, a program for degenerate primer design for broad-taxonomic-range PCR in microbial ecology studies."
@@ -16,6 +17,12 @@ DEGEPRIME-1.1.0: DOI: 10.1128/AEM.01403-14; "DegePrime, a program for degenerate
 biopython: Not required in v1.0.1 and the subsequent version
 
 mfeprimer-3.2.6: DOI: 10.1093/nar/gkz351; "MFEprimer-3.0: quality control for PCR primers."
+
+MUSCLE: v3.8.1551. http://www.drive5.com/muscle This software is donated to the public domain. Please cite: Edgar, R.C. Nucleic Acids Res 32(5), 1792-97.
+
+MAFFT: v7.508 (2022/Sep/07)
+
+fastANI: version 1.33
 
 blast+: Links: https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastNews
 
