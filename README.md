@@ -94,7 +94,7 @@ or
   ```
 For example:
   
-  MD-DPD (--variation 0) or MD-EDPD (--variation 1 or 2, we do not suggest you set --variation greater than 2, because amplification efficiency was severely inhibited when there is 3 mismathes). The development version of MD-DPD or MD-EDPD can be installed with:
+  MD-DPD (--variation 0) or MD-EDPD (--variation 1 or 2, we do not suggest you set --variation greater than 2, because amplification efficiency was severely inhibited when there are 3 mismathes). The development version of MD-DPD or MD-EDPD can be installed with:
   **pypi:**
   ```bash
   pip install multiPrime
@@ -107,7 +107,7 @@ For example:
   ```
   ```bash
   Usage: multiPrime-core.py -i input -o output -p 20
-                 Options: { -l [18] -n [4] -d [10] -v [1] -g [0.2,0.7] -f [0.8] -c [4] -p [10] -a [4] }
+                 Options: { -l [18] -n [4] -d [10] -v [1] -e [3.6] -g [0.2,0.7] -f [0.8] -c [4] -p [10] -a [4] }
 
   Options:
   -h, --help            show this help message and exit
@@ -129,9 +129,9 @@ For example:
                         Filter primers by match fraction. Default: 0.8.
   -c COORDINATE, --coordinate=COORDINATE
                         Mismatch index is not allowed to locate in start or
-                        stop. otherwise, it won't be regard as the mis-
+                        stop region. otherwise, it won't be regard as the mis-
                         coverage. With this param, you can control the index
-                        of Y-distance (number=variation and position of mismatch) when calculate
+                        of Y-distance (number and position of mismatch) when calculate
                         coverage with error.Default: 4.
   -p PROC, --proc=PROC  Number of process to launch. Default: 20.
   -a AWAY, --away=AWAY  Filter hairpin structure, which means distance of the

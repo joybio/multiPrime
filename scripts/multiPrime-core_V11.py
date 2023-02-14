@@ -63,7 +63,7 @@ from itertools import repeat
 # (because of stability of annealing), and should be avoided.
 def argsParse():
     parser = OptionParser('Usage: %prog -i input -o output -p 10\n \
-                Options: { -l [18] -n [4] -d [10] -v [1] -g [0.2,0.7] -f [0.8] -c [4] -p [10] -a [4] }')
+                Options: { -l [18] -n [4] -d [10] -v [1] -e [3.6] -g [0.2,0.7] -f [0.8] -c [4] -p [10] -a [4] }')
     parser.add_option('-i', '--input',
                       dest='input',
                       help='Input file: multi-alignment output (muscle or others).')
@@ -123,11 +123,10 @@ def argsParse():
                       dest='coordinate',
                       default="4",
                       type="int",
-                      help="Mismatch index is not allowed to locate in start or stop. "
+                      help="Mismatch index is not allowed to locate in start or stop region. "
                            "otherwise, it won't be regard as the mis-coverage. "
-                           "With this param, you can control the index of Y-distance (number=variation and position of mismatch) "
-                           "when calculate coverage with error."
-                           "Default: 4.")
+                           "With this param, you can control the index of Y-distance (number and position of mismatch) "
+                           "when calculate coverage with error. Default: 4.")
 
     parser.add_option('-p', '--proc',
                       dest='proc',
