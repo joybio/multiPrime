@@ -233,10 +233,10 @@ For example:
   ```
   Get primer information of PCR products with mismatch
   ```bash
-  python scripts/primer_coverage_confirmation_by_BWT.py
+  python scripts/primer_coverage_validation_by_BWT.py
   ```
   ```
-  Usage: primer_coverage_confirmation_by_BWT.py -i [input] -r [bowtie index] -l [150,2000] -p [10]-o [output]
+  Usage: primer_coverage_validation_by_BWT.py -i [input] -r [bowtie index] -l [150,2000] -p [10]-o [output]
 
   Options:
   -h, --help            show this help message and exit
