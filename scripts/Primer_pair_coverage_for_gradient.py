@@ -26,11 +26,12 @@ from concurrent.futures import ProcessPoolExecutor
 
 
 def argsParse():
-    parser = OptionParser('Usage: %prog -i [input] -r [Cluster_0_20723.fa] -c [.pair.num] -o [output]')
+    parser = OptionParser('Usage: Stastics of primer pair coverage by multiPrime prediction (top N) and BWT.'
+			'%prog -i [input] -r [Cluster_0_20723.fa] -c [.pair.num] -o [output]')
 
     parser.add_option('-i', '--input',
                       dest='input',
-                      help='input file: candidate primer.txt.')
+                      help='input file: candidate primer.txt. Results of get_multiPrime.py, which located in the dir: Cluster_cprimer.')
 
     parser.add_option('-r', '--ref',
                       dest='ref',
