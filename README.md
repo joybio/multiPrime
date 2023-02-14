@@ -102,7 +102,8 @@ For example:
   pip install multiPrime
   ```
   All manual instruction for runjob can be found in [here](https://pypi.org/project/multiPrime/).
-  or
+ 
+  or:
   ```bash
   python scripts/multiPrime-core.py
   ```
