@@ -95,13 +95,11 @@ or
 For example:
   
   MD-DPD (--variation 0) or MD-EDPD (--variation 1 or 2, we do not suggest you set --variation greater than 2, because amplification efficiency was severely inhibited when there is 3 mismathes). The development version of MD-DPD or MD-EDPD can be installed with:
-  ```
-  pypi:
-  ```
+  **pypi:**
   ```bash
   pip install multiPrime
   ```
-  All manual instruction for runjob can be found in [here](https://pypi.org/project/multiPrime/).
+  multiPrime package is same with multiPrime-core.py, more functions will be improved in the future. All manual instruction for multiPrime can be found in [here](https://pypi.org/project/multiPrime/).
  
   or:
   ```bash
@@ -123,9 +121,8 @@ For example:
                         Max mismatch number of primer. Default: 1.
   -e ENTROPY, --entropy=ENTROPY
                         Entropy is actually a measure of disorder. This
-                        parameter is used to judge whether the window is
-                        conservation. Entropy of primer-length window.
-                        Default: 3.6.
+                        parameter is used to judge the window is conservation or not. 
+			Entropy of primer-length window. Default: 3.6.
   -g GC, --gc=GC        Filter primers by GC content. Default [0.2,0.7].
   -s SIZE, --size=SIZE  Filter primers by mini PRODUCT size. Default 100.
   -f FRACTION, --fraction=FRACTION
