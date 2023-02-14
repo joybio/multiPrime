@@ -94,7 +94,15 @@ or
   ```
 For example:
   
-  MD-DPD (--variation 0) or MD-EDPD (--variation 1 or 2, we do not suggest you set --variation greater than 2, because amplification efficiency was severely inhibited when there is 3 mismathes):
+  MD-DPD (--variation 0) or MD-EDPD (--variation 1 or 2, we do not suggest you set --variation greater than 2, because amplification efficiency was severely inhibited when there is 3 mismathes). The development version of MD-DPD or MD-EDPD can be installed with:
+  ```
+  pypi:
+  ```
+  ```bash
+  pip install multiPrime
+  ```
+  All manual instruction for runjob can be found in [here](https://pypi.org/project/multiPrime/).
+  or
   ```bash
   python scripts/multiPrime-core.py
   ```
