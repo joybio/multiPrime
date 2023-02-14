@@ -39,7 +39,7 @@ def argsParse():
 
     parser.add_option('-c', '--coverage',
                       dest='coverage',
-                      help='BWT coverage results.')
+                      help='BWT coverage results. Result of primer_coverage_confirmation_by_BWT.py.')
 
     parser.add_option('-s', '--step',
                       dest='step',
