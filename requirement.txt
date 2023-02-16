@@ -98,6 +98,7 @@ libunistring=0.9.10=h7f98852_0
 libxml2=2.9.14=h22db469_3
 libzlib=1.2.12=h166bdaf_2
 logmuse=0.2.6=pyh8c360ce_0
+mafft=7.515=hec16e2b_0
 markupsafe=2.1.1=py37h540881e_1
 multidict=6.0.2=py37h540881e_1
 muscle=3.8.1551=h7d875b9_6
