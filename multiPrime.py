@@ -1,8 +1,8 @@
 configfile:  "multiPrime.yaml"
-#__version__ = "0.0.2"
+#__version__ = "1.0.2"
 #__date__ = "2022-7-28"
 #__author__ = "Junbo Yang"
-#__email__ = "yang_junbo_hi@126.com"
+#__email__ = yang_junbo_hi@126.com; 1806389316@pku.edu.cn
 #__description__ = "A Snakemake workflow to design multiPCR primers and get Max_primerset"
 
 import os

@@ -1,7 +1,9 @@
 multiPrime: version 2.0.0
 
 # multi PCR primer pairs design processing pipeline
-multiPrime was developed to design primer set for large-scale sequences (MD-EDPD). It can identify the core primer pairs and optimize primer sets.
+multiPrime was developed to design primer set for large-scale sequences. It can identify the core primer pairs and optimize primer sets.
+multiPrime1: degenerate primer design by DEGEPRIME (MD-DPD).
+mulitPrime2: degenerate primer design by multiPrime-core (MD-EDPD and MD-DPD).
 
 Scripts and pipelines provided in this repository aid to design multiplex PCR primer and return a minimal primerset for multi-PCR. It contains all scripts to allow a self-assembled processing and additionally provides pipeline scripts that run the entire processing automatically.
 
@@ -14,21 +16,21 @@ Please note: MUSCLE always collapse when sequence length is greater than 10K and
 Download/Provide all necessary files:
 
 DEGEPRIME-1.1.0: DOI: 10.1128/AEM.01403-14; "DegePrime, a program for degenerate primer design for broad-taxonomic-range PCR in microbial ecology studies."
-		Links: https://github.com/EnvGen/DegePrime; please move this directory into scripts
+		Links: https://github.com/EnvGen/DegePrime; please move this directory into scripts.
 
-biopython: Not required in v1.0.1 and the subsequent version
+biopython: Not required in v1.0.1 and the subsequent version.
 
-mfeprimer-3.2.6: DOI: 10.1093/nar/gkz351; Please cite: "MFEprimer-3.0: quality control for PCR primers." please move this it into scripts
+mfeprimer-3.2.6: DOI: 10.1093/nar/gkz351; Please cite: "MFEprimer-3.0: quality control for PCR primers." please move this it into scripts. 
 
 Programs we employed:
 
 MUSCLE: It is already in the requirement.txt. version=v3.8.1551. http://www.drive5.com/muscle This software is donated to the public domain. Please cite: Edgar, R.C. Nucleic Acids Res 32(5), 1792-97.
 
-MAFFT: It is already in the requirement.txt. version=v7.508 (2022/Sep/07). Please cite: "MAFFT multiple sequence alignment software version 7: improvements in performance and usability"
+MAFFT: It is already in the requirement.txt. version=v7.508 (2022/Sep/07). Please cite: "MAFFT multiple sequence alignment software version 7: improvements in performance and usability".
 
 fastANI: It is already in the requirement.txt. version=version 1.33. Please cite: "FastANI, Mash and Dashing equally differentiate between Klebsiella species." 
 
-blast+: It is already in the requirement.txt. version=BLAST 2.13.0+. Links: https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastNews
+blast+: It is already in the requirement.txt. version=BLAST 2.13.0+. Links: https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastNews.
 
 bowtie2: It is already in the requirement.txt. version=version 2.2.5. DOI:10.1038/nmeth.1923; Please cite: "Fast gapped-read alignment with Bowtie 2."
 		Links: https://www.nature.com/articles/nmeth.1923
