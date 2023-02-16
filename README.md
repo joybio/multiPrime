@@ -2,8 +2,10 @@ multiPrime: version 2.0.0
 
 # multi PCR primer pairs design processing pipeline
 multiPrime was developed to design primer set for large-scale sequences. It can identify the core primer pairs and optimize primer sets.
-multiPrime1: degenerate primer design by DEGEPRIME (MD-DPD).
-mulitPrime2: degenerate primer design by multiPrime-core (MD-EDPD and MD-DPD).
+
+multiPrime1: Degenerate primer design by DEGEPRIME (MD-DPD).
+
+mulitPrime2: Degenerate primer design by multiPrime-core (MD-EDPD and MD-DPD).
 
 Scripts and pipelines provided in this repository aid to design multiplex PCR primer and return a minimal primerset for multi-PCR. It contains all scripts to allow a self-assembled processing and additionally provides pipeline scripts that run the entire processing automatically.
 
