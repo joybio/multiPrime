@@ -4,14 +4,14 @@
 ################################################################################
 # directory, where is/are the input virus fasta file(s) located
 # absolute path
-input_dir: /share/data3/yangjunbo/multiPCR/multiPrime2/all
+input_dir: /share/data3/yangjunbo/git_storage/multiPrime/test_data
 
 # directory, in which the pipeline writes all output files (relative to current directory)
 # (this also includes the summary files)
-results_dir: /share/data3/yangjunbo/multiPCR/multiPrime2/all/all2.results
+results_dir: /share/data3/yangjunbo/git_storage/multiPrime/results
 
 # directory to write the log-files, created during processing, to 
-log_dir: /share/data3/yangjunbo/multiPCR/multiPrime2/all/all2.logs
+log_dir: /share/data3/yangjunbo/git_storage/multiPrime/logs
 
 # directory of scripts.
 scripts_dir: /share/data3/yangjunbo/git_storage/multiPrime/scripts
@@ -23,7 +23,7 @@ scripts_dir: /share/data3/yangjunbo/git_storage/multiPrime/scripts
 # please type here: sample1
 # this name is used throughout the entire pipeline as name for the output samples
 virus:
-  - all
+  - CDS_20727
 ################################################################################
 # preprocessing
 ################################################################################
@@ -34,7 +34,7 @@ virus:
 #Params in cd-hit -c {}. Suggestion: 0.7. minimum: 0.65 
 #If the identity of sequences in your input file is very high, you can set this param as 0.9.
 #BUG (dont use 1): If you set this param as 1. It will generate primers by no-cluster methods.
-identity: 0.7
+identity: 0.8
 
 # minmum sequence number in cluster 
 # multiPrime will try to merge those clusters with less than {seq_number_ANI} into those clusters

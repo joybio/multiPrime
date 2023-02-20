@@ -23,7 +23,7 @@ scripts_dir: /share/data3/yangjunbo/git_storage/multiPrime/scripts
 # please type here: sample1
 # this name is used throughout the entire pipeline as name for the output samples
 virus:
-  - test
+  - CDS_20727
 ################################################################################
 # preprocessing
 ################################################################################
@@ -34,7 +34,7 @@ virus:
 #Params in cd-hit -c {}. Suggestion: 0.7. minimum: 0.65 
 #If the identity of sequences in your input file is very high, you can set this param as 0.9.
 #BUG (dont use 1): If you set this param as 1. It will generate primers by no-cluster methods.
-identity: 0.7
+identity: 0.8
 #Max sequence number of each cluster used in multi-alignment {muscle}. 
 #We randomly choose {maxseq} sequences in cluster for next steps.
 #It wont affect the calculation of primer coverage in the final primer set, 
