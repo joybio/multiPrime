@@ -5,7 +5,7 @@ multiPrime was developed to design primer set for large-scale sequences. It can 
 
 multiPrime1: Degenerate primer design by DEGEPRIME (MD-DPD).
 
-mulitPrime2: Degenerate primer design by multiPrime-core (MD-EDPD and MD-DPD).
+mulitPrime2: Degenerate primer design by multiPrime-core (MD-EDPD or MD-DPD).
 
 Scripts and pipelines provided in this repository aid to design multiplex PCR primer and return a minimal primerset for multi-PCR. It contains all scripts to allow a self-assembled processing and additionally provides pipeline scripts that run the entire processing automatically.
 
@@ -55,7 +55,7 @@ Snakemake is a workflow management system that helps to create and execute data 
 
 # Configure input parameters
 
-The working directory contains a file named `multiPrime.yaml` and `multiPrime2.yaml`. These are the central file in which all user settings, paramter values and path specifications are stored. `multiPrime.yaml` use DEGEPRIME-1.1.0 for maximum coverage degenerate primer design (MD-DPD), `multiPrime2.yaml` use multiPrime-core.py for MD-DPD or MD-DPD with error. During a run, all steps of the pipeline will retrieve their paramter values from these file. It follows the yaml syntax (find more information about yaml and it's syntax [here](http://www.yaml.org/)) what makes it easy to read and edit. The main principles are:
+The working directory contains files named `multiPrime.yaml` and `multiPrime2.yaml`. These are the central file in which all user settings, paramter values and path specifications are stored. `multiPrime.yaml` employs DEGEPRIME-1.1.0 for maximum coverage degenerate primer design (MD-DPD), `multiPrime2.yaml` use multiPrime-core.py for MD-DPD or MD-DPD with error. During a run, all steps of the pipeline will retrieve their paramter values from these file. It follows the yaml syntax (find more information about yaml and it's syntax [here](http://www.yaml.org/)) what makes it easy to read and edit. The main principles are:
   - everything that comes after a `#` symbol is considered as comment and will not be interpreted
   - paramters are given as key-value pair, with `key` being the name and `value` the value of any paramter
 
