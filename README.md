@@ -276,6 +276,8 @@ results: results directory
 
 	-cluster.txt: cluster information. for example: Cluster_0_222.fa, 0 ==> cluster rank; 222 ==> sequence number.
 
+	-history.txt:  history of clusters with rare sequence numbers are compared with others by average nucleotide identity.
+	
 	-Total_fa: genome file and cluster of genome file.
 
 	-Clusters_fa: genome file split by each cluster.
@@ -292,7 +294,9 @@ results: results directory
 		--*.trim.tmsa: trimmed muscle by degePrimer
 
 	-Clusters_primer: get_degePrimer from degePrimer out
-		--*.top.primer.out: paired primers designed by the top N {default: 500} fasta
+		--*.out: paired primers designed by the top N {default: 500} fasta
+		--*.gap_seq_id_json: Positions and non-contained sequences caused by gap.
+		--*.non_coverage_seq_id_json: Positions and non-contained sequences caused by others.
 
 	-Clusters_cprimer: candidate primers for each cluster.
 		--*.bed: candidate PCR product (1 mismatch and mismatch position must 9bp away from 3'end at least.)
