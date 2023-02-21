@@ -11,7 +11,7 @@ Scripts and pipelines provided in this repository aid to design multiplex PCR pr
 
 # Requirements
 
-To run this pipeline, your computer requires **30 GB of available memory (RAM)** to process larger number of sequence (e.g. 1,000,000). We don't suggest that Input sequences contains those sequences whose length is greater than 100K,  if necessary, you'd better set the Maxseq in yaml file as small as possible, but do not smaller than 200. Snakemake was used to facilitate the automated execution of all analysis steps. The easiest way to make use of the pipeline is to set up a python 3.9 virtual environment and run the pipeline is this environment. 
+To run this pipeline, your computer requires **30 GB of available memory (RAM)** to process larger number of sequence (e.g. 1,000,000). We don't suggest that Input sequences contains those sequences whose average ength is greater than 10K,  if necessary, you'd better set the Maxseq in yaml file as small as possible, but do not smaller than 200 and use MAFFT to generate multi-alignment in the pipeline instead of MUSCLE. Snakemake was used to facilitate the automated execution of all analysis steps. The easiest way to make use of the pipeline is to set up a python 3.9 virtual environment and run the pipeline is this environment. 
 
 Please note: MUSCLE always collapse when sequence length is greater than 10K and sequence number is greater than 50. In such situation, use MAFFT instead.
 
