@@ -63,7 +63,7 @@ from itertools import repeat
 # (because of stability of annealing), and should be avoided.
 def argsParse():
     parser = OptionParser('Usage: %prog -i input -o output -p 10\n \
-                Options: { -l [18] -n [4] -d [10] -v [1] -e [3.6] -g [0.2,0.7] -f [0.8] -c [4] -p [10] -a [4] }')
+                Options: { -l [18] -n [4] -d [10] -v [1] -g [0.2,0.7] -f [0.8] -c [4] -p [10] -a [4] }')
     parser.add_option('-i', '--input',
                       dest='input',
                       help='Input file: multi-alignment output (muscle or others).')
@@ -123,10 +123,11 @@ def argsParse():
                       dest='coordinate',
                       default="4",
                       type="int",
-                      help="Mismatch index is not allowed to locate in start or stop region. "
+                      help="Mismatch index is not allowed to locate in start or stop. "
                            "otherwise, it won't be regard as the mis-coverage. "
-                           "With this param, you can control the index of Y-distance (number and position of mismatch) "
-                           "when calculate coverage with error. Default: 4.")
+                           "With this param, you can control the index of Y-distance (number=variation and position of mismatch) "
+                           "when calculate coverage with error."
+                           "Default: 4.")
 
     parser.add_option('-p', '--proc',
                       dest='proc',
@@ -194,12 +195,6 @@ symmetry_correction = 0.4
 
 ##############################################################################################
 base2bit = {"A": 0, "C": 1, "G": 2, "T": 3, "#": 4}
-TRANS = str.maketrans("ATCG", "TAGC")
-
-def complement(seq):
-    return seq.translate(TRANS)[::-1]
-
-
 
 ##############################################################################################
 # 37°C and 1 M NaCl
@@ -241,10 +236,6 @@ for i in bases:
         di_bases.append(i + j)
 
 
-def reversecomplement(seq):
-    return seq.translate(TRANS)[::-1]
-
-
 def Penalty_points(length, GC, d1, d2):
     return log10((2 ** length * 2 ** GC) / ((d1 + 0.1) * (d2 + 0.1)))
 
@@ -262,9 +253,6 @@ for i in base2bit.keys():
                 tri = (i + j + k) * 3
                 di_nucleotides.add(tri)
 
-TRANS = str.maketrans("ATGCRYMKSWHBVDN", "TACGYRKMSWDVBHN")
-
-
 def score_trans(sequence):
     return reduce(mul, [math.floor(score_table[x]) for x in list(sequence)])
 
@@ -272,6 +260,7 @@ def score_trans(sequence):
 def dege_number(sequence):
     return sum(math.floor(score_table[x]) > 1 for x in list(sequence))
 
+TRANS = str.maketrans("ATGC", "TACG")
 
 def RC(seq):
     return seq.translate(TRANS)[::-1]
@@ -293,7 +282,7 @@ def symmetry(seq):
         return False
     else:
         F = seq[:int(len(seq) / 2)]
-        R = complement(seq[int(len(seq) / 2):][::-1])
+        R = RC(seq[int(len(seq) / 2):][::-1])
         if F == R:
             return True
         else:
@@ -443,7 +432,7 @@ class NN_degenerate(object):
             left = self.degenerate_seq(primer[n + 5 + distance:])
             for k in kmer:
                 for l in left:
-                    if re.search(reversecomplement(k), l):
+                    if re.search(RC(k), l):
                         check = "TRUE"
                         break
                 if check == "TRUE":
@@ -567,7 +556,7 @@ class NN_degenerate(object):
         dimer = False
         for end in current_end_sort:
             for p in self.degenerate_seq(primer):
-                idx = p.find(reversecomplement(end))
+                idx = p.find(RC(end))
                 if idx >= 0:
                     end_length = len(end)
                     end_GC = end.count("G") + end.count("C")

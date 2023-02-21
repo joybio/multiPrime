@@ -66,7 +66,7 @@ rule seq_format:
 #-------------------------------------------------------------------------------------------
 # extract_ rule 3: Dependency packages - None
 #-------------------------------------------------------------------------------------------
-#rule extract__seq:
+#rule extract_seq:
 #	input:
 #		config["results_dir"] + "/Total_fa/{virus}.format.fa"
 #	output:
@@ -165,6 +165,7 @@ rule alignment_by_muscle:
 		'''
 		muscle -in {input} -out {output}
 		'''
+#		for long input.
 #		mafft --auto {input} > {output}
 #-------------------------------------------------------------------------------------------
 # multiPrime rule 7: Dependency packages - multiPrime-core

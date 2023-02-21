@@ -66,7 +66,7 @@ rule seq_format:
 #-------------------------------------------------------------------------------------------
 # extract_ rule 3: Dependency packages - None
 #-------------------------------------------------------------------------------------------
-#rule extract__seq:
+#rule extract_seq:
 #	input:
 #		config["results_dir"] + "/Total_fa/{virus}.format.fa"
 #	output:
