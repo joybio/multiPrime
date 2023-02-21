@@ -81,7 +81,7 @@ Once you set up your configuration file, running the pipeline locally on your co
   ```bash
   snakemake --configfile multiPrime.yaml -s multiPrime.py --cores 30
   ```
-  minimal degeneracy degenerate primer design with errors (MD-EDPD) or MD-DPD. It depends on the parameter in multiPrime2.yaml. MD-DPD when you set variation=0 else MD-EDPD.
+  minimal degeneracy degenerate primer design with errors (MD-EDPD) or MD-DPD. It depends on the parameter in multiPrime2.yaml. MD-DPD when you set variation=0.
   ```bash
   snakemake --configfile multiPrime2.yaml -s multiPrime2.py --cores 30
   ```
@@ -103,7 +103,7 @@ For example:
   ```bash
   pip install multiPrime
   ```
-  multiPrime package is same with multiPrime-core.py, more functions will be improved in the future. All manual instruction for multiPrime can be found in [here](https://pypi.org/project/multiPrime/).
+  multiPrime package contains primer design; primer pair selection and primer pair coverage statistics, more functions will be improved in the future. All manual instruction for multiPrime can be found in [here](https://pypi.org/project/multiPrime/).
  
   or:
   ```bash
