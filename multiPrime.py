@@ -142,7 +142,7 @@ rule alignment_by_muscle:
 		"Step6: alignment by muscle .."
 	shell:
 		'''
-		muscle -in {input} -out {output}
+		mafft --auto {input} > {output}
 		'''
 #-------------------------------------------------------------------------------------------
 # degePrimer_trim rule 7: Dependency packages - DEGEPRIME-1.1.0

@@ -1,1 +1,5 @@
-#Primer	Primer_rank	Primer_F	Primer_R	PCR_product	Primer target by blast+ [2 mismatch]	Primer position (representative sequence)
+#Primer	Primer_rank	Primer_F	Primer_R	PCR_product (Length:Tm:Coverage)	Coverage number with error in top N	Primer position (representative sequence)
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_2_1120.candidate.primers.txt	1	YACTGCAACACTGTGCTT	RGTCAGCCAATTCAGTCT	422	368	115:536
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_1_412.candidate.primers.txt	1	TCAGATGCRCCTATTGAC	TATGCARGCATTGTCACA	610	297	887:1496
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_3_138.candidate.primers.txt	1	KATACTACTGACCCATTG	ATGGGTAGCAAYTGCTGA	306	96	61:366
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_0_19048.candidate.primers.txt	1	GAGCTRCATTCTATGTCT	AAGGGTAACAGYTGCTGT	309	367	49:357

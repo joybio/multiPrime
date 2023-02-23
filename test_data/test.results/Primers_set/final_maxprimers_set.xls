@@ -1,5 +1,12 @@
-#Primer	Primer_rank	Primer_F	Primer_R	PCR_product	Primer target by blast+ [2 mismatch]	Primer position (representative sequence)	Primer target number by blast+ [2 mismatch]
-/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_3_5.candidate.primers.txt	1	GTCTTGATCAAGCACTTC	GGACTACTAACTAGCTCA	277		164:441	5
-/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_1_3.candidate.primers.txt	1	AGGAATTAAACGGGCACC	AGCCTTAAGGGAGAAAGA	253		87:340	3
-/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_2_1.candidate.primers.txt	1	CAGACCACCGTTACTCCA	CGACTTCCAGGTGCATCA	250		31:281	1
-/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_0_1.candidate.primers.txt	811	ATAATGGCTGCAGTAGTG	TCCAATCCCGATCCAATT	250		60:310	1
+#Primer	Primer_rank	Primer_F	Primer_R	PCR_product (Length:Tm:Coverage)	Coverage number with error in top N	Primer position (representative sequence)
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_2_1120.candidate.primers.txt	1	YACTGCAACACTGTGCTT	RGTCAGCCAATTCAGTCT	422	368	115:536
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_1_412.candidate.primers.txt	1	TCAGATGCRCCTATTGAC	TATGCARGCATTGTCACA	610	297	887:1496
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_3_138.candidate.primers.txt	1	KATACTACTGACCCATTG	ATGGGTAGCAAYTGCTGA	306	96	61:366
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_4_1.candidate.primers.txt	1	CTTGGGCACCATGCAGTA	TCCAGTCCAATTGAAGCT	328	1	119:446
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_5_3.candidate.primers.txt	1	GCTTTGAGCTACAYTCTA	GTTGCTGTAGGCTTTGCT	304	3	32:335
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_0_19048.candidate.primers.txt	1	GAGCTRCATTCTATGTCT	AAGGGTAACAGYTGCTGT	309	367	49:357
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_6_1.candidate.primers.txt	1	CTTGGGCACCATGCAGTA	TCCAGTCCAATTGAAGCT	328	1	107:434
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_7_1.candidate.primers.txt	1	CTTGGGCACCATGCAGTA	GCCCAATTGAAGCTTTCA	324	1	107:430
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_8_1.candidate.primers.txt	1	TTTCTGTCTGGCTTTCAG	TTCCAGGGTTCCTGATGA	359	1	44:402
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_10_1.candidate.primers.txt	1	GACCATCATTGCTTTGAG	TTGCTGCGTTCAACGAAA	301	1	34:334
+/share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results/Clusters_cprimer/Cluster_9_1.candidate.primers.txt	1	CTTGGGCACCATGCAGTA	GGTGAAACCCATTGACTC	319	1	90:408

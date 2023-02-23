@@ -56,7 +56,7 @@ def argsParse():
                         dest='complete',
 			default="F",
 			type='str',
-                        help='Only complete CDS or genome is used, defalut: T. use other word (F), if you dont want this param.')
+                        help='Only complete CDS or genome is used, defalut: F. use other word (T), if you want this param.')
 	parser.add_option('-l','--length',
 			dest='length',
 			default=300,
@@ -107,12 +107,13 @@ def seq_format(Input):
 if __name__ == "__main__":
 	(options, args) = argsParse()
 	seq, length, c_number = seq_format(options.input)
+	temp = open(options.out.rstrip("fa")+"filtered.fa", "w")	
 	with open(options.out,"w") as Out:
 		# if ID dont have string complete, then use all.
 		if c_number == 0:
 			for i in length.keys():
 				if length[i] < options.length:
-					pass
+					temp.write(i + seq[i] + "\n")
 				else:
 					Out.write(i + seq[i] + "\n")
 		else:

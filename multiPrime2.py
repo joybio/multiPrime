@@ -163,8 +163,9 @@ rule alignment_by_muscle:
 		"Step6: alignment by muscle .."
 	shell:
 		'''
-		muscle -in {input} -out {output}
+		mafft --auto {input} > {output}
 		'''
+#		muscle -in {input} -out {output}
 #		for long input.
 #		mafft --auto {input} > {output}
 #-------------------------------------------------------------------------------------------
