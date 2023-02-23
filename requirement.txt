@@ -177,7 +177,7 @@ sqlite=3.39.2=h4ff8645_0
 stone=3.3.1=pyhd8ed1ab_0
 stopit=1.1.2=py_0
 tabulate=0.8.9=pyhd8ed1ab_0
-tk=8.6.12=x11tk0_2000
+tk=8.6.12=h27826a3_0
 tomli=2.0.1=pyhd8ed1ab_0
 toposort=1.7=pyhd8ed1ab_0
 traitlets=5.3.0=pyhd8ed1ab_0
