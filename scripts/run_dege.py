@@ -79,13 +79,14 @@ if __name__ == "__main__":
 	(options, args) = argsParse()
 	In = options.input
 	script = options.script
-	Out = options.out + ".tmp"
+	Out_tmp = options.out + ".tmp"
 	length = options.length
 	degeneracy = options.deg
 	e1 = time.time()
 	os.system("perl {}/DEGEPRIME-1.1.0/DegePrime.pl -i {} \
-                        -d {} -l {} -o {}".format(script,In,degeneracy,length,Out))
-	os.system("mv {} {}".format(Out,Out.rstrip(".tmp")))
+                        -d {} -l {} -o {}".format(script,In,degeneracy,length,Out_tmp))
+	
+	os.rename(Out_tmp, options.out)
 	e2 = time.time()
 	print("INFO {} Total times: {}".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
                                            round(float(e2 - e1), 2)))
