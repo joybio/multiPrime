@@ -37,13 +37,28 @@ import re
 from optparse import OptionParser
 from collections import defaultdict
 def argsParse():
-	parser = OptionParser('Usage: %prog -i [input.fa] -o [output.fa] ')
+	parser = OptionParser('Usage: %prog -i [input.fa] -o [output.fa] -s [script]'
+				'options: {-l 18 -d 4}')
 	parser.add_option('-i','--input',
 			dest='input',
 			help='Input file')
 	parser.add_option('-o','--out',
 			dest='out',
 			help='Out file')
+	parser.add_option('-s','--script',
+                        dest='script',
+                        help='dir of script')
+	parser.add_option('-l','--length',
+                        dest='length',
+			default='18',
+			type="int",
+                        help='primer length')
+	parser.add_option('-d','--deg',
+                        dest='deg',
+			default='4',
+			type="int",
+                        help='primer degeneracy')
+
 	(options,args) = parser.parse_args()
 	import sys
 	from sys import argv
@@ -60,22 +75,17 @@ def argsParse():
 		sys.exit(1)
 	return parser.parse_args()
 
-def run_mafft(Input, Output):
-	info = Input.rstrip(".tfa").split("_")
-	#print(info[-1])
-	if info[-1] == "1" or info[-1] == 1:
-		os.system("muscle -in {} -out {}".format(Input, Output))
-	else:
-		os.system("mafft --auto {} > {}".format(Input, Output))
-	
-
-
 if __name__ == "__main__":
 	(options, args) = argsParse()
 	In = options.input
-	Out = options.out
+	script = options.script
+	Out = options.out + ".tmp"
+	length = options.length
+	degeneracy = options.deg
 	e1 = time.time()
-	run_mafft(In, Out)
+	os.system("perl {}/DEGEPRIME-1.1.0/DegePrime.pl -i {} \
+                        -d {} -l {} -o {}".format(script,In,degeneracy,length,Out))
+	os.system("mv {} {}".format(Out,Out.rstrip(".tmp")))
 	e2 = time.time()
 	print("INFO {} Total times: {}".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
                                            round(float(e2 - e1), 2)))

@@ -191,7 +191,7 @@ rule degePrimer_design:
 		"Step8: design primers by degePrimer .."
 	shell:
 		'''
-		perl {params.script}/DEGEPRIME-1.1.0/DegePrime.pl -i {input} \
+		python {params.script}/run_dege.py -i {input} -s {params.script}\
 			-d {params.dege_number} -l {params.primer_len} \
 			-o {output} 2>&1 > {log}
 		'''
