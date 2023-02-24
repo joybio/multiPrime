@@ -63,8 +63,8 @@ def argsParse():
 def run_mafft(Input, Output):
 	info = Input.strip(".fa").split("_")
 	#print(info[-1])
-	if info[-1] == "1":
-		os.system("cp {} {}".format(Input, Output))
+	if info[-1] == "1" or info[-1] == 1:
+		os.system("muscle -in {} -out {}".format(Input, Output))
 	else:
 		os.system("mafft --auto {} > {}".format(Input, Output))
 	

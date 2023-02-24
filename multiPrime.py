@@ -138,6 +138,8 @@ rule alignment_by_muscle:
 		config["results_dir"] + "/Clusters_fa/{i}.tfa"
 	output:
 		config["results_dir"] + "/Clusters_msa/{i}.tmsa"
+	resources:
+		mem_mb= 10000 # 10G
 	params:
 		script = config["scripts_dir"]
 	message:
@@ -157,6 +159,8 @@ rule degePrimer_trim:
 		config["results_dir"] + "/Clusters_trim_msa/{i}.trim.tmsa"
 	log:
 		config["log_dir"] + "/TrimAlignment_{i}.log"
+	resources:
+		mem_mb= 10000 # 10G
 	params:
 		config["scripts_dir"]
 	message:
@@ -177,6 +181,8 @@ rule degePrimer_design:
 		config["results_dir"] + "/Clusters_primer/{i}.top.primer.out"
 	log:
 		config["log_dir"] + "/DegePrime_{i}.log"
+	resources:
+		mem_mb= 10000 # 10G
 	params:
 		script = config["scripts_dir"],
 		dege_number = config["dege_number"],
@@ -200,6 +206,8 @@ rule get_degePrimer:
 		config["results_dir"] + "/Clusters_cprimer/{i}.candidate.primers.txt"
 	log:
 		config["log_dir"] + "/get_degePrimer_{i}.log"
+	resources:
+		mem_mb= 10000 # 10G
 	params:
 		script = config["scripts_dir"],
 		fraction = config["coverage"],

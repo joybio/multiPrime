@@ -180,6 +180,8 @@ rule multiPrime:
 		config["results_dir"] + "/Clusters_primer/{i}.top.primer.out"
 	log:
 		config["log_dir"] + "/multiPrime_{i}.log"
+	resources:
+		mem_mb= 10000 # 10G
 	params:
 		script = config["scripts_dir"],
 		dege_number = config["dege_number"],
@@ -209,6 +211,8 @@ rule get_multiPrime:
 		config["results_dir"] + "/Clusters_cprimer/{i}.candidate.primers.txt"
 	log:
 		config["log_dir"] + "/get_multiPrime_{i}.log"
+	resources:
+		mem_mb= 10000 # 10G
 	params:
 		script = config["scripts_dir"],
 		fraction = config["coverage"],
