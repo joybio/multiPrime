@@ -138,11 +138,13 @@ rule alignment_by_muscle:
 		config["results_dir"] + "/Clusters_fa/{i}.tfa"
 	output:
 		config["results_dir"] + "/Clusters_msa/{i}.tmsa"
+	params:
+		script = config["scripts_dir"]
 	message:
 		"Step6: alignment by muscle .."
 	shell:
 		'''
-		mafft --auto {input} > {output}
+		python {params.script}/run_mafft.py -i {input} -o {output}
 		'''
 #-------------------------------------------------------------------------------------------
 # degePrimer_trim rule 7: Dependency packages - DEGEPRIME-1.1.0
