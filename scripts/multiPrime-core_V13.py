@@ -384,7 +384,7 @@ def Calc_Tm_v2(seq):
 
 class NN_degenerate(object):
     def __init__(self, seq_file, primer_length=18, coverage=0.8, number_of_dege_bases=18, score_of_dege_bases=1000,
-                 product_len=250, position=4, variation=2, entropy_threshold=3.6, distance=4, GC="0.4,0.6", nproc=10,
+                 product_len=250, position=4, variation=2, raw_entropy_threshold=3.6, distance=4, GC="0.4,0.6", nproc=10,
                  outfile=""):
         self.primer_length = primer_length  # primer length
         self.coverage = coverage  # min coverage
@@ -395,11 +395,13 @@ class NN_degenerate(object):
         self.variation = variation  # coverage of n-nt variation and max_gap_number
         self.distance = distance  # haripin
         self.GC = GC.split(",")
-        self.entropy_threshold = entropy_threshold
         self.nproc = nproc  # GC content
         self.seq_dict, self.total_sequence_number = self.parse_seq(seq_file)
         self.start_position = self.seq_attribute(self.seq_dict)[0]
         self.stop_position = self.seq_attribute(self.seq_dict)[1]
+        self.length = self.seq_attribute(self.seq_dict)[2]
+        self.raw_entropy_threshold = raw_entropy_threshold
+        self.entropy_threshold = self.entropy_threshold_adjust(self.length)
         self.outfile = outfile
         self.resQ = Manager().Queue()
 
@@ -516,7 +518,7 @@ class NN_degenerate(object):
                         i = i.strip().split(" ")
                         acc_id = i[0]
                     else:
-                        sequence = re.sub("[^ACGTRYMKSWHBVDN]", "-", i.strip().upper())
+                        sequence = re.sub("[^ACGTRYMKSWHBVD]", "-", i.strip().upper())
                         seq_dict[acc_id] += sequence
         return seq_dict, len(seq_dict)
 
@@ -703,7 +705,17 @@ class NN_degenerate(object):
                   "coverage! Non candidate primers !!!".format(self.coverage))
             sys.exit(1)
         else:
-            return [start, stop]
+            return [start, stop, stop-start]
+
+    def entropy_threshold_adjust(self, length):
+        if length < 5000:
+            return self.raw_entropy_threshold
+        else:
+            if length < 10000:
+                return self.raw_entropy_threshold / 2
+            else:
+                return 1
+
 
     def get_primers(self, sequence_dict, primer_start):  # , primer_info, non_cov_primer_out
         # record sequence and acc id
@@ -761,6 +773,7 @@ class NN_degenerate(object):
                         pass
                     else:
                         cover_for_MM[i] += 1
+            # print(sequence)
         # number of sequences with too many gaps greater than (1 - self.coverage)
         if round(gap_sequence_number / self.total_sequence_number, 2) >= (1 - self.coverage):
             self.resQ.put(None)
@@ -1166,7 +1179,7 @@ class NN_degenerate(object):
         stop_primer = self.stop_position
         # primer_info = Manager().list()
         # non_cov_primer_out = Manager().list()
-        for position in range(start_primer, stop_primer - self.primer_length):
+        for position in range(6547, stop_primer - self.primer_length):
             # print(position)
             p.submit(self.get_primers(sequence_dict, position))  # , primer_info, non_cov_primer_out
             # This will submit all tasks to one place without blocking, and then each
@@ -1211,7 +1224,7 @@ def main():
     options, args = argsParse()
     NN_APP = NN_degenerate(seq_file=options.input, primer_length=options.plen, coverage=options.fraction,
                            number_of_dege_bases=options.dnum, score_of_dege_bases=options.degeneracy,
-                           entropy_threshold=options.entropy, product_len=options.size, position=options.coordinate,
+                           raw_entropy_threshold=options.entropy, product_len=options.size, position=options.coordinate,
                            variation=options.variation, distance=options.away, GC=options.gc, nproc=options.proc,
                            outfile=options.out)
     NN_APP.run()
