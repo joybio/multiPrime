@@ -518,6 +518,7 @@ class NN_degenerate(object):
                     if i.startswith(">"):
                         i = i.strip().split(" ")
                         acc_id = i[0]
+                        # print(acc_id)
                     else:
                         # carefully !, make sure that Ns have been replaced!
                         sequence = re.sub("[^ACGTRYMKSWHBVD]", "-", i.strip().upper())
@@ -692,13 +693,19 @@ class NN_degenerate(object):
     def seq_attribute(self, Input_dict):
         start_dict = {}
         stop_dict = {}
-        pattern_start = re.compile('[A-Z]')
-        pattern_stop = re.compile("-*$")
+        # pattern_start = re.compile('[A-Z]')
+        # pattern_stop = re.compile("-*$")
         for acc_id in Input_dict.keys():
-            # len_dict[acc_id] = len(Input_dict[acc_id])
-            start_dict[acc_id] = pattern_start.search(Input_dict[acc_id]).span()[0]
-            stop_dict[acc_id] = pattern_stop.search(Input_dict[acc_id]).span()[0] - 1
-        # start position should contain [coverage] sequences at least.
+            # print(acc_id)
+            # print(Input_dict[acc_id])
+            # # len_dict[acc_id] = len(Input_dict[acc_id])
+            # start_dict[acc_id] = pattern_start.search(Input_dict[acc_id]).span()[0]
+            # stop_dict[acc_id] = pattern_stop.search(Input_dict[acc_id]).span()[0] - 1
+            # print(pattern_start.search(Input_dict[acc_id]).span()[0], pattern_stop.search(Input_dict[acc_id]).span()[0] - 1)
+            t_length = len(Input_dict[acc_id])
+            start_dict[acc_id] = t_length - len(Input_dict[acc_id].lstrip("-"))
+            stop_dict[acc_id] = len(Input_dict[acc_id].rstrip("-")) 
+            # start position should contain [coverage] sequences at least.
         start = np.quantile(np.array(list(start_dict.values())).reshape(1, -1), self.coverage, interpolation="higher")
         # for python 3.9.9
         # start = np.quantile(np.array(list(start_dict.values())).reshape(1, -1), self.coverage, method="higher")
@@ -710,7 +717,7 @@ class NN_degenerate(object):
                   "coverage! Non candidate primers !!!".format(self.coverage))
             sys.exit(1)
         else:
-            # print(start, stop, stop-start)
+            print(start, stop, stop-start)
             return [start, stop, stop-start]
 
     def entropy_threshold_adjust(self, length):
@@ -742,18 +749,21 @@ class NN_degenerate(object):
             sequence = sequence_dict[seq_id][primer_start:primer_start + self.primer_length].upper()
             # print(sequence)
             # replace "-" which in start or stop position with nucleotides
-            if sequence.startswith("-"):
-                sequence_narrow = sequence.lstrip("-")
-                append_base_length = len(sequence) - len(sequence_narrow)
-                left_seq = sequence_dict[seq_id][0:primer_start].replace("-", "")
-                if len(left_seq) >= append_base_length:
-                    sequence = left_seq[len(left_seq) - append_base_length:] + sequence_narrow
-            if sequence.endswith("-"):
-                sequence_narrow = sequence.rstrip("-")
-                append_base_length = len(sequence) - len(sequence_narrow)
-                right_seq = sequence_dict[seq_id][primer_start + self.primer_length:].replace("-", "")
-                if len(right_seq) >= append_base_length:
-                    sequence = sequence_narrow + right_seq[0:append_base_length]
+            if sequence == "-" * self.primer_length:
+                pass
+            else:
+                if sequence.startswith("-"):
+                    sequence_narrow = sequence.lstrip("-")
+                    append_base_length = len(sequence) - len(sequence_narrow)
+                    left_seq = sequence_dict[seq_id][0:primer_start].replace("-", "")
+                    if len(left_seq) >= append_base_length:
+                        sequence = left_seq[len(left_seq) - append_base_length:] + sequence_narrow
+                if sequence.endswith("-"):
+                    sequence_narrow = sequence.rstrip("-")
+                    append_base_length = len(sequence) - len(sequence_narrow)
+                    right_seq = sequence_dict[seq_id][primer_start + self.primer_length:].replace("-", "")
+                    if len(right_seq) >= append_base_length:
+                        sequence = sequence_narrow + right_seq[0:append_base_length]
             if len(sequence) < self.primer_length:
                 append_base_length = self.primer_length - len(sequence)
                 left_seq = sequence_dict[seq_id][0:primer_start].replace("-", "")
@@ -1188,7 +1198,7 @@ class NN_degenerate(object):
         # primer_info = Manager().list()
         # non_cov_primer_out = Manager().list()
         for position in range(start_primer, stop_primer - self.primer_length):
-            print(position)
+            # print(position)
             p.submit(self.get_primers(sequence_dict, position))  # , primer_info, non_cov_primer_out
             # This will submit all tasks to one place without blocking, and then each
             # thread in the thread pool will fetch tasks.
