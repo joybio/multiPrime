@@ -704,7 +704,7 @@ class NN_degenerate(object):
             # print(pattern_start.search(Input_dict[acc_id]).span()[0], pattern_stop.search(Input_dict[acc_id]).span()[0] - 1)
             t_length = len(Input_dict[acc_id])
             start_dict[acc_id] = t_length - len(Input_dict[acc_id].lstrip("-"))
-            stop_dict[acc_id] = len(Input_dict[acc_id].rstrip("-")) 
+            stop_dict[acc_id] = len(Input_dict[acc_id].rstrip("-"))
             # start position should contain [coverage] sequences at least.
         start = np.quantile(np.array(list(start_dict.values())).reshape(1, -1), self.coverage, interpolation="higher")
         # for python 3.9.9
@@ -1198,7 +1198,7 @@ class NN_degenerate(object):
         # primer_info = Manager().list()
         # non_cov_primer_out = Manager().list()
         for position in range(start_primer, stop_primer - self.primer_length):
-            # print(position)
+            print(position)
             p.submit(self.get_primers(sequence_dict, position))  # , primer_info, non_cov_primer_out
             # This will submit all tasks to one place without blocking, and then each
             # thread in the thread pool will fetch tasks.
