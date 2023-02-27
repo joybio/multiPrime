@@ -397,9 +397,10 @@ class NN_degenerate(object):
         self.GC = GC.split(",")
         self.nproc = nproc  # GC content
         self.seq_dict, self.total_sequence_number = self.parse_seq(seq_file)
-        self.start_position = self.seq_attribute(self.seq_dict)[0]
-        self.stop_position = self.seq_attribute(self.seq_dict)[1]
-        self.length = self.seq_attribute(self.seq_dict)[2]
+        self.position_list = self.seq_attribute(self.seq_dict)
+        self.start_position = self.position_list[0]
+        self.stop_position = self.position_list[1]
+        self.length = self.position_list[2]
         self.raw_entropy_threshold = raw_entropy_threshold
         self.entropy_threshold = self.entropy_threshold_adjust(self.length)
         self.outfile = outfile
@@ -518,8 +519,12 @@ class NN_degenerate(object):
                         i = i.strip().split(" ")
                         acc_id = i[0]
                     else:
+                        # carefully !, make sure that Ns have been replaced!
                         sequence = re.sub("[^ACGTRYMKSWHBVD]", "-", i.strip().upper())
+                        # print(sequence)
                         seq_dict[acc_id] += sequence
+        # print(seq_dict)
+        # print(len(seq_dict))
         return seq_dict, len(seq_dict)
 
 
@@ -705,6 +710,7 @@ class NN_degenerate(object):
                   "coverage! Non candidate primers !!!".format(self.coverage))
             sys.exit(1)
         else:
+            # print(start, stop, stop-start)
             return [start, stop, stop-start]
 
     def entropy_threshold_adjust(self, length):
@@ -732,8 +738,9 @@ class NN_degenerate(object):
         gap_sequence_number = 0
         primers_db = []
         for seq_id in sequence_dict.keys():
-            # sequence
+            # print(seq_id)
             sequence = sequence_dict[seq_id][primer_start:primer_start + self.primer_length].upper()
+            # print(sequence)
             # replace "-" which in start or stop position with nucleotides
             if sequence.startswith("-"):
                 sequence_narrow = sequence.lstrip("-")
@@ -753,6 +760,7 @@ class NN_degenerate(object):
                 if len(left_seq) >= append_base_length:
                     sequence = left_seq[len(left_seq) - append_base_length:] + sequence
             # gap number. number of gap > 2
+            # print(sequence)
             if list(sequence).count("-") > self.variation:
                 gap_sequence[sequence] += 1
                 gap_sequence_number += 1
@@ -1179,7 +1187,7 @@ class NN_degenerate(object):
         stop_primer = self.stop_position
         # primer_info = Manager().list()
         # non_cov_primer_out = Manager().list()
-        for position in range(6547, stop_primer - self.primer_length):
+        for position in range(start_primer, stop_primer - self.primer_length):
             # print(position)
             p.submit(self.get_primers(sequence_dict, position))  # , primer_info, non_cov_primer_out
             # This will submit all tasks to one place without blocking, and then each
