@@ -45,7 +45,7 @@ max_seq: 500
 ## primer design by degePrimer
 ##-------------------------------------------------------------------------------
 #param in DegePrime.pl -d {}. number of the degenerate nucleotide
-dege_number: 2 
+degeneracy: 2 
 #param in DegePrime.pl -l {}. length of the degenerate primers
 primer_len: 18
 

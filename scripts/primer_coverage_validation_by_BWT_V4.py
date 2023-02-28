@@ -305,7 +305,7 @@ class off_targets(object):
             pass
         else:
             if self.bowtie == 'bowtie2':
-                os.system("bowtie2 -p {} -f -N {} -L 8 -a -x {} -f -U {} -S {}".format(self.nproc, self.mismatch_num,
+                os.system("bowtie2 -p {} -N {} -L 8 -a -x {} -f -U {} -S {}".format(self.nproc, self.mismatch_num,
                                                                                        ref_index, fa, out))
             elif self.bowtie == 'bowtie':
                 os.system(

@@ -1,5 +1,5 @@
-configfile:  "multiPrime2.yaml"
-#__version__ = "2.0.2"
+configfile:  "multiPrime.yaml"
+#__version__ = "1.0.2"
 #__date__ = "2022-7-28"
 #__author__ = "Junbo Yang"
 #__email__ = yang_junbo_hi@126.com; 1806389316@pku.edu.cn
@@ -10,7 +10,7 @@ import os
 virus = config["virus"]
 
 def aggregate_input(wildcards):
-	checkpoint_output = checkpoints.extract_cluster_fa.get(**wildcards).output[1]
+	checkpoint_output = checkpoints.extract_cluster_V2_fa.get(**wildcards).output[1]
 	return expand(config["results_dir"] + "/Clusters_cprimer/{i}.candidate.primers.txt",
 		i=glob_wildcards(os.path.join(checkpoint_output, "{i}.fa")).i)
 #Here a new directory will be created for each sample by the checkpoint. 
@@ -99,7 +99,7 @@ rule cluster_by_identity:
 	output: 
 		config["results_dir"] + "/Total_fa/{virus}.format.rmdup.cluster.uniq.fa",
 		config["results_dir"] + "/Total_fa/{virus}.format.rmdup.cluster.uniq.fa.clstr"
-	# It is allowed that output name not used in the shell.
+		# It is allowed that output name not used in the shell.
 	message: "Step4: Cluster .."
 	params:
 		identity=config['identity']
@@ -108,9 +108,9 @@ rule cluster_by_identity:
 		cd-hit -M 0 -T 0 -i {input} -o {output[0]} -c {params.identity}
 		'''
 #-------------------------------------------------------------------------------------------
-# extract_cluster_fa rule 5: Dependency packages - None
+# extract_cluster_V2_fa rule 5: Dependency packages - None
 #-------------------------------------------------------------------------------------------
-checkpoint extract_cluster_fa:
+checkpoint extract_cluster_V2_fa:
 	input:
 		expand(config["results_dir"] + "/Total_fa/{virus}.format.rmdup.cluster.fa",
 			virus = virus),
@@ -119,38 +119,17 @@ checkpoint extract_cluster_fa:
 	output:
 		config["results_dir"] + "/cluster.txt",
 		directory(config["results_dir"] + "/Clusters_fa"),
-		config["results_dir"] + "/cluster.identities.txt",
-		config["results_dir"] + "/history.txt",
+		config["results_dir"] + "/cluster.identities.txt"
 	params:
 		script = config["scripts_dir"],
-		max_seq = config["max_seq"],
-		threshold =  config["seq_number_ANI"]
+		max_seq = config["max_seq"]
 	message:
 		"Step5: extract fasta in each cluster from cd-hit results .."
 	shell:
 		'''
-		python {params.script}/extract_cluster_V3.py -i {input[0]} -c {input[1]} \
-			 -m {params.max_seq} -o {output[0]} -y {output[2]} -d {output[1]};
-
-		python {params.script}/merge_cluster_by_ANI.py -i {output[0]} -p 20 -t {params.threshold} \
-			-o {output[3]}
+		python {params.script}/extract_cluster_V2.py -i {input[0]} -c {input[1]} \
+			 -m {params.max_seq} -o {output[0]} -y {output[2]} -d {output[1]}
 		'''
-
-#-------------------------------------------------------------------------------------------
-# merge_cluster 6: Dependency packages - fastANI
-#-------------------------------------------------------------------------------------------
-#rule merge_cluster:
-#	input:
-#		config["results_dir"] + "/cluster.txt"
-#	output:
-#		config["results_dir"] + "/history.txt"
-#	message:
-#		"Step6: Merging cluster by ANI.."
-#	shell:
-#		'''
-#		python {params.script}/merge_cluster_by_ANI.py -i {input} -p 20 -t 20 -o {output}
-#		'''
-
 #-------------------------------------------------------------------------------------------
 # alignment_by_muscle rule 6: Dependency packages - None
 #-------------------------------------------------------------------------------------------
@@ -159,80 +138,93 @@ rule alignment_by_muscle:
 		config["results_dir"] + "/Clusters_fa/{i}.tfa"
 	output:
 		config["results_dir"] + "/Clusters_msa/{i}.tmsa"
+	resources:
+		mem_mb= 10000 # 10G
 	params:
 		script = config["scripts_dir"]
-	resources:
-		mem_mb = 10000
 	message:
 		"Step6: alignment by muscle .."
 	shell:
 		'''
 		python {params.script}/run_mafft.py -i {input} -o {output}
 		'''
-#		muscle -in {input} -out {output}
-#		for long input.
-#		mafft --auto {input} > {output}
 #-------------------------------------------------------------------------------------------
-# multiPrime rule 7: Dependency packages - multiPrime-core
+# degePrimer_trim rule 7: Dependency packages - DEGEPRIME-1.1.0
 #-------------------------------------------------------------------------------------------
-rule multiPrime:
+rule degePrimer_trim:
 	input:
 		rules.alignment_by_muscle.output
+		#config["results_dir"] + "/Clusters_msa/{i}.msa"
+	output:
+		config["results_dir"] + "/Clusters_trim_msa/{i}.trim.tmsa"
+	log:
+		config["log_dir"] + "/TrimAlignment_{i}.log"
+	resources:
+		mem_mb= 10000 # 10G
+	params:
+		config["scripts_dir"]
+	message:
+		"Step7: trimming by degePrimer .."
+	shell:
+		'''
+		perl {params}/DEGEPRIME-1.1.0/TrimAlignment.pl -i {input} \
+			-o {output} 2>&1 > {log}
+		'''
+#-------------------------------------------------------------------------------------------
+# degePrimer_design rule 8: Dependency packages - DEGEPRIME-1.1.0
+#-------------------------------------------------------------------------------------------
+rule degePrimer_design:
+	input:
+		rules.degePrimer_trim.output
+		#config["results_dir"] + "/Clusters_trim_msa/{i}.trim.msa"
 	output:
 		config["results_dir"] + "/Clusters_primer/{i}.top.primer.out"
 	log:
-		config["log_dir"] + "/multiPrime_{i}.log"
+		config["log_dir"] + "/DegePrime_{i}.log"
 	resources:
-		mem_mb = 10000
+		mem_mb= 10000 # 10G
 	params:
 		script = config["scripts_dir"],
-		dege_number = config["dege_number"],
 		degeneracy = config["degeneracy"],
-		primer_len = config["primer_len"],
-		min_PCR_size = config["PRODUCT_size"].split(",")[0],
-		variation = config["variation"],
-		coordinate = config["coordinate"],
-		GC = config["gc_content"],
-		coverage = config["coverage"]
+		primer_len = config["primer_len"]
 	message:
-		"Step8: design primers by multiPrime .."
+		"Step8: design primers by degePrimer .."
 	shell:
 		'''
-		python {params.script}/multiPrime-core.py -i {input} -n {params.dege_number} \
-			-d {params.degeneracy} -v {params.variation} -c {params.coordinate} \
-			-g {params.GC} -s {params.min_PCR_size} -l {params.primer_len} \
-			-o {output} -f {params.coverage} -p 1 2>&1 > {log}
+		python {params.script}/run_dege.py -i {input} -s {params.script}\
+			-d {params.degeneracy} -l {params.primer_len} \
+			-o {output} 2>&1 > {log}
 		'''
 #-------------------------------------------------------------------------------------------
 # get_degePrimer rule 9: Dependency packages - pandas, biopython, math, operator,functools
 #-------------------------------------------------------------------------------------------
-rule get_multiPrime:
+rule get_degePrimer:
 	input:
 		primer = config["results_dir"] + "/Clusters_primer/{i}.top.primer.out",
-		ref_fa = config["results_dir"] + "/Clusters_fa/{i}.tfa"
+		ref_fa = config["results_dir"] + "/Clusters_fa/{i}.fa"
 	output:
 		config["results_dir"] + "/Clusters_cprimer/{i}.candidate.primers.txt"
 	log:
-		config["log_dir"] + "/get_multiPrime_{i}.log"
+		config["log_dir"] + "/get_degePrimer_{i}.log"
 	resources:
-		mem_mb = 10000
+		mem_mb= 10000 # 10G
 	params:
 		script = config["scripts_dir"],
 		fraction = config["coverage"],
 		size = config["PRODUCT_size"],
-		# maxseq=config["max_seq"],
+		maxseq=config["max_seq"],
 		gc_content = config["gc_content"],
 		distance = config["distance"],
 		adaptor = config["adaptor"],
 		end = config["end"]
 	message:
-		"Step9: choose candidate primeri pairs for each cluster (hairpin, dimer (F-R) check) .."
+		"Step9: choose candidate primers for each cluster (hairpin, dimer (F-R) check) .."
 	shell:
 		'''
-		python {params.script}/get_multiPrime.py -i {input.primer} -r {input.ref_fa} \
+		python {params.script}/get_degePrimer.py -i {input.primer} -r {input.ref_fa} \
 			-f {params.fraction} -s {params.size} -g {params.gc_content} -e {params.end} \
-			-d {params.distance} -a {params.adaptor} -m 0\
-			-o {output} -p 1 2>&1 > {log}
+			-d {params.distance} -a {params.adaptor} -m {params.maxseq}\
+			-o {output} 2>&1 > {log}
 		'''
 
 #-------------------------------------------------------------------------------------------
@@ -394,8 +386,7 @@ rule all_mfeprimer_check:
 	output:
 		config["results_dir"] + "/Primers_set/final_maxprimers_set.fa",
 		config["results_dir"] + "/Primers_set/final_maxprimers_set.fa.hairpin",
-		config["results_dir"] + "/Primers_set/final_maxprimers_set.fa.dimer",
-		config["results_dir"] + "/Primers_set/final_maxprimers_set.fa.findimer"
+		config["results_dir"] + "/Primers_set/final_maxprimers_set.fa.dimer"	
 	params:
 		config["scripts_dir"]
 	message:
@@ -406,7 +397,6 @@ rule all_mfeprimer_check:
 		python {params}/primerset_format.py -i {input} -o {output[0]}
 		{params}/mfeprimer-3.2.6 hairpin -i {output[0]} -o {output[1]}
 		{params}/mfeprimer-3.2.6 dimer -i {output[0]} -o {output[2]}
-		python {params}/finDimer.py -i {output[0]} -o {output[3]}
 		"""
 #-------------------------------------------------------------------------------------------
 # core_mfeprimer_check rule 18: Dependency packages - mfeprimer-3.2.6
@@ -417,8 +407,7 @@ rule core_mfeprimer_check:
 	output:
 		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa",
 		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa.hairpin",
-		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa.dimer",
-		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa.findimer"
+		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa.dimer"
 	params:
 		config["scripts_dir"]
 	message:
@@ -428,7 +417,6 @@ rule core_mfeprimer_check:
 		python {params}/primerset_format.py -i {input} -o {output[0]}
 		{params}/mfeprimer-3.2.6 hairpin -i {output[0]} -o {output[1]}
 		{params}/mfeprimer-3.2.6 dimer -i {output[0]} -o {output[2]}
-		python {params}/finDimer.py -i {output[0]} -o {output[3]}
 		"""
 #-------------------------------------------------------------------------------------------
 # Done!

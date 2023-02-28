@@ -4,17 +4,17 @@
 ################################################################################
 # directory, where is/are the input virus fasta file(s) located
 # absolute path
-input_dir: /share/data3/yangjunbo/git_storage/multiPrime/test_data
+input_dir: /share/data2/yangjunbo/202302/20230223/multiPrime2
 
 # directory, in which the pipeline writes all output files (relative to current directory)
 # (this also includes the summary files)
-results_dir: /share/data3/yangjunbo/git_storage/multiPrime/results
+results_dir: /share/data2/yangjunbo/202302/20230223/multiPrime2/results
 
 # directory to write the log-files, created during processing, to 
-log_dir: /share/data3/yangjunbo/git_storage/multiPrime/logs
+log_dir: /share/data2/yangjunbo/202302/20230223/multiPrime2/logs
 
 # directory of scripts.
-scripts_dir: /share/data3/yangjunbo/git_storage/multiPrime/scripts
+scripts_dir: /share/data2/yangjunbo/multiPrime/scripts
 
 ################################################################################
 # sample(s) information
@@ -23,7 +23,7 @@ scripts_dir: /share/data3/yangjunbo/git_storage/multiPrime/scripts
 # please type here: sample1
 # this name is used throughout the entire pipeline as name for the output samples
 virus:
-  - CDS_20727
+  - all_uniq
 ################################################################################
 # preprocessing
 ################################################################################
@@ -34,14 +34,14 @@ virus:
 #Params in cd-hit -c {}. Suggestion: 0.7. minimum: 0.65 
 #If the identity of sequences in your input file is very high, you can set this param as 0.9.
 #BUG (dont use 1): If you set this param as 1. It will generate primers by no-cluster methods.
-identity: 0.8
+identity: 0.7
 
 # minmum sequence number in cluster 
 # multiPrime will try to merge those clusters with less than {seq_number_ANI} into those clusters
 # greater than {seq_number_ANI}. It is used to reduce cluster number. 
 # If seq_number_ANI = 0, then all clusters will be processed 
 # If seq_number_ANI = 1, then no clusters will be processed
-seq_number_ANI: 20
+seq_number_ANI: 1
 #Max sequence number of each cluster used in multi-alignment {muscle}. 
 #We randomly choose {maxseq} sequences in cluster for next steps.
 #It wont affect the calculation of primer coverage in the final primer set, 
@@ -73,7 +73,7 @@ coordinate: 4
 #coverage threshold [0.6] is not suitable. you can reset this threshold.
 #If sequence number of some clusters is very large {> 100000}. it will take {500} sequences randomly to get output
 #Details are list in the usage of get_multiPrime.py
-coverage: 0.75
+coverage: 0.7
 
 #PCR PRODUCT SIZE. Filter primers by PRODUCT size.default [250,700].
 PRODUCT_size: 150,1200

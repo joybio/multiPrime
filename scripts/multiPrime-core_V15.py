@@ -518,14 +518,10 @@ class NN_degenerate(object):
                     if i.startswith(">"):
                         i = i.strip().split(" ")
                         acc_id = i[0]
-                        # print(acc_id)
                     else:
                         # carefully !, make sure that Ns have been replaced!
                         sequence = re.sub("[^ACGTRYMKSWHBVD]", "-", i.strip().upper())
-                        # print(sequence)
                         seq_dict[acc_id] += sequence
-        # print(seq_dict)
-        # print(len(seq_dict))
         return seq_dict, len(seq_dict)
 
 
@@ -544,8 +540,8 @@ class NN_degenerate(object):
         for seq in self.degenerate_seq(sequence):
             Delta_G = 0
             for n in range(len(seq) - 1):
-                i, j = base2bit[seq[n + 1]], base2bit[seq[n]]
-                Delta_G += freedom_of_H_37_table[i][j] * H_bonds_number[i][j] + penalty_of_H_37_table[i][j]
+                base_i, base_j = base2bit[seq[n + 1]], base2bit[seq[n]]
+                Delta_G += freedom_of_H_37_table[base_i][base_j] * H_bonds_number[base_i][base_j] + penalty_of_H_37_table[base_i][base_j]
             term5 = sequence[-2:]
             if term5 == "TA":
                 Delta_G += adjust_initiation[seq[0]] + adjust_initiation[seq[-1]] + adjust_terminal_TA
@@ -681,12 +677,17 @@ class NN_degenerate(object):
         return best_primer_index
 
     def entropy(self, cover, cover_number, gap_sequence, gap_sequence_number):
+        # cBit: entropy of cover sequences
+        # tBit: entropy of total sequences
         cBit = 0
+        tBit = 0
         for c in cover.keys():
             cBit += (cover[c] / cover_number) * math.log((cover[c] / cover_number), 2)
-        tBit = cBit
+            tBit += (cover[c] / (cover_number + gap_sequence_number)) * \
+                    math.log((cover[c] / (cover_number + gap_sequence_number)), 2)
         for t in gap_sequence.keys():
-            tBit += (gap_sequence[t] / gap_sequence_number) * math.log((gap_sequence[t] / gap_sequence_number), 2)
+            tBit += (gap_sequence[t] / (cover_number + gap_sequence_number)) * \
+                    math.log((gap_sequence[t] / (cover_number + gap_sequence_number)), 2)
         return round(-cBit, 2), round(-tBit, 2)
 
     # Sequence processing. Return a list contains sequence length, start and stop position of each sequence.
@@ -696,12 +697,8 @@ class NN_degenerate(object):
         # pattern_start = re.compile('[A-Z]')
         # pattern_stop = re.compile("-*$")
         for acc_id in Input_dict.keys():
-            # print(acc_id)
-            # print(Input_dict[acc_id])
-            # # len_dict[acc_id] = len(Input_dict[acc_id])
             # start_dict[acc_id] = pattern_start.search(Input_dict[acc_id]).span()[0]
             # stop_dict[acc_id] = pattern_stop.search(Input_dict[acc_id]).span()[0] - 1
-            # print(pattern_start.search(Input_dict[acc_id]).span()[0], pattern_stop.search(Input_dict[acc_id]).span()[0] - 1)
             t_length = len(Input_dict[acc_id])
             start_dict[acc_id] = t_length - len(Input_dict[acc_id].lstrip("-"))
             stop_dict[acc_id] = len(Input_dict[acc_id].rstrip("-"))
@@ -717,7 +714,6 @@ class NN_degenerate(object):
                   "coverage! Non candidate primers !!!".format(self.coverage))
             sys.exit(1)
         else:
-            print(start, stop, stop-start)
             return [start, stop, stop-start]
 
     def entropy_threshold_adjust(self, length):
@@ -725,9 +721,9 @@ class NN_degenerate(object):
             return self.raw_entropy_threshold
         else:
             if length < 10000:
-                return self.raw_entropy_threshold / 2
+                return self.raw_entropy_threshold * 0.95
             else:
-                return 1
+                return self.raw_entropy_threshold * 0.9
 
 
     def get_primers(self, sequence_dict, primer_start):  # , primer_info, non_cov_primer_out
@@ -745,9 +741,7 @@ class NN_degenerate(object):
         gap_sequence_number = 0
         primers_db = []
         for seq_id in sequence_dict.keys():
-            # print(seq_id)
             sequence = sequence_dict[seq_id][primer_start:primer_start + self.primer_length].upper()
-            # print(sequence)
             # replace "-" which in start or stop position with nucleotides
             if sequence == "-" * self.primer_length:
                 pass
@@ -770,14 +764,16 @@ class NN_degenerate(object):
                 if len(left_seq) >= append_base_length:
                     sequence = left_seq[len(left_seq) - append_base_length:] + sequence
             # gap number. number of gap > 2
-            # print(sequence)
             if list(sequence).count("-") > self.variation:
                 gap_sequence[sequence] += 1
                 gap_sequence_number += 1
-                # record acc ID of gap sequences
-                expand_sequence = self.degenerate_seq(sequence)
-                for i in expand_sequence:
-                    gap_seq_id[i].append(seq_id)
+                if round(gap_sequence_number / self.total_sequence_number, 2) >= (1 - self.coverage):
+                    break
+                else:
+                    # record acc ID of gap sequences
+                    expand_sequence = self.degenerate_seq(sequence)
+                    for i in expand_sequence:
+                        gap_seq_id[i].append(seq_id)
             # # accepted gap, number of gap <= variation
             else:
                 expand_sequence = self.degenerate_seq(sequence)
@@ -791,25 +787,33 @@ class NN_degenerate(object):
                         pass
                     else:
                         cover_for_MM[i] += 1
-            # print(sequence)
         # number of sequences with too many gaps greater than (1 - self.coverage)
         if round(gap_sequence_number / self.total_sequence_number, 2) >= (1 - self.coverage):
+            print("Gap fail")
             self.resQ.put(None)
         elif len(cover) < 1:
             self.resQ.put(None)
+            print("Cover fail")
         else:
+            # cBit: entropy of cover sequences
+            # tBit: entropy of total sequences
             cBit, tBit = self.entropy(cover, cover_number, gap_sequence, gap_sequence_number)
             if tBit > self.entropy_threshold:
+                print("Entropy fail")
                 # This window is not a conserved region, and not proper to design primers
                 self.resQ.put(None)
             else:
                 primers_db = pd.DataFrame(primers_db)
                 # frequency matrix
                 freq_matrix = self.state_matrix(primers_db)
+                colSum = np.sum(freq_matrix, axis=0)
                 a, b = freq_matrix.shape
                 # a < 4 means base composition of this region is less than 4 (GC bias).
                 # It's not a proper region for primer design.
                 if a < 4:
+                    self.resQ.put(None)
+                elif (colSum == 0).any():
+                    print(colSum)  # if 0 in array; pass
                     self.resQ.put(None)
                 else:
                     gap_seq_id_info = [primer_start, gap_seq_id]
@@ -820,6 +824,7 @@ class NN_degenerate(object):
                     # F, R = mismatch_coverage[1][6], mismatch_coverage[1][7]
                     sequence = mismatch_coverage[1][2]
                     if self.dimer_check(sequence):
+                        print("Dimer fail")
                         self.resQ.put(None)
                     else:
                         self.resQ.put([mismatch_coverage, non_cov_primer_info, gap_seq_id_info])
