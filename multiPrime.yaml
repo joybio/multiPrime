@@ -45,7 +45,7 @@ max_seq: 500
 ## primer design by degePrimer
 ##-------------------------------------------------------------------------------
 #param in DegePrime.pl -d {}. number of the degenerate nucleotide
-degeneracy: 2 
+degeneracy: 10 
 #param in DegePrime.pl -l {}. length of the degenerate primers
 primer_len: 18
 
@@ -63,10 +63,10 @@ primer_len: 18
 coverage: 0.7
 
 #PCR PRODUCT SIZE. Filter primers by PRODUCT size.default [150,400].
-PRODUCT_size: 300,700
+PRODUCT_size: 150,1200
 
 #Filter primers by GC content. default [0.45,0.65].
-gc_content: 0.4,0.6
+gc_content: 0.2,0.7
 
 #Filter param of hairpin, which means distance of the minimal paired bases. Default: 4. Example:(number of X) AGCT[XXXX]AGCT
 distance: 4

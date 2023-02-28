@@ -124,7 +124,9 @@ checkpoint extract_cluster_fa:
 	params:
 		script = config["scripts_dir"],
 		max_seq = config["max_seq"],
-		threshold =  config["seq_number_ANI"]
+		threshold = config["seq_number_ANI"],
+		drop = config["drop"],
+		ani = config["ani"]
 	message:
 		"Step5: extract fasta in each cluster from cd-hit results .."
 	shell:
@@ -133,7 +135,7 @@ checkpoint extract_cluster_fa:
 			 -m {params.max_seq} -o {output[0]} -y {output[2]} -d {output[1]};
 
 		python {params.script}/merge_cluster_by_ANI.py -i {output[0]} -p 20 -t {params.threshold} \
-			-o {output[3]}
+			-o {output[3]} -d {params.drop} -a {params.ani}
 		'''
 
 #-------------------------------------------------------------------------------------------

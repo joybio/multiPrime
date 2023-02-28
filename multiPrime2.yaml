@@ -41,7 +41,12 @@ identity: 0.7
 # greater than {seq_number_ANI}. It is used to reduce cluster number. 
 # If seq_number_ANI = 0, then all clusters will be processed 
 # If seq_number_ANI = 1, then no clusters will be processed
-seq_number_ANI: 1
+seq_number_ANI: 60
+# Threshold of average nucleotide identity, minimum:0.7.
+ani: 0.8
+# Merge or drop those clusters with rare sequences and shows high ANI with others. T: drop; F: merge into others
+drop: "T"
+
 #Max sequence number of each cluster used in multi-alignment {muscle}. 
 #We randomly choose {maxseq} sequences in cluster for next steps.
 #It wont affect the calculation of primer coverage in the final primer set, 

@@ -74,20 +74,20 @@ def argsParse():
                            'It will be used as input file of snakemake pipeline')
     parser.add_option('-m', '--max',
                       dest='max',
-                      default=1000,
+                      default=500,
                       type="int",
-                      help='max sequence number in 1 cluster. Default: 1000.')
+                      help='max sequence number in 1 cluster. Default: 500.')
     parser.add_option('-d', '--dir',
                       dest='dir',
-                      default="Cluster_fa",
+                      default="Clusters_fa",
                       type="str",
-                      help='directory of output fasta: clusters information. Default: Cluster_fa.')
+                      help='directory of output fasta: clusters information. Default: Clusters_fa.')
 
     parser.add_option('-p', '--proc',
                       dest='proc',
-                      default="10",
+                      default="1",
                       type="int",
-                      help='Number of process to launch.  default: 10.')
+                      help='Number of process to launch.  default: 1.')
 
     (options, args) = parser.parse_args()
     import sys
