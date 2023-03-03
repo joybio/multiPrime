@@ -3,9 +3,9 @@ multiPrime: version 2.0.0
 # multi PCR primer pairs design processing pipeline
 MultiPrime is a pipeline designed for broad-spectrum detection of target sequences using PCR and tNGS. It is implemented in Python and Snakemake and takes a FASTA format file as input. The pipeline has three main steps: classification by identity, primer design, and primer set combination. In the classification step, redundant sequences are removed and clusters are formed by identity. Rare sequence clusters are compared to others by average nucleotide identity, and if they are deemed similar enough, they are merged. In the primer design step, multi-alignment is performed using MUSCLE or MAFFT, and candidate primers are designed using the nearest-neighbor model. Primer pairs are selected based on PCR product length, melting temperature, dimer examination, coverage with errors, and other factors. Finally, a greedy algorithm is used to combine primer pairs into a minimal primer set according to dimer examination.
 
-multiPrime1: Degenerate primer design by DEGEPRIME (MD-DPD).
+multiPrime1: Degenerate primer design by DEGEPRIME (MC-DPD).
 
-mulitPrime2: Degenerate primer design by multiPrime-core (MD-EDPD or MD-DPD).
+mulitPrime2: Degenerate primer design by multiPrime-core (MC-EDPD or MC-DPD).
 
 Scripts and pipelines provided in this repository aid to design multiplex PCR primer and return a minimal primerset for multi-PCR. It contains all scripts to allow a self-assembled processing and additionally provides pipeline scripts that run the entire processing automatically.
 
@@ -59,7 +59,7 @@ Snakemake is a workflow management system that helps to create and execute data 
 
 # Configure input parameters
 
-The working directory contains files named `multiPrime.yaml` and `multiPrime2.yaml`. These are the central file in which all user settings, paramter values and path specifications are stored. `multiPrime.yaml` employs DEGEPRIME-1.1.0 for maximum coverage degenerate primer design (MD-DPD), `multiPrime2.yaml` use multiPrime-core.py for MD-DPD or MD-DPD with error. During a run, all steps of the pipeline will retrieve their paramter values from these file. It follows the yaml syntax (find more information about yaml and it's syntax [here](http://www.yaml.org/)) what makes it easy to read and edit. The main principles are:
+The working directory contains files named `multiPrime.yaml` and `multiPrime2.yaml`. These are the central file in which all user settings, paramter values and path specifications are stored. `multiPrime.yaml` employs DEGEPRIME-1.1.0 for maximum coverage degenerate primer design (MC-DPD), `multiPrime2.yaml` use multiPrime-core.py for MC-DPD or MC-DPD with error. During a run, all steps of the pipeline will retrieve their paramter values from these file. It follows the yaml syntax (find more information about yaml and it's syntax [here](http://www.yaml.org/)) what makes it easy to read and edit. The main principles are:
   - everything that comes after a `#` symbol is considered as comment and will not be interpreted
   - paramters are given as key-value pair, with `key` being the name and `value` the value of any paramter
 
@@ -81,11 +81,11 @@ Once you set up your configuration file, running the pipeline locally on your co
   ```bash
   sh run.sh
   ```
-  minimal degeneracy degenerate primer design (MD-DPD):
+  minimal degeneracy degenerate primer design (MC-DPD):
   ```bash
   snakemake --configfile multiPrime.yaml -s multiPrime.py --cores 10 --resources disk_mb=80000
   ```
-  minimal degeneracy degenerate primer design with errors (MD-EDPD) or MD-DPD. It depends on the parameter in multiPrime2.yaml. MD-DPD when you set variation=0.
+  minimal degeneracy degenerate primer design with errors (MC-EDPD) or MC-DPD. It depends on the parameter in multiPrime2.yaml. MC-DPD when you set variation=0.
   ```bash
   snakemake --configfile multiPrime2.yaml -s multiPrime2.py --cores 10 --resources disk_mb=80000
   ```
@@ -102,7 +102,7 @@ or
   ```
 For example:
   
-  MD-DPD (--variation 0) or MD-EDPD (--variation 1 or 2, we do not suggest you set --variation greater than 2, because amplification efficiency was severely inhibited when there are 3 mismathes). The development version of MD-DPD or MD-EDPD can be installed with:
+  MC-DPD (--variation 0) or MC-EDPD (--variation 1 or 2, we do not suggest you set --variation greater than 2, because amplification efficiency was severely inhibited when there are 3 mismathes). The development version of MC-DPD or MC-EDPD can be installed with:
   **pypi:**
   ```bash
   pip install multiPrime
