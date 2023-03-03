@@ -258,7 +258,7 @@ class Product(object):
             c.write(
                 "Total number of sequences:\t{}\n"
                 "Coveraged number of sequence:\t{}\n"
-                "Rate of coverage:\t> {}\n".format(seq_number, len(Product_seq_id),
+                "Rate of coverage:\t>= {}\n".format(seq_number, len(Product_seq_id),
                                                    round(float(len(Product_seq_id)) / seq_number, 2)))
         c.close()
 
