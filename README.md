@@ -99,18 +99,19 @@ or
   ```bash
   python {path to script}/{target}.py
   ```
-For example:
-  
-  MC-DPD (--variation 0) or MC-EDPD (--variation 1 or 2, we do not suggest you set --variation greater than 2, because amplification efficiency was severely inhibited when there are 3 mismathes). 
-  
-  The development version of MC-DPD or MC-EDPD can be installed with:
-  **pypi:**
+or
   ```bash
   pip install multiPrime
   ```
-  multiPrime package contains primer design; primer pair selection and primer pair coverage statistics, more functions will be improved in the future. All manual instruction for multiPrime can be found in [here](https://pypi.org/project/multiPrime/). 
+  ```bash
+  multiPrime --help
+  ```
+  multiPrime package contains primer design; primer pair selection and primer pair coverage statistics, more functions will be improved in the future. All manual instruction for multiPrime can be found in [here](https://pypi.org/project/multiPrime/).
 
-  or:
+For example:
+  
+  MC-DPD (--variation 0) or MC-EDPD (--variation 1 or 2, we do not suggest you set --variation greater than 2, because amplification efficiency was severely inhibited when there are 3 mismathes). 
+
   ```bash
   python scripts/multiPrime-core.py
   ```
