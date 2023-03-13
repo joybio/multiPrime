@@ -1,0 +1,4 @@
+#Cluster_id	Number
+Cluster_0	647
+Cluster_1	19
+Cluster_2	489

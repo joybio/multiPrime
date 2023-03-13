@@ -1,0 +1,7246 @@
+{
+    "70": [
+        {
+            "ACGCAAAGTCAATGCTAT": [
+                ">MH828690.1"
+            ]
+        },
+        {
+            "--GCAAAGCCAATGCTCT": [
+                ">KT835360.1"
+            ]
+        }
+    ],
+    "71": [
+        {
+            "CGCAAAGTCAATGCTATC": [
+                ">MH828690.1"
+            ]
+        },
+        {
+            "-GCAAAGCCAATGCTCTC": [
+                ">KT835360.1"
+            ]
+        }
+    ],
+    "72": [
+        {},
+        {}
+    ],
+    "73": [
+        {},
+        {}
+    ],
+    "74": [
+        {},
+        {}
+    ],
+    "75": [
+        {},
+        {}
+    ],
+    "76": [
+        {
+            "AGCCAATGCTCTCATA-T": [
+                ">KT835356.1"
+            ]
+        },
+        {}
+    ],
+    "77": [
+        {
+            "GCCAATGCTCTCATA-TA": [
+                ">KT835356.1"
+            ]
+        },
+        {}
+    ],
+    "78": [
+        {},
+        {}
+    ],
+    "79": [
+        {},
+        {
+            "--ATGCTCTCATAATAAA": [
+                ">KT835355.1",
+                ">KT835358.1"
+            ]
+        }
+    ],
+    "80": [
+        {},
+        {
+            "-ATGCTCTCATAATAAAT": [
+                ">KT835355.1",
+                ">KT835358.1"
+            ]
+        }
+    ],
+    "81": [
+        {},
+        {}
+    ],
+    "82": [
+        {},
+        {}
+    ],
+    "83": [
+        {},
+        {}
+    ],
+    "84": [
+        {},
+        {}
+    ],
+    "85": [
+        {},
+        {}
+    ],
+    "86": [
+        {
+            "CTCATA-TAAATGAGA-C": [
+                ">KT835356.1"
+            ]
+        },
+        {}
+    ],
+    "87": [
+        {
+            "TCATA-TAAATGAGA-CA": [
+                ">KT835356.1"
+            ]
+        },
+        {}
+    ],
+    "88": [
+        {},
+        {}
+    ],
+    "89": [
+        {},
+        {
+            "ATA-TAAATGAGA-CATT": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "90": [
+        {},
+        {
+            "TA-TAAATGAGA-CATTG": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "91": [
+        {},
+        {
+            "A-TAAATGAGA-CATTGA": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "92": [
+        {
+            "ATAAATGAGA-CATTGAG": [
+                ">KT835356.1"
+            ]
+        },
+        {}
+    ],
+    "93": [
+        {
+            "TAAATGAGA-CATTGAGG": [
+                ">KT835356.1"
+            ]
+        },
+        {}
+    ],
+    "94": [
+        {
+            "AAATGAGA-CATTGAGGC": [
+                ">KT835356.1"
+            ]
+        },
+        {}
+    ],
+    "95": [
+        {},
+        {}
+    ],
+    "97": [
+        {},
+        {}
+    ],
+    "98": [
+        {},
+        {}
+    ],
+    "99": [
+        {},
+        {
+            "AGA-CATTGAGGCCTACA": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "100": [
+        {},
+        {
+            "GA-CATTGAGGCCTACAT": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "101": [
+        {},
+        {
+            "A-CATTGAGGCCTACATT": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "102": [
+        {},
+        {}
+    ],
+    "103": [
+        {},
+        {}
+    ],
+    "104": [
+        {},
+        {}
+    ],
+    "105": [
+        {},
+        {}
+    ],
+    "106": [
+        {},
+        {}
+    ],
+    "107": [
+        {},
+        {}
+    ],
+    "108": [
+        {},
+        {}
+    ],
+    "109": [
+        {
+            "GGCCTACATTGCCATT-G": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "GGCCTACATTGCCATT-G": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "110": [
+        {
+            "GCCTACATTGCCATT-GT": [
+                ">KT835356.1"
+            ]
+        },
+        {}
+    ],
+    "111": [
+        {},
+        {}
+    ],
+    "112": [
+        {},
+        {}
+    ],
+    "113": [
+        {
+            "TACATTGCCATT-GTAAG": [
+                ">KT835356.1"
+            ]
+        },
+        {}
+    ],
+    "114": [
+        {
+            "ACATTGCCATT-GTAAGG": [
+                ">KT835356.1"
+            ]
+        },
+        {}
+    ],
+    "115": [
+        {
+            "CATTGCCATT-GTAAGGA": [
+                ">KT835356.1"
+            ]
+        },
+        {}
+    ],
+    "116": [
+        {
+            "ATTGCCATT-GTAAGGAA": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "ATTGCCATT-GTAAGGAA": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "117": [
+        {
+            "TTGCCATT-GTAAGGAAG": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "TTGCCATT-GTAAGGAAG": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "118": [
+        {
+            "TGCCATT-GTAAGGAAGT": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "TGCCATT-GTAAGGAAGT": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "119": [
+        {
+            "GCCATT-GTAAGGAAGTG": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "GCCATT-GTAAGGAAGTG": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "120": [
+        {
+            "CCATT-GTAAGGAAGTGG": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "CCATT-GTAAGGAAGTGG": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "121": [
+        {
+            "CATT-GTAAGGAAGTGGC": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "CATT-GTAAGGAAGTGGC": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "122": [
+        {
+            "ATT-GTAAGGAAGTGG-C": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "ATT-GTAAGGAAGTGG-C": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "123": [
+        {
+            "TT-GTAAGGAAGTGG-CC": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "TT-GTAAGGAAGTGG-CC": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "125": [
+        {
+            "TGTAAGGAAGTGG-CCTT": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "TGTAAGGAAGTGG-CCTT": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "126": [
+        {
+            "GTAAGGAAGTGG-CCTTA": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "GTAAGGAAGTGG-CCTTA": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "127": [
+        {
+            "TAAGGAAGTGG-CCTTAA": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "TAAGGAAGTGG-CCTTAA": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "128": [
+        {
+            "AAGGAAGTGGGCCTTAAC": [
+                ">LC123748.1"
+            ],
+            "AAGGAAGTGG-CCTTAAT": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "AAGGAAGTGGGCCTTAAC": [
+                ">LC123748.1"
+            ],
+            "AAGGAAGTGG-CCTTAAT": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "129": [
+        {
+            "AGGAAGTGG-CCTTAATG": [
+                ">KT835356.1"
+            ],
+            "AGGAAGTGGGCCTTAACG": [
+                ">LC123748.1"
+            ]
+        },
+        {
+            "AGGAAGTGG-CCTTAATG": [
+                ">KT835356.1"
+            ],
+            "AGGAAGTGGGCCTTAACG": [
+                ">LC123748.1"
+            ]
+        }
+    ],
+    "130": [
+        {
+            "GGAAGTGG-CCTTAATGG": [
+                ">KT835356.1"
+            ],
+            "GGAAGTGGGCCTTAACGG": [
+                ">LC123748.1"
+            ]
+        },
+        {
+            "GGAAGTGG-CCTTAATGG": [
+                ">KT835356.1"
+            ],
+            "GGAAGTGGGCCTTAACGG": [
+                ">LC123748.1"
+            ]
+        }
+    ],
+    "131": [
+        {
+            "GAAGTGG-CCTTAATGGC": [
+                ">KT835356.1"
+            ],
+            "GAAGTGGGCCTTAATGGT": [
+                ">AB099563.1"
+            ]
+        },
+        {
+            "GAAGTGG-CCTTAATGGC": [
+                ">KT835356.1"
+            ],
+            "GAAGTGGGCCTTAATGGT": [
+                ">AB099563.1"
+            ]
+        }
+    ],
+    "132": [
+        {
+            "AAGTGGGCCTTAATGGTG": [
+                ">AB099563.1"
+            ],
+            "AAGTGG-CCTTAATGGCG": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "AAGTGGGCCTTAATGGTG": [
+                ">AB099563.1"
+            ],
+            "AAGTGG-CCTTAATGGCG": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "133": [
+        {
+            "AGTGGGCCTTAATGGTGA": [
+                ">AB099563.1"
+            ],
+            "AGTGG-CCTTAATGGCGA": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "AGTGGGCCTTAATGGTGA": [
+                ">AB099563.1"
+            ],
+            "AGTGG-CCTTAATGGCGA": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "134": [
+        {},
+        {
+            "GTGG-CCTTAATGGCGAT": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "135": [
+        {},
+        {
+            "TGG-CCTTAATGGCGATG": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "136": [
+        {},
+        {
+            "GG-CCTTAATGGCGATGA": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "137": [
+        {},
+        {
+            "G-CCTTAATGGCGATGAA": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "138": [
+        {},
+        {}
+    ],
+    "139": [
+        {},
+        {}
+    ],
+    "140": [
+        {},
+        {}
+    ],
+    "141": [
+        {},
+        {}
+    ],
+    "142": [
+        {},
+        {}
+    ],
+    "143": [
+        {
+            "AATGGCGATGAAATGT-G": [
+                ">KT835356.1"
+            ]
+        },
+        {}
+    ],
+    "144": [
+        {
+            "ATGGCGATGAAATGT-GA": [
+                ">KT835356.1"
+            ]
+        },
+        {}
+    ],
+    "145": [
+        {},
+        {}
+    ],
+    "146": [
+        {},
+        {}
+    ],
+    "147": [
+        {},
+        {}
+    ],
+    "148": [
+        {},
+        {}
+    ],
+    "149": [
+        {},
+        {}
+    ],
+    "150": [
+        {},
+        {}
+    ],
+    "151": [
+        {},
+        {}
+    ],
+    "152": [
+        {},
+        {}
+    ],
+    "153": [
+        {},
+        {}
+    ],
+    "154": [
+        {},
+        {}
+    ],
+    "155": [
+        {},
+        {}
+    ],
+    "156": [
+        {
+            "TGT-GATCCTGGAAAATG": [
+                ">KT835356.1"
+            ],
+            "TGTTGATCCTGGAAAACG": [
+                ">AB099573.1"
+            ]
+        },
+        {
+            "TGT-GATCCTGGAAAATG": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "157": [
+        {
+            "GTTGATCCTGGAAAACGG": [
+                ">AB099573.1"
+            ],
+            "GT-GATCCTGGAAAATGG": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "GT-GATCCTGGAAAATGG": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "158": [
+        {
+            "TTGATCTTGGAAAATAGC": [
+                ">KM507556.1"
+            ],
+            "TTGATCCTGGAAAATGGA": [
+                ">AB981430.1"
+            ]
+        },
+        {
+            "T-GATCCTGGAAAATGGC": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "159": [
+        {
+            "TGATCCTGGAAAATGGAA": [
+                ">AB981430.1"
+            ]
+        },
+        {}
+    ],
+    "160": [
+        {
+            "GATCCTGGAAAATGGAAT": [
+                ">AB981430.1"
+            ]
+        },
+        {}
+    ],
+    "161": [
+        {},
+        {}
+    ],
+    "162": [
+        {},
+        {}
+    ],
+    "163": [
+        {},
+        {
+            "CTTGGAAAATAGCATAGC": [
+                ">KM507556.1"
+            ]
+        }
+    ],
+    "164": [
+        {},
+        {}
+    ],
+    "165": [
+        {},
+        {}
+    ],
+    "166": [
+        {},
+        {}
+    ],
+    "167": [
+        {},
+        {}
+    ],
+    "169": [
+        {},
+        {}
+    ],
+    "170": [
+        {
+            "AATGGAATAGCAATTGAA": [
+                ">AB981430.1"
+            ]
+        },
+        {
+            "AATGGAATAGCAATTGAA": [
+                ">AB981430.1"
+            ]
+        }
+    ],
+    "171": [
+        {
+            "ATGGAATAGCAATTGAAA": [
+                ">AB981430.1"
+            ]
+        },
+        {
+            "ATGGAATAGCAATTGAAA": [
+                ">AB981430.1"
+            ]
+        }
+    ],
+    "172": [
+        {
+            "TGGAATAGCAATTGAAAA": [
+                ">AB981430.1"
+            ]
+        },
+        {
+            "TGGAATAGCAATTGAAAA": [
+                ">AB981430.1"
+            ]
+        }
+    ],
+    "173": [
+        {
+            "GGAATAGCAATTGAAAAA": [
+                ">AB981430.1"
+            ]
+        },
+        {
+            "GGAATAGCAATTGAAAAA": [
+                ">AB981430.1"
+            ]
+        }
+    ],
+    "174": [
+        {},
+        {}
+    ],
+    "175": [
+        {},
+        {}
+    ],
+    "176": [
+        {},
+        {}
+    ],
+    "177": [
+        {},
+        {}
+    ],
+    "178": [
+        {},
+        {}
+    ],
+    "179": [
+        {},
+        {}
+    ],
+    "180": [
+        {},
+        {}
+    ],
+    "181": [
+        {},
+        {}
+    ],
+    "182": [
+        {},
+        {}
+    ],
+    "183": [
+        {},
+        {}
+    ],
+    "184": [
+        {},
+        {}
+    ],
+    "185": [
+        {},
+        {}
+    ],
+    "186": [
+        {},
+        {}
+    ],
+    "187": [
+        {},
+        {}
+    ],
+    "188": [
+        {},
+        {}
+    ],
+    "189": [
+        {},
+        {}
+    ],
+    "190": [
+        {},
+        {}
+    ],
+    "191": [
+        {},
+        {}
+    ],
+    "192": [
+        {},
+        {}
+    ],
+    "193": [
+        {},
+        {}
+    ],
+    "194": [
+        {},
+        {}
+    ],
+    "195": [
+        {},
+        {}
+    ],
+    "196": [
+        {},
+        {}
+    ],
+    "197": [
+        {},
+        {}
+    ],
+    "198": [
+        {},
+        {}
+    ],
+    "199": [
+        {},
+        {}
+    ],
+    "200": [
+        {},
+        {}
+    ],
+    "201": [
+        {},
+        {}
+    ],
+    "202": [
+        {},
+        {}
+    ],
+    "203": [
+        {},
+        {}
+    ],
+    "204": [
+        {
+            "GTTGTGATGGAAAGTAAA": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        },
+        {}
+    ],
+    "205": [
+        {
+            "TTGTGATGGAAAGTAAAG": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        },
+        {
+            "TTGTGATGGAAAGTAAAG": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        }
+    ],
+    "206": [
+        {
+            "TGTGATGGAAAGTAAAGC": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "TGTGATGGAAAATATCAA": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ]
+        },
+        {
+            "TGTGATGGAAAGTAAAGC": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        }
+    ],
+    "207": [
+        {
+            "GTGATGGAAAGTAAAGCC": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "GTGATGGAAAATATCAAG": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ]
+        },
+        {
+            "GTGATGGAAAGTAAAGCC": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        }
+    ],
+    "208": [
+        {
+            "TGATGGAAAGTAAAGCCG": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "TGATGGAAAATATCAAGA": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ]
+        },
+        {
+            "TGATGGAAAGTAAAGCCG": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        }
+    ],
+    "209": [
+        {
+            "GATGGAAAGTAAAGCCGC": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "GATGGAAAATATCAAGAA": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ],
+            "GATGGAAAGTAAAGCCGT": [
+                ">D30703.1"
+            ]
+        },
+        {
+            "GATGGAAAGTAAAGCCGC": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "GATGGAAAATATCAAGAA": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ],
+            "GATGGAAAGTAAAGCCGT": [
+                ">D30703.1"
+            ]
+        }
+    ],
+    "210": [
+        {
+            "ATGGAAAGTAAAGCCGTT": [
+                ">D30703.1"
+            ],
+            "ATGGAAAGTAAAGCCGCT": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "ATGGAAAATATCAAGAAA": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ]
+        },
+        {
+            "ATGGAAAGTAAAGCCGTT": [
+                ">D30703.1"
+            ],
+            "ATGGAAAGTAAAGCCGCT": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "ATGGAAAATATCAAGAAA": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ]
+        }
+    ],
+    "211": [
+        {
+            "TGGAAAGTAAAGCCGCTC": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "TGGAAAATATCAAGAAAA": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ],
+            "TGGAAAGTAAAGCCGTTC": [
+                ">D30703.1"
+            ]
+        },
+        {
+            "TGGAAAGTAAAGCCGCTC": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "TGGAAAATATCAAGAAAA": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ],
+            "TGGAAAGTAAAGCCGTTC": [
+                ">D30703.1"
+            ]
+        }
+    ],
+    "212": [
+        {
+            "GGAAAATATCAAGAAAAA": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ],
+            "GGAAAGTAAAGCCGTTCA": [
+                ">D30703.1"
+            ],
+            "GGAAAGTAAAGCCGCTCA": [
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        },
+        {
+            "GGAAAATATCAAGAAAAA": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ],
+            "GGAAAGTAAAGCCGTTCA": [
+                ">D30703.1"
+            ],
+            "GGAAAGTAAAGCCGCTCA": [
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        }
+    ],
+    "213": [
+        {
+            "GAAAATATCAAGAAAAAA": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ],
+            "GAAAGTAAAGCCGTTCAA": [
+                ">D30703.1"
+            ],
+            "GAAAGTATCAAGAAAAAC": [
+                ">MH828690.1"
+            ],
+            "GAAAGTAAAGCCGCTCAA": [
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        },
+        {
+            "GAAAATATCAAGAAAAAA": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ],
+            "GAAAGTAAAGCCGTTCAA": [
+                ">D30703.1"
+            ],
+            "GAAAGTATCAAGAAAAAC": [
+                ">MH828690.1"
+            ],
+            "GAAAGTAAAGCCGCTCAA": [
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        }
+    ],
+    "214": [
+        {
+            "AAAGTAAAGCCGTTCAAG": [
+                ">D30703.1"
+            ],
+            "AAAGTAAAGCCGCTCAAG": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "AAAGTATCAAGAAAAACG": [
+                ">MH828690.1"
+            ],
+            "AAAATATCAAGAAAAAAG": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ]
+        },
+        {
+            "AAAGTAAAGCCGTTCAAG": [
+                ">D30703.1"
+            ],
+            "AAAGTAAAGCCGCTCAAG": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "AAAGTATCAAGAAAAACG": [
+                ">MH828690.1"
+            ],
+            "AAAATATCAAGAAAAAAG": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ]
+        }
+    ],
+    "215": [
+        {
+            "AAGTAAAGCCGTTCAAGA": [
+                ">D30703.1"
+            ],
+            "AAATATCAAGAAAAAAGG": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ],
+            "AAGTATCAAGAAAAAAGA": [
+                ">MH348117.1",
+                ">LC123726.1"
+            ],
+            "AAGTAAAGCCGCTCAAGA": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "AAGTATCAAGAAAAACGG": [
+                ">MH828690.1"
+            ]
+        },
+        {
+            "AAGTAAAGCCGTTCAAGA": [
+                ">D30703.1"
+            ],
+            "AAATATCAAGAAAAAAGG": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ],
+            "AAGTATCAAGAAAAAAGA": [
+                ">MH348117.1",
+                ">LC123726.1"
+            ],
+            "AAGTAAAGCCGCTCAAGA": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "AAGTATCAAGAAAAACGG": [
+                ">MH828690.1"
+            ]
+        }
+    ],
+    "216": [
+        {
+            "AGTATCAAGAAAAACGGG": [
+                ">MH828690.1"
+            ],
+            "AGTAAAGCCGCTCAAGAA": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "AATATCAAGAAAAAAGGG": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ],
+            "AGTAAAGCCGTTCAAGAA": [
+                ">D30703.1"
+            ],
+            "AGTATCAAGAAAAAAGAG": [
+                ">MH348117.1",
+                ">LC123726.1"
+            ]
+        },
+        {
+            "AGTATCAAGAAAAACGGG": [
+                ">MH828690.1"
+            ],
+            "AGTAAAGCCGCTCAAGAA": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "AATATCAAGAAAAAAGGG": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ],
+            "AGTAAAGCCGTTCAAGAA": [
+                ">D30703.1"
+            ],
+            "AGTATCAAGAAAAAAGAG": [
+                ">MH348117.1",
+                ">LC123726.1"
+            ]
+        }
+    ],
+    "217": [
+        {
+            "GTAAAGCCGCTCAAGAAT": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "GTATCAAGAAAAACGGGA": [
+                ">MH828690.1"
+            ],
+            "GTAAAGCCGTTCAAGAAT": [
+                ">D30703.1"
+            ],
+            "ATATCAAGAAAAAAGGGA": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ],
+            "GTATCAAGAAAAAAGAGA": [
+                ">MH348117.1",
+                ">LC123726.1"
+            ]
+        },
+        {
+            "GTAAAGCCGCTCAAGAAT": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "GTATCAAGAAAAACGGGA": [
+                ">MH828690.1"
+            ],
+            "GTAAAGCCGTTCAAGAAT": [
+                ">D30703.1"
+            ],
+            "ATATCAAGAAAAAAGGGA": [
+                ">KM507549.1",
+                ">MZ330904.1"
+            ],
+            "GTATCAAGAAAAAAGAGA": [
+                ">MH348117.1",
+                ">LC123726.1"
+            ]
+        }
+    ],
+    "218": [
+        {
+            "TATCAAGAAAAAAGGGAG": [
+                ">MK480602.1"
+            ],
+            "TAAAGCCGCTCAAGAATT": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "TATCAAGAAAAACGGGAA": [
+                ">MH828690.1"
+            ],
+            "TATCAAGAAAAAAGAGAA": [
+                ">MH348117.1",
+                ">LC123726.1"
+            ],
+            "TAAAGCCGTTCAAGAATT": [
+                ">D30703.1"
+            ]
+        },
+        {
+            "TATCAAGAAAAAAGGGAG": [
+                ">MK480602.1"
+            ],
+            "TAAAGCCGCTCAAGAATT": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "TATCAAGAAAAACGGGAA": [
+                ">MH828690.1"
+            ],
+            "TATCAAGAAAAAAGAGAA": [
+                ">MH348117.1",
+                ">LC123726.1"
+            ],
+            "TAAAGCCGTTCAAGAATT": [
+                ">D30703.1"
+            ]
+        }
+    ],
+    "219": [
+        {
+            "AAAGCCGCTCAAGAATTG": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "ATCAAGAAAAAAGAGAAA": [
+                ">MH348117.1",
+                ">LC123726.1"
+            ],
+            "ATCAAGAAAAACGGGAAA": [
+                ">MH828690.1"
+            ],
+            "ATCAAGAAAAAAGGGAGA": [
+                ">MK480602.1"
+            ],
+            "AAAGCCGTTCAAGAATTG": [
+                ">D30703.1"
+            ]
+        },
+        {
+            "AAAGCCGCTCAAGAATTG": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "ATCAAGAAAAAAGAGAAA": [
+                ">MH348117.1",
+                ">LC123726.1"
+            ],
+            "ATCAAGAAAAACGGGAAA": [
+                ">MH828690.1"
+            ],
+            "ATCAAGAAAAAAGGGAGA": [
+                ">MK480602.1"
+            ],
+            "AAAGCCGTTCAAGAATTG": [
+                ">D30703.1"
+            ]
+        }
+    ],
+    "220": [
+        {
+            "TCAAGAAAAAAGGGAGAA": [
+                ">MK480602.1"
+            ],
+            "TCAAGAGAAGAGGGAAAA": [
+                ">M17700.1"
+            ],
+            "TCAAGAGAAAAGGGAAAA": [
+                ">AB981437.1"
+            ],
+            "TCAAGAAAAAAGAGAAAA": [
+                ">MH348117.1",
+                ">LC123726.1"
+            ]
+        },
+        {
+            "TCAAGAAAAAAGGGAGAA": [
+                ">MK480602.1"
+            ],
+            "TCAAGAGAAGAGGGAAAA": [
+                ">M17700.1"
+            ],
+            "TCAAGAGAAAAGGGAAAA": [
+                ">AB981437.1"
+            ],
+            "TCAAGAAAAAAGAGAAAA": [
+                ">MH348117.1",
+                ">LC123726.1"
+            ]
+        }
+    ],
+    "233": [
+        {
+            "GAAAAGAAAGAAAGGGAA": [
+                ">LC123753.1"
+            ],
+            "GAGAAGAAAGCAAGAGAT": [
+                ">MK480602.1"
+            ]
+        },
+        {
+            "GAAAAGAAAGAAAGGGAA": [
+                ">LC123753.1"
+            ],
+            "GAGAAGAAAGCAAGAGAT": [
+                ">MK480602.1"
+            ]
+        }
+    ],
+    "234": [
+        {
+            "AGAAGAAAGCAAGAGATG": [
+                ">MK480602.1"
+            ],
+            "AAAAGAAAGAAAGGGAAG": [
+                ">LC123753.1"
+            ]
+        },
+        {
+            "AGAAGAAAGCAAGAGATG": [
+                ">MK480602.1"
+            ],
+            "AAAAGAAAGAAAGGGAAG": [
+                ">LC123753.1"
+            ]
+        }
+    ],
+    "235": [
+        {
+            "GAAGAAAGCAAGAGATGC": [
+                ">MK480602.1"
+            ],
+            "AAAGAAAGAAAGGGAAGC": [
+                ">LC123753.1"
+            ]
+        },
+        {
+            "GAAGAAAGCAAGAGATGC": [
+                ">MK480602.1"
+            ],
+            "AAAGAAAGAAAGGGAAGC": [
+                ">LC123753.1"
+            ]
+        }
+    ],
+    "236": [
+        {},
+        {}
+    ],
+    "237": [
+        {
+            "AGAAAGCAAGAGACGC-C": [
+                ">KT835356.1"
+            ]
+        },
+        {}
+    ],
+    "238": [
+        {
+            "GAAAGCAAGAGACGC-CA": [
+                ">KT835356.1"
+            ]
+        },
+        {}
+    ],
+    "239": [
+        {},
+        {}
+    ],
+    "240": [
+        {},
+        {
+            "AAGAAAGGGAAGCCCAAA": [
+                ">LC123753.1"
+            ]
+        }
+    ],
+    "241": [
+        {},
+        {
+            "AGCGAGAGAAGCCCAAAG": [
+                ">AB684311.1",
+                ">JX947862.1",
+                ">AB064483.1"
+            ],
+            "AGAAAGGGAAGCCCAAAG": [
+                ">LC123753.1"
+            ]
+        }
+    ],
+    "242": [
+        {
+            "GCAAGAGACGCCCAAAGG": [
+                ">LC123814.1"
+            ]
+        },
+        {
+            "GCGAGAGAAGCCCAAAGA": [
+                ">AB684311.1",
+                ">JX947862.1",
+                ">AB064483.1"
+            ],
+            "GAAAGGGAAGCCCAAAGA": [
+                ">LC123753.1"
+            ]
+        }
+    ],
+    "243": [
+        {
+            "CGAGAGAAGCCCAAAGAG": [
+                ">AB684311.1",
+                ">JX947862.1",
+                ">AB064483.1"
+            ],
+            "CAAGAGACGCCCAAAGGG": [
+                ">LC123814.1"
+            ],
+            "AAAGGGAAGCCCAAAGAG": [
+                ">LC123753.1"
+            ],
+            "CAAGAGAAGCTCAAAGAT": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "CAAGAGACGC-CAAAGAG": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "CGAGAGAAGCCCAAAGAG": [
+                ">AB684311.1",
+                ">JX947862.1",
+                ">AB064483.1"
+            ],
+            "CAAGAGACGCCCAAAGGG": [
+                ">LC123814.1"
+            ],
+            "AAAGGGAAGCCCAAAGAG": [
+                ">LC123753.1"
+            ],
+            "CAAGAGAAGCTCAAAGAT": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "CAAGAGACGC-CAAAGAG": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "244": [
+        {
+            "AAGAGACGCCCAAAGGGC": [
+                ">LC123814.1"
+            ],
+            "AAGAGAAGCTCAAAGATC": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "AAGAGAAGCCCAAAGATC": [
+                ">LC123728.1",
+                ">AB064467.1",
+                ">LC123729.1",
+                ">LC123730.1"
+            ]
+        },
+        {
+            "AAGAGACGC-CAAAGAGC": [
+                ">KT835356.1"
+            ],
+            "GAGAGAAGCCCAAAGAGC": [
+                ">AB684311.1",
+                ">JX947862.1",
+                ">AB064483.1"
+            ],
+            "AAGAGACGCCCAAAGGGC": [
+                ">LC123814.1"
+            ],
+            "AAGAGAAGCTCAAAGATC": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "AAGAGAAGCCCAAAGATC": [
+                ">LC123728.1",
+                ">AB064467.1",
+                ">LC123729.1",
+                ">LC123730.1"
+            ]
+        }
+    ],
+    "245": [
+        {
+            "AGAGAAGCTCAAAGATCG": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "AGAGACGC-CAAAGAGCG": [
+                ">KT835356.1"
+            ],
+            "AGAGACGCCCAAAGAGTG": [
+                ">MH348117.1",
+                ">LC123771.1"
+            ],
+            "AGAGAAGCCCAAAGATCA": [
+                ">LC123728.1",
+                ">AB064467.1",
+                ">LC123729.1",
+                ">LC123730.1"
+            ],
+            "AGAGACGCCCAAAGGGCG": [
+                ">LC123814.1"
+            ]
+        },
+        {
+            "AGAGAAGCTCAAAGATCG": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "AGAGACGC-CAAAGAGCG": [
+                ">KT835356.1"
+            ],
+            "AGAGACGCCCAAAGAGTG": [
+                ">MH348117.1",
+                ">LC123771.1"
+            ],
+            "AGAGAAGCCCAAAGATCA": [
+                ">LC123728.1",
+                ">AB064467.1",
+                ">LC123729.1",
+                ">LC123730.1"
+            ],
+            "AGAGACGCCCAAAGGGCG": [
+                ">LC123814.1"
+            ]
+        }
+    ],
+    "246": [
+        {
+            "GAGACGCCCAAAGAGTGG": [
+                ">MH348117.1",
+                ">LC123771.1"
+            ],
+            "GAGACGC-CAAAGAGCGG": [
+                ">KT835356.1"
+            ],
+            "GAGAAGCCCAAAGATCAG": [
+                ">LC123728.1",
+                ">AB064467.1",
+                ">LC123729.1",
+                ">LC123730.1"
+            ],
+            "GAGACGCCCAAAGGGCGG": [
+                ">LC123814.1"
+            ],
+            "GAGAAGCTCAAAGATCGG": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ]
+        },
+        {
+            "GAGACGCCCAAAGAGTGG": [
+                ">MH348117.1",
+                ">LC123771.1"
+            ],
+            "GAGACGC-CAAAGAGCGG": [
+                ">KT835356.1"
+            ],
+            "GAGAAGCCCAAAGATCAG": [
+                ">LC123728.1",
+                ">AB064467.1",
+                ">LC123729.1",
+                ">LC123730.1"
+            ],
+            "GAGACGCCCAAAGGGCGG": [
+                ">LC123814.1"
+            ],
+            "GAGAAGCTCAAAGATCGG": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ]
+        }
+    ],
+    "247": [
+        {
+            "AGAAGCCCAAAGATCAGA": [
+                ">LC123728.1",
+                ">AB064467.1",
+                ">LC123729.1",
+                ">LC123730.1"
+            ],
+            "AGACGC-CAAAGAGCGGA": [
+                ">KT835356.1"
+            ],
+            "AGAAGCTCAAAGATCGGA": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "AGACGCCCAAAGAGTGGA": [
+                ">MH348117.1",
+                ">LC123771.1"
+            ],
+            "AGACGCCCAAAGGGCGGA": [
+                ">LC123814.1"
+            ]
+        },
+        {
+            "AGAAGCCCAAAGATCAGA": [
+                ">LC123728.1",
+                ">AB064467.1",
+                ">LC123729.1",
+                ">LC123730.1"
+            ],
+            "AGACGC-CAAAGAGCGGA": [
+                ">KT835356.1"
+            ],
+            "AGAAGCTCAAAGATCGGA": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "AGACGCCCAAAGAGTGGA": [
+                ">MH348117.1",
+                ">LC123771.1"
+            ],
+            "AGACGCCCAAAGGGCGGA": [
+                ">LC123814.1"
+            ]
+        }
+    ],
+    "248": [
+        {
+            "GAAGCTCAAAGATCGGAC": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "GACGCCCAAAGAGCGGAT": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ]
+        },
+        {
+            "GAAGCTCAAAGATCGGAC": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ]
+        }
+    ],
+    "249": [
+        {
+            "ACGCCCAAAGAGCGGATA": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "AAGCTCAAAGATCGGACA": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ]
+        },
+        {
+            "AAGCTCAAAGATCGGACA": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ]
+        }
+    ],
+    "250": [
+        {
+            "AGCTCAAAGATCGGACAG": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "CGCCCAAAGAGCGGATAG": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ]
+        },
+        {
+            "AGCTCAAAGATCGGACAG": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "CGC-CAAAGAGCGGACAG": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "251": [
+        {
+            "GCCCAAAGAGCGGATAGT": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "GCCCAAAGGGCGGACAGT": [
+                ">LC123814.1"
+            ],
+            "GCTCAAAGATCGGACAGC": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "GC-CAAAGAGCGGACAGT": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "GCCCAAAGAGCGGATAGT": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "GCCCAAAGGGCGGACAGT": [
+                ">LC123814.1"
+            ],
+            "GCTCAAAGATCGGACAGC": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "GC-CAAAGAGCGGACAGT": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "252": [
+        {
+            "CCCAAAGGGCGGACAGTA": [
+                ">LC123814.1"
+            ],
+            "CTCAAAGATCGGACAGCA": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "CCCAAAGAGCGGATAGTA": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "C-CAAAGAGCGGACAGTA": [
+                ">KT835356.1"
+            ]
+        },
+        {
+            "CCCAAAGGGCGGACAGTA": [
+                ">LC123814.1"
+            ],
+            "CTCAAAGATCGGACAGCA": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "CCCAAAGAGCGGATAGTA": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "C-CAAAGAGCGGACAGTA": [
+                ">KT835356.1"
+            ]
+        }
+    ],
+    "253": [
+        {
+            "TCAAAGATCGGACAGCAA": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "CCAAAGAGCGGATAGTAA": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "CCAAAGGGCGGACAGTAA": [
+                ">LC123814.1"
+            ]
+        },
+        {
+            "TCAAAGATCGGACAGCAA": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "CCAAAGAGCGGATAGTAA": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "CCAAAGGGCGGACAGTAA": [
+                ">LC123814.1"
+            ]
+        }
+    ],
+    "254": [
+        {
+            "CAAAGGGCGGACAGTAAC": [
+                ">LC123814.1"
+            ],
+            "CAAAGAGCGGATAGTAAC": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "CAAAGAGCGGACAGTAAT": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ]
+        },
+        {
+            "CAAAGGGCGGACAGTAAC": [
+                ">LC123814.1"
+            ],
+            "CAAAGAGCGGATAGTAAC": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "CAAAGAGCGGACAGTAAT": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ]
+        }
+    ],
+    "255": [
+        {
+            "AAAGAGCGGATAGTAACT": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "AAAGGGCGGACAGTAACT": [
+                ">LC123814.1"
+            ],
+            "AAAGAGCGGACAGTAATT": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ]
+        },
+        {
+            "AAAGAGCGGATAGTAACT": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "AAAGGGCGGACAGTAACT": [
+                ">LC123814.1"
+            ],
+            "AAAGAGCGGACAGTAATT": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ]
+        }
+    ],
+    "256": [
+        {
+            "AAGGGCGGACAGTAACTT": [
+                ">LC123814.1"
+            ],
+            "AAGAGCGGATAGTAACTT": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "AAGAGCGGACAGTAATTT": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ]
+        },
+        {
+            "AAGGGCGGACAGTAACTT": [
+                ">LC123814.1"
+            ],
+            "AAGAGCGGATAGTAACTT": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "AAGAGCGGACAGTAATTT": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ]
+        }
+    ],
+    "257": [
+        {
+            "AGAGCAGACAGCAACTTT": [
+                ">LC123724.1",
+                ">AB981430.1"
+            ],
+            "AGAGCGGATAGTAACTTC": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "AGGGCGGACAGTAACTTC": [
+                ">LC123814.1"
+            ],
+            "AGAGCGGACAGTAATTTC": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ]
+        },
+        {
+            "AGAGCAGACAGCAACTTT": [
+                ">LC123724.1",
+                ">AB981430.1"
+            ],
+            "AGAGCGGATAGTAACTTC": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "AGGGCGGACAGTAACTTC": [
+                ">LC123814.1"
+            ],
+            "AGAGCGGACAGTAATTTC": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ]
+        }
+    ],
+    "258": [
+        {
+            "GAGCGGATAGTAACTTCA": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "GAGTGGACAGTAACTTCG": [
+                ">MH348117.1"
+            ],
+            "GAGCGGACAGTAATTTCA": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ],
+            "GGGCGGACAGTAACTTCA": [
+                ">LC123814.1"
+            ],
+            "GAGCAGACAGCAACTTTA": [
+                ">LC123724.1",
+                ">AB981430.1"
+            ]
+        },
+        {
+            "GAGCGGATAGTAACTTCA": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "GAGTGGACAGTAACTTCG": [
+                ">MH348117.1"
+            ],
+            "GAGCGGACAGTAATTTCA": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ],
+            "GGGCGGACAGTAACTTCA": [
+                ">LC123814.1"
+            ],
+            "GAGCAGACAGCAACTTTA": [
+                ">LC123724.1",
+                ">AB981430.1"
+            ]
+        }
+    ],
+    "259": [
+        {
+            "AGCAGACAGCAACTTTAA": [
+                ">LC123724.1",
+                ">AB981430.1"
+            ],
+            "ATCAGACAGCAACTTCAA": [
+                ">LC123728.1",
+                ">AB064467.1",
+                ">LC123729.1",
+                ">LC123730.1"
+            ],
+            "ATCGGACAGCAACTTCAA": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "AGCGGATAGTAACTTCAA": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "AGTGGACAGTAACTTCGA": [
+                ">MH348117.1"
+            ],
+            "AGCGGACAGTAATTTCAA": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ]
+        },
+        {
+            "AGCAGACAGCAACTTTAA": [
+                ">LC123724.1",
+                ">AB981430.1"
+            ],
+            "ATCAGACAGCAACTTCAA": [
+                ">LC123728.1",
+                ">AB064467.1",
+                ">LC123729.1",
+                ">LC123730.1"
+            ],
+            "ATCGGACAGCAACTTCAA": [
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "AGCGGATAGTAACTTCAA": [
+                ">MK050100.1",
+                ">MZ330904.1"
+            ],
+            "AGTGGACAGTAACTTCGA": [
+                ">MH348117.1"
+            ],
+            "AGCGGACAGTAATTTCAA": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ]
+        }
+    ],
+    "260": [
+        {
+            "GCGGATAGTAACTTCAAT": [
+                ">MK050100.1"
+            ],
+            "GCGGATAGTAACTTCAAC": [
+                ">MZ330904.1"
+            ],
+            "GCAGACAGCAACTTTAAT": [
+                ">LC123724.1"
+            ],
+            "GCAGACAGCAACTTTAAC": [
+                ">AB981430.1"
+            ],
+            "GCGGACAGTAATTTCAAC": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ],
+            "GTGGACAGTAACTTCGAC": [
+                ">MH348117.1"
+            ],
+            "GTGGACAGTAACTTCAAC": [
+                ">LC123771.1"
+            ]
+        },
+        {
+            "GCGGATAGTAACTTCAAT": [
+                ">MK050100.1"
+            ],
+            "GCGGATAGTAACTTCAAC": [
+                ">MZ330904.1"
+            ],
+            "GCAGACAGCAACTTTAAT": [
+                ">LC123724.1"
+            ],
+            "GCAGACAGCAACTTTAAC": [
+                ">AB981430.1"
+            ],
+            "GCGGACAGTAATTTCAAC": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ],
+            "GTGGACAGTAACTTCGAC": [
+                ">MH348117.1"
+            ],
+            "GTGGACAGTAACTTCAAC": [
+                ">LC123771.1"
+            ]
+        }
+    ],
+    "261": [
+        {},
+        {
+            "CGGACAGTAATTTCAACG": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ],
+            "CAGACAGCAACTTTAATG": [
+                ">LC123724.1"
+            ],
+            "CGGATAGTAACTTCAATG": [
+                ">MK050100.1"
+            ],
+            "CGGATAGTAACTTCAACG": [
+                ">MZ330904.1"
+            ],
+            "TGGACAGTAACTTCGACG": [
+                ">MH348117.1"
+            ],
+            "CAGACAGCAACTTTAACG": [
+                ">AB981430.1"
+            ]
+        }
+    ],
+    "262": [
+        {
+            "AGACAGCAACTTTAATGC": [
+                ">LC123724.1"
+            ],
+            "GGATAGTAACTTCAATGC": [
+                ">MK050100.1"
+            ],
+            "GGACAGTAATTTCAACGC": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ],
+            "AGACAGCAACTTTAACGC": [
+                ">AB981430.1"
+            ],
+            "GGATAGTAACTTCAACGC": [
+                ">MZ330904.1"
+            ]
+        },
+        {
+            "AGACAGCAACTTTAATGC": [
+                ">LC123724.1"
+            ],
+            "GGATAGTAACTTCAATGC": [
+                ">MK050100.1"
+            ],
+            "GGACAGTAATTTCAACGC": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ],
+            "AGACAGCAACTTTAACGC": [
+                ">AB981430.1"
+            ],
+            "GGATAGTAACTTCAACGC": [
+                ">MZ330904.1"
+            ]
+        }
+    ],
+    "263": [
+        {
+            "GACAGTAATTTCAACGCA": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ],
+            "GATAGTAACTTCAATGCA": [
+                ">MK050100.1"
+            ],
+            "GATAGTAACTTCAACGCA": [
+                ">MZ330904.1"
+            ],
+            "GACAGCAACTTTAATGCA": [
+                ">LC123724.1"
+            ],
+            "GACAGCAACTTTAACGCA": [
+                ">AB981430.1"
+            ]
+        },
+        {
+            "GACAGTAATTTCAACGCA": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ],
+            "GATAGTAACTTCAATGCA": [
+                ">MK050100.1"
+            ],
+            "GATAGTAACTTCAACGCA": [
+                ">MZ330904.1"
+            ],
+            "GACAGCAACTTTAATGCA": [
+                ">LC123724.1"
+            ],
+            "GACAGCAACTTTAACGCA": [
+                ">AB981430.1"
+            ]
+        }
+    ],
+    "264": [
+        {
+            "ATAGTAACTTCAATGCAG": [
+                ">MK050100.1"
+            ],
+            "ACAGTAATTTCAACGCAG": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ],
+            "ATAGTAACTTCAACGCAG": [
+                ">MZ330904.1"
+            ],
+            "ACAGCAACTTTAATGCAG": [
+                ">LC123724.1"
+            ],
+            "ACAGCAACTTTAACGCAG": [
+                ">AB981430.1"
+            ]
+        },
+        {
+            "ATAGTAACTTCAATGCAG": [
+                ">MK050100.1"
+            ],
+            "ACAGTAATTTCAACGCAG": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ],
+            "ATAGTAACTTCAACGCAG": [
+                ">MZ330904.1"
+            ],
+            "ACAGCAACTTTAATGCAG": [
+                ">LC123724.1"
+            ],
+            "ACAGCAACTTTAACGCAG": [
+                ">AB981430.1"
+            ]
+        }
+    ],
+    "265": [
+        {
+            "TAGTAACTTCAACGCAGA": [
+                ">MZ330904.1"
+            ],
+            "CAGCAACTTTAATGCAGA": [
+                ">LC123724.1"
+            ],
+            "CAGTAATTTCAACGCAGA": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ],
+            "TAGTAACTTCAATGCAGA": [
+                ">MK050100.1"
+            ],
+            "CAGCAACTTTAACGCAGA": [
+                ">AB981430.1"
+            ]
+        },
+        {
+            "TAGTAACTTCAACGCAGA": [
+                ">MZ330904.1"
+            ],
+            "CAGCAACTTTAATGCAGA": [
+                ">LC123724.1"
+            ],
+            "CAGTAATTTCAACGCAGA": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ],
+            "TAGTAACTTCAATGCAGA": [
+                ">MK050100.1"
+            ],
+            "CAGCAACTTTAACGCAGA": [
+                ">AB981430.1"
+            ]
+        }
+    ],
+    "266": [
+        {},
+        {}
+    ],
+    "267": [
+        {},
+        {}
+    ],
+    "268": [
+        {},
+        {
+            "TAATTTCAACGCAGATTC": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ]
+        }
+    ],
+    "269": [
+        {},
+        {
+            "AATTTCAACGCAGATTCC": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ]
+        }
+    ],
+    "270": [
+        {},
+        {
+            "ATTTCAACGCAGATTCCA": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ]
+        }
+    ],
+    "271": [
+        {},
+        {
+            "CTTTAACGCAGACTCCAT": [
+                ">AB981430.1"
+            ],
+            "CTTTAATGCAGATTCCAT": [
+                ">LC123724.1"
+            ],
+            "TTTCAACGCAGATTCCAT": [
+                ">KM507549.1",
+                ">KT232086.1"
+            ]
+        }
+    ],
+    "272": [
+        {},
+        {
+            "TTCGACGCAGATTCCATT": [
+                ">MH348117.1"
+            ],
+            "TTTAATGCAGATTCCATT": [
+                ">LC123724.1"
+            ],
+            "TTTAACGCAGACTCCATT": [
+                ">AB981430.1"
+            ]
+        }
+    ],
+    "273": [
+        {},
+        {
+            "TTAATGCAGATTCCATTG": [
+                ">LC123724.1"
+            ],
+            "TTAACGCAGACTCCATTG": [
+                ">AB981430.1"
+            ],
+            "TCGACGCAGATTCCATTG": [
+                ">MH348117.1"
+            ]
+        }
+    ],
+    "274": [
+        {},
+        {
+            "TAATGCAGATTCCATTGG": [
+                ">LC123724.1"
+            ],
+            "CGACGCAGATTCCATTGG": [
+                ">MH348117.1"
+            ],
+            "TAACGCAGACTCCATTGG": [
+                ">AB981430.1"
+            ]
+        }
+    ],
+    "275": [
+        {
+            "AACGCAGATTCCATTGGC": [
+                ">AB099571.1"
+            ],
+            "GACGCAGATTCCATTGGG": [
+                ">MH348117.1"
+            ],
+            "AATGCGGATTCCATTGGG": [
+                ">LC123728.1",
+                ">AB064467.1",
+                ">LC123729.1",
+                ">LC123730.1"
+            ]
+        },
+        {
+            "GACGCAGATTCCATTGGG": [
+                ">MH348117.1"
+            ]
+        }
+    ],
+    "276": [
+        {
+            "ATGCGGATTCCATTGGGA": [
+                ">LC123728.1",
+                ">AB064467.1",
+                ">LC123729.1",
+                ">LC123730.1"
+            ],
+            "ACGCAGATTCCATTGGCA": [
+                ">AB099571.1"
+            ]
+        },
+        {}
+    ],
+    "277": [
+        {
+            "TGCGGATTCCATTGGGAT": [
+                ">LC123728.1",
+                ">AB064467.1",
+                ">LC123729.1",
+                ">LC123730.1"
+            ],
+            "CGCAGATTCCATTGGCAT": [
+                ">AB099571.1"
+            ]
+        },
+        {
+            "TGCGGATTCCATTGGGAT": [
+                ">LC123728.1",
+                ">AB064467.1",
+                ">LC123729.1",
+                ">LC123730.1"
+            ]
+        }
+    ],
+    "279": [
+        {},
+        {
+            "CAGATTCCATTGGCATCA": [
+                ">AB099571.1"
+            ]
+        }
+    ],
+    "280": [
+        {},
+        {
+            "AGATTCCATTGGCATCAG": [
+                ">AB099571.1"
+            ]
+        }
+    ],
+    "281": [
+        {
+            "GATTCCATTGGCATCAGA": [
+                ">AB099571.1"
+            ]
+        },
+        {}
+    ],
+    "282": [
+        {
+            "ATTCCATTGGCATCAGAC": [
+                ">AB099571.1"
+            ]
+        },
+        {}
+    ],
+    "283": [
+        {
+            "TTCCATTGGCATCAGACT": [
+                ">AB099571.1"
+            ]
+        },
+        {}
+    ],
+    "284": [
+        {
+            "TCCATTGGGATCAGACTG": [
+                ">LC123807.1"
+            ]
+        },
+        {}
+    ],
+    "285": [
+        {
+            "CCATTGGGATCAGACTGG": [
+                ">LC123807.1"
+            ]
+        },
+        {}
+    ],
+    "288": [
+        {},
+        {}
+    ],
+    "289": [
+        {},
+        {}
+    ],
+    "290": [
+        {},
+        {}
+    ],
+    "291": [
+        {},
+        {}
+    ],
+    "292": [
+        {},
+        {}
+    ],
+    "293": [
+        {},
+        {}
+    ],
+    "294": [
+        {},
+        {}
+    ],
+    "295": [
+        {},
+        {}
+    ],
+    "296": [
+        {},
+        {}
+    ],
+    "297": [
+        {},
+        {}
+    ],
+    "298": [
+        {},
+        {}
+    ],
+    "299": [
+        {},
+        {}
+    ],
+    "300": [
+        {},
+        {}
+    ],
+    "301": [
+        {},
+        {}
+    ],
+    "302": [
+        {},
+        {}
+    ],
+    "303": [
+        {},
+        {}
+    ],
+    "304": [
+        {},
+        {}
+    ],
+    "305": [
+        {},
+        {}
+    ],
+    "306": [
+        {
+            "AAAGAGCTGGTTCAGGAG": [
+                ">KM507556.1"
+            ]
+        },
+        {}
+    ],
+    "307": [
+        {
+            "AAGAGCTGGTTCAGGAGC": [
+                ">KM507556.1"
+            ]
+        },
+        {}
+    ],
+    "309": [
+        {},
+        {}
+    ],
+    "310": [
+        {},
+        {}
+    ],
+    "311": [
+        {},
+        {}
+    ],
+    "312": [
+        {},
+        {}
+    ],
+    "313": [
+        {},
+        {}
+    ],
+    "316": [
+        {
+            "TTCAGGCACCAATATTAC": [
+                ">MH348117.1"
+            ],
+            "TTCAGGAGCCAATATAAA": [
+                ">KM507556.1"
+            ]
+        },
+        {
+            "TTCAGGAGCCAATATAAA": [
+                ">KM507556.1"
+            ]
+        }
+    ],
+    "317": [
+        {
+            "TCAGGAGCCAATATAAAC": [
+                ">KM507556.1"
+            ],
+            "TCAGGCACTAATATAAGC": [
+                ">AB064467.1"
+            ]
+        },
+        {
+            "TCAGGAGCCAATATAAAC": [
+                ">KM507556.1"
+            ]
+        }
+    ],
+    "318": [
+        {
+            "CAGGCACTAATATAAGCT": [
+                ">AB064467.1"
+            ],
+            "CAGGAGCCAATATAAACT": [
+                ">KM507556.1"
+            ]
+        },
+        {
+            "CAGGAGCCAATATAAACT": [
+                ">KM507556.1"
+            ]
+        }
+    ],
+    "319": [
+        {
+            "AGGAGCCAATATAAACTA": [
+                ">KM507556.1"
+            ]
+        },
+        {
+            "AGGAGCCAATATAAACTA": [
+                ">KM507556.1"
+            ]
+        }
+    ],
+    "320": [
+        {
+            "GGAGCCAATATAAACTAC": [
+                ">KM507556.1"
+            ]
+        },
+        {
+            "GGAGCCAATATAAACTAC": [
+                ">KM507556.1"
+            ],
+            "GGTACCAATATAACCTAC": [
+                ">LC123762.1"
+            ]
+        }
+    ],
+    "321": [
+        {
+            "GAGCCAATATAAACTACC": [
+                ">KM507556.1"
+            ]
+        },
+        {
+            "GTACCAATATAACCTACC": [
+                ">LC123762.1"
+            ],
+            "GAGCCAATATAAACTACC": [
+                ">KM507556.1"
+            ]
+        }
+    ],
+    "322": [
+        {
+            "AGCCAATATAAACTACCA": [
+                ">KM507556.1"
+            ]
+        },
+        {
+            "TACCAATATAACCTACCA": [
+                ">LC123762.1"
+            ],
+            "AGCCAATATAAACTACCA": [
+                ">KM507556.1"
+            ]
+        }
+    ],
+    "323": [
+        {},
+        {
+            "GCCAATATAAACTACCAT": [
+                ">KM507556.1"
+            ]
+        }
+    ],
+    "324": [
+        {
+            "CCAATATAACCTATCATG": [
+                ">MZ330890.1"
+            ],
+            "CTAATATAACCTATCATG": [
+                ">LC123730.1"
+            ],
+            "CCAATATAACTTACCATG": [
+                ">LC123724.1"
+            ],
+            "CCAATATTACCTACCATT": [
+                ">MH348117.1"
+            ],
+            "CTAATATAAGCTACCATG": [
+                ">AB064467.1"
+            ],
+            "CCAATATAAACTACCATG": [
+                ">KM507556.1"
+            ]
+        },
+        {}
+    ],
+    "325": [
+        {
+            "CAATATAACCTATCATGC": [
+                ">MZ330890.1"
+            ],
+            "CAATATAAACTACCATGC": [
+                ">KM507556.1"
+            ],
+            "TAATATAACCTATCATGC": [
+                ">LC123730.1"
+            ],
+            "TAATATAAGCTACCATGC": [
+                ">AB064467.1"
+            ],
+            "CAATATAACTTACCATGC": [
+                ">LC123724.1"
+            ],
+            "CAATATTACCTACCATTC": [
+                ">MH348117.1"
+            ]
+        },
+        {}
+    ],
+    "326": [
+        {
+            "AATATAAGCTACCATGCA": [
+                ">AB064467.1"
+            ],
+            "AATATAAACTACCATGCA": [
+                ">KM507556.1"
+            ],
+            "AATATTACCTACCATTCA": [
+                ">MH348117.1"
+            ],
+            "AATATAACCTATCATGCA": [
+                ">MZ330890.1",
+                ">LC123730.1"
+            ]
+        },
+        {}
+    ],
+    "327": [
+        {},
+        {}
+    ],
+    "328": [
+        {},
+        {
+            "TATTACCTACCATTCAGT": [
+                ">MH348117.1"
+            ]
+        }
+    ],
+    "329": [
+        {},
+        {
+            "ATTACCTACCATTCAGTT": [
+                ">MH348117.1"
+            ]
+        }
+    ],
+    "330": [
+        {},
+        {
+            "TAAGCTACCATGCAGTTG": [
+                ">AB064467.1"
+            ],
+            "TAAACTACCATGCAGTTG": [
+                ">KM507556.1"
+            ],
+            "TTACCTACCATTCAGTTG": [
+                ">MH348117.1"
+            ]
+        }
+    ],
+    "331": [
+        {},
+        {
+            "AAACTACCATGCAGTTGT": [
+                ">KM507556.1"
+            ],
+            "AAGCTACCATGCAGTTGT": [
+                ">AB064467.1"
+            ],
+            "TACCTACCATTCAGTTGT": [
+                ">MH348117.1"
+            ]
+        }
+    ],
+    "332": [
+        {},
+        {
+            "AACTACCATGCAGTTGTT": [
+                ">KM507556.1"
+            ],
+            "AGCTACCATGCAGTTGTT": [
+                ">AB064467.1"
+            ]
+        }
+    ],
+    "333": [
+        {
+            "CCTATCATGCAGTTGTTG": [
+                ">MZ330890.1",
+                ">LC123730.1"
+            ],
+            "CTTACCATGCAGTTGTTG": [
+                ">LC123724.1"
+            ]
+        },
+        {
+            "CCTATCATGCAGTTGTTG": [
+                ">MZ330890.1",
+                ">LC123730.1"
+            ],
+            "CTTACCATGCAGTTGTTG": [
+                ">LC123724.1"
+            ],
+            "ACTACCATGCAGTTGTTG": [
+                ">KM507556.1"
+            ]
+        }
+    ],
+    "334": [
+        {},
+        {
+            "TTACCATGCAGTTGTTGA": [
+                ">LC123724.1"
+            ]
+        }
+    ],
+    "335": [
+        {
+            "TACCATGCAGTTGTTGAG": [
+                ">AB099565.1",
+                ">LC123754.1"
+            ]
+        },
+        {}
+    ],
+    "336": [
+        {
+            "ACCATGCAGTTGTTGAGT": [
+                ">AB099565.1"
+            ],
+            "ACCATGCAGTTGTTGAGC": [
+                ">LC123754.1"
+            ]
+        },
+        {
+            "ATCATGCAGTTGTTGAAT": [
+                ">MZ330890.1",
+                ">LC123730.1"
+            ]
+        }
+    ],
+    "337": [
+        {
+            "CCATGCAGTTGTTGAGCT": [
+                ">LC123754.1"
+            ],
+            "CCATGCAGTTGTTGAGTT": [
+                ">AB099565.1"
+            ]
+        },
+        {
+            "TCATGCAGTTGTTGAATT": [
+                ">MZ330890.1",
+                ">LC123730.1"
+            ]
+        }
+    ],
+    "338": [
+        {
+            "CATGCAGTTGTTGAGTTA": [
+                ">AB099565.1"
+            ],
+            "CATGCAGTTGTTGAGCTG": [
+                ">LC123754.1"
+            ],
+            "CACGCAGTTGTTGAACTG": [
+                ">AB064482.1",
+                ">AB064476.1",
+                ">AB064477.1",
+                ">LC123751.1",
+                ">AB684311.1",
+                ">JX947862.1",
+                ">AB064483.1"
+            ]
+        },
+        {
+            "CATGCAGTTGTTGAGTTA": [
+                ">AB099565.1"
+            ],
+            "CATGCAGTTGTTGAGCTG": [
+                ">LC123754.1"
+            ],
+            "CACGCAGTTGTTGAACTG": [
+                ">AB064482.1",
+                ">AB064476.1",
+                ">AB064477.1",
+                ">LC123751.1",
+                ">AB684311.1",
+                ">JX947862.1",
+                ">AB064483.1"
+            ]
+        }
+    ],
+    "339": [
+        {
+            "ACGCAGTTGTTGAACTGA": [
+                ">AB064482.1",
+                ">AB064476.1",
+                ">AB064477.1",
+                ">LC123751.1",
+                ">AB684311.1",
+                ">JX947862.1",
+                ">AB064483.1"
+            ],
+            "ATGCAGTTGTTGAGTTAA": [
+                ">AB099565.1"
+            ],
+            "ATGCAGTTGTTGAGCTGA": [
+                ">LC123754.1"
+            ]
+        },
+        {
+            "ACGCAGTTGTTGAACTGA": [
+                ">AB064482.1",
+                ">AB064476.1",
+                ">AB064477.1",
+                ">LC123751.1",
+                ">AB684311.1",
+                ">JX947862.1",
+                ">AB064483.1"
+            ],
+            "ATGCAGTTGTTGAGTTAA": [
+                ">AB099565.1"
+            ],
+            "ATGCAGTTGTTGAGCTGA": [
+                ">LC123754.1"
+            ]
+        }
+    ],
+    "340": [
+        {
+            "TTCAGTTGTTGAATTAAC": [
+                ">MH348117.1"
+            ],
+            "TGCAGTTGTTGAGTTAAC": [
+                ">AB099565.1"
+            ],
+            "TGCAGTTGTTGAGCTGAC": [
+                ">LC123754.1"
+            ]
+        },
+        {
+            "TTCAGTTGTTGAATTAAC": [
+                ">MH348117.1"
+            ]
+        }
+    ],
+    "341": [
+        {
+            "TCAGTTGTTGAATTAACA": [
+                ">MH348117.1"
+            ],
+            "TGTTGTGATGGAAAGTAA": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        },
+        {
+            "TCAGTTGTTGAATTAACA": [
+                ">MH348117.1"
+            ],
+            "TGTTGTGATGGAAAGTAA": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        }
+    ],
+    "342": [
+        {
+            "GTTGTGATGGAAAGTAAA": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        },
+        {
+            "GTTGTGATGGAAAGTAAA": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        }
+    ],
+    "343": [
+        {
+            "AGTTGTTGAATTAACAAA": [
+                ">LC123803.1",
+                ">LC123813.1"
+            ],
+            "AGTTGTCGAACTGACAAA": [
+                ">LC123753.1"
+            ],
+            "TTGTGATGGAAAGTAAAG": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        },
+        {
+            "AGTTGTTGAATTAACAAA": [
+                ">LC123803.1",
+                ">LC123813.1"
+            ],
+            "AGTTGTCGAACTGACAAA": [
+                ">LC123753.1"
+            ],
+            "TTGTGATGGAAAGTAAAG": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        }
+    ],
+    "344": [
+        {
+            "GTTGTTGAATTAACAAGT": [
+                ">LC123774.1"
+            ],
+            "GTTGTTGAATTAACAAAC": [
+                ">LC123803.1",
+                ">LC123813.1"
+            ],
+            "TGTGATGGAAAGTAAAGC": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "GTTGTCGAACTGACAAAC": [
+                ">LC123753.1"
+            ]
+        },
+        {
+            "GTTGTTGAATTAACAAGT": [
+                ">LC123774.1"
+            ],
+            "GTTGTTGAATTAACAAAC": [
+                ">LC123803.1",
+                ">LC123813.1"
+            ],
+            "TGTGATGGAAAGTAAAGC": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "GTTGTCGAACTGACAAAC": [
+                ">LC123753.1"
+            ]
+        }
+    ],
+    "345": [
+        {
+            "GTGATGGAAAGTAAAGCC": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "TTGTTGAATTAACAAGTC": [
+                ">LC123774.1"
+            ],
+            "TTGTCGAACTGACAAACC": [
+                ">LC123753.1"
+            ],
+            "TTGTTGAATTAACAAACC": [
+                ">LC123803.1",
+                ">LC123813.1"
+            ]
+        },
+        {
+            "GTGATGGAAAGTAAAGCC": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "TTGTTGAATTAACAAGTC": [
+                ">LC123774.1"
+            ],
+            "TTGTCGAACTGACAAACC": [
+                ">LC123753.1"
+            ],
+            "TTGTTGAATTAACAAACC": [
+                ">LC123803.1",
+                ">LC123813.1"
+            ]
+        }
+    ],
+    "346": [
+        {
+            "TGATGGAAAGTAAAGCCG": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "TGTCGAACTGACAAACCG": [
+                ">LC123753.1"
+            ],
+            "TGTTGAATTAACAAGTCG": [
+                ">LC123774.1"
+            ],
+            "TGTTGAATTAACAAACCG": [
+                ">LC123803.1",
+                ">LC123813.1"
+            ]
+        },
+        {
+            "TGATGGAAAGTAAAGCCG": [
+                ">D30703.1",
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "TGTCGAACTGACAAACCG": [
+                ">LC123753.1"
+            ],
+            "TGTTGAATTAACAAGTCG": [
+                ">LC123774.1"
+            ],
+            "TGTTGAATTAACAAACCG": [
+                ">LC123803.1",
+                ">LC123813.1"
+            ]
+        }
+    ],
+    "347": [
+        {
+            "GATGGAAAGTAAAGCCGC": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "GATGGAAAGTAAAGCCGT": [
+                ">D30703.1"
+            ]
+        },
+        {
+            "GATGGAAAGTAAAGCCGC": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "GATGGAAAGTAAAGCCGT": [
+                ">D30703.1"
+            ]
+        }
+    ],
+    "348": [
+        {
+            "ATGGAAAGTAAAGCCGTT": [
+                ">D30703.1"
+            ],
+            "TTGAATTAACAAGCCGTT": [
+                ">D78440.1",
+                ">LC123744.1",
+                ">LC123734.1",
+                ">LC123737.1",
+                ">LC123741.1",
+                ">LC123750.1"
+            ],
+            "ATGGAAAGTAAAGCCGCT": [
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        },
+        {
+            "ATGGAAAGTAAAGCCGTT": [
+                ">D30703.1"
+            ],
+            "ATGGAAAGTAAAGCCGCT": [
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        }
+    ],
+    "349": [
+        {
+            "TGGAAAGTAAAGCCGCTC": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "TGGAAAGTAAAGCCGTTC": [
+                ">D30703.1"
+            ]
+        },
+        {
+            "TGAGCTGACAAGCCGCTC": [
+                ">LC123754.1"
+            ],
+            "TGAGTTAACAAGCCGCTC": [
+                ">AB099565.1"
+            ],
+            "TGGAAAGTAAAGCCGCTC": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "TGGAAAGTAAAGCCGTTC": [
+                ">D30703.1"
+            ]
+        }
+    ],
+    "350": [
+        {
+            "GAACTGACAAACCGCTCA": [
+                ">LC123753.1"
+            ],
+            "GAATTAACAAACCGCTCA": [
+                ">LC123803.1",
+                ">LC123813.1"
+            ],
+            "GAATTAACAAGTCGCTCA": [
+                ">LC123774.1"
+            ],
+            "GGAAAGTAAAGCCGTTCA": [
+                ">D30703.1"
+            ],
+            "GGAAAGTAAAGCCGCTCA": [
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        },
+        {
+            "GAACTGACAAACCGCTCA": [
+                ">LC123753.1"
+            ],
+            "GAATTAACAAACCGCTCA": [
+                ">LC123803.1",
+                ">LC123813.1"
+            ],
+            "GAATTAACAAGTCGCTCA": [
+                ">LC123774.1"
+            ],
+            "GGAAAGTAAAGCCGTTCA": [
+                ">D30703.1"
+            ],
+            "GGAAAGTAAAGCCGCTCA": [
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        }
+    ],
+    "351": [
+        {
+            "AATTAACAAACCGCTCAA": [
+                ">LC123803.1",
+                ">LC123813.1"
+            ],
+            "AGCTGACAAGCCGCTCAA": [
+                ">LC123754.1"
+            ],
+            "GAAAGTAAAGCCGTTCAA": [
+                ">D30703.1"
+            ],
+            "GAAAGTAAAGCCGCTCAA": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "AACTGACAAACCGCTCAA": [
+                ">LC123753.1"
+            ],
+            "AATTAACAAGTCGCTCAA": [
+                ">LC123774.1"
+            ],
+            "AGTTAACAAGCCGCTCAA": [
+                ">AB099565.1"
+            ]
+        },
+        {
+            "AATTAACAAACCGCTCAA": [
+                ">LC123803.1",
+                ">LC123813.1"
+            ],
+            "AGCTGACAAGCCGCTCAA": [
+                ">LC123754.1"
+            ],
+            "GAAAGTAAAGCCGTTCAA": [
+                ">D30703.1"
+            ],
+            "GAAAGTAAAGCCGCTCAA": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "AACTGACAAACCGCTCAA": [
+                ">LC123753.1"
+            ],
+            "AATTAACAAGTCGCTCAA": [
+                ">LC123774.1"
+            ],
+            "AGTTAACAAGCCGCTCAA": [
+                ">AB099565.1"
+            ]
+        }
+    ],
+    "352": [
+        {
+            "AAAGTAAAGCCGTTCAAG": [
+                ">D30703.1"
+            ],
+            "AAAGTAAAGCCGCTCAAG": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "ATTAACAAACCGCTCAAG": [
+                ">LC123803.1",
+                ">LC123813.1"
+            ],
+            "ATTAACAAGTCGCTCAAG": [
+                ">LC123774.1"
+            ],
+            "ACTGACAAACCGCTCAAG": [
+                ">LC123753.1"
+            ]
+        },
+        {
+            "AAAGTAAAGCCGTTCAAG": [
+                ">D30703.1"
+            ],
+            "AAAGTAAAGCCGCTCAAG": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "ATTAACAAACCGCTCAAG": [
+                ">LC123803.1",
+                ">LC123813.1"
+            ],
+            "ATTAACAAGTCGCTCAAG": [
+                ">LC123774.1"
+            ],
+            "ACTGACAAACCGCTCAAG": [
+                ">LC123753.1"
+            ]
+        }
+    ],
+    "353": [
+        {
+            "AAGTAAAGCCGTTCAAGA": [
+                ">D30703.1"
+            ],
+            "TTAACAAGCCGCTCAAGG": [
+                ">AB086753.1"
+            ],
+            "AAGTAAAGCCGCTCAAGA": [
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        },
+        {
+            "AAGTAAAGCCGTTCAAGA": [
+                ">D30703.1"
+            ],
+            "TTAACAAGCCGCTCAAGG": [
+                ">AB086753.1"
+            ],
+            "TTAACAAACCGCTCAAGA": [
+                ">LC123803.1",
+                ">LC123813.1"
+            ],
+            "CTGACAAACCGCTCAAGA": [
+                ">LC123753.1"
+            ],
+            "AAGTAAAGCCGCTCAAGA": [
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        }
+    ],
+    "354": [
+        {
+            "TAACAAGCCGCTCAAGGA": [
+                ">AB086753.1"
+            ],
+            "AGTAAAGCCGTTCAAGAA": [
+                ">D30703.1"
+            ],
+            "AGTAAAGCCGCTCAAGAA": [
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        },
+        {
+            "TAACAAGCCGCTCAAGGA": [
+                ">AB086753.1"
+            ],
+            "AGTAAAGCCGTTCAAGAA": [
+                ">D30703.1"
+            ],
+            "AGTAAAGCCGCTCAAGAA": [
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        }
+    ],
+    "355": [
+        {
+            "AACAAGCCGCTCAAGGAT": [
+                ">AB086753.1"
+            ],
+            "GTAAAGCCGTTCAAGAAT": [
+                ">D30703.1"
+            ],
+            "GTAAAGCCGCTCAAGAAT": [
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        },
+        {
+            "AACAAGCCGCTCAAGGAT": [
+                ">AB086753.1"
+            ],
+            "GTAAAGCCGTTCAAGAAT": [
+                ">D30703.1"
+            ],
+            "GTAAAGCCGCTCAAGAAT": [
+                ">D30708.1",
+                ">D30693.1"
+            ]
+        }
+    ],
+    "356": [
+        {
+            "TAAAGCCGCTCAAGAATT": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "TAAAGCCGTTCAAGAATT": [
+                ">D30703.1"
+            ]
+        },
+        {
+            "TAAAGCCGCTCAAGAATT": [
+                ">D30708.1",
+                ">D30693.1"
+            ],
+            "TAAAGCCGTTCAAGAATT": [
+                ">D30703.1"
+            ]
+        }
+    ],
+    "357": [
+        {},
+        {
+            "CAAGCCGCTCAAGGATTG": [
+                ">AB086753.1"
+            ]
+        }
+    ],
+    "358": [
+        {},
+        {}
+    ],
+    "359": [
+        {},
+        {}
+    ],
+    "360": [
+        {},
+        {}
+    ],
+    "361": [
+        {},
+        {}
+    ],
+    "362": [
+        {},
+        {}
+    ],
+    "363": [
+        {},
+        {}
+    ],
+    "364": [
+        {},
+        {}
+    ],
+    "365": [
+        {},
+        {}
+    ],
+    "366": [
+        {},
+        {}
+    ],
+    "367": [
+        {},
+        {}
+    ],
+    "368": [
+        {},
+        {}
+    ],
+    "369": [
+        {},
+        {}
+    ],
+    "370": [
+        {},
+        {}
+    ],
+    "371": [
+        {},
+        {}
+    ],
+    "372": [
+        {},
+        {}
+    ],
+    "373": [
+        {},
+        {}
+    ],
+    "374": [
+        {},
+        {}
+    ],
+    "379": [
+        {},
+        {}
+    ],
+    "380": [
+        {},
+        {}
+    ],
+    "381": [
+        {},
+        {}
+    ],
+    "382": [
+        {},
+        {}
+    ],
+    "383": [
+        {},
+        {}
+    ],
+    "384": [
+        {},
+        {}
+    ],
+    "385": [
+        {},
+        {}
+    ],
+    "386": [
+        {},
+        {}
+    ],
+    "387": [
+        {},
+        {}
+    ],
+    "388": [
+        {},
+        {}
+    ],
+    "389": [
+        {},
+        {}
+    ],
+    "390": [
+        {},
+        {}
+    ],
+    "391": [
+        {},
+        {}
+    ],
+    "392": [
+        {},
+        {}
+    ],
+    "393": [
+        {},
+        {}
+    ],
+    "394": [
+        {},
+        {}
+    ],
+    "395": [
+        {},
+        {}
+    ],
+    "396": [
+        {},
+        {}
+    ],
+    "397": [
+        {
+            "GGGAAATGAACTAAACAA": [
+                ">MH348117.1"
+            ]
+        },
+        {}
+    ],
+    "398": [
+        {
+            "GGAAATGAACTAAACAAA": [
+                ">MH348117.1"
+            ]
+        },
+        {}
+    ],
+    "399": [
+        {
+            "GAAATGAACTAAACAAAG": [
+                ">MH348117.1"
+            ]
+        },
+        {}
+    ],
+    "400": [
+        {},
+        {}
+    ],
+    "401": [
+        {
+            "AATGAACTAAACAGAGCC": [
+                ">AB086756.1"
+            ]
+        },
+        {}
+    ],
+    "402": [
+        {
+            "ATGAACTAAACAGAGCCA": [
+                ">AB086756.1"
+            ]
+        },
+        {}
+    ],
+    "403": [
+        {
+            "TGAACTAAACAGAGCCAA": [
+                ">AB086756.1"
+            ]
+        },
+        {
+            "TGAACTAAACAAAGCAAA": [
+                ">MH348117.1"
+            ],
+            "TGAACTAAACAGAGCCAA": [
+                ">AB086756.1"
+            ]
+        }
+    ],
+    "404": [
+        {},
+        {
+            "GAACTAAACAGAGCCAAA": [
+                ">AB086756.1"
+            ],
+            "GAACTAAACAAAGCAAAA": [
+                ">MH348117.1"
+            ]
+        }
+    ],
+    "405": [
+        {
+            "AACTAAACAAAGCAAAAG": [
+                ">MH348117.1"
+            ]
+        },
+        {
+            "AACTAAACAAAGCAAAAG": [
+                ">MH348117.1"
+            ],
+            "AACTAAACAGAGCCAAAA": [
+                ">AB086756.1"
+            ]
+        }
+    ],
+    "406": [
+        {
+            "ACTAAACAAAGCAAAAGT": [
+                ">MH348117.1"
+            ]
+        },
+        {
+            "ACTAAACAAAGCAAAAGT": [
+                ">MH348117.1"
+            ],
+            "ACTAAACAGAGCCAAAAT": [
+                ">AB086756.1"
+            ]
+        }
+    ],
+    "407": [
+        {
+            "CTAAACAAAGCAAAAGTT": [
+                ">MH348117.1"
+            ]
+        },
+        {}
+    ],
+    "408": [
+        {},
+        {}
+    ],
+    "409": [
+        {},
+        {}
+    ],
+    "410": [
+        {},
+        {}
+    ],
+    "411": [
+        {},
+        {}
+    ],
+    "412": [
+        {},
+        {}
+    ],
+    "413": [
+        {},
+        {}
+    ],
+    "414": [
+        {},
+        {}
+    ],
+    "415": [
+        {},
+        {}
+    ],
+    "416": [
+        {},
+        {}
+    ],
+    "417": [
+        {},
+        {}
+    ],
+    "418": [
+        {},
+        {}
+    ],
+    "419": [
+        {},
+        {}
+    ],
+    "420": [
+        {},
+        {}
+    ],
+    "421": [
+        {},
+        {}
+    ],
+    "422": [
+        {
+            "GTTGCAGGAAAAAGACTC": [
+                ">MH348117.1"
+            ]
+        },
+        {
+            "GTTGCAGGAAAAAGACTC": [
+                ">MH348117.1"
+            ]
+        }
+    ],
+    "423": [
+        {},
+        {}
+    ],
+    "424": [
+        {},
+        {}
+    ],
+    "425": [
+        {
+            "GCAGGAAAAAGACTCGGT": [
+                ">LC123774.1"
+            ]
+        },
+        {
+            "GCAGGAAAAAGACTCGGT": [
+                ">LC123774.1"
+            ]
+        }
+    ],
+    "426": [
+        {
+            "CAGGAAAAAGACTCGGTT": [
+                ">LC123774.1"
+            ]
+        },
+        {
+            "CAGGAAAAAGACTCGGTT": [
+                ">LC123774.1"
+            ]
+        }
+    ],
+    "427": [
+        {
+            "AGGAAAAAGACTCGGTTT": [
+                ">LC123774.1"
+            ]
+        },
+        {
+            "AGGAAAAAGACTCGGTTT": [
+                ">LC123774.1"
+            ]
+        }
+    ],
+    "428": [
+        {
+            "GGAAAAAGACTCGGTTTC": [
+                ">LC123774.1"
+            ],
+            "GGAAAAAGGCTCGGCTTT": [
+                ">AB099573.1"
+            ],
+            "GGAAAAAGACTCGGCTTT": [
+                ">D78444.1"
+            ]
+        },
+        {
+            "GGAAAAAGACTCGGTTTC": [
+                ">LC123774.1"
+            ],
+            "GGAAAAAGGCTCGGCTTT": [
+                ">AB099573.1"
+            ],
+            "GGAAAAAGACTCGGCTTT": [
+                ">D78444.1"
+            ]
+        }
+    ],
+    "429": [
+        {
+            "GAAAAAGACTCGGTTTCT": [
+                ">LC123774.1"
+            ],
+            "GAAAAAGACTCGGCTTTT": [
+                ">D78444.1"
+            ],
+            "GAAAAAGGCTCGGCTTTT": [
+                ">AB099573.1"
+            ]
+        },
+        {
+            "GAAAAAGACTCGGTTTCT": [
+                ">LC123774.1"
+            ],
+            "GAAAAAGACTCGGCTTTT": [
+                ">D78444.1"
+            ],
+            "GAAAAAGGCTCGGCTTTT": [
+                ">AB099573.1"
+            ]
+        }
+    ],
+    "430": [
+        {
+            "AAAAAGACTCGGTTTCTC": [
+                ">LC123774.1"
+            ],
+            "AAAAAGGCTCGGCTTTTC": [
+                ">AB099573.1"
+            ],
+            "AAAAAGACTCGGCTTCTT": [
+                ">KT835355.1"
+            ],
+            "AAAAAGACTCGGCTTTTC": [
+                ">D78444.1"
+            ]
+        },
+        {
+            "AAAAAGACTCGGTTTCTC": [
+                ">LC123774.1"
+            ],
+            "AAAAAGGCTCGGCTTTTC": [
+                ">AB099573.1"
+            ],
+            "AAAAAGACTCGGCTTCTT": [
+                ">KT835355.1"
+            ],
+            "AAAAAGACTCGGCTTTTC": [
+                ">D78444.1"
+            ]
+        }
+    ],
+    "431": [
+        {
+            "AAAAGACTCGGCTTTTCT": [
+                ">D78444.1"
+            ],
+            "AAAAGACTCGGTTTCTCT": [
+                ">LC123774.1"
+            ],
+            "AAAAGGCTCGGCTTTTCA": [
+                ">AB099573.1"
+            ],
+            "AAAAGACTCGGCTTCTTT": [
+                ">KT835355.1"
+            ]
+        },
+        {
+            "AAAAGACTCGGCTTTTCT": [
+                ">D78444.1"
+            ],
+            "AAAAGACTCGGTTTCTCT": [
+                ">LC123774.1"
+            ],
+            "AAAAGGCTCGGCTTTTCA": [
+                ">AB099573.1"
+            ],
+            "AAAAGACTCGGCTTCTTT": [
+                ">KT835355.1"
+            ]
+        }
+    ],
+    "432": [
+        {
+            "AAAGACTCGGCTTTTCTG": [
+                ">D78444.1"
+            ],
+            "AAAGGCTCGGCTTTTCAG": [
+                ">AB099573.1"
+            ],
+            "AAAGACTCGGTTTCTCTG": [
+                ">LC123774.1"
+            ],
+            "AAAGACTCGGCTTCTTTG": [
+                ">KT835355.1"
+            ]
+        },
+        {
+            "AAAGACTCGGCTTTTCTG": [
+                ">D78444.1"
+            ],
+            "AAAGGCTCGGCTTTTCAG": [
+                ">AB099573.1"
+            ],
+            "AAAGACTCGGTTTCTCTG": [
+                ">LC123774.1"
+            ],
+            "AAAGACTCGGCTTCTTTG": [
+                ">KT835355.1"
+            ]
+        }
+    ],
+    "433": [
+        {
+            "AAGACTCGGCTTTTCTGC": [
+                ">D78444.1"
+            ],
+            "AAGACTCGGCTTCTTTGC": [
+                ">KT835355.1"
+            ],
+            "AAGACTCGGTTTCTCTGC": [
+                ">LC123774.1"
+            ],
+            "AAGGCTCGGCTTTTCAGC": [
+                ">AB099573.1"
+            ]
+        },
+        {
+            "AAGACTCGGCTTTTCTGC": [
+                ">D78444.1"
+            ],
+            "AAGACTCGGCTTCTTTGC": [
+                ">KT835355.1"
+            ],
+            "AAGACTCGGTTTCTCTGC": [
+                ">LC123774.1"
+            ],
+            "AAGGCTCGGCTTTTCAGC": [
+                ">AB099573.1"
+            ]
+        }
+    ],
+    "434": [
+        {
+            "AGACTCGGCTTCTCTGCG": [
+                ">LC123805.1",
+                ">LC123801.1"
+            ]
+        },
+        {
+            "AGGCTCGGCTTTTCAGCA": [
+                ">AB099573.1"
+            ],
+            "AGACTCGGCTTCTCTGCG": [
+                ">LC123805.1",
+                ">LC123801.1"
+            ],
+            "AGACTCGGTTTCTCTGCA": [
+                ">LC123774.1"
+            ],
+            "AGACTCGGCTTCTTTGCA": [
+                ">KT835355.1"
+            ],
+            "AGACTCGGCTTTTCTGCA": [
+                ">D78444.1"
+            ]
+        }
+    ],
+    "435": [
+        {
+            "GACTCGGCTTCTCTGCGC": [
+                ">LC123805.1",
+                ">LC123801.1"
+            ]
+        },
+        {
+            "GGCTCGGCTTTTCAGCAC": [
+                ">AB099573.1"
+            ],
+            "GACTCGGTTTCTCTGCAC": [
+                ">LC123774.1"
+            ],
+            "GACTCGGCTTCTCTGCGC": [
+                ">LC123805.1",
+                ">LC123801.1"
+            ],
+            "GACTCGGCTTTTCTGCAC": [
+                ">D78444.1"
+            ],
+            "GACTCGGCTTCTTTGCAC": [
+                ">KT835355.1"
+            ]
+        }
+    ],
+    "436": [
+        {
+            "ACTCGGCTTCTCTGCGCT": [
+                ">LC123805.1",
+                ">LC123801.1"
+            ]
+        },
+        {
+            "ACTCGGCTTTTCTGCACT": [
+                ">D78444.1"
+            ],
+            "ACTCGGCTTCTCTGCGCT": [
+                ">LC123805.1",
+                ">LC123801.1"
+            ],
+            "GCTCGGCTTTTCAGCACT": [
+                ">AB099573.1"
+            ],
+            "ACTCGGCTTCTTTGCACT": [
+                ">KT835355.1"
+            ],
+            "ACTCGGTTTCTCTGCACT": [
+                ">LC123774.1"
+            ]
+        }
+    ],
+    "437": [
+        {
+            "CTCGGCTTCTCTGCACTT": [
+                ">MK480595.1",
+                ">MK480581.1"
+            ]
+        },
+        {}
+    ],
+    "438": [
+        {
+            "TCGGCTTCTCTGCACTTT": [
+                ">MK480595.1",
+                ">MK480581.1"
+            ]
+        },
+        {}
+    ],
+    "439": [
+        {
+            "CGGCTTCTCTGCACTTTT": [
+                ">MK480595.1",
+                ">MK480581.1"
+            ]
+        },
+        {
+            "CGGTTTCTCTGCACTCTT": [
+                ">LC123774.1"
+            ]
+        }
+    ],
+    "440": [
+        {},
+        {
+            "GGTTTCTCTGCACTCTTC": [
+                ">LC123774.1"
+            ]
+        }
+    ],
+    "441": [
+        {
+            "GCTTCTCTGCACTCTTCT": [
+                ">MZ330953.1"
+            ]
+        },
+        {
+            "GTTTCTCTGCACTCTTCG": [
+                ">LC123774.1"
+            ]
+        }
+    ],
+    "442": [
+        {
+            "CTTCTCTGCACTCTTCTC": [
+                ">MZ330953.1"
+            ]
+        },
+        {
+            "TTTCTCTGCACTCTTCGC": [
+                ">LC123774.1"
+            ]
+        }
+    ],
+    "443": [
+        {
+            "TTCTCTGCACTCTTCTCT": [
+                ">MZ330953.1"
+            ]
+        },
+        {}
+    ],
+    "444": [
+        {},
+        {
+            "TCTTTGCACTCTTCGCTT": [
+                ">KT835355.1"
+            ]
+        }
+    ],
+    "445": [
+        {},
+        {
+            "CTTTGCACTCTTCGCTTC": [
+                ">KT835355.1"
+            ]
+        }
+    ],
+    "446": [
+        {
+            "TCTGCACTCTTTGCTTCG": [
+                ">LC123747.1"
+            ]
+        },
+        {
+            "TTTGCACTCTTCGCTTCT": [
+                ">KT835355.1"
+            ]
+        }
+    ],
+    "447": [
+        {
+            "CTGCACTCTTTGCTTCGA": [
+                ">LC123747.1"
+            ]
+        },
+        {}
+    ],
+    "448": [
+        {
+            "TGCACTCTTTGCTTCGAA": [
+                ">LC123747.1"
+            ]
+        },
+        {
+            "TGCGCTCTTCGCTTCTAA": [
+                ">LC123805.1"
+            ],
+            "TGCGCTCTTTGCTTCTAA": [
+                ">LC123801.1"
+            ]
+        }
+    ],
+    "449": [
+        {},
+        {
+            "GCGCTCTTCGCTTCTAAC": [
+                ">LC123805.1"
+            ],
+            "GCGCTCTTTGCTTCTAAT": [
+                ">LC123801.1"
+            ]
+        }
+    ],
+    "450": [
+        {},
+        {
+            "CTCTCTTCGCTTCTAACT": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ],
+            "CGCTCTTTGCTTCTAATT": [
+                ">LC123801.1"
+            ],
+            "CGCTCTTCGCTTCTAACT": [
+                ">LC123805.1"
+            ],
+            "CTCTCTTTGCTTCTAACT": [
+                ">LC123750.1"
+            ]
+        }
+    ],
+    "451": [
+        {},
+        {
+            "TCTCTTTGCTTCTAACTT": [
+                ">LC123750.1"
+            ],
+            "GCTCTTTGCTTCTAATTT": [
+                ">LC123801.1"
+            ],
+            "GCTCTTCGCTTCTAACTT": [
+                ">LC123805.1"
+            ],
+            "ACTTTTCGCTTCTAACTT": [
+                ">MK480595.1",
+                ">MK480581.1"
+            ],
+            "TCTCTTCGCTTCTAACTT": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ]
+        }
+    ],
+    "452": [
+        {
+            "CTCTTCTCTTCTAACTTG": [
+                ">MZ330953.1"
+            ],
+            "CTCTTCGCTTCCAATTTG": [
+                ">LC123803.1"
+            ],
+            "CTCTTCGCTTCCAACTTG": [
+                ">LC123813.1"
+            ],
+            "CTTTTCGCTTCTAACTTG": [
+                ">MK480595.1",
+                ">MK480581.1"
+            ],
+            "CTCTTTGCTTCCAACTTG": [
+                ">MH348117.1"
+            ],
+            "CTCTTTGCTTCGAATTTA": [
+                ">LC123747.1"
+            ],
+            "CTCTTCGCTTCCAACCTG": [
+                ">LC123766.1",
+                ">LC123761.1",
+                ">LC123762.1"
+            ]
+        },
+        {
+            "CTTTTCGCTTCTAACTTG": [
+                ">MK480595.1",
+                ">MK480581.1"
+            ]
+        }
+    ],
+    "453": [
+        {
+            "TCTTTGCTTCGAATTTAG": [
+                ">LC123747.1"
+            ],
+            "TTTTCGCTTCTAACTTGG": [
+                ">MK480595.1",
+                ">MK480581.1"
+            ],
+            "TCTTTGCTTCCAACTTGG": [
+                ">MH348117.1"
+            ],
+            "TCTTCTCTTCTAACTTGG": [
+                ">MZ330953.1"
+            ],
+            "TCTTCGCTTCCAACTTGG": [
+                ">LC123813.1"
+            ],
+            "TCTTCGCTTCCAATTTGG": [
+                ">LC123803.1"
+            ],
+            "TCTTCGCTTCCAACCTGG": [
+                ">LC123766.1",
+                ">LC123761.1",
+                ">LC123762.1"
+            ]
+        },
+        {
+            "TTTTCGCTTCTAACTTGG": [
+                ">MK480595.1",
+                ">MK480581.1"
+            ]
+        }
+    ],
+    "455": [
+        {
+            "TTCGCTTCCAATTTGGAG": [
+                ">LC123803.1"
+            ],
+            "TTTGCTTCCAACTTGGAG": [
+                ">MH348117.1"
+            ],
+            "TTCGCTTCTAACTTGGAG": [
+                ">LC123767.1"
+            ]
+        },
+        {
+            "TTCGCTTCCAATTTGGAG": [
+                ">LC123803.1"
+            ],
+            "TTTGCTTCCAACTTGGAG": [
+                ">MH348117.1"
+            ],
+            "TTCTCTTCTAACTTGGAA": [
+                ">MZ330953.1"
+            ]
+        }
+    ],
+    "456": [
+        {
+            "TCGCTTCCAATTTGGAGG": [
+                ">LC123803.1"
+            ],
+            "TTGCTTCCAACTTGGAGG": [
+                ">MH348117.1"
+            ],
+            "TCGCTTCTAACTTGGAGG": [
+                ">LC123767.1"
+            ]
+        },
+        {
+            "TCGCTTCCAATTTGGAGG": [
+                ">LC123803.1"
+            ],
+            "TCTCTTCTAACTTGGAAG": [
+                ">MZ330953.1"
+            ],
+            "TTGCTTCCAACTTGGAGG": [
+                ">MH348117.1"
+            ]
+        }
+    ],
+    "458": [
+        {},
+        {
+            "TCTTCTAACTTGGAAGCA": [
+                ">MZ330953.1"
+            ]
+        }
+    ],
+    "459": [
+        {},
+        {}
+    ],
+    "460": [
+        {},
+        {
+            "TTCGAATTTAGAAGCAAT": [
+                ">LC123747.1"
+            ]
+        }
+    ],
+    "461": [
+        {
+            "TCCAACTTGGAGGCAATT": [
+                ">MH348117.1"
+            ],
+            "TCCAATTTGGAGGCAATT": [
+                ">LC123803.1"
+            ]
+        },
+        {
+            "TCCAACCTGGAAGCAATT": [
+                ">LC123766.1",
+                ">LC123761.1",
+                ">LC123762.1"
+            ],
+            "TCCAACTTGGAGGCAATT": [
+                ">MH348117.1"
+            ],
+            "TCCAATTTGGAGGCAATT": [
+                ">LC123803.1"
+            ],
+            "TCCAACTTGGAAGCAATT": [
+                ">LC123813.1"
+            ],
+            "TCGAATTTAGAAGCAATT": [
+                ">LC123747.1"
+            ]
+        }
+    ],
+    "462": [
+        {
+            "CGAATTTAGAAGCAATTA": [
+                ">LC123747.1"
+            ],
+            "CCAACTTGGAGGCAATTA": [
+                ">MH348117.1"
+            ],
+            "CCAATTTGGAGGCAATTA": [
+                ">LC123803.1"
+            ]
+        },
+        {
+            "CGAATTTAGAAGCAATTA": [
+                ">LC123747.1"
+            ],
+            "CCAACCTGGAAGCAATTA": [
+                ">LC123766.1",
+                ">LC123761.1",
+                ">LC123762.1"
+            ],
+            "CCAACTTGGAAGCAATTA": [
+                ">LC123813.1"
+            ],
+            "CCAACTTGGAGGCAATTA": [
+                ">MH348117.1"
+            ],
+            "CCAATTTGGAGGCAATTA": [
+                ">LC123803.1"
+            ]
+        }
+    ],
+    "463": [
+        {
+            "GAATTTAGAAGCAATTAT": [
+                ">LC123747.1"
+            ],
+            "CAACTTGGAGGCAATTAT": [
+                ">MH348117.1"
+            ],
+            "CAATTTGGAGGCAATTAT": [
+                ">LC123803.1"
+            ]
+        },
+        {
+            "GAATTTAGAAGCAATTAT": [
+                ">LC123747.1"
+            ],
+            "TAATTTAGAAGCAATTAT": [
+                ">LC123769.1",
+                ">LC123800.1",
+                ">LC123798.1",
+                ">LC123801.1",
+                ">LC123795.1",
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123748.1"
+            ],
+            "CAACTTGGAGGCAATTAT": [
+                ">MH348117.1"
+            ],
+            "CAACCTGGAAGCAATTAT": [
+                ">LC123766.1",
+                ">LC123761.1",
+                ">LC123762.1"
+            ],
+            "CAATTTGGAGGCAATTAT": [
+                ">LC123803.1"
+            ],
+            "CAACTTGGAAGCAATTAT": [
+                ">LC123813.1"
+            ]
+        }
+    ],
+    "464": [
+        {
+            "AATTTGGAGGCAATTATC": [
+                ">LC123803.1"
+            ]
+        },
+        {
+            "AATTTAGAAGCAATTATT": [
+                ">LC123769.1",
+                ">LC123800.1",
+                ">LC123798.1",
+                ">LC123801.1",
+                ">LC123795.1",
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "AATTTGGAGGCAATTATC": [
+                ">LC123803.1"
+            ]
+        }
+    ],
+    "465": [
+        {
+            "ATTTGGAGGCAATTATCT": [
+                ">LC123803.1"
+            ]
+        },
+        {
+            "ATTTGGAGGCAATTATCT": [
+                ">LC123803.1"
+            ],
+            "ATTTAGAAGCAATTATTT": [
+                ">LC123769.1",
+                ">LC123800.1",
+                ">LC123798.1",
+                ">LC123801.1",
+                ">LC123795.1",
+                ">AB086749.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ]
+        }
+    ],
+    "466": [
+        {},
+        {
+            "CTTGGAGGCAATTATCTA": [
+                ">LC123767.1"
+            ],
+            "TTTGGAGGCAATTATCTA": [
+                ">LC123803.1"
+            ],
+            "CCTGGAAGCAATTATCTA": [
+                ">LC123766.1",
+                ">LC123761.1",
+                ">LC123762.1"
+            ],
+            "CCTAGAAGCAATTATTTA": [
+                ">AB064482.1",
+                ">AB064476.1",
+                ">AB064477.1",
+                ">LC123751.1",
+                ">AB684311.1",
+                ">JX947862.1",
+                ">AB064483.1"
+            ],
+            "CTTGGAGGCAATTATTTA": [
+                ">MH348117.1"
+            ],
+            "CTTGGAAGCAATCATTTA": [
+                ">AB064473.1"
+            ],
+            "CTTAGAAGCAATCATTTA": [
+                ">AB086756.1",
+                ">AB086759.1",
+                ">AB099563.1",
+                ">AB099573.1",
+                ">AB684313.1",
+                ">LC123763.1",
+                ">LC123757.1",
+                ">AB099568.1",
+                ">AB086757.1",
+                ">AB099569.1",
+                ">AB086753.1",
+                ">AB099565.1",
+                ">AB064471.1",
+                ">LC123759.1",
+                ">LC123756.1"
+            ]
+        }
+    ],
+    "467": [
+        {},
+        {
+            "TTGGAGGCAATTATCTAT": [
+                ">LC123767.1",
+                ">LC123803.1"
+            ],
+            "TTGGAGGCAATTATTTAT": [
+                ">MH348117.1"
+            ],
+            "CTGGAAGCAATTATCTAT": [
+                ">LC123766.1",
+                ">LC123761.1",
+                ">LC123762.1"
+            ],
+            "CTAGAAGCAATTATTTAT": [
+                ">AB064482.1",
+                ">AB064476.1",
+                ">AB064477.1",
+                ">LC123751.1",
+                ">AB684311.1",
+                ">JX947862.1",
+                ">AB064483.1"
+            ]
+        }
+    ],
+    "468": [
+        {},
+        {
+            "TGGAGGCAATTATCTATC": [
+                ">LC123767.1",
+                ">LC123803.1"
+            ],
+            "TGGAGGCAATTATTTATC": [
+                ">MH348117.1"
+            ]
+        }
+    ],
+    "469": [
+        {},
+        {
+            "GGAGGCAATTATTTATCA": [
+                ">MH348117.1"
+            ],
+            "GGAGGCAATTATCTATCA": [
+                ">LC123767.1",
+                ">LC123803.1"
+            ]
+        }
+    ],
+    "470": [
+        {
+            "GAAGCAATTATTTATCAG": [
+                ">LC123769.1"
+            ]
+        },
+        {
+            "GAAGCAATTATTTATCAG": [
+                ">LC123769.1"
+            ]
+        }
+    ],
+    "471": [
+        {
+            "AAGCAATTATTTATCAGA": [
+                ">LC123769.1"
+            ]
+        },
+        {
+            "AAGCAATTATTTATCAGA": [
+                ">LC123769.1"
+            ]
+        }
+    ],
+    "472": [
+        {
+            "AGCAATTATTTATCAGAG": [
+                ">LC123769.1"
+            ]
+        },
+        {
+            "AGCAATTATTTATCAGAG": [
+                ">LC123769.1"
+            ]
+        }
+    ],
+    "473": [
+        {},
+        {}
+    ],
+    "474": [
+        {},
+        {}
+    ],
+    "475": [
+        {},
+        {}
+    ],
+    "476": [
+        {
+            "ATTATTTATCAGAGAGGA": [
+                ">LC123769.1"
+            ]
+        },
+        {}
+    ],
+    "477": [
+        {
+            "TTATTTATCAGAGAGGAA": [
+                ">LC123769.1"
+            ]
+        },
+        {}
+    ],
+    "478": [
+        {
+            "TTTTTATCAAAGAGGAAG": [
+                ">MK480588.1"
+            ],
+            "TATTTATCAGAGAGGAAG": [
+                ">LC123769.1"
+            ]
+        },
+        {
+            "TTTTTATCAAAGAGGAAG": [
+                ">MK480588.1"
+            ],
+            "TATTTATCAGAGAGGAAG": [
+                ">LC123769.1"
+            ]
+        }
+    ],
+    "479": [
+        {
+            "ATTTATCAGAGAGGAAGA": [
+                ">LC123769.1"
+            ],
+            "TTTTATCAAAGAGGAAGA": [
+                ">MK480588.1"
+            ]
+        },
+        {
+            "ATTTATCAGAGAGGAAGA": [
+                ">LC123769.1"
+            ],
+            "TTTTATCAAAGAGGAAGA": [
+                ">MK480588.1"
+            ]
+        }
+    ],
+    "480": [
+        {
+            "TTTATCAGAGAGGAAGAA": [
+                ">LC123769.1"
+            ]
+        },
+        {
+            "TTTATCAGAGAGGAAGAA": [
+                ">LC123769.1"
+            ]
+        }
+    ],
+    "481": [
+        {
+            "TTATCAGAGAGGAAGAAA": [
+                ">LC123769.1"
+            ]
+        },
+        {
+            "TTATCAGAGAGGAAGAAA": [
+                ">LC123769.1"
+            ]
+        }
+    ],
+    "482": [
+        {
+            "TATCAGAGAGGAAGAAAT": [
+                ">LC123769.1"
+            ]
+        },
+        {
+            "TATCAGAGAGGAAGAAAT": [
+                ">LC123769.1"
+            ]
+        }
+    ],
+    "483": [
+        {
+            "ATCAGAGAGGAAGAAATG": [
+                ">LC123769.1"
+            ],
+            "ATCAAAGAGGGAGAAACG": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ]
+        },
+        {
+            "ATCAGAGAGGAAGAAATG": [
+                ">LC123769.1"
+            ],
+            "ATCAAAGAGGGAGAAACG": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ]
+        }
+    ],
+    "484": [
+        {
+            "TCAGAGAGGAAGAAATGC": [
+                ">LC123769.1"
+            ],
+            "TCAAAGAGGGAGAAACGC": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ]
+        },
+        {
+            "TCAGAGAGGAAGAAATGC": [
+                ">LC123769.1"
+            ],
+            "TCAAAGAGGGAGAAACGC": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ]
+        }
+    ],
+    "485": [
+        {
+            "CAAAGAGGGAGAAACGCA": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ],
+            "CAGAGAGGAAGAAATGCA": [
+                ">LC123769.1"
+            ]
+        },
+        {
+            "CAAAGAGGGAGAAACGCA": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ],
+            "CAGAGAGGAAGAAATGCA": [
+                ">LC123769.1"
+            ]
+        }
+    ],
+    "486": [
+        {
+            "AGAGAGGAAGAAATGCAG": [
+                ">LC123769.1"
+            ],
+            "AAAGAGGGAGAAACGCAG": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ]
+        },
+        {
+            "AGAGAGGAAGAAATGCAG": [
+                ">LC123769.1"
+            ],
+            "AAAGAGGGAGAAACGCAG": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ]
+        }
+    ],
+    "487": [
+        {
+            "AAGAGGGAGAAACGCAGC": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ],
+            "GAGAGGAAGAAATGCAGC": [
+                ">LC123769.1"
+            ]
+        },
+        {
+            "AAGAGGGAGAAACGCAGC": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ],
+            "GAGAGGAAGAAATGCAGC": [
+                ">LC123769.1"
+            ]
+        }
+    ],
+    "488": [
+        {
+            "AGAGGGAGAAACGCAGCA": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ]
+        },
+        {
+            "AGAGGGAGAAACGCAGCA": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ]
+        }
+    ],
+    "489": [
+        {
+            "GAGGGAGAAACGCAGCAA": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ]
+        },
+        {
+            "GAGGGAGAAACGCAGCAA": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ]
+        }
+    ],
+    "490": [
+        {
+            "AGGGAGAAACGCAGCAAG": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ]
+        },
+        {
+            "AGGGAGAAACGCAGCAAG": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ]
+        }
+    ],
+    "491": [
+        {
+            "GGAAGAAACGCAGCAAGG": [
+                ">AB086756.1"
+            ],
+            "GGGAGAAACGCAGCAAGA": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ]
+        },
+        {
+            "GGAAGAAACGCAGCAAGG": [
+                ">AB086756.1"
+            ],
+            "GGGAGAAACGCAGCAAGA": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ]
+        }
+    ],
+    "492": [
+        {
+            "GGAGAAACGCAGCAAGAA": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ],
+            "GAAGAAACGCAGCAAGGA": [
+                ">AB086756.1"
+            ]
+        },
+        {
+            "GGAGAAACGCAGCAAGAA": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ],
+            "GAAGAAACGCAGCAAGGA": [
+                ">AB086756.1"
+            ]
+        }
+    ],
+    "493": [
+        {
+            "GAGAAACGCAGCAAGAAG": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ],
+            "AAGAAACGCAGCAAGGAG": [
+                ">AB086756.1"
+            ]
+        },
+        {
+            "GAGAAACGCAGCAAGAAG": [
+                ">LC123767.1",
+                ">LC603650.1"
+            ],
+            "AAGAAACGCAGCAAGGAG": [
+                ">AB086756.1"
+            ]
+        }
+    ],
+    "494": [
+        {
+            "AGAAACGCAGCAAGAAGG": [
+                ">D87381.1"
+            ],
+            "AGAAACGCAGCAAGGAGA": [
+                ">AB086756.1"
+            ]
+        },
+        {
+            "AGAAACGCAGCAAGAAGG": [
+                ">D87381.1"
+            ],
+            "AGAAACGCAGCAAGGAGA": [
+                ">AB086756.1"
+            ]
+        }
+    ],
+    "495": [
+        {
+            "GAAACGCAGCAAGGAGAA": [
+                ">AB086756.1"
+            ],
+            "GAAACGCAGCAAGAAGGA": [
+                ">D87381.1"
+            ]
+        },
+        {
+            "GAAACGCAGCAAGGAGAA": [
+                ">AB086756.1"
+            ],
+            "GAAACGCAGCAAGAAGGA": [
+                ">D87381.1"
+            ]
+        }
+    ],
+    "496": [
+        {
+            "AAATGCAGCAAGAAGAAC": [
+                ">FR671423.1"
+            ],
+            "AAACGCAGCAAGAAGGAA": [
+                ">D87381.1"
+            ]
+        },
+        {
+            "AAATGCAGCAAGAAGAAC": [
+                ">FR671423.1"
+            ],
+            "AAACGCAGCAAGAAGGAA": [
+                ">D87381.1"
+            ]
+        }
+    ],
+    "497": [
+        {
+            "AATGCAGCAAGAAGAACC": [
+                ">FR671423.1"
+            ],
+            "AACGCAGCAAGAAGGAAC": [
+                ">D87381.1"
+            ]
+        },
+        {
+            "AATGCAGCAAGAAGAACC": [
+                ">FR671423.1"
+            ],
+            "AACGCAGCAAGAAGGAAC": [
+                ">D87381.1"
+            ]
+        }
+    ],
+    "498": [
+        {
+            "ATGCAGCAAGAAGAACCG": [
+                ">FR671423.1"
+            ],
+            "ACGCAGCAAGAAGGAACG": [
+                ">D87381.1"
+            ]
+        },
+        {
+            "ATGCAGCAAGAAGAACCG": [
+                ">FR671423.1"
+            ],
+            "ACGCAGCAAGAAGGAACG": [
+                ">D87381.1"
+            ]
+        }
+    ],
+    "499": [
+        {
+            "TGCAGCAAGAAGAACCGG": [
+                ">FR671423.1"
+            ],
+            "CGCAGCAAGAAGGAACGG": [
+                ">D87381.1"
+            ]
+        },
+        {
+            "TGCAGCAAGAAGAACCGG": [
+                ">FR671423.1"
+            ],
+            "CGCAGCAAGAAGGAACGG": [
+                ">D87381.1"
+            ]
+        }
+    ],
+    "500": [
+        {
+            "GCAGCAAGAAGAACCGGT": [
+                ">FR671423.1"
+            ],
+            "GCAGCAAGAAGGAACGGT": [
+                ">D87381.1"
+            ]
+        },
+        {
+            "GCAGCAAGAAGAACCGGT": [
+                ">FR671423.1"
+            ],
+            "GCAGCAAGAAGGAACGGT": [
+                ">D87381.1"
+            ]
+        }
+    ],
+    "501": [
+        {},
+        {}
+    ],
+    "502": [
+        {},
+        {}
+    ],
+    "503": [
+        {
+            "GCAAGAAGAAACGGTTCA": [
+                ">LC123741.1"
+            ]
+        },
+        {}
+    ],
+    "504": [
+        {
+            "CAAGAAGAAACGGTTCAG": [
+                ">LC123741.1"
+            ]
+        },
+        {}
+    ],
+    "505": [
+        {
+            "AAGAAGAAACGGTTCAGC": [
+                ">LC123741.1"
+            ]
+        },
+        {
+            "AAGAAGGAACGGTTCTGC": [
+                ">D87381.1"
+            ],
+            "AAGAAGAACCGGTTCTGC": [
+                ">FR671423.1"
+            ],
+            "AAGAAGAAACGGTTCAGC": [
+                ">LC123741.1"
+            ]
+        }
+    ],
+    "506": [
+        {
+            "AGAAGAAACGGTTCTGCA": [
+                ">AB981430.1"
+            ]
+        },
+        {
+            "AGGAGAAACGGTTCTGCT": [
+                ">AB086756.1"
+            ]
+        }
+    ],
+    "507": [
+        {
+            "GAAGAAACGGTTCTGCAG": [
+                ">AB981430.1"
+            ]
+        },
+        {
+            "GGAGAAACGGTTCTGCTG": [
+                ">AB086756.1"
+            ]
+        }
+    ],
+    "508": [
+        {
+            "AAGAAACGGTTCTGCAGA": [
+                ">AB981430.1"
+            ]
+        },
+        {
+            "GAGAAACGGTTCTGCTGA": [
+                ">AB086756.1"
+            ],
+            "AAGGAACGGTTCTGCCGA": [
+                ">D87381.1"
+            ]
+        }
+    ],
+    "509": [
+        {
+            "AGAAACGGCTCTGCTGAG": [
+                ">AB064482.1",
+                ">AB064476.1",
+                ">AB064477.1",
+                ">LC123751.1"
+            ]
+        },
+        {
+            "AGGAACGGTTCTGCCGAA": [
+                ">D87381.1"
+            ]
+        }
+    ],
+    "510": [
+        {
+            "GAAACGGCTCTGCTGAGT": [
+                ">AB064476.1",
+                ">AB064477.1",
+                ">LC123751.1"
+            ],
+            "GAAACGGCTCTGCTGAGC": [
+                ">AB064482.1"
+            ]
+        },
+        {
+            "GAACCGGTTCTGCTGAAT": [
+                ">FR671423.1"
+            ],
+            "GGAACGGTTCTGCCGAAT": [
+                ">D87381.1"
+            ]
+        }
+    ],
+    "511": [
+        {
+            "AAACGGCTCTGCTGAGTT": [
+                ">AB064476.1",
+                ">AB064477.1",
+                ">LC123751.1"
+            ],
+            "AAACGGCTCTGCTGAGCT": [
+                ">AB064482.1"
+            ]
+        },
+        {
+            "GAACGGTTCTGCCGAATT": [
+                ">D87381.1"
+            ],
+            "AACCGGTTCTGCTGAATT": [
+                ">FR671423.1"
+            ]
+        }
+    ],
+    "512": [
+        {
+            "AACGGTTCTGCCGAACTA": [
+                ">LC327663.1"
+            ]
+        },
+        {
+            "ACCGGTTCTGCTGAATTG": [
+                ">FR671423.1"
+            ]
+        }
+    ],
+    "513": [
+        {
+            "ACGGTTCTGCCGAACTAT": [
+                ">LC327663.1"
+            ]
+        },
+        {}
+    ],
+    "514": [
+        {
+            "CGGTTCTGCCGAACTATT": [
+                ">LC327663.1"
+            ]
+        },
+        {
+            "CGGCTCTGCTGAATTGTT": [
+                ">AB684311.1",
+                ">JX947862.1",
+                ">AB064483.1",
+                ">AB684308.1",
+                ">LC123726.1",
+                ">LC123732.1",
+                ">LC123736.1",
+                ">LC123745.1",
+                ">LC123747.1",
+                ">LC123748.1"
+            ],
+            "TGGCTCTGCTGAATTGTT": [
+                ">LC123766.1",
+                ">LC123761.1",
+                ">LC123762.1",
+                ">AB086749.1"
+            ],
+            "CGGCTCTGCTGAGCTGTT": [
+                ">AB064482.1"
+            ],
+            "CGGCTCTGCTGAGTTGTT": [
+                ">AB064476.1",
+                ">AB064477.1",
+                ">LC123751.1"
+            ]
+        }
+    ],
+    "515": [
+        {
+            "GGTTCTGCTGAATTGTTT": [
+                ">AB684315.1",
+                ">LC123776.1",
+                ">LC123724.1",
+                ">LC123723.1"
+            ],
+            "GGTTCTGCCGAATTGTTT": [
+                ">LC123743.1"
+            ]
+        },
+        {}
+    ],
+    "516": [
+        {
+            "GTTCTGCTGAATTGTTTA": [
+                ">AB684315.1",
+                ">LC123776.1",
+                ">LC123724.1",
+                ">LC123723.1"
+            ],
+            "GTTCTGCCGAATTGTTTA": [
+                ">LC123743.1"
+            ]
+        },
+        {}
+    ],
+    "517": [
+        {},
+        {
+            "TTCAGCTGAATTGTTCAC": [
+                ">LC123741.1"
+            ],
+            "TCCTGCCGAATTGTTCAC": [
+                ">MH348117.1"
+            ]
+        }
+    ],
+    "518": [
+        {
+            "TCTGCTGAATTGTTCACC": [
+                ">LC123766.1",
+                ">LC123761.1",
+                ">LC123762.1"
+            ]
+        },
+        {
+            "CCTGCCGAATTGTTCACT": [
+                ">MH348117.1"
+            ],
+            "TCAGCTGAATTGTTCACT": [
+                ">LC123741.1"
+            ]
+        }
+    ],
+    "519": [
+        {
+            "CTGCTGAATTGTTCACCC": [
+                ">LC123766.1",
+                ">LC123761.1",
+                ">LC123762.1"
+            ],
+            "CTGCCGAACTGTTCACTT": [
+                ">KT835360.1"
+            ]
+        },
+        {
+            "CAGCTGAATTGTTCACTC": [
+                ">LC123741.1"
+            ]
+        }
+    ],
+    "520": [
+        {
+            "TGCTGAATTGTTCACCCT": [
+                ">LC123766.1",
+                ">LC123761.1",
+                ">LC123762.1"
+            ],
+            "TGCCGAACTGTTCACTTT": [
+                ">KT835360.1"
+            ]
+        },
+        {
+            "TGCAGAACTGTTCACTCT": [
+                ">AB981430.1"
+            ],
+            "AGCTGAATTGTTCACTCT": [
+                ">LC123741.1"
+            ]
+        }
+    ],
+    "521": [
+        {
+            "GCCGAACTGTTCACTTTC": [
+                ">KT835360.1"
+            ],
+            "GCTGAATTGTTTACTCTA": [
+                ">LC123724.1"
+            ],
+            "GCCGAACTATTCACTCTT": [
+                ">LC327663.1"
+            ]
+        },
+        {
+            "GCAGAACTGTTCACTCTC": [
+                ">AB981430.1"
+            ],
+            "GCCGAACTATTCACTCTT": [
+                ">LC327663.1"
+            ]
+        }
+    ],
+    "522": [
+        {
+            "CTGAATTGTTTACTCTAA": [
+                ">LC123724.1"
+            ],
+            "CCGAACTATTCACTCTTA": [
+                ">LC327663.1"
+            ]
+        },
+        {
+            "CAGAACTGTTCACTCTCA": [
+                ">AB981430.1"
+            ],
+            "CCGAACTATTCACTCTTA": [
+                ">LC327663.1"
+            ]
+        }
+    ],
+    "523": [
+        {
+            "TGAATTGTTTACTCTAAC": [
+                ">LC123724.1"
+            ],
+            "CGAACTATTCACTCTTAC": [
+                ">LC327663.1"
+            ]
+        },
+        {
+            "CGAACTGTTCACTTTCAC": [
+                ">KT835360.1"
+            ],
+            "TGAATTGTTTACTCTAAC": [
+                ">LC123724.1"
+            ],
+            "TGAATTGTTCACCCTCAC": [
+                ">LC123766.1",
+                ">LC123761.1",
+                ">LC123762.1"
+            ],
+            "AGAACTGTTCACTCTCAC": [
+                ">AB981430.1"
+            ],
+            "CGAACTATTCACTCTTAC": [
+                ">LC327663.1"
+            ]
+        }
+    ],
+    "524": [
+        {
+            "GAACTATTCACTCTTACT": [
+                ">LC327663.1"
+            ]
+        },
+        {
+            "GAACTATTCACTCTTACT": [
+                ">LC327663.1"
+            ],
+            "GAATTGTTCACCCTCACT": [
+                ">LC123766.1",
+                ">LC123761.1",
+                ">LC123762.1"
+            ],
+            "GAATTGTTTACTCTAACT": [
+                ">LC123724.1"
+            ],
+            "GAACTGTTCACTTTCACT": [
+                ">KT835360.1"
+            ]
+        }
+    ],
+    "525": [
+        {
+            "AACTATTCACTCTTACTC": [
+                ">LC327663.1"
+            ]
+        },
+        {
+            "AACTATTCACTCTTACTC": [
+                ">LC327663.1"
+            ],
+            "AATTGTTCACCCTCACTC": [
+                ">LC123766.1",
+                ">LC123761.1",
+                ">LC123762.1"
+            ],
+            "AATTGTTTACTCTAACTC": [
+                ">LC123724.1"
+            ],
+            "AACTGTTCACTTTCACTC": [
+                ">KT835360.1"
+            ]
+        }
+    ],
+    "526": [
+        {
+            "ACTATTCACTCTTACTCA": [
+                ">LC327663.1"
+            ]
+        },
+        {
+            "ACTGTTCACTTTCACTCA": [
+                ">KT835360.1"
+            ],
+            "ATTGTTCACCCTCACTCA": [
+                ">LC123766.1",
+                ">LC123761.1",
+                ">LC123762.1"
+            ],
+            "ATTGTTTACTCTAACTCA": [
+                ">LC123724.1"
+            ],
+            "ACTATTCACTCTTACTCA": [
+                ">LC327663.1"
+            ]
+        }
+    ],
+    "527": [
+        {
+            "CTGTTCACTTTCACTCAA": [
+                ">KT835360.1"
+            ],
+            "TTGTTCACCCTCACTCAA": [
+                ">LC123762.1"
+            ],
+            "TTGTTCACCCTCACTCAG": [
+                ">LC123766.1",
+                ">LC123761.1"
+            ],
+            "CTATTCACTCTTACTCAA": [
+                ">LC327663.1"
+            ],
+            "TTGTTTACTCTAACTCAA": [
+                ">LC123724.1"
+            ]
+        },
+        {
+            "CTATTCACTCTTACTCAA": [
+                ">LC327663.1"
+            ]
+        }
+    ],
+    "528": [
+        {
+            "TGTTCACCCTCACTCAAG": [
+                ">LC123762.1"
+            ],
+            "TGTTCACCCTCACTCAGG": [
+                ">LC123766.1",
+                ">LC123761.1"
+            ],
+            "TGTTTACTCTAACTCAAG": [
+                ">LC123724.1"
+            ],
+            "TATTCACTCTTACTCAAG": [
+                ">LC327663.1"
+            ]
+        },
+        {
+            "TATTCACTCTTACTCAAG": [
+                ">LC327663.1"
+            ]
+        }
+    ],
+    "529": [
+        {
+            "ATTCACTCTTACTCAAGG": [
+                ">LC327663.1"
+            ],
+            "GTTCACCCTCACTCAAGG": [
+                ">LC123762.1"
+            ],
+            "GTTCACCCTCACTCAGGG": [
+                ">LC123766.1",
+                ">LC123761.1"
+            ],
+            "GTTTACTCTAACTCAAGG": [
+                ">LC123724.1"
+            ]
+        },
+        {
+            "ATTCACTCTTACTCAAGG": [
+                ">LC327663.1"
+            ]
+        }
+    ],
+    "530": [
+        {
+            "TTTACTCTAACTCAAGGG": [
+                ">LC123724.1"
+            ],
+            "TTCACCCTCACTCAAGGG": [
+                ">LC123762.1"
+            ],
+            "TTCACTCTTACTCAAGGA": [
+                ">LC327663.1"
+            ],
+            "TTCACTTTCACTCAAGGA": [
+                ">KT835360.1"
+            ],
+            "TTCACTCTCACTCAGGGT": [
+                ">AB684313.1"
+            ],
+            "TTCACCCTCACTCAGGGG": [
+                ">LC123766.1",
+                ">LC123761.1"
+            ]
+        },
+        {
+            "TTTACTCTAACTCAAGGG": [
+                ">LC123724.1"
+            ],
+            "TTCACCCTCACTCAAGGG": [
+                ">LC123762.1"
+            ],
+            "TTCACTCTTACTCAAGGA": [
+                ">LC327663.1"
+            ],
+            "TTCACTTTCACTCAAGGA": [
+                ">KT835360.1"
+            ],
+            "TTCACCCTCACTCAGGGG": [
+                ">LC123766.1",
+                ">LC123761.1"
+            ]
+        }
+    ],
+    "531": [
+        {
+            "TCACTTTCACTCAAGGAG": [
+                ">KT835360.1"
+            ],
+            "TCACTCTCACTCAGGGTG": [
+                ">AB684313.1"
+            ],
+            "TCACCCTCACTCAAGGGG": [
+                ">LC123762.1"
+            ],
+            "TCACCCTCACTCAGGGGG": [
+                ">LC123766.1",
+                ">LC123761.1"
+            ],
+            "TCACTCTTACTCAAGGAG": [
+                ">LC327663.1"
+            ],
+            "TTACTCTAACTCAAGGGG": [
+                ">LC123724.1"
+            ]
+        },
+        {
+            "TCACTTTCACTCAAGGAG": [
+                ">KT835360.1"
+            ],
+            "TCACCCTCACTCAAGGGG": [
+                ">LC123762.1"
+            ],
+            "TCACCCTCACTCAGGGGG": [
+                ">LC123766.1",
+                ">LC123761.1"
+            ],
+            "TCACTCTTACTCAAGGAG": [
+                ">LC327663.1"
+            ],
+            "TTACTCTAACTCAAGGGG": [
+                ">LC123724.1"
+            ]
+        }
+    ],
+    "532": [
+        {
+            "CACCCTCACTCAAGGGGC": [
+                ">LC123762.1"
+            ],
+            "CACTCTTACTCAAGGAGC": [
+                ">LC327663.1"
+            ],
+            "CACCCTCACTCAGGGGGC": [
+                ">LC123766.1",
+                ">LC123761.1"
+            ],
+            "CACTCTCACTCAGGGTGC": [
+                ">AB684313.1"
+            ],
+            "TACTCTAACTCAAGGGGC": [
+                ">LC123724.1"
+            ],
+            "CACTTTCACTCAAGGAGC": [
+                ">KT835360.1"
+            ]
+        },
+        {
+            "CACCCTCACTCAAGGGGC": [
+                ">LC123762.1"
+            ],
+            "CACTCTTACTCAAGGAGC": [
+                ">LC327663.1"
+            ],
+            "CACCCTCACTCAGGGGGC": [
+                ">LC123766.1",
+                ">LC123761.1"
+            ],
+            "TACTCTAACTCAAGGGGC": [
+                ">LC123724.1"
+            ],
+            "CACTTTCACTCAAGGAGC": [
+                ">KT835360.1"
+            ]
+        }
+    ],
+    "533": [
+        {
+            "ACTCTCACTCAGGGGGCA": [
+                ">LC123764.1",
+                ">LC123765.1"
+            ],
+            "ACTCTTACTCAAGGAGCT": [
+                ">LC327663.1"
+            ],
+            "ACTCTAACTCAAGGGGCT": [
+                ">LC123724.1"
+            ],
+            "ACCCTCACTCAGGGGGCT": [
+                ">LC123766.1",
+                ">LC123761.1"
+            ],
+            "ACCCTCACTCAAGGGGCT": [
+                ">LC123762.1"
+            ]
+        },
+        {
+            "ACTCTCACTCAGGGGGCA": [
+                ">LC123764.1",
+                ">LC123765.1"
+            ],
+            "ACTCTTACTCAAGGAGCT": [
+                ">LC327663.1"
+            ],
+            "ACTCTAACTCAAGGGGCT": [
+                ">LC123724.1"
+            ],
+            "ACCCTCACTCAGGGGGCT": [
+                ">LC123766.1",
+                ">LC123761.1"
+            ],
+            "ACCCTCACTCAAGGGGCT": [
+                ">LC123762.1"
+            ]
+        }
+    ],
+    "534": [
+        {
+            "CTCTAACTCAAGGGGCTG": [
+                ">LC123724.1"
+            ],
+            "CCCTCACTCAGGGGGCTG": [
+                ">LC123766.1",
+                ">LC123761.1"
+            ],
+            "CTCTCACTCAGGGGGCAG": [
+                ">LC123764.1",
+                ">LC123765.1"
+            ],
+            "CCCTCACTCAAGGGGCTG": [
+                ">LC123762.1"
+            ],
+            "CTCTTACTCAAGGAGCTG": [
+                ">LC327663.1"
+            ]
+        },
+        {
+            "CTCTAACTCAAGGGGCTG": [
+                ">LC123724.1"
+            ],
+            "CCCTCACTCAGGGGGCTG": [
+                ">LC123766.1",
+                ">LC123761.1"
+            ],
+            "CTCTCACTCAGGGGGCAG": [
+                ">LC123764.1",
+                ">LC123765.1"
+            ],
+            "CCCTCACTCAAGGGGCTG": [
+                ">LC123762.1"
+            ],
+            "CTCTTACTCAAGGAGCTG": [
+                ">LC327663.1"
+            ]
+        }
+    ],
+    "535": [
+        {
+            "TCTAACTCAAGGGGCTGG": [
+                ">LC123724.1"
+            ],
+            "TCTTACTCAAGGAGCTGG": [
+                ">LC327663.1"
+            ],
+            "TTTCACTCAAGGAGCTGG": [
+                ">KT835360.1"
+            ],
+            "TCTCACTCAGGGGGCAGG": [
+                ">LC123764.1",
+                ">LC123765.1"
+            ]
+        },
+        {
+            "TCTAACTCAAGGGGCTGG": [
+                ">LC123724.1"
+            ],
+            "TCTTACTCAAGGAGCTGG": [
+                ">LC327663.1"
+            ],
+            "TTTCACTCAAGGAGCTGG": [
+                ">KT835360.1"
+            ],
+            "TCTCACTCAGGGGGCAGG": [
+                ">LC123764.1",
+                ">LC123765.1"
+            ]
+        }
+    ],
+    "536": [
+        {
+            "TTCACTCAAGGAGCTGGA": [
+                ">KT835360.1"
+            ],
+            "CTCACTCAAGGGGCTGGG": [
+                ">LC123753.1"
+            ],
+            "CTTACTCAAGGAGCTGGA": [
+                ">LC327663.1"
+            ],
+            "CTAACTCAAGGGGCTGGA": [
+                ">LC123724.1"
+            ]
+        },
+        {
+            "TTCACTCAAGGAGCTGGA": [
+                ">KT835360.1"
+            ],
+            "CTCACTCAAGGGGCTGGG": [
+                ">LC123753.1"
+            ],
+            "CTTACTCAAGGAGCTGGA": [
+                ">LC327663.1"
+            ],
+            "CTAACTCAAGGGGCTGGA": [
+                ">LC123724.1"
+            ]
+        }
+    ],
+    "537": [
+        {
+            "TCACTCAAGGGGCTGGGA": [
+                ">LC123753.1"
+            ],
+            "TAACTCAAGGGGCTGGAA": [
+                ">LC123724.1"
+            ],
+            "TTACTCAAGGAGCTGGAA": [
+                ">LC327663.1"
+            ]
+        },
+        {
+            "TCACTCAAGGGGCTGGGA": [
+                ">LC123753.1"
+            ],
+            "TAACTCAAGGGGCTGGAA": [
+                ">LC123724.1"
+            ],
+            "TTACTCAAGGAGCTGGAA": [
+                ">LC327663.1"
+            ]
+        }
+    ],
+    "538": [
+        {
+            "AACTCAAGGGGCTGGAAT": [
+                ">LC123724.1"
+            ],
+            "CACTCAAGGGGCTGGGAT": [
+                ">LC123753.1"
+            ],
+            "TACTCAAGGAGCTGGAAT": [
+                ">LC327663.1"
+            ]
+        },
+        {
+            "AACTCAAGGGGCTGGAAT": [
+                ">LC123724.1"
+            ],
+            "CACTCAAGGGGCTGGGAT": [
+                ">LC123753.1"
+            ],
+            "TACTCAAGGAGCTGGAAT": [
+                ">LC327663.1"
+            ]
+        }
+    ],
+    "539": [
+        {
+            "ACTCAGGGGGCAGGAATC": [
+                ">LC123764.1",
+                ">LC123765.1"
+            ],
+            "ACTCAAGGGGCTGGGATC": [
+                ">LC123753.1"
+            ]
+        },
+        {
+            "ACTCAGGGGGCAGGAATC": [
+                ">LC123764.1",
+                ">LC123765.1"
+            ],
+            "ACTCAAGGGGCTGGGATC": [
+                ">LC123753.1"
+            ]
+        }
+    ],
+    "540": [
+        {
+            "CTCAGGGGGCAGGAATCG": [
+                ">LC123764.1",
+                ">LC123765.1"
+            ],
+            "CTCAAGGGGCTGGGATCG": [
+                ">LC123753.1"
+            ]
+        },
+        {
+            "CTCAGGGGGCAGGAATCG": [
+                ">LC123764.1",
+                ">LC123765.1"
+            ],
+            "CTCAAGGGGCTGGGATCG": [
+                ">LC123753.1"
+            ]
+        }
+    ],
+    "541": [
+        {
+            "TCAGGGGGCAGGAATCGA": [
+                ">LC123764.1",
+                ">LC123765.1"
+            ],
+            "TCAAGGGGCTGGGATCGA": [
+                ">LC123753.1"
+            ]
+        },
+        {
+            "TCAGGGGGCAGGAATCGA": [
+                ">LC123764.1",
+                ">LC123765.1"
+            ],
+            "TCAGGGTGCTGGAATCGA": [
+                ">AB684313.1"
+            ],
+            "TCAAGGGGCTGGGATCGA": [
+                ">LC123753.1"
+            ]
+        }
+    ],
+    "542": [
+        {
+            "CAAGGGGCTGGGATCGAA": [
+                ">LC123753.1"
+            ]
+        },
+        {
+            "CAAGGGGCTGGGATCGAA": [
+                ">LC123753.1"
+            ],
+            "CAGGGTGCTGGAATCGAA": [
+                ">AB684313.1"
+            ]
+        }
+    ],
+    "543": [
+        {
+            "AAGGGGCTGGAATCGAA-": [
+                ">D30703.1",
+                ">D30708.1"
+            ],
+            "AAGGGGCTGGGATCGAAA": [
+                ">LC123753.1"
+            ],
+            "AGGGGGCAGGAATCGAAA": [
+                ">LC123764.1",
+                ">LC123765.1"
+            ],
+            "AGGGGGCTGGAATCGAA-": [
+                ">D30693.1"
+            ]
+        },
+        {
+            "AAGGGGCTGGAATCGAA-": [
+                ">D30703.1",
+                ">D30708.1"
+            ],
+            "AAGGGGCTGGGATCGAAA": [
+                ">LC123753.1"
+            ],
+            "AGGGGGCAGGAATCGAAA": [
+                ">LC123764.1",
+                ">LC123765.1"
+            ],
+            "AGGGGGCTGGAATCGAA-": [
+                ">D30693.1"
+            ],
+            "AGGGTGCTGGAATCGAAA": [
+                ">AB684313.1"
+            ]
+        }
+    ],
+    "544": [
+        {
+            "AGGGGCTGGAATCGAA--": [
+                ">D30703.1",
+                ">D30708.1"
+            ],
+            "AGGGGCTGGGATCGAAAC": [
+                ">LC123753.1"
+            ],
+            "GGGGGCTGGAATCGAA--": [
+                ">D30693.1"
+            ],
+            "GGGGGCAGGAATCGAAAC": [
+                ">LC123764.1",
+                ">LC123765.1"
+            ]
+        },
+        {
+            "AGGGGCTGGAATCGAA--": [
+                ">D30703.1",
+                ">D30708.1"
+            ],
+            "AGGGGCTGGGATCGAAAC": [
+                ">LC123753.1"
+            ],
+            "GGGGGCTGGAATCGAA--": [
+                ">D30693.1"
+            ],
+            "GGGTGCTGGAATCGAAAC": [
+                ">AB684313.1"
+            ],
+            "GGGGGCAGGAATCGAAAC": [
+                ">LC123764.1",
+                ">LC123765.1"
+            ]
+        }
+    ],
+    "545": [
+        {
+            "GGGGCTGGAATCGAACCT": [
+                ">MH828690.1"
+            ]
+        },
+        {
+            "GGGGCTGGGATCGAAACT": [
+                ">LC123753.1"
+            ],
+            "GGGGCTGGAATCGAACCT": [
+                ">MH828690.1"
+            ],
+            "GGTGCTGGAATCGAAACT": [
+                ">AB684313.1"
+            ]
+        }
+    ],
+    "546": [
+        {},
+        {
+            "GGGCTGGAATCGAACCTA": [
+                ">MH828690.1"
+            ],
+            "GGGCTGGGATCGAAACTA": [
+                ">LC123753.1"
+            ],
+            "GTGCTGGAATCGAAACTA": [
+                ">AB684313.1"
+            ]
+        }
+    ],
+    "547": [
+        {},
+        {
+            "GGCTGGGATCGAAACTAG": [
+                ">LC123753.1"
+            ],
+            "GGCTGGAATCGAACCTAG": [
+                ">MH828690.1"
+            ],
+            "TGCTGGAATCGAAACTAG": [
+                ">AB684313.1"
+            ]
+        }
+    ],
+    "548": [
+        {},
+        {}
+    ],
+    "549": [
+        {},
+        {}
+    ],
+    "550": [
+        {},
+        {
+            "TGGAATCGAACCTAGATA": [
+                ">MH828690.1"
+            ]
+        }
+    ],
+    "551": [
+        {},
+        {
+            "GGAATCGAACCTAGATAT": [
+                ">MH828690.1"
+            ]
+        }
+    ],
+    "552": [
+        {},
+        {
+            "GAATCGAACCTAGATATA": [
+                ">MH828690.1"
+            ]
+        }
+    ],
+    "553": [
+        {},
+        {
+            "AATCGAACCTAGATATAA": [
+                ">MH828690.1"
+            ]
+        }
+    ],
+    "554": [
+        {},
+        {}
+    ],
+    "555": [
+        {},
+        {}
+    ],
+    "556": [
+        {},
+        {}
+    ],
+    "557": [
+        {},
+        {}
+    ],
+    "558": [
+        {},
+        {}
+    ],
+    "559": [
+        {},
+        {}
+    ],
+    "560": [
+        {},
+        {}
+    ],
+    "561": [
+        {},
+        {}
+    ],
+    "562": [
+        {},
+        {}
+    ],
+    "563": [
+        {},
+        {}
+    ],
+    "564": [
+        {},
+        {}
+    ],
+    "565": [
+        {},
+        {}
+    ],
+    "566": [
+        {},
+        {}
+    ],
+    "567": [
+        {},
+        {}
+    ],
+    "568": [
+        {},
+        {}
+    ],
+    "570": [
+        {},
+        {}
+    ],
+    "571": [
+        {},
+        {}
+    ],
+    "572": [
+        {},
+        {}
+    ],
+    "573": [
+        {},
+        {}
+    ],
+    "574": [
+        {},
+        {}
+    ],
+    "575": [
+        {},
+        {}
+    ],
+    "576": [
+        {},
+        {}
+    ],
+    "577": [
+        {
+            "AATGGAAAAGCATATCGA": [
+                ">KT835355.1"
+            ]
+        },
+        {
+            "AATGGAAAAGCATATCGA": [
+                ">KT835355.1"
+            ]
+        }
+    ],
+    "578": [
+        {
+            "ATGGAAAAGCATATCGAA": [
+                ">KT835355.1"
+            ],
+            "ATGGAAAAACATATCGGA": [
+                ">LC603650.1"
+            ]
+        },
+        {
+            "ATGGAAAAGCATATCGAA": [
+                ">KT835355.1"
+            ],
+            "ATGGAAAAACATATCGGA": [
+                ">LC603650.1"
+            ]
+        }
+    ],
+    "579": [
+        {
+            "TGGAAAAGCATATCGAAA": [
+                ">KT835355.1"
+            ],
+            "TGGAAAAACATATCGGAA": [
+                ">LC603650.1"
+            ]
+        },
+        {
+            "TGGAAAAGCATATCGAAA": [
+                ">KT835355.1"
+            ],
+            "TGGAAAAACATATCGGAA": [
+                ">LC603650.1"
+            ]
+        }
+    ],
+    "580": [
+        {
+            "GGAAAAACATATCGGAAT": [
+                ">LC603650.1"
+            ],
+            "GGAAAAGCATATCGAAAT": [
+                ">KT835355.1"
+            ]
+        },
+        {
+            "GGAAAAACATATCGGAAT": [
+                ">LC603650.1"
+            ],
+            "GGAAAAGCATATCGAAAT": [
+                ">KT835355.1"
+            ]
+        }
+    ],
+    "581": [
+        {
+            "GAAAAGCATATCGAAATT": [
+                ">KT835355.1"
+            ],
+            "GAAAAACATATCGGAATT": [
+                ">LC603650.1"
+            ]
+        },
+        {
+            "GAAAAGCATATCGAAATT": [
+                ">KT835355.1"
+            ],
+            "GAAAAACATATCGGAATT": [
+                ">LC603650.1"
+            ]
+        }
+    ],
+    "582": [
+        {
+            "AAAAGCATATCGAAATTG": [
+                ">KT835355.1"
+            ],
+            "AAAAACATATCGGAATTG": [
+                ">LC603650.1"
+            ]
+        },
+        {
+            "AAAAGCATATCGAAATTG": [
+                ">KT835355.1"
+            ],
+            "AAAAACATATCGGAATTG": [
+                ">LC603650.1"
+            ]
+        }
+    ],
+    "583": [
+        {
+            "AAAGCATATCGAAATTGG": [
+                ">KT835355.1"
+            ],
+            "AAAACATATCGGAATTGG": [
+                ">LC603650.1"
+            ]
+        },
+        {
+            "AAAGCATATCGAAATTGG": [
+                ">KT835355.1"
+            ],
+            "AAAACATATCGGAATTGG": [
+                ">LC603650.1"
+            ]
+        }
+    ],
+    "584": [
+        {
+            "AAGCATATCGAAATTGGG": [
+                ">KT835355.1"
+            ],
+            "AAACATATCGGAATTGGG": [
+                ">LC603650.1"
+            ]
+        },
+        {
+            "AAGCATATCGAAATTGGG": [
+                ">KT835355.1"
+            ],
+            "AAACATATCGGAATTGGG": [
+                ">LC603650.1"
+            ]
+        }
+    ],
+    "585": [
+        {
+            "AGCATATCGAAATTGGGG": [
+                ">KT835355.1"
+            ],
+            "AACATATCGGAATTGGGG": [
+                ">LC603650.1"
+            ]
+        },
+        {
+            "AGCATATCGAAATTGGGG": [
+                ">KT835355.1"
+            ],
+            "AACATATCGGAATTGGGG": [
+                ">LC603650.1"
+            ]
+        }
+    ],
+    "586": [
+        {
+            "GCATATCGAAATTGGGGT": [
+                ">KT835355.1"
+            ],
+            "ACATATCGGAATTGGGGT": [
+                ">LC603650.1"
+            ]
+        },
+        {
+            "GCATATCGAAATTGGGGT": [
+                ">KT835355.1"
+            ],
+            "ACATATCGGAATTGGGGT": [
+                ">LC603650.1"
+            ]
+        }
+    ],
+    "587": [
+        {
+            "CATATCGAAATTGGGGTT": [
+                ">KT835355.1"
+            ]
+        },
+        {
+            "CATATCGAAATTGGGGTT": [
+                ">KT835355.1"
+            ]
+        }
+    ],
+    "588": [
+        {
+            "ATATTGGAATTGGAGTTT": [
+                ">JX963111.1"
+            ],
+            "ATATCGAAATTGGGGTTC": [
+                ">KT835355.1"
+            ]
+        },
+        {
+            "ATATTGGAATTGGAGTTT": [
+                ">JX963111.1"
+            ],
+            "ATATCGAAATTGGGGTTC": [
+                ">KT835355.1"
+            ]
+        }
+    ],
+    "589": [
+        {
+            "TATCGAAATTGGGGTTCT": [
+                ">KT835355.1"
+            ],
+            "TATTGGAATTGGAGTTTT": [
+                ">JX963111.1"
+            ]
+        },
+        {
+            "TATCGAAATTGGGGTTCT": [
+                ">KT835355.1"
+            ],
+            "TATTGGAATTGGAGTTTT": [
+                ">JX963111.1"
+            ]
+        }
+    ],
+    "590": [
+        {
+            "ATTGGAATTGGAGTTTTT": [
+                ">JX963111.1"
+            ]
+        },
+        {
+            "ATTGGAATTGGAGTTTTT": [
+                ">JX963111.1"
+            ]
+        }
+    ],
+    "591": [
+        {
+            "TTGGAATTGGAGTTTTTA": [
+                ">JX963111.1"
+            ]
+        },
+        {
+            "TTGGAATTGGAGTTTTTA": [
+                ">JX963111.1"
+            ]
+        }
+    ],
+    "592": [
+        {
+            "TGGAATTGGAGTTTTTAT": [
+                ">JX963111.1"
+            ]
+        },
+        {
+            "TGGAATTGGAGTTTTTAT": [
+                ">JX963111.1"
+            ]
+        }
+    ],
+    "593": [
+        {
+            "GGAATTGGAGTTTTTATA": [
+                ">JX963111.1"
+            ]
+        },
+        {
+            "GGAATTGGAGTTTTTATA": [
+                ">JX963111.1"
+            ]
+        }
+    ],
+    "594": [
+        {
+            "GAATTGGAGTTTTTATAG": [
+                ">JX963111.1"
+            ]
+        },
+        {
+            "GAATTGGAGTTTTTATAG": [
+                ">JX963111.1"
+            ]
+        }
+    ],
+    "595": [
+        {},
+        {}
+    ],
+    "596": [
+        {},
+        {}
+    ],
+    "597": [
+        {},
+        {}
+    ],
+    "598": [
+        {},
+        {}
+    ],
+    "599": [
+        {},
+        {}
+    ],
+    "600": [
+        {},
+        {}
+    ],
+    "601": [
+        {},
+        {}
+    ],
+    "602": [
+        {
+            "GTTCTTATAGCTGACGCG": [
+                ">M17700.1"
+            ]
+        },
+        {}
+    ],
+    "603": [
+        {
+            "TTCTTATAGCTGACGCGA": [
+                ">M17700.1"
+            ]
+        },
+        {}
+    ],
+    "604": [
+        {
+            "TCTTATAGCTGACGCGAA": [
+                ">M17700.1"
+            ]
+        },
+        {}
+    ],
+    "605": [
+        {
+            "TTTATAGCTGACGCAAAA": [
+                ">JX963111.1"
+            ],
+            "CTTATAGCTGACGCGAAA": [
+                ">M17700.1"
+            ]
+        },
+        {
+            "TTTATAGCTGACGCAAAA": [
+                ">JX963111.1"
+            ]
+        }
+    ],
+    "606": [
+        {
+            "TTATAGCTGACGCGAAAG": [
+                ">M17700.1"
+            ]
+        },
+        {}
+    ],
+    "607": [
+        {
+            "TATAGCTGACGCGAAAGG": [
+                ">M17700.1"
+            ]
+        },
+        {}
+    ],
+    "608": [
+        {
+            "ATAGCTGACGCAAAAGGG": [
+                ">LC123813.1"
+            ]
+        },
+        {}
+    ],
+    "609": [
+        {
+            "TAGCTGACGCAAAAGGGT": [
+                ">LC123813.1"
+            ]
+        },
+        {}
+    ],
+    "611": [
+        {
+            "GCTGATGCAAAAGGTTTG": [
+                ">MZ330925.1",
+                ">MZ330939.1"
+            ],
+            "GCTGACGCAAAAGGTTTG": [
+                ">MK480602.1"
+            ]
+        },
+        {
+            "GCAGACGCAAAAGGTTTA": [
+                ">AB684311.1",
+                ">JX947862.1",
+                ">AB064483.1"
+            ]
+        }
+    ],
+    "612": [
+        {
+            "CTGATGCAAAAGGTTTGA": [
+                ">MZ330925.1",
+                ">MZ330939.1"
+            ],
+            "CTGACGCAAAAGGTTTAG": [
+                ">AB981434.1"
+            ],
+            "CTGACGCAAAAGGTTTGA": [
+                ">MK480602.1"
+            ]
+        },
+        {
+            "CAGACGCAAAAGGTTTAA": [
+                ">AB684311.1",
+                ">JX947862.1",
+                ">AB064483.1"
+            ]
+        }
+    ],
+    "613": [
+        {
+            "TGATGCAAAAGGTTTGAT": [
+                ">MZ330925.1",
+                ">MZ330939.1"
+            ],
+            "TGACGCAAAAGGTTTGAT": [
+                ">MK480602.1"
+            ],
+            "TGACGCAAAAGGTTTAGT": [
+                ">AB981434.1"
+            ]
+        },
+        {
+            "AGACGCAAAAGGTTTAAT": [
+                ">AB684311.1",
+                ">JX947862.1",
+                ">AB064483.1"
+            ]
+        }
+    ],
+    "614": [
+        {
+            "GACGCAAAAGGTTTAGTA": [
+                ">AB981434.1"
+            ]
+        },
+        {}
+    ],
+    "615": [
+        {},
+        {}
+    ],
+    "616": [
+        {},
+        {
+            "CGCGAAAGGTTTAATAAA": [
+                ">M17700.1"
+            ]
+        }
+    ],
+    "617": [
+        {},
+        {
+            "GCGAAAGGTTTAATAAAT": [
+                ">M17700.1"
+            ]
+        }
+    ],
+    "618": [
+        {},
+        {
+            "CGAAAGGTTTAATAAATG": [
+                ">M17700.1"
+            ]
+        }
+    ],
+    "619": [
+        {},
+        {
+            "AAAGGGCTTAATAAATGG": [
+                ">MH348117.1",
+                ">D87382.1"
+            ],
+            "GAAAGGTTTAATAAATGG": [
+                ">M17700.1"
+            ]
+        }
+    ],
+    "620": [
+        {
+            "AAAGGGTTAATAAATGGA": [
+                ">LC123813.1"
+            ],
+            "AAGGGCTTAATAAATGGA": [
+                ">MH348117.1",
+                ">D87382.1"
+            ]
+        },
+        {
+            "AAAGGGTTAATAAATGGA": [
+                ">LC123813.1"
+            ],
+            "AAGGGCTTAATAAATGGA": [
+                ">MH348117.1",
+                ">D87382.1"
+            ]
+        }
+    ],
+    "621": [
+        {
+            "AGGGCTTAATAAATGGAA": [
+                ">MH348117.1",
+                ">D87382.1"
+            ],
+            "AAGGGTTAATAAATGGAA": [
+                ">LC123813.1"
+            ]
+        },
+        {
+            "AGGGCTTAATAAATGGAA": [
+                ">MH348117.1",
+                ">D87382.1"
+            ],
+            "AAGGGTTAATAAATGGAA": [
+                ">LC123813.1"
+            ]
+        }
+    ],
+    "622": [
+        {
+            "AGGGTTAATAAATGGAAA": [
+                ">LC123813.1"
+            ],
+            "GGGCTTAATAAATGGAAA": [
+                ">MH348117.1",
+                ">D87382.1"
+            ]
+        },
+        {
+            "AGGGTTAATAAATGGAAA": [
+                ">LC123813.1"
+            ],
+            "GGGCTTAATAAATGGAAA": [
+                ">MH348117.1",
+                ">D87382.1"
+            ]
+        }
+    ],
+    "623": [
+        {
+            "GGGTTAATAAATGGAAAG": [
+                ">LC123813.1"
+            ],
+            "GGTTTAATAAATGGAAAA": [
+                ">MZ330911.1",
+                ">AB099561.1",
+                ">AB981426.1"
+            ]
+        },
+        {
+            "GGGTTAATAAATGGAAAG": [
+                ">LC123813.1"
+            ],
+            "GGTTTAATAAATGGAAAA": [
+                ">MZ330911.1",
+                ">AB099561.1",
+                ">AB981426.1"
+            ]
+        }
+    ],
+    "624": [
+        {
+            "GGTTAATAAATGGAAAGA": [
+                ">LC123813.1"
+            ],
+            "GTTTAATAAATGGAAAAA": [
+                ">MZ330911.1",
+                ">AB099561.1",
+                ">AB981426.1"
+            ]
+        },
+        {
+            "GGTTAATAAATGGAAAGA": [
+                ">LC123813.1"
+            ],
+            "GTTTAATAAATGGAAAAA": [
+                ">MZ330911.1",
+                ">AB099561.1",
+                ">AB981426.1"
+            ]
+        }
+    ],
+    "625": [
+        {
+            "TCTAATAAATGGAAAGAG": [
+                ">LC327663.1"
+            ],
+            "GTTAATAAATGGAAAGAG": [
+                ">LC123813.1"
+            ],
+            "TTTAATAAATGGAAAAAG": [
+                ">MZ330911.1",
+                ">AB099561.1",
+                ">AB981426.1"
+            ]
+        },
+        {
+            "TCTAATAAATGGAAAGAG": [
+                ">LC327663.1"
+            ],
+            "GTTAATAAATGGAAAGAG": [
+                ">LC123813.1"
+            ],
+            "TTTAATAAATGGAAAAAG": [
+                ">MZ330911.1",
+                ">AB099561.1",
+                ">AB981426.1"
+            ]
+        }
+    ],
+    "626": [
+        {
+            "CTAATAAATGGAAAGAGA": [
+                ">LC327663.1"
+            ],
+            "TTAATAAATGGAAAAAGA": [
+                ">MZ330911.1",
+                ">AB099561.1",
+                ">AB981426.1"
+            ]
+        },
+        {
+            "CTAATAAATGGAAAGAGA": [
+                ">LC327663.1"
+            ],
+            "TTAATAAATGGAAAAAGA": [
+                ">MZ330911.1",
+                ">AB099561.1",
+                ">AB981426.1"
+            ]
+        }
+    ],
+    "632": [
+        {},
+        {}
+    ],
+    "633": [
+        {},
+        {}
+    ],
+    "634": [
+        {},
+        {}
+    ],
+    "643": [
+        {},
+        {}
+    ],
+    "644": [
+        {},
+        {}
+    ],
+    "645": [
+        {},
+        {}
+    ],
+    "646": [
+        {},
+        {}
+    ],
+    "647": [
+        {
+            "GGCAAAAGAGGAGTTGAG": [
+                ">FR671423.1"
+            ]
+        },
+        {
+            "GGCAAAAGAGGAGTTGAG": [
+                ">FR671423.1"
+            ]
+        }
+    ],
+    "648": [
+        {
+            "GCAAAAGAGGAGTTGAGG": [
+                ">FR671423.1"
+            ]
+        },
+        {
+            "GCAAAAGAGGAGTTGAGG": [
+                ">FR671423.1"
+            ]
+        }
+    ],
+    "649": [
+        {
+            "CAAAAGAGGAGTTGAGGC": [
+                ">FR671423.1"
+            ]
+        },
+        {
+            "CAAAAGAGGAGTTGAGGC": [
+                ">FR671423.1"
+            ]
+        }
+    ],
+    "650": [
+        {
+            "AAAAGAGGAGTTGAGGCC": [
+                ">FR671423.1"
+            ],
+            "AAAAGAGGAGTGGATGCC": [
+                ">AB099571.1"
+            ]
+        },
+        {
+            "AAAAGAGGAGTTGAGGCC": [
+                ">FR671423.1"
+            ],
+            "AAAAGAGGAGTGGATGCC": [
+                ">AB099571.1"
+            ]
+        }
+    ],
+    "651": [
+        {
+            "AAAGAGGAGTGGATGCCA": [
+                ">AB099571.1"
+            ],
+            "AAAGAGGAGTTGAGGCCA": [
+                ">FR671423.1"
+            ]
+        },
+        {
+            "AAAGAGGAGTGGATGCCA": [
+                ">AB099571.1"
+            ],
+            "AAAGAGGAGTTGAGGCCA": [
+                ">FR671423.1"
+            ]
+        }
+    ],
+    "652": [
+        {
+            "AAGAGGAGTGGATGCCAA": [
+                ">AB099571.1"
+            ],
+            "AAGAGGAGTTGAGGCCAA": [
+                ">FR671423.1"
+            ],
+            "AAGAGGAGTTGATGCCAG": [
+                ">MH348117.1"
+            ]
+        },
+        {
+            "AAGAGGAGTGGATGCCAA": [
+                ">AB099571.1"
+            ],
+            "AAGAGGAGTTGAGGCCAA": [
+                ">FR671423.1"
+            ],
+            "AAGAGGAGTTGATGCCAG": [
+                ">MH348117.1"
+            ]
+        }
+    ],
+    "653": [
+        {
+            "AGAGGAGTGGATGCCAA-": [
+                ">AB099571.1"
+            ],
+            "AGAGGAGTTGATGCCAA-": [
+                ">AB981422.1",
+                ">AB981437.1",
+                ">AB086756.1",
+                ">AB086759.1",
+                ">AB099563.1",
+                ">AB099573.1",
+                ">AB099568.1",
+                ">AB086757.1",
+                ">AB099569.1",
+                ">AB064473.1",
+                ">AB086753.1",
+                ">AB099565.1",
+                ">AB064471.1",
+                ">AB064479.1",
+                ">D78438.1",
+                ">AB981436.1",
+                ">AB981432.1",
+                ">AB981434.1",
+                ">AB099561.1",
+                ">AB064476.1",
+                ">AB981430.1",
+                ">AB981426.1",
+                ">AB064485.1",
+                ">D87381.1",
+                ">D87382.1",
+                ">D78444.1",
+                ">AB064467.1",
+                ">AB086749.1"
+            ],
+            "AAAGGAATTGATGCCAA-": [
+                ">D78440.1"
+            ],
+            "AGAGGGGTTGATGCCAA-": [
+                ">AB064482.1",
+                ">AB064477.1",
+                ">AB064483.1"
+            ],
+            "AGAGGAGTTGATGCCAGT": [
+                ">MH348117.1"
+            ]
+        },
+        {
+            "AAAGGAATTGATGCCAA-": [
+                ">D78440.1"
+            ],
+            "AAAGGAGTTGATGCCAAT": [
+                ">LC123760.1",
+                ">LC123734.1",
+                ">LC123737.1",
+                ">LC123741.1",
+                ">LC123750.1",
+                ">AF170573.2"
+            ],
+            "AAAGGAATTGATGCCAAT": [
+                ">LC123744.1"
+            ]
+        }
+    ],
+    "654": [
+        {
+            "GAGGAGTTGATGCCAGTG": [
+                ">MH348117.1"
+            ],
+            "GAGGAGTGGATGCCAA--": [
+                ">AB099571.1"
+            ],
+            "GAGGAGTTGATGCCAA--": [
+                ">AB981422.1",
+                ">AB981437.1",
+                ">AB086756.1",
+                ">AB086759.1",
+                ">AB099563.1",
+                ">AB099573.1",
+                ">AB099568.1",
+                ">AB086757.1",
+                ">AB099569.1",
+                ">AB064473.1",
+                ">AB086753.1",
+                ">AB099565.1",
+                ">AB064471.1",
+                ">AB064479.1",
+                ">D78438.1",
+                ">AB981436.1",
+                ">AB981432.1",
+                ">AB981434.1",
+                ">AB099561.1",
+                ">AB064476.1",
+                ">AB981430.1",
+                ">AB981426.1",
+                ">AB064485.1",
+                ">D87381.1",
+                ">D87382.1",
+                ">D78444.1",
+                ">AB064467.1",
+                ">AB086749.1"
+            ],
+            "AAGGAATTGATGCCAA--": [
+                ">D78440.1"
+            ],
+            "GAGGGGTTGATGCCAA--": [
+                ">AB064482.1",
+                ">AB064477.1",
+                ">AB064483.1"
+            ]
+        },
+        {
+            "AAGGAGTTGATGCCAATG": [
+                ">LC123760.1",
+                ">LC123734.1",
+                ">LC123737.1",
+                ">LC123741.1",
+                ">LC123750.1",
+                ">AF170573.2"
+            ],
+            "AAGGAATTGATGCCAATG": [
+                ">LC123744.1"
+            ],
+            "GAGGAGTGGATGCCAA--": [
+                ">AB099571.1"
+            ],
+            "AAGGAATTGATGCCAA--": [
+                ">D78440.1"
+            ],
+            "GAGGGGTTGATGCCAA--": [
+                ">AB064482.1",
+                ">AB064477.1",
+                ">AB064483.1"
+            ]
+        }
+    ]
+}

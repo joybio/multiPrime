@@ -789,17 +789,17 @@ class NN_degenerate(object):
                         cover_for_MM[i] += 1
         # number of sequences with too many gaps greater than (1 - self.coverage)
         if round(gap_sequence_number / self.total_sequence_number, 2) >= (1 - self.coverage):
-            print("Gap fail")
+            # print("Gap fail")
             self.resQ.put(None)
         elif len(cover) < 1:
             self.resQ.put(None)
-            print("Cover fail")
+            # print("Cover fail")
         else:
             # cBit: entropy of cover sequences
             # tBit: entropy of total sequences
             cBit, tBit = self.entropy(cover, cover_number, gap_sequence, gap_sequence_number)
             if tBit > self.entropy_threshold:
-                print("Entropy fail")
+                # print("Entropy fail")
                 # This window is not a conserved region, and not proper to design primers
                 self.resQ.put(None)
             else:
@@ -813,7 +813,7 @@ class NN_degenerate(object):
                 if a < 4:
                     self.resQ.put(None)
                 elif (colSum == 0).any():
-                    print(colSum)  # if 0 in array; pass
+                    # print(colSum)  # if 0 in array; pass
                     self.resQ.put(None)
                 else:
                     gap_seq_id_info = [primer_start, gap_seq_id]
@@ -824,7 +824,7 @@ class NN_degenerate(object):
                     # F, R = mismatch_coverage[1][6], mismatch_coverage[1][7]
                     sequence = mismatch_coverage[1][2]
                     if self.dimer_check(sequence):
-                        print("Dimer fail")
+                        # print("Dimer fail")
                         self.resQ.put(None)
                     else:
                         self.resQ.put([mismatch_coverage, non_cov_primer_info, gap_seq_id_info])
@@ -1203,7 +1203,7 @@ class NN_degenerate(object):
         # primer_info = Manager().list()
         # non_cov_primer_out = Manager().list()
         for position in range(start_primer, stop_primer - self.primer_length):
-            print(position)
+            # print(position)
             p.submit(self.get_primers(sequence_dict, position))  # , primer_info, non_cov_primer_out
             # This will submit all tasks to one place without blocking, and then each
             # thread in the thread pool will fetch tasks.
