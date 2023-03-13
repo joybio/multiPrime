@@ -11,9 +11,7 @@ Scripts and pipelines provided in this repository aid to design multiplex PCR pr
 
 # Requirements
 
-To run this pipeline, your computer requires **30 GB of available memory (RAM)** to process larger number of sequence (e.g. 1,000,000). We **don't suggest** that Input sequences contains those sequences whose **average length is greater than 100K**,  if necessary, you'd better set the Maxseq in yaml file as small as possible, but **do not smaller than 200** and use MAFFT to generate multi-alignment in the pipeline instead of MUSCLE. Snakemake was used to facilitate the automated execution of all analysis steps. The easiest way to make use of the pipeline is to set up a python 3.9 virtual environment and run the pipeline is this environment. 
-
-Please note: MUSCLE always collapse when sequence length is greater than 10K and sequence number is greater than 50. In such situation, use MAFFT instead.
+To run this pipeline, your computer requires **30 GB of available memory (RAM)** to process larger number of sequence (e.g. 1,000,000). We **don't suggest** that Input sequences contains those sequences whose **average length is greater than 100K**,  if necessary, you'd better set the Maxseq in yaml file as small as possible, but **do not smaller than 200**. Snakemake was used to facilitate the automated execution of all analysis steps. The easiest way to make use of the pipeline is to set up a python 3.9 virtual environment and run the pipeline is this environment. 
 
 Download/Provide all necessary files:
 
@@ -23,6 +21,7 @@ DEGEPRIME-1.1.0: DOI: 10.1128/AEM.01403-14; "DegePrime, a program for degenerate
 biopython: Not required in v1.0.1 and the subsequent version.
 
 mfeprimer-3.2.6: DOI: 10.1093/nar/gkz351; Please cite: "MFEprimer-3.0: quality control for PCR primers." please move this it into scripts. 
+Please add "execute" to mfeprimer-3.2.6
 
 Programs we employed:
 
@@ -102,13 +101,15 @@ or
   ```
 For example:
   
-  MC-DPD (--variation 0) or MC-EDPD (--variation 1 or 2, we do not suggest you set --variation greater than 2, because amplification efficiency was severely inhibited when there are 3 mismathes). The development version of MC-DPD or MC-EDPD can be installed with:
+  MC-DPD (--variation 0) or MC-EDPD (--variation 1 or 2, we do not suggest you set --variation greater than 2, because amplification efficiency was severely inhibited when there are 3 mismathes). 
+  
+  The development version of MC-DPD or MC-EDPD can be installed with:
   **pypi:**
   ```bash
   pip install multiPrime
   ```
-  multiPrime package contains primer design; primer pair selection and primer pair coverage statistics, more functions will be improved in the future. All manual instruction for multiPrime can be found in [here](https://pypi.org/project/multiPrime/).
- 
+  multiPrime package contains primer design; primer pair selection and primer pair coverage statistics, more functions will be improved in the future. All manual instruction for multiPrime can be found in [here](https://pypi.org/project/multiPrime/). 
+
   or:
   ```bash
   python scripts/multiPrime-core.py
