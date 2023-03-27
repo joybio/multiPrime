@@ -42,12 +42,12 @@ identity: 0.7
 # If seq_number_ANI = 0, then all clusters will be processed 
 # If seq_number_ANI = 1, then no clusters will be processed
 # Suggestion: 10 or 0
-seq_number_ANI: 10
+seq_number_ANI: 1
 # Threshold of average nucleotide identity, minimum:0.7.
 ani: 0.8
 # Merge or drop those clusters with rare sequences and shows high ANI with others. T: drop; F: merge into others
 # Carefully use "F".
-drop: "T"
+drop: "F"
 
 #Max sequence number of each cluster used in multi-alignment {muscle}. 
 #We randomly choose {maxseq} sequences in cluster for next steps.

@@ -55,9 +55,9 @@ def argsParse():
 
     parser.add_option('-p', '--nproc',
                       dest='nproc',
-                      default=10,
+                      default=1,
                       type="int",
-                      help='Primer set file. option. Default: 10')
+                      help='Primer set file. option. Default: 1')
 
     parser.add_option('-l', '--len',
                       dest='len',
@@ -67,15 +67,15 @@ def argsParse():
 
     parser.add_option('-m', '--min_ident',
                       dest='min_ident',
-                      default=0.6,
+                      default=0.8,
                       type="float",
-                      help='min identity. Default: 0.6')
+                      help='min identity. Default: 0.8')
 
     parser.add_option('-f', '--format',
                       dest='format',
                       default="fq",
                       type="str",
-                      help='Input format, Default: fastq')
+                      help='Input format; fasta: fa; fastq: fq. Default: fastq')
 
     parser.add_option('-o', '--out',
                       dest='out',
