@@ -4,14 +4,14 @@
 ################################################################################
 # directory, where is/are the input virus fasta file(s) located
 # absolute path
-input_dir: /share/data3/yangjunbo/git_storage/multiPrime/test_data
+input_dir: /share/data3/yangjunbo/multiPCR/multiPrime2/virus_sequence/Rhinovirus
 
 # directory, in which the pipeline writes all output files (relative to current directory)
 # (this also includes the summary files)
-results_dir: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.results
+results_dir: /share/data3/yangjunbo/multiPCR/multiPrime2/virus_sequence/Rhinovirus/multiPrime1.results
 
 # directory to write the log-files, created during processing, to 
-log_dir: /share/data3/yangjunbo/git_storage/multiPrime/test_data/test.logs
+log_dir: /share/data3/yangjunbo/multiPCR/multiPrime2/virus_sequence/Rhinovirus/multiPrime1.logs
 
 # directory of scripts.
 scripts_dir: /share/data3/yangjunbo/git_storage/multiPrime/scripts
@@ -23,7 +23,7 @@ scripts_dir: /share/data3/yangjunbo/git_storage/multiPrime/scripts
 # please type here: sample1
 # this name is used throughout the entire pipeline as name for the output samples
 virus:
-  - CDS_20727
+  - Rhinovirus
 ################################################################################
 # preprocessing
 ################################################################################
@@ -34,7 +34,7 @@ virus:
 #Params in cd-hit -c {}. Suggestion: 0.7. minimum: 0.65 
 #If the identity of sequences in your input file is very high, you can set this param as 0.9.
 #BUG (dont use 1): If you set this param as 1. It will generate primers by no-cluster methods.
-identity: 0.8
+identity: 0.7
 #Max sequence number of each cluster used in multi-alignment {muscle}. 
 #We randomly choose {maxseq} sequences in cluster for next steps.
 #It wont affect the calculation of primer coverage in the final primer set, 
@@ -60,7 +60,7 @@ primer_len: 18
 #coverage threshold [0.6] is not suitable. you can reset this threshold.
 #If sequence number of some clusters is very large {> 100000}. it will take {500} sequences randomly to get output
 #Details are list in the usage of get_degePrimer.py
-coverage: 0.7
+coverage: 0.5
 
 #PCR PRODUCT SIZE. Filter primers by PRODUCT size.default [150,400].
 PRODUCT_size: 150,1200

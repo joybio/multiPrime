@@ -185,14 +185,14 @@ rule degePrimer_design:
 		mem_mb= 10000 # 10G
 	params:
 		script = config["scripts_dir"],
-		dege_number = config["dege_number"],
+		degeneracy = config["degeneracy"],
 		primer_len = config["primer_len"]
 	message:
 		"Step8: design primers by degePrimer .."
 	shell:
 		'''
 		python {params.script}/run_dege.py -i {input} -s {params.script}\
-			-d {params.dege_number} -l {params.primer_len} \
+			-d {params.degeneracy} -l {params.primer_len} \
 			-o {output} 2>&1 > {log}
 		'''
 #-------------------------------------------------------------------------------------------
