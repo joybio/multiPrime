@@ -52,17 +52,19 @@ rule seq_format:
 		python {params}/seq_format.py -i {input} -o {output}
 		'''
 #-------------------------------------------------------------------------------------------
-# seq_format rule 2: Dependency packages - blast+
+# bowtie2-index rule 2: Dependency packages - bowtie2
 #-------------------------------------------------------------------------------------------
-#rule makeblastdb:
-#	input:
-#		config["results_dir"] + "/Total_fa/{virus}.format.fa"
-#	output:
-#		directory(config["results_dir"]) + "/Total_fa/{virus}.format.fa.db"
-#	shell:
-#		'''
-#		makeblastdb -dbtype nucl -in {input} -out {output}
-#		'''
+rule makedb:
+	input:
+		config["results_dir"] + "/Total_fa/{virus}.format.fa"
+	output:
+		config["results_dir"] + "/Bowtie_db/{virus}"
+	message:
+		"Step2: Build index for BWT (bowtie2) .."
+	shell:
+		'''
+		bowtie2-build {input} {output}
+		'''
 #-------------------------------------------------------------------------------------------
 # extract_ rule 3: Dependency packages - None
 #-------------------------------------------------------------------------------------------
@@ -85,7 +87,8 @@ rule rmdup:
 		config["results_dir"] + "/Total_fa/{virus}.format.fa"
 	output:
 		config["results_dir"] + "/Total_fa/{virus}.format.rmdup.cluster.fa"
-	message: "Step3: remove duplicated sequence .."
+	message: 
+		"Step3: Remove duplicated sequence .."
 	shell:
 		'''
 		cd-hit -M 0 -T 0 -i {input} -o {output} -c 1
@@ -100,7 +103,8 @@ rule cluster_by_identity:
 		config["results_dir"] + "/Total_fa/{virus}.format.rmdup.cluster.uniq.fa",
 		config["results_dir"] + "/Total_fa/{virus}.format.rmdup.cluster.uniq.fa.clstr"
 	# It is allowed that output name not used in the shell.
-	message: "Step4: Cluster .."
+	message: 
+		"Step4: Cluster sequences by identity .."
 	params:
 		identity=config['identity']
 	shell:
@@ -128,7 +132,7 @@ checkpoint extract_cluster_fa:
 		drop = config["drop"],
 		ani = config["ani"]
 	message:
-		"Step5: extract fasta in each cluster from cd-hit results .."
+		"Step5: Extract fasta from cd-hit results .."
 	shell:
 		'''
 		python {params.script}/extract_cluster_V3.py -i {input[0]} -c {input[1]} \
@@ -166,7 +170,7 @@ rule alignment_by_muscle:
 	resources:
 		mem_mb = 10000
 	message:
-		"Step6: alignment by muscle .."
+		"Step6: Alignment by MAFFT/muscle .."
 	shell:
 		'''
 		python {params.script}/run_mafft.py -i {input} -o {output}
@@ -197,7 +201,7 @@ rule multiPrime:
 		GC = config["gc_content"],
 		coverage = config["coverage"]
 	message:
-		"Step8: design primers by multiPrime .."
+		"Step7: Design primers by multiPrime .."
 	shell:
 		'''
 		python {params.script}/multiPrime-core.py -i {input} -n {params.dege_number} \
@@ -206,7 +210,7 @@ rule multiPrime:
 			-o {output} -f {params.coverage} -p 1 2>&1 > {log}
 		'''
 #-------------------------------------------------------------------------------------------
-# get_degePrimer rule 9: Dependency packages - pandas, biopython, math, operator,functools
+# get_degePrimer rule 8: Dependency packages - pandas, biopython, math, operator,functools
 #-------------------------------------------------------------------------------------------
 rule get_multiPrime:
 	input:
@@ -228,7 +232,7 @@ rule get_multiPrime:
 		adaptor = config["adaptor"],
 		end = config["end"]
 	message:
-		"Step9: choose candidate primeri pairs for each cluster (hairpin, dimer (F-R) check) .."
+		"Step8: Filter candidate primeri pairs for each cluster (hairpin, dimer (F-R) check) .."
 	shell:
 		'''
 		python {params.script}/get_multiPrime.py -i {input.primer} -r {input.ref_fa} \
@@ -238,7 +242,7 @@ rule get_multiPrime:
 		'''
 
 #-------------------------------------------------------------------------------------------
-# aggregate_candidate_primers rule 10: Dependency packages - None
+# aggregate_candidate_primers rule 9: Dependency packages - None
 #-------------------------------------------------------------------------------------------
 rule aggregate_candidate_primers:
 	input:
@@ -246,13 +250,13 @@ rule aggregate_candidate_primers:
 	output:
 		config["results_dir"] + "/Primers_set/candidate_primers_sets.txt"
 	message:
-		"Step10: prepare all candidate primers for primer selection .."
+		"Step9: Prepare all candidate primers for primer selection .."
 	shell:
 		'''
 		cat {input} > {output}
 		'''
 #-------------------------------------------------------------------------------------------
-# get_candidate_primer_fa rule 12: Dependency packages - None
+# get_candidate_primer_fa rule 10: Dependency packages - None
 #-------------------------------------------------------------------------------------------
 rule get_candidate_primer_fa:
 	input:
@@ -263,7 +267,8 @@ rule get_candidate_primer_fa:
 	params:
 		script = config["scripts_dir"],
 		step = config["step"]
-
+	message:
+		"Step10: Get candidate primers .."
 	shell:
 		'''
 		python {params.script}/candidate_primer_txt2fa.py -i {input} -s {params.step} \
@@ -285,7 +290,7 @@ rule get_Maxprimerset:
 		step = config["step"],
 		method = config["method"]
 	message:
-		"Step11: extract Max_primer_set..."
+		"Step11: Try to find Max_primer_set..."
 	shell:
 		'''
 		python {params.script}/get_Maxprimerset.py -i {input} -s {params.step} \
@@ -301,7 +306,7 @@ rule get_core_primer_set:
 	output:
 		config["results_dir"] + "/Core_primers_set/core_candidate_primers_sets.txt"
 	message:
-		"step12: extract core primer set..."
+		"step12: Extract core primer set..."
 	params:
 		script = config["scripts_dir"],
 		number = config["core_number"]
@@ -319,7 +324,7 @@ rule get_core_Maxprimerset:
 	output:
 		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.xls"
 	message:
-		"step13: extract core Max_primer_set..."
+		"Step13: Try to find core Max_primer_set .."
 	params:
 		script = config["scripts_dir"],
 		step = config["step"],
@@ -344,6 +349,8 @@ rule format_transition:
 	params:
 		script = config["scripts_dir"],
 		step = config["step"]
+	message:
+		"Step14: Format transition .."
 	shell:
 		"""
 		python {params.script}/candidate_primer_txt2fa.py -i {input} -s {params.step} \
@@ -362,7 +369,7 @@ rule get_all_PCR_product:
 	params:
 		config["scripts_dir"]
 	message:
-		"Step14: extract PCR product from the input virus sequence .."
+		"Step15: Extract PCR product from the input virus sequence (non-mismatch) .."
 	shell:
 		'''
 		python {params}/extract_PCR_product.py -i {input[0]} -r {input[1]} -p 10 \
@@ -381,7 +388,7 @@ rule get_core_PCR_product:
 	params:
 		config["scripts_dir"]
 	message:
-		"Step15: extract core PCR product from the input virus sequence .."
+		"Step16: Extract core PCR product from the input virus sequence (non-mismatch) .."
 	shell:
 		'''
 		python {params}/extract_PCR_product.py -i {input[0]} -r {input[1]} -p 10 \
@@ -401,7 +408,7 @@ rule all_mfeprimer_check:
 	params:
 		config["scripts_dir"]
 	message:
-		"Step16: hairpin and dimer check .. "
+		"Step17: Hairpin and dimer check by mfeprimer .."
 	
 	shell:
 		"""
@@ -424,7 +431,7 @@ rule core_mfeprimer_check:
 	params:
 		config["scripts_dir"]
 	message:
-		"Step17: hairpin and dimer check .. "
+		"Step18: Hairpin and dimer check by mfeprimer.. "
 	shell:
 		"""
 		python {params}/primerset_format.py -i {input} -o {output[0]}
@@ -432,6 +439,26 @@ rule core_mfeprimer_check:
 		{params}/mfeprimer-3.2.6 dimer -i {output[0]} -o {output[2]}
 		python {params}/finDimer.py -i {output[0]} -o {output[3]}
 		"""
+#-------------------------------------------------------------------------------------------
+# core_primer_coverage rule 19: Dependency packages - bowtie2 
+#-------------------------------------------------------------------------------------------
+rule BWT_validation:
+	input:
+		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa",
+		config["results_dir"] + "/Bowtie_db/{virus}"
+	output:
+		config["results_dir"] + "/Core_primers_set/BWT_coverage/core_final_maxprimers_set.out"
+	params:
+		script = config["scripts_dir"],
+		primer_len = config["primer_len"]
+	message:
+		"Step19: Primer coverage clculation .. "
+	shell:
+		"""
+		python {params.script}/primer_coverage_validation_by_BWT.py -i {input[0]}  -r {input[1]}
+			-l {params.primer_len} -t 1 -s 50,2000 -o core_final_maxprimers_set.out
+		"""
+
 #-------------------------------------------------------------------------------------------
 # Done!
 #-------------------------------------------------------------------------------------------
