@@ -138,6 +138,7 @@ def argsParse():
     parser.add_option('-a', '--away',
                       dest='away',
                       default=4,
+                      type="int",
                       help='Filter hairpin structure, which means distance of the minimal paired bases. Default: 4. '
                            'Example:(number of X) AGCT[XXXX]AGCT. '
                            'Primers should not have complementary sequences (no consecutive 4 bp complementarities),'
