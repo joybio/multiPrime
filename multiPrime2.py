@@ -33,7 +33,8 @@ rule all:
 		config["results_dir"] + "/Primers_set/final_maxprimers_set.fa.dimer",
 		config["results_dir"] + "/Core_primers_set/core_Coverage_stast.xls",
 		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa.dimer",
-		config["results_dir"] + "/Core_primers_set/core_candidate_primers_sets.number"
+		config["results_dir"] + "/Core_primers_set/core_candidate_primers_sets.number",
+		config["results_dir"] + "/Core_primers_set/BWT_coverage/core_final_maxprimers_set.out"
 
 #-------------------------------------------------------------------------------------------
 # seq_format rule 1: Dependency packages - python
@@ -445,7 +446,7 @@ rule core_mfeprimer_check:
 rule BWT_validation:
 	input:
 		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa",
-		config["results_dir"] + "/Bowtie_db/{virus}"
+		expand(config["results_dir"] + "/Bowtie_db/{virus}",virus=config["virus"])
 	output:
 		config["results_dir"] + "/Core_primers_set/BWT_coverage/core_final_maxprimers_set.out"
 	params:
