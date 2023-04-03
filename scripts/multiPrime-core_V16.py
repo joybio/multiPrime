@@ -127,9 +127,9 @@ def argsParse():
                            "otherwise, it won't be regard as the mis-coverage. "
                            "With this param, you can control the index of Y-distance (number=variation and position of mismatch) "
                            "when calculate coverage with error. coordinate>0: 5\'==>3\'; coordinate<0: 3\'==>5\'."
-                           "You can set this param to any value that you prefer. Default: 2,-1. "
-                           "2:  I dont want mismatch at the 2nd postion. "
-                           "-1: I dont want mismatch at the -1st postion.")
+                           "You can set this param to any value that you prefer. Default: 1,-1. "
+                           "1:  I dont want mismatch at the 2nd postion, start from 0."
+                           "-1: I dont want mismatch at the -1st postion, start fro -1.")
 
     parser.add_option('-p', '--proc',
                       dest='proc',
@@ -1168,8 +1168,8 @@ class NN_degenerate(object):
                 Y_strict.append(y_index)
                 Y_strict_R.append(self.primer_length - y_index)
             else:
-                Y_strict.append(self.primer_length + y_index)
-                Y_strict_R.append(-y_index)
+                Y_strict.append(self.primer_length + y_index + 1)
+                Y_strict_R.append(-y_index + 1)
         return Y_strict, Y_strict_R
 
     def mis_primer_check(self, all_primers, optimal_primer, cover, non_gap_seq_id):
