@@ -445,19 +445,19 @@ rule core_mfeprimer_check:
 #-------------------------------------------------------------------------------------------
 rule BWT_validation:
 	input:
-		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa",
-		expand(config["results_dir"] + "/Bowtie_db/{virus}",virus=config["virus"])
+		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa"
 	output:
 		config["results_dir"] + "/Core_primers_set/BWT_coverage/core_final_maxprimers_set.out"
 	params:
 		script = config["scripts_dir"],
-		primer_len = config["primer_len"]
+		primer_len = config["primer_len"],
+		index = expand(config["results_dir"] + "/Bowtie_db/{virus}",virus=config["virus"])
 	message:
 		"Step19: Primer coverage clculation .. "
 	shell:
 		"""
-		python {params.script}/primer_coverage_validation_by_BWT.py -i {input[0]}  -r {input[1]}
-			-l {params.primer_len} -t 1 -s 50,2000 -o core_final_maxprimers_set.out
+		python {params.script}/primer_coverage_validation_by_BWT.py -i {input[0]}  -r {params.index} \
+			-l {params.primer_len} -t 1 -s 50,2000 -o {output}
 		"""
 
 #-------------------------------------------------------------------------------------------
