@@ -136,6 +136,7 @@ class Extract_Cluster(object):
         cluster_rep = {}  # Representative sequence
         cluster_dict = defaultdict(list)
         cluster_identity = defaultdict(list)  # identity of each sequence (compare with representative sequence)
+        print(self.clstr)
         with open(self.clstr, "r") as cluster:
             for c in cluster:
                 if c.startswith(">"):
@@ -156,6 +157,7 @@ class Extract_Cluster(object):
                         identities.write(i.lstrip(">") + '\t' + j[0] + "\t" + j[1] + "\n")
             identities.close()
         identities.close()
+        print(cluster_dict)
         return [cluster_dict, cluster_rep]
 
     def parse_seq(self):
@@ -171,20 +173,21 @@ class Extract_Cluster(object):
                 else:
                     seq_dict[seq_name] = seq
         data.close()
+        print(seq_dict)
         return seq_dict
 
     def extract(self, ClusterID, number):
         current_cluster_file_id = ClusterID.lstrip(">") + "_" + str(len(self.clstr_dict[ClusterID])) + ".fa"
         current_cluster_file = Path(self.Cluster_fa).joinpath(current_cluster_file_id)
-        with open(current_cluster_file, "w") as cf:
-            for acc in self.clstr_dict[ClusterID]:
-                cf.write(str(acc) + "\n" + self.seq_dict[acc])
-        cf.close()
         top_current_cluster_file = Path(current_cluster_file).with_suffix(".tfa")
         # out_path = self.Cluster_fa
         current_cluster_seq = Path(current_cluster_file).with_suffix(".txt")
         new_path = ClusterID.lstrip(">") + "_" + str(len(self.clstr_dict[ClusterID]))
         top_cluster_for_ANI = Path(self.Cluster_fa).joinpath(new_path)
+        with open(current_cluster_file, "w") as cf:
+            for acc in self.clstr_dict[ClusterID]:
+                cf.write(str(acc) + "\n" + self.seq_dict[acc])
+            cf.close()
         if top_cluster_for_ANI.exists():
             pass
         else:
@@ -195,9 +198,9 @@ class Extract_Cluster(object):
         # cs.close()
         if number == 0:
             os.system("cp {} {}".format(current_cluster_file, top_current_cluster_file))
-            if len(self.clstr_dict[ClusterID]) > 100:
+            if len(self.clstr_dict[ClusterID]) > 500:
                 self.clstr_dict[ClusterID].remove(self.clstr_rep[ClusterID])
-                selected_seq = random.sample(self.clstr_dict[ClusterID], 99)
+                selected_seq = random.sample(self.clstr_dict[ClusterID], 499)
                 selected_seq.append(self.clstr_rep[ClusterID])
                 with open(current_cluster_seq, "w") as cs:
                     for seq_id in set(selected_seq):
@@ -218,36 +221,38 @@ class Extract_Cluster(object):
                             t.write(str(seq_id) + "\n" + self.seq_dict[seq_id])
                             t.close()
                 cs.close()
-        elif 0 < len(self.clstr_dict[ClusterID]) <= int(number):
-            os.system("cp {} {}".format(current_cluster_file, top_current_cluster_file))
-            with open(top_current_cluster_file, "w") as tmp:
-                with open(current_cluster_seq, "w") as cs:
-                    for acc_top in self.clstr_dict[ClusterID]:
-                        tmp_id = acc_top.lstrip(">") + ".fa"
-                        cs.write(str(self.Cluster_fa) + "/" + str(new_path) + "/" + tmp_id + "\n")
-                        sequence = Path(top_cluster_for_ANI).joinpath(tmp_id)
-                        tmp.write(str(acc_top) + "\n" + self.seq_dict[acc_top]) 
-                        with open(sequence, "w") as t:
-                            t.write(str(acc_top) + "\n" + self.seq_dict[acc_top])
-                            t.close()
-                cs.close()
-            tmp.close()
         else:
-            self.clstr_dict[ClusterID].remove(self.clstr_rep[ClusterID])
-            selected_seq = random.sample(self.clstr_dict[ClusterID], int(number) - 1)
-            selected_seq.append(self.clstr_rep[ClusterID])
-            with open(top_current_cluster_file, "w") as tmp:
-                with open(current_cluster_seq, "w") as cs:
-                    for seq_id in set(selected_seq):
-                        tmp_id = seq_id.lstrip(">") + ".fa"
-                        cs.write(str(self.Cluster_fa) + "/" + str(new_path) +"/" + tmp_id + "\n")
-                        sequence = Path(top_cluster_for_ANI).joinpath(tmp_id)
-                        tmp.write(str(seq_id) + "\n" + self.seq_dict[seq_id])
-                        with open(sequence, "w") as t:
-                            t.write(str(seq_id) + "\n" + self.seq_dict[seq_id])
-                            t.close()
-                cs.close()
-            tmp.close()
+            print(number)
+            if 0 < len(self.clstr_dict[ClusterID]) <= int(number):
+                os.system("cp {} {}".format(current_cluster_file, top_current_cluster_file))
+                with open(top_current_cluster_file, "w") as tmp:
+                    with open(current_cluster_seq, "w") as cs:
+                        for acc_top in self.clstr_dict[ClusterID]:
+                            tmp_id = acc_top.lstrip(">") + ".fa"
+                            cs.write(str(self.Cluster_fa) + "/" + str(new_path) + "/" + tmp_id + "\n")
+                            sequence = Path(top_cluster_for_ANI).joinpath(tmp_id)
+                            tmp.write(str(acc_top) + "\n" + self.seq_dict[acc_top])
+                            with open(sequence, "w") as t:
+                                t.write(str(acc_top) + "\n" + self.seq_dict[acc_top])
+                                t.close()
+                    cs.close()
+                tmp.close()
+            else:
+                self.clstr_dict[ClusterID].remove(self.clstr_rep[ClusterID])
+                selected_seq = random.sample(self.clstr_dict[ClusterID], int(number) - 1)
+                selected_seq.append(self.clstr_rep[ClusterID])
+                with open(top_current_cluster_file, "w") as tmp:
+                    with open(current_cluster_seq, "w") as cs:
+                        for seq_id in set(selected_seq):
+                            tmp_id = seq_id.lstrip(">") + ".fa"
+                            cs.write(str(self.Cluster_fa) + "/" + str(new_path) +"/" + tmp_id + "\n")
+                            sequence = Path(top_cluster_for_ANI).joinpath(tmp_id)
+                            tmp.write(str(seq_id) + "\n" + self.seq_dict[seq_id])
+                            with open(sequence, "w") as t:
+                                t.write(str(seq_id) + "\n" + self.seq_dict[seq_id])
+                                t.close()
+                    cs.close()
+                tmp.close()
 
     def run(self):
         self.parse_dir()
