@@ -164,7 +164,7 @@ class Extract_Cluster(object):
                     if re.search(" ", seq):
                         seq = seq.split(" ")
                         if len(seq[0]) > 20:
-                            print("Please rename your fasta ID! Make sure ID after less than 19 characters!")
+                            print("Please rename your fasta ID! Make sure ID length less than 20 characters!")
                             sys.exit(1)
                         else:
                             seq_name = seq[0]
@@ -188,7 +188,7 @@ class Extract_Cluster(object):
                 if acc in self.seq_dict.keys():
                     cf.write(str(acc) + "\n" + self.seq_dict[acc])
                 else:
-                    print("Please rename your fasta ID! Make sure ID after less than 19 characters!")
+                    print("Please rename your fasta ID! Make sure ID length less than 20 characters!")
             cf.close()
         if top_cluster_for_ANI.exists():
             pass
