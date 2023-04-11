@@ -40,8 +40,7 @@ import random
 from collections import defaultdict
 import re
 import os
-
-# TRANS = str.maketrans("ATGCRYMKSWHBVDN", "TACGYRKMSWDVBHN")
+import sys
 from pathlib import Path
 
 TRANS = str.maketrans("ATGC", "TACG")
@@ -90,7 +89,6 @@ def argsParse():
                       help='Number of process to launch.  default: 10.')
 
     (options, args) = parser.parse_args()
-    import sys
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit(1)
@@ -136,7 +134,6 @@ class Extract_Cluster(object):
         cluster_rep = {}  # Representative sequence
         cluster_dict = defaultdict(list)
         cluster_identity = defaultdict(list)  # identity of each sequence (compare with representative sequence)
-        print(self.clstr)
         with open(self.clstr, "r") as cluster:
             for c in cluster:
                 if c.startswith(">"):
@@ -157,7 +154,6 @@ class Extract_Cluster(object):
                         identities.write(i.lstrip(">") + '\t' + j[0] + "\t" + j[1] + "\n")
             identities.close()
         identities.close()
-        print(cluster_dict)
         return [cluster_dict, cluster_rep]
 
     def parse_seq(self):
@@ -167,7 +163,11 @@ class Extract_Cluster(object):
                 if seq.startswith(">"):
                     if re.search(" ", seq):
                         seq = seq.split(" ")
-                        seq_name = seq[0]
+                        if len(seq[0]) > 20:
+                            print("Please rename your fasta ID! Make sure ID after less than 19 characters!")
+                            sys.exit(1)
+                        else:
+                            seq_name = seq[0]
                     else:
                         seq_name = seq.strip()
                 else:
@@ -180,13 +180,15 @@ class Extract_Cluster(object):
         current_cluster_file_id = ClusterID.lstrip(">") + "_" + str(len(self.clstr_dict[ClusterID])) + ".fa"
         current_cluster_file = Path(self.Cluster_fa).joinpath(current_cluster_file_id)
         top_current_cluster_file = Path(current_cluster_file).with_suffix(".tfa")
-        # out_path = self.Cluster_fa
         current_cluster_seq = Path(current_cluster_file).with_suffix(".txt")
         new_path = ClusterID.lstrip(">") + "_" + str(len(self.clstr_dict[ClusterID]))
         top_cluster_for_ANI = Path(self.Cluster_fa).joinpath(new_path)
         with open(current_cluster_file, "w") as cf:
             for acc in self.clstr_dict[ClusterID]:
-                cf.write(str(acc) + "\n" + self.seq_dict[acc])
+                if acc in self.seq_dict.keys():
+                    cf.write(str(acc) + "\n" + self.seq_dict[acc])
+                else:
+                    print("Please rename your fasta ID! Make sure ID after less than 19 characters!")
             cf.close()
         if top_cluster_for_ANI.exists():
             pass
