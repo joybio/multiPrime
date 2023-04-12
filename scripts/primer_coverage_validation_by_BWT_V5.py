@@ -67,7 +67,7 @@ def argsParse():
 
     parser.add_option('-r', '--ref',
                       dest='ref',
-                      help='reference file: bowtie index.')
+                      help='fasta file.')
 
     parser.add_option('-l', '--len',
                       dest='len',
@@ -219,7 +219,7 @@ class off_targets(object):
         self.nproc = nproc
         self.term_len = term_length
         self.primer_file = primer_file
-        self.reference_file = reference_file
+        self.reference_file = Path(reference_file).parent.joinpath("Bowtie_DB").joinpath(Path(reference_file).stem)
         self.outfile = outfile
         self.PCR_size = PCR_product_size
         self.resQ = Manager().Queue()
@@ -415,9 +415,22 @@ class off_targets(object):
                 fo.write(k[0] + "\t" + str(k[1]) + "\t" + str(len(primer_pair_acc_set)) + "\n")
         with open(self.outfile + ".total.acc.num", "w") as fo2:
             fo2.write("total coverage of primer set (PS) is: {}".format(len(acc_id)))
+def Bowtie_index(Input):
+    Bowtie_file = Path(Input).parent.joinpath("Bowtie_DB")
+    Bowtie_prefix = Path(Bowtie_file).joinpath(Path(Input).stem)
+    if Bowtie_file.exists():
+        size = os.path.getsize(Bowtie_file)
+        if not size:
+            os.system("bowtie2-build {} {}".format(Input, Bowtie_prefix))
+        else:
+            pass
+    else:
+        os.mkdir(Bowtie_file)
+        os.system("bowtie2-build {} {}".format(Input, Bowtie_prefix))
 
 def main():
     options, args = argsParse()
+    Bowtie_index(options.ref)
     prediction = off_targets(primer_file=options.input_file, term_length=options.len, reference_file=options.ref,
                              PCR_product_size=options.size, mismatch_num=options.seedmms, outfile=options.out,
                              term_threshold=options.term, bowtie=options.bowtie, nproc=options.proc)

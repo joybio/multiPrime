@@ -53,21 +53,7 @@ rule seq_format:
 		python {params}/seq_format.py -i {input} -o {output}
 		'''
 #-------------------------------------------------------------------------------------------
-# bowtie2-index rule 2: Dependency packages - bowtie2
-#-------------------------------------------------------------------------------------------
-rule makedb:
-	input:
-		config["results_dir"] + "/Total_fa/{virus}.format.fa"
-	output:
-		config["results_dir"] + "/Bowtie_db/{virus}"
-	message:
-		"Step2: Build index for BWT (bowtie2) .."
-	shell:
-		'''
-		bowtie2-build {input} {output}
-		'''
-#-------------------------------------------------------------------------------------------
-# extract_ rule 3: Dependency packages - None
+# extract_ rule 2: Dependency packages - None
 #-------------------------------------------------------------------------------------------
 #rule extract_seq:
 #	input:
@@ -94,6 +80,22 @@ rule rmdup:
 		'''
 		cd-hit -M 0 -T 0 -i {input} -o {output} -c 1
 		'''
+#-------------------------------------------------------------------------------------------
+# bowtie2-index rule 2: Dependency packages - bowtie2
+#-------------------------------------------------------------------------------------------
+#rule makedb:
+#	input:
+#		config["results_dir"] + "/Total_fa/{virus}.format.rmdup.cluster.fa"
+#	output:
+#		touch(config["results_dir"] + "/Bowtie_db/done")
+#	params:
+#		output_prefix=config["results_dir"] + "/Bowtie_db/genome"
+#	message:
+#		"Step2: Build index for BWT (bowtie2) .."
+#	shell:
+#		'''
+#		bowtie2-build {input} {params.output_prefix}
+#		'''
 #-------------------------------------------------------------------------------------------
 # cluster_by_identity rule 4: Dependency packages - cd-hit || suggest: identity=0.8
 #-------------------------------------------------------------------------------------------
@@ -445,18 +447,18 @@ rule core_mfeprimer_check:
 #-------------------------------------------------------------------------------------------
 rule BWT_validation:
 	input:
-		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa"
+		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa",
+		expand(config["results_dir"] + "/Total_fa/{virus}.format.fa",virus = virus)
 	output:
 		config["results_dir"] + "/Core_primers_set/BWT_coverage/core_final_maxprimers_set.out"
 	params:
 		script = config["scripts_dir"],
 		primer_len = config["primer_len"],
-		index = expand(config["results_dir"] + "/Bowtie_db/{virus}",virus=config["virus"])
 	message:
 		"Step19: Primer coverage clculation .. "
 	shell:
 		"""
-		python {params.script}/primer_coverage_validation_by_BWT.py -i {input[0]}  -r {params.index} \
+		python {params.script}/primer_coverage_validation_by_BWT.py -i {input[0]}  -r {input[1]} \
 			-l {params.primer_len} -t 1 -s 50,2000 -o {output}
 		"""
 
