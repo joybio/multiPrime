@@ -173,7 +173,6 @@ class Extract_Cluster(object):
                 else:
                     seq_dict[seq_name] = seq
         data.close()
-        print(seq_dict)
         return seq_dict
 
     def extract(self, ClusterID, number):
@@ -224,7 +223,6 @@ class Extract_Cluster(object):
                             t.close()
                 cs.close()
         else:
-            print(number)
             if 0 < len(self.clstr_dict[ClusterID]) <= int(number):
                 os.system("cp {} {}".format(current_cluster_file, top_current_cluster_file))
                 with open(top_current_cluster_file, "w") as tmp:
