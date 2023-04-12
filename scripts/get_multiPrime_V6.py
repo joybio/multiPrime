@@ -88,8 +88,8 @@ def argsParse():
 
     parser.add_option('-s', '--size',
                       dest='size',
-                      default="250,1000",
-                      help="Filter primers by PRODUCT size. Default [250,1000].")
+                      default="250,500",
+                      help="Filter primers by PRODUCT size. Default [250,500].")
 
     parser.add_option('-d', '--dist',
                       dest='dist',
@@ -690,10 +690,16 @@ class Primers_filter(object):
         # print(candidate_position)
         coverage_threshold = 1 - self.fraction
         if int(candidate_position[-1]) - int(candidate_position[0]) < min_len:
-            # print("min len!")
-            pass
+            print("Max PCR product legnth < min len!")
+            ID = str(self.outfile)
+            with open(self.outfile, "w") as fo:
+                # headers = ["Primer_F_seq", "Primer_R_seq", "Product length:Tm:coverage_percentage",
+                # "Target number", "Primer_start_end"]
+                # fo.write(ID + "\t" + "\t".join(headers) + "\t")
+                fo.write(ID + "\n")
         else:
             for start in range(len(candidate_position)):
+                print(start)
                 p.submit(self.primer_pairs(start, adaptor, min_len, max_len, candidate_position, primer_pairs,
                                            coverage_threshold))
                 # This will submit all tasks to one place without blocking, and then each
@@ -711,6 +717,7 @@ class Primers_filter(object):
                     # This will submit all tasks to one place without blocking, and then each
                     # thread in the thread pool will fetch tasks.
                 new_p.shutdown()
+            print(primer_pairs)
             ID = str(self.outfile)
             with open(self.outfile, "w") as fo:
                 # headers = ["Primer_F_seq", "Primer_R_seq", "Product length:Tm:coverage_percentage",
