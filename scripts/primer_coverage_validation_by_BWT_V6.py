@@ -59,7 +59,7 @@ from concurrent.futures import ProcessPoolExecutor
 
 
 def argsParse():
-    parser = OptionParser('Usage: %prog -i [input] -r [bowtie index] -l [150,2000] -p [10]-o [output]')
+    parser = OptionParser('Usage: %prog -i [input] -r [reference fasta] -l [150,2000] -p [10]-o [output]')
 
     parser.add_option('-i', '--input',
                       dest='input_file',
@@ -67,7 +67,7 @@ def argsParse():
 
     parser.add_option('-r', '--ref',
                       dest='ref',
-                      help='fasta file.')
+                      help='reference file. fasta format.')
 
     parser.add_option('-l', '--len',
                       dest='len',
@@ -97,7 +97,8 @@ def argsParse():
                       dest='bowtie',
                       default="bowtie2",
                       type="string",
-                      help='bowtie or bowtie2 was employed for mapping. Default: bowtie2')
+                      help='bowtie/ABS_path(bowtie) or bowtie2/ABS_path(bowtie2) was employed for mapping. '
+                           'Default: bowtie2')
 
     parser.add_option('-m', '--seedmms',
                       dest='seedmms',
@@ -120,7 +121,7 @@ def argsParse():
         sys.exit(1)
     elif options.ref is None:
         parser.print_help()
-        print("reference index (bowtie) must be specified !!!")
+        print("reference (fasta) must be specified !!!")
         sys.exit(1)
     elif options.out is None:
         parser.print_help()
@@ -208,7 +209,7 @@ def closest(my_list, my_number1, my_number2):
 
 
 class off_targets(object):
-    def __init__(self, primer_file, term_length=9, reference_file="", mismatch_num=1, term_threshold=4, bowtie="bowtie",
+    def __init__(self, primer_file, term_length=9, reference_file="", mismatch_num=1, term_threshold=4, bowtie="",
                  PCR_product_size="150,2000", outfile="", nproc=10):
         #  If an attribute in a Python class does not want to be accessed externally,
         #  we can start with a double underscore (__) when naming the attribute,
@@ -304,13 +305,13 @@ class off_targets(object):
         if for_out.exists() and rev_out.exists():
             pass
         else:
-            if self.bowtie == 'bowtie2':
-                os.system("bowtie2 -p {} -N {} -L 8 -a -x {} -f -U {} -S {}".format(self.nproc, self.mismatch_num,
-                                                                                       ref_index, fa, out))
-            elif self.bowtie == 'bowtie':
+            if re.search('bowtie2', self.bowtie):
+                os.system("{} -p {} -N {} -L 8 -a -x {} -f -U {} -S {}".format(self.bowtie, self.nproc,
+                                                                            self.mismatch_num, ref_index, fa, out))
+            elif re.search('bowtie', self.bowtie):
                 os.system(
-                    "bowtie -p {} -f -n {} -l 8 -a -p {} --best --strata {} {} -S {}".format(self.nproc, self.mismatch_num,
-                                                                                             nproc, ref_index, fa, out))
+                    "{} -p {} -f -n {} -l 8 -a --best --strata {} {} -S {}".format(self.bowtie, self.nproc,
+                                                                                self.mismatch_num,  ref_index, fa, out))
             else:
                 print("mapping software must be bowtie or bowtie2 !")
                 sys.exit(1)
@@ -415,22 +416,25 @@ class off_targets(object):
                 fo.write(k[0] + "\t" + str(k[1]) + "\t" + str(len(primer_pair_acc_set)) + "\n")
         with open(self.outfile + ".total.acc.num", "w") as fo2:
             fo2.write("total coverage of primer set (PS) is: {}".format(len(acc_id)))
-def Bowtie_index(Input):
+def Bowtie_index(Input, method):
     Bowtie_file = Path(Input).parent.joinpath("Bowtie_DB")
     Bowtie_prefix = Path(Bowtie_file).joinpath(Path(Input).stem)
+    bowtie_cmd = method + "-build"
     if Bowtie_file.exists():
-        size = os.path.getsize(Bowtie_file)
+        size = os.listdir(Bowtie_file)
         if not size:
-            os.system("bowtie2-build {} {}".format(Input, Bowtie_prefix))
+            print("No bowtie index found, start building ...")
+            os.system("{} {} {}".format(bowtie_cmd, Input, Bowtie_prefix))
         else:
+            print("Bowtie index is OK.")
             pass
     else:
         os.mkdir(Bowtie_file)
-        os.system("bowtie2-build {} {}".format(Input, Bowtie_prefix))
+        os.system("{} {} {}".format(bowtie_cmd, Input, Bowtie_prefix))
 
 def main():
     options, args = argsParse()
-    Bowtie_index(options.ref)
+    Bowtie_index(options.ref, options.bowtie)
     prediction = off_targets(primer_file=options.input_file, term_length=options.len, reference_file=options.ref,
                              PCR_product_size=options.size, mismatch_num=options.seedmms, outfile=options.out,
                              term_threshold=options.term, bowtie=options.bowtie, nproc=options.proc)

@@ -1,1 +1,1 @@
-primer_coverage_validation_by_BWT_V5.py
+primer_coverage_validation_by_BWT_V6.py
