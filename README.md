@@ -15,15 +15,15 @@ To run this pipeline, your computer requires **30 GB of available memory (RAM)**
 
 Download/Provide all necessary files:
 
+# cross validation
 DEGEPRIME-1.1.0: DOI: 10.1128/AEM.01403-14; "DegePrime, a program for degenerate primer design for broad-taxonomic-range PCR in microbial ecology studies."
 		Links: https://github.com/EnvGen/DegePrime; please move this directory into scripts.
-
-biopython: Not required in v1.0.1 and the subsequent version.
 
 mfeprimer-3.2.6: DOI: 10.1093/nar/gkz351; Please cite: "MFEprimer-3.0: quality control for PCR primers." please move this it into scripts. 
 Please add "execute" to mfeprimer-3.2.6
 
-Programs we employed:
+# Programs we employed:
+biopython: Not required in v1.0.1 and the subsequent version.
 
 MUSCLE: It is already in the requirement.txt. version=v3.8.1551. http://www.drive5.com/muscle This software is donated to the public domain. Please cite: Edgar, R.C. Nucleic Acids Res 32(5), 1792-97.
 
