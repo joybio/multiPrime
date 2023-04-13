@@ -1,6 +1,6 @@
 multiPrime: version 2.0.3
 
-# multi PCR primer pairs design processing pipeline
+# Multi PCR primer pairs design processing pipeline
 MultiPrime is a pipeline designed for broad-spectrum detection of target sequences using tNGS. It is implemented in Python and Snakemake and takes a FASTA format file as input. The pipeline has three main steps: classification by identity, primer design, and primer set combination. In the classification step, redundant sequences are removed and clusters are formed by identity. Rare sequence clusters are compared to others by average nucleotide identity, and if they are deemed similar enough, they are merged. In the primer design step, multi-alignment is performed using MUSCLE or MAFFT, and candidate primers are designed using the nearest-neighbor model. Primer pairs are selected based on PCR product length, melting temperature, dimer examination, coverage with errors, and other factors. Finally, a greedy algorithm is used to combine primer pairs into a minimal primer set according to dimer examination.
 
 multiPrime1: Degenerate primer design by DEGEPRIME (MC-DPD).
@@ -305,10 +305,10 @@ results: results directory
 		--*.non_coverage_seq_id_json: Positions and non-contained sequences caused by others.
 
 	-Clusters_cprimer: candidate primers for each cluster.
-		--*.bed: candidate PCR product (1 mismatch and mismatch position must 9bp away from 3'end at least.)
+		--*.bed: candidate PCR product (1 mismatch and mismatch position must 4bp away from 3'end at least.)
 		--*.fa: candidate primers in fa format
 		--*.txt: candidate primers in txt format (1 line)
-		--*.Check: tmp file; primers filter by bowtie2 (1 mismatch and mismatch position must 9bp away from 3'end at least.)
+		--*.Check: tmp file; primers filter by bowtie2 (1 mismatch and mismatch position must 4bp away from 3'end at least.)
 
 	-Primers_set:
 		--candidate_primers_sets.txt: all candidate primers in each cluster
@@ -323,6 +323,7 @@ results: results directory
 		--PCR_product: perfect PCR product of each primer
 
 	-Core_primers_set:
+		--BWT_coverage: coverage of all primers in core primer set (up to 2-mismatch)
 		--core_candidate_primers_sets.txt: core candidate primers in each cluster
 		--core_candidate_primers_sets:  directory contain all core candidate primers in fasta
 		--sort.core_candidate_primers_sets.txt: sorted by the number of core candidate primers in each line (cluster)
