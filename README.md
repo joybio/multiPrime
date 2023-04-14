@@ -160,7 +160,7 @@ For example:
   -o OUT, --out=OUT     Output file: candidate primers. e.g.
                         [*].candidate.primers.txt.
   ```
-  Get candidate degenerate primer with high (error) coverage:
+  To get candidate degenerate primer pairs with high coverage.
   ```bash
   python scripts/get_multiPrime.py
   ```
