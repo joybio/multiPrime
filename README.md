@@ -82,7 +82,7 @@ Once you set up your configuration file, running the pipeline locally on your co
   ```bash
   sh run.sh
   ```
-  maximal coverage degenerate primer design (MC-DPD):
+  maximal coverage degenerate primer design (MC-DPD). The approach employed DegePrime to design degenerate primers for the target sequence.
   ```bash
   snakemake --configfile multiPrime.yaml -s multiPrime.py --cores 10 --resources disk_mb=80000
   ```
