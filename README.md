@@ -259,7 +259,7 @@ For example:
   -h, --help            show this help message and exit
   -i INPUT_FILE, --input=INPUT_FILE
                         input file: primer.fa.
-  -r REF, --ref=REF     reference file: bowtie index.
+  -r REF, --ref=REF     reference file: template fasta or reference fasta.
   -l LEN, --len=LEN     Length of primer, which is used for mapping. Default:
                         18
   -t TERM, --term=TERM  Position of mismatch is not allowed in the 3 term of
