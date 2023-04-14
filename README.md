@@ -35,7 +35,7 @@ blast+: It is already in the requirement.txt. version=BLAST 2.13.0+. Links: http
 
 bowtie2: It is already in the requirement.txt. version=version 2.2.5. DOI:10.1038/nmeth.1923; Please cite: "Fast gapped-read alignment with Bowtie 2."
 		Links: https://www.nature.com/articles/nmeth.1923
-# snakemake
+# Snakemake
 Snakemake is a workflow management system that helps to create and execute data processing pipelines. It requires python3 and dependent environment (multiPrime == multiPrime2) can be most easily installed via the bioconda package of the python anaconda distribution. 
 
   ```bash
@@ -73,6 +73,7 @@ Before starting the pipeline, open the `multiPrime.yaml` configuration file and 
 	-scripts_dir: ["abs_path_to"]/multiPrime/scripts
   - **name(s) of your input samples** - please note: If your sample is named `sample1.fa` then `sample1` will be kept as naming scheme throughout the entire run to indicate output files that belong to this input file, e.g. the pipeline will create a file called `sample1.fa`. If you have multiple input files, just follow the given pattern with one sample name per line (and a dash that indicates another list item).
   - **identity** - threshold for classification. please note: If you set 1, multiPrime will design candidate primer pairs for each fasta in input files. Suggestion: 0.7-0.8. 
+  - **others** - for more information on the parameters, please refer to the YAML file.
 
 # Start a run
 
@@ -80,18 +81,29 @@ Once you set up your configuration file, running the pipeline locally on your co
   ```bash
   sh run.sh
   ```
-  minimal degeneracy degenerate primer design (MC-DPD):
+  maximal coverage degenerate primer design (MC-DPD):
   ```bash
   snakemake --configfile multiPrime.yaml -s multiPrime.py --cores 10 --resources disk_mb=80000
   ```
-  minimal degeneracy degenerate primer design with errors (MC-EDPD) or MC-DPD. It depends on the parameter in multiPrime2.yaml. MC-DPD when you set variation=0.
+  maximal coverage degenerate primer design with errors (MC-EDPD) or MC-DPD.  The approach used in multiPrime2.yaml depends on the value of the "variation" parameter.
+  If "variation" is set to 0, then multiPrime uses the MC-DPD approach to design degenerate primers for the target sequence. In this approach, the primer sequences are designed with non-mismatch.
+  If "variation" is set to a value greater than 0, then multiPrime uses the MC-EDPD approach to design degenerate primers with errors. In this approach, the primer sequences are allowed to contain a limited number of errors or mismatches, which increases the probability of finding suitable primer sequences for the target sequence.
   ```bash
   snakemake --configfile multiPrime2.yaml -s multiPrime2.py --cores 10 --resources disk_mb=80000
   ```
 
 
 # Start a run independently
-If you want to run python script locally on your computer independently. It is as easy as invoking:
+Setting default parameters may not always be suitable for all conditions. If you want to design primers with more flexible parameters, you can install the multiPrime package through PyPI (Python Package Index) using pip.
+```bash
+  pip install multiPrime==2.3.8
+  ```
+  ```bash
+  multiPrime --help
+  ```
+  The multiPrime package includes various functions for designing primers, selecting primer pairs, and calculating the coverage of these primer pairs. These features have been developed to assist researchers in performing PCR experiments efficiently and accurately. The package is continuously being improved and expanded upon, with additional functions expected to be added in the future. All manual instruction for multiPrime can be found in [here](https://pypi.org/project/multiPrime/).
+
+If you have already cloned this repository and do not wish to install the multiPrime package from PyPI, you can use the scripts included in this repository to perform primer design. These scripts have the same functionality as the multiPrime package and can be run locally on your computer without the need for a separate installation.
   ```bash
   python {path to script}/{target}.py --help
   ```
@@ -99,18 +111,10 @@ or
   ```bash
   python {path to script}/{target}.py
   ```
-or
-  ```bash
-  pip install multiPrime
-  ```
-  ```bash
-  multiPrime --help
-  ```
-  multiPrime package contains primer design; primer pair selection and primer pair coverage statistics, more functions will be improved in the future. All manual instruction for multiPrime can be found in [here](https://pypi.org/project/multiPrime/).
 
 For example:
   
-  MC-DPD (--variation 0) or MC-EDPD (--variation 1 or 2, we do not suggest you set --variation greater than 2, because amplification efficiency was severely inhibited when there are 3 mismathes). 
+  Primer design with MC-DPD (--variation 0) or MC-EDPD (--variation 1 or 2. We do not recommend setting the --variation parameter greater than 2, as amplification efficiency can be severely inhibited when there are more than 2 mismatches between the primers and their targets). 
 
   ```bash
   python scripts/multiPrime-core.py
@@ -192,7 +196,7 @@ For example:
   -o OUT, --out=OUT     Output file: candidate primers. e.g.
                         [*].candidate.primers.txt.
   ```
-  Extract primers from ONT reads. FindONTprimerV2.py = FindONTprimerV3.py:
+  To extract primers of your amplicons from Oxford Nanopore Technology (ONT) reads. FindONTprimerV2.py = FindONTprimerV3.py. If your primers are degenerate, you can use the "FindONTexpandprimer.py" script included in the multiPrime package. This script is designed specifically to identify degenerate primer sequences from ONT reads and expand them into their full, non-degenerate forms.:
   ```bash
   python scripts/FindONTprimerV3.py
   ```
@@ -214,7 +218,7 @@ For example:
   -o OUT, --out=OUT     Output file: candidate primers. e.g.
                         [*].candidate.primers.txt.
   ```
-  Extract PCR products with perfect match:
+  To extract PCR products with perfect matches from your input FASTA file:
   ```bash
   python scripts/extract_PCR_product.py
   ```
@@ -241,7 +245,7 @@ For example:
                         Stast information: number of coverage and total.
                         default: Coverage.xls
   ```
-  Get primer information of PCR products with mismatch
+  To extract PCR products with mismatches from your input FASTA file
   ```bash
   python scripts/primer_coverage_validation_by_BWT.py
   ```
