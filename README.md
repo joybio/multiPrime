@@ -345,7 +345,7 @@ results: results directory
 		--core_PCR_product: core PCR product of each primer
 
 
-# Contributions
+# Owner and contributions
 The project was conceptualized and scripted by Junbo Yang (1806389316@pku.edu.cn/yang_junbo_hi@126.com).
 
 # Contact
