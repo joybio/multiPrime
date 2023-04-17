@@ -15,7 +15,7 @@ To run this pipeline, your computer requires **30 GB of available memory (RAM)**
 
 Download/Provide all necessary files:
 
-# Cross validation
+# Comparison
 DEGEPRIME-1.1.0: DOI: 10.1128/AEM.01403-14; "DegePrime, a program for degenerate primer design for broad-taxonomic-range PCR in microbial ecology studies."
 		Links: https://github.com/EnvGen/DegePrime; please move this directory into scripts.
 
