@@ -103,7 +103,7 @@ Once you set up your configuration file, running the pipeline locally on your co
 # Start a run independently
 Setting default parameters may not always be suitable for all conditions. If you want to design primers with more flexible parameters, you can install the multiPrime package through PyPI (Python Package Index) using pip.
   ```bash
-  pip install multiPrime==2.3.8
+  pip install multiPrime==2.3.8 (make sure version >=2.3.8)
   ```
   ```bash
   multiPrime --help

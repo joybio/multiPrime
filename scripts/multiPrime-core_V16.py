@@ -128,8 +128,8 @@ def argsParse():
                            "With this param, you can control the index of Y-distance (number=variation and position of mismatch) "
                            "when calculate coverage with error. coordinate>0: 5\'==>3\'; coordinate<0: 3\'==>5\'."
                            "You can set this param to any value that you prefer. Default: 1,-1. "
-                           "1:  I dont want mismatch at the 2nd postion, start from 0."
-                           "-1: I dont want mismatch at the -1st postion, start fro -1.")
+                           "1:  I dont want mismatch at the 2nd position, start from 0."
+                           "-1: I dont want mismatch at the -1st position, start fro -1.")
 
     parser.add_option('-p', '--proc',
                       dest='proc',
