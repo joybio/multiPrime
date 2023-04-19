@@ -5,7 +5,7 @@ MultiPrime is a pipeline designed for broad-spectrum detection of target sequenc
 
 multiPrime1: Degenerate primer design by DEGEPRIME (MC-DPD).
 
-mulitPrime2: Degenerate primer design by multiPrime-core (MC-EDPD or MC-DPD). It only allows for avoidance of mismatches at 3'end positions.
+mulitPrime2: Degenerate primer design by multiPrime-core (MC-EDPD or MC-DPD). It allows for avoidance of mismatches at 3'end region.
 
 mulitPrime3: It is similar to multiPrime2, but it allows for easy avoidance of mismatches at any position, making it flexible for experienced users.
 
