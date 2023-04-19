@@ -1,3 +1,0 @@
-Config file multiPrime2.yaml is extended by additional config specified via the command line.
-Building DAG of jobs...
-File path /share/data3/yangjunbo/multiPCR/multiPrime2/virus_sequence/Rhinovirus//Rhinovirus.fa contains double '/'. This is likely unintended. It can also lead to inconsistent results of the file-matching approach used by Snakemake.
