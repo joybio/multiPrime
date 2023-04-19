@@ -1,4 +1,4 @@
-multiPrime: version 2.0.3
+multiPrime: version 2.1.1
 
 # Multi PCR primer pairs design processing pipeline
 MultiPrime is a pipeline designed for broad-spectrum detection of target sequences using tNGS. It is implemented in Python and Snakemake and takes a FASTA format file as input. The pipeline has three main steps: classification by identity, primer design, and primer set combination. In the classification step, redundant sequences are removed and clusters are formed by identity. Rare sequence clusters are compared to others by average nucleotide identity, and if they are deemed similar enough, they are merged. In the primer design step, multi-alignment is performed using MUSCLE or MAFFT, and candidate primers are designed using the nearest-neighbor model. Primer pairs are selected based on PCR product length, melting temperature, dimer examination, coverage with errors, and other factors. Finally, a greedy algorithm is used to combine primer pairs into a minimal primer set according to dimer examination.
