@@ -88,11 +88,11 @@ Once you set up your configuration file, running the pipeline locally on your co
   ```bash
   snakemake --configfile multiPrime.yaml -s multiPrime.py --cores 10 --resources disk_mb=80000
   ```
-  maximal coverage degenerate primer design with errors (MC-EDPD) or MC-DPD. MultiPrime2 is capable of avoiding mismatches that occur at the 3'end position. The approach used in multiPrime2.yaml depends on the value of the "variation" parameter.
+  maximal coverage degenerate primer design with errors tolerant (MC-EDPD) or MC-DPD. MultiPrime2 is capable of avoiding mismatches that occur at the 3'end position. The approach used in multiPrime2.yaml depends on the value of the "variation" parameter.
 
-  If "variation" is set to 0, then multiPrime uses the MC-DPD approach to design degenerate primers for the target sequence. In this approach, the primer sequences are designed with non-mismatch.
+  If "variation" is set to 0, then multiPrime uses the MC-DPD approach to design degenerate primers for the target sequence. In this approach, the primer sequences are designed with prefect match (0-mismatch).
 
-  If "variation" is set to a value greater than 0, then multiPrime uses the MC-EDPD approach to design degenerate primers with errors. In this approach, the primer sequences are allowed to contain a limited number of errors or mismatches, which increases the probability of finding suitable primer sequences for the target sequence.
+  If "variation" is set to a value greater than 0, then multiPrime uses the MC-EDPD approach to design degenerate primers with errors (mismatches) tolerant (1-mismatch or 2-mismatches). In this approach, the primer sequences are allowed to contain a limited number of errors (mismatches), which increases the probability of finding suitable primer sequences for the target sequence.
   ```bash
   snakemake --configfile multiPrime2.yaml -s multiPrime2.py --cores 10 --resources disk_mb=80000
   ```
