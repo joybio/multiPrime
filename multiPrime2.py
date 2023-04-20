@@ -1,5 +1,5 @@
 configfile:  "multiPrime2.yaml"
-#__version__ = "2.0.2"
+#__version__ = "2.0.3"
 #__date__ = "2022-7-28"
 #__author__ = "Junbo Yang"
 #__email__ = yang_junbo_hi@126.com; 1806389316@pku.edu.cn
