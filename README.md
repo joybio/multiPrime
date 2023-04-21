@@ -27,6 +27,12 @@ Please add "execute" to mfeprimer-3.2.6
 # Programs we employed:
 biopython: Not required in v1.0.1 and the subsequent version.
 
+The method for calculating Tm values in this study is a slightly modified version of primer3-py[here](https://github.com/libnano/primer3-py). Reference paper: Owczarzy et al., 2004; Owczarzy et al., 2008
+
+The method for calculating deltaG in this study is a slightly modified version of the approach proposed by Martin et al., 2020. "Base-Pairing and Base-Stacking Contributions to Double-Stranded DNA Formation."
+
+The method for dimer examination in this study is a slightly modified version of the approach proposed by Xie et al., 2022. "Designing highly multiplex PCR primer sets with Simulated Annealing Design using Dimer Likelihood Estimation (SADDLE)"
+
 MUSCLE: It is already in the requirement.txt. version=v3.8.1551. http://www.drive5.com/muscle This software is donated to the public domain. Please cite: Edgar, R.C. Nucleic Acids Res 32(5), 1792-97.
 
 MAFFT: It is already in the requirement.txt. version=v7.508 (2022/Sep/07). Please cite: "MAFFT multiple sequence alignment software version 7: improvements in performance and usability".
