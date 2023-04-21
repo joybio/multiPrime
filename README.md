@@ -27,7 +27,7 @@ Please add "execute" to mfeprimer-3.2.6
 # Programs we employed:
 biopython: Not required in v1.0.1 and the subsequent version.
 
-The method for calculating Tm values in this study is a slightly modified version of primer3-py[here](https://github.com/libnano/primer3-py). Reference paper: Owczarzy et al., 2004; Owczarzy et al., 2008
+The method for calculating Tm values in this study is a slightly modified version of primer3-py [here](https://github.com/libnano/primer3-py). Reference paper: Owczarzy et al., 2004; Owczarzy et al., 2008.
 
 The method for calculating deltaG in this study is a slightly modified version of the approach proposed by Martin et al., 2020. "Base-Pairing and Base-Stacking Contributions to Double-Stranded DNA Formation."
 
