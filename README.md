@@ -205,9 +205,10 @@ For example:
                         (Default). If you dont want adaptor,
                         use [","]
   -m MAXSEQ, --maxseq=MAXSEQ
-                        Limit of sequence number. Default: 500. If 0, then all
-                        sequence will take into account. This param should
-                        consistent with [max_seq] in multi-alignment [muscle].
+			The default value for the limit of sequence number is set at 500. 
+			However, if the value is set to 0, then all sequences will be taken into consideration. 
+			It is important that this parameter remains consistent with the [max_seq] 
+			parameter used in multi-alignment [muscle]. 
   -o OUT, --out=OUT     Output file: candidate primers. e.g.
                         [*].candidate.primers.txt.
   ```
@@ -357,9 +358,8 @@ results: results directory
 		--core_PCR_product: core PCR product of each primer
 
 
-# Owner and contact
-The project was conceptualized and scripted by Junbo Yang.
-Please send comments, suggestions, bug reports and bug fixes to 1806389316@pku.edu.cn / yang_junbo_hi@126.com.
+# Contact
+The project was conceptualized and scripted by Junbo Yang.Please send comments, suggestions, bug reports and bug fixes to 1806389316@pku.edu.cn / yang_junbo_hi@126.com.
 
 # Todo
 This repository is updated frequently. Expect breaking changes. More functions will be improved in the future and a new version is comming.
