@@ -149,9 +149,9 @@ For example:
   -v VARIATION, --variation=VARIATION
                         Max mismatch number of primer. Default: 1.
   -e ENTROPY, --entropy=ENTROPY
-  			Entropy is a measurement of the degree of randomness or disorder in a system. 
-			This parameter is utilized to determine whether a window is conserved or not. 
-			Entropy of primer-length window. Default: 3.6.
+                        Entropy is a measurement of the degree of randomness or disorder in a system. 
+                        This parameter is utilized to determine whether a window is conserved or not. 
+                        Entropy of primer-length window. Default: 3.6.
 
   -g GC, --gc=GC        Filter primers by GC content. Default [0.2,0.7].
   -s SIZE, --size=SIZE  Filter primers by mini PRODUCT size. Default 100.
