@@ -96,8 +96,9 @@ def argsParse():
                       dest='entropy',
                       default=3.6,
                       type="float",
-                      help='Entropy is actually a measure of disorder. This parameter is used to judge whether the '
-                           'window is conservation. Entropy of primer-length window. Default: 3.6.')
+                      help='Entropy is a measurement of the degree of randomness or disorder in a system.'
+			'This parameter is utilized to determine whether a window is conserved or not.'
+			'Entropy of primer-length window. Default: 3.6.')
 
     parser.add_option('-g', '--gc',
                       dest='gc',
