@@ -100,7 +100,6 @@ def argsParse():
                         'This parameter is utilized to determine whether a window is conserved or not.'
                         'Entropy of primer-length window. Default: 3.6.')
 
-
     parser.add_option('-g', '--gc',
                       dest='gc',
                       default="0.2,0.7",

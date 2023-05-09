@@ -60,7 +60,7 @@ from concurrent.futures import ProcessPoolExecutor
 
 
 def argsParse():
-    parser = OptionParser('Usage: %prog -i [input] -r [bowtie index] -l [150,2000] -p [10]-o [output]')
+    parser = OptionParser('Usage: %prog -i [input] -r [bowtie index] -l [150,2000] -p [10]-o [output]',version = "%prog 0.1.2")
 
     parser.add_option('-i', '--input',
                       dest='input_file',

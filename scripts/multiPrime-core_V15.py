@@ -63,7 +63,7 @@ from itertools import repeat
 # (because of stability of annealing), and should be avoided.
 def argsParse():
     parser = OptionParser('Usage: %prog -i input -o output -p 10\n \
-                Options: { -l [18] -n [4] -d [10] -v [1] -g [0.2,0.7] -f [0.8] -c [4] -p [10] -a [4] }')
+                Options: { -l [18] -n [4] -d [10] -v [1] -g [0.2,0.7] -f [0.8] -c [4] -p [10] -a [4] }', version="%prog 0.1.5")
     parser.add_option('-i', '--input',
                       dest='input',
                       help='Input file: multi-alignment output (muscle or others).')

@@ -52,7 +52,7 @@ def RC(seq):
 
 def argsParse():
     parser = OptionParser('Usage: %prog -i [total.fa] -c [cluster.clstr] \n'
-                          'Options: -o [cluster.txt] -y [cluster.identities] -m [500] -d [Cluster.fa]',version = "%prog 0.0.2")
+                          'Options: -o [cluster.txt] -y [cluster.identities] -m [500] -d [Cluster.fa]',version = "%prog 0.0.4")
     parser.add_option('-i', '--input',
                       dest='input',
                       help='Input file: *complete.genome.fa')
