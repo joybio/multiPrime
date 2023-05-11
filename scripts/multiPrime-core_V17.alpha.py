@@ -905,11 +905,30 @@ class NN_degenerate(object):
 
     def refine_by_NN_array(self, optimal_primer_list, optimal_coverage_init, cover,
                            optimal_NN_index, optimal_NN_coverage, NN_array):
+        """Refine primers by adjusting nucleotides at the positions with minimum
+            coverage according to the minimum values in the optimal_NN_coverage array.
+
+            Args:
+                optimal_primer_list (list): A list of current optimal primer pairs.
+                optimal_coverage_init (int): The initial coverage score.
+                cover (dict): A dictionary containing the coverage information for all primers.
+                optimal_NN_index (numpy.ndarray): An array of indices of nucleotide changes needed to
+                    obtain the best coverage for each primer pair.
+                optimal_NN_coverage (numpy.ndarray): An array containing the coverage scores for each
+                    position that needs to be refined.
+                NN_array (numpy.ndarray): An array containing the nearest neighbor (NN) interactions
+                    between nucleotides at each position in each primer pair.
+
+            Returns:
+                tuple: A tuple containing the refined primer pair, the updated coverage score,
+                       the updated NN coverage array, and the updated NN array.
+            """
         # use minimum index of optimal_NN_coverage as the position to refine
         refine_index = np.where(optimal_NN_coverage == np.min(optimal_NN_coverage))[0]  # np.where[0] is a list
-        # build dict to record coverage and NN array
+        # List to record coverage and NN array
         primer_update_list, coverage_update_list, NN_array_update_list, NN_coverage_update = [], [], [], []
         for i in refine_index:
+            # Copy variables to avoid modifying initial values
             optimal_NN_coverage_tmp = optimal_NN_coverage.copy()
             NN_array_tmp = NN_array.copy()
             optimal_list = optimal_primer_list.copy()
