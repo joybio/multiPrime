@@ -132,6 +132,7 @@ class Dimer(object):
         self.threshold = threshold
         self.outfile = os.path.abspath(outfile)
         self.primers = self.parse_primers()
+        self.primers_list = list(self.primers.keys())
         self.resQ = Manager().Queue()
 
     def parse_primers(self):
@@ -187,11 +188,11 @@ class Dimer(object):
             Delta_G_list.append(Delta_G)
         return round(max(Delta_G_list), 2)
 
-    def dimer_check(self, primer):
-        current_end_set = self.current_end(primer)
+    def dimer_check(self, position):
+        current_end_set = self.current_end(self.primers_list[position])
         current_end_list = sorted(list(current_end_set), key=lambda i: len(i), reverse=True)
         dimer = False
-        for ps in self.primers:
+        for ps in self.primers_list[position:]:
             for end in current_end_list:
                 for p in self.degenerate_seq(ps):
                     idx = p.find(reversecomplement(end))
@@ -204,7 +205,7 @@ class Dimer(object):
                             end_length, end_GC, end_d1, end_d2)
                         delta_G = self.deltaG(end)
                         if Loss >= self.threshold or (delta_G < -5 and (end_d1 == end_d2)):
-                            line = (self.primers[primer], primer,
+                            line = (self.primers[self.primers_list[position]], self.primers_list[position],
                                     end, delta_G, end_length, end_d1,
                                     end_GC, self.primers[ps],
                                     ps, end_d2, Loss
@@ -239,8 +240,8 @@ class Dimer(object):
 
     def run(self):
         p = ProcessPoolExecutor(self.nproc)
-        for primer in self.primers.keys():
-            p.submit(self.dimer_check, primer)
+        for position in range(len(self.primers_list)):
+            p.submit(self.dimer_check, position)
             #  This will submit all tasks to one place without blocking, and then each
             #  thread in the thread pool will fetch tasks.
         n = 0
