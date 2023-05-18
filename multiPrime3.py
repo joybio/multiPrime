@@ -1,4 +1,4 @@
-configfile:  "multiPrime2.yaml"
+configfile:  "multiPrime3.yaml"
 #__version__ = "2.1.1"
 #__date__ = "2023-4-20"
 #__author__ = "Junbo Yang"

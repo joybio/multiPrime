@@ -360,7 +360,12 @@ if __name__ == "__main__":
     (options, args) = argsParse()
     adaptor = options.adaptor.split(",")
     adaptor_len = len(adaptor[0])
-    with open(options.input, "r") as primers_file, open("sort." + options.input, "w") as f:
+    if re.search("/", options.input):
+        sort_dir = options.input.split("/")
+        sort = '/'.join(sort_dir[:-1]) + "/sort." + sort_dir[-1]
+    else:
+        sort = "sort." + options.input
+    with open(options.input, "r") as primers_file, open(sort, "w") as f:
         primers = list(sorted([list(filter(None, line.strip().split('\t'))) for line in primers_file], key=len))
         for i in primers:
             f.write('\t'.join(i) + "\n")
