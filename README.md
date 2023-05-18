@@ -45,7 +45,7 @@ blast+: It is already in the requirement.txt. version=BLAST 2.13.0+. Links: http
 
 bowtie2: It is already in the requirement.txt. version=version 2.2.5. DOI:10.1038/nmeth.1923; Please cite: "Fast gapped-read alignment with Bowtie 2."
 		Links: https://www.nature.com/articles/nmeth.1923
-# Snakemake
+#Installation and Snakemake
 Snakemake is a workflow management system that helps to create and execute data processing pipelines. It requires python3 and dependent environment (multiPrime == multiPrime2) can be most easily installed via the bioconda package of the python anaconda distribution. 
 
   ```bash
