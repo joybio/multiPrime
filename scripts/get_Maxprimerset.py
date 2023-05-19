@@ -1,1 +1,1 @@
-get_Maxprimerset_V1.3.alpha.py
+get_Maxprimerset_V1.3.py
