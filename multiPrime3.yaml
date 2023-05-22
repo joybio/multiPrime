@@ -67,7 +67,7 @@ primer_len: 18
 #variation. max mis-match in the calculation of mis-coverage
 variation: 1
 #coordinate:. mis-match position is not allowed in the term -c {} in the calculation of mis-coverage
-coordinate: 2,-1
+coordinate: 2,3,-1
 
 #-------------------------------------------------------------------------------
 ## get candidate primers from multiPrime output
