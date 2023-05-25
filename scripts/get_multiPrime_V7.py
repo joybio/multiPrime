@@ -52,7 +52,7 @@ import sys
 
 def argsParse():
     parser = OptionParser('Usage: %prog -i [input] -r [sequence.fa] -o [output] \n \
-                Options: {-f [0.6] -m [500] -n [200] -e [4] -p [9] -s [250,500] -g [0.4,0.6] -d [4] -a ","}', version="%prog 0.0.7")
+                Options: {-f [0.6] -m [500] -n [200] -e [4] -p [9] -s [250,500] -g [0.4,0.6] -d [4] -a ","}.')
     parser.add_option('-i', '--input',
                       dest='input',
                       help='Input file: multiPrime out.')
@@ -78,7 +78,8 @@ def argsParse():
                       default="4",
                       type="int",
                       help="Filter primers by degenerate base position. e.g. [-t 4] means I dont want degenerate base "
-                           "appear at the end four bases when primer pre-filter. Default: 4.")
+                           "appear at the end four bases when primer pre-filter. Default: 4. If you set -e 0, then it "
+                           "wont filter by degenerate base position")
 
     parser.add_option('-p', '--proc',
                       dest='proc',
@@ -479,7 +480,6 @@ class Primers_filter(object):
     def dimer_check(self, primer_F, primer_R):
         current_end_set = set(self.current_end(primer_F)).union(set(self.current_end(primer_R)))
         primer_pairs = [primer_F, primer_R]
-        dimer = False
         for pp in primer_pairs:
             for end in current_end_set:
                 for p in self.degenerate_seq(pp):
@@ -494,17 +494,8 @@ class Primers_filter(object):
                         delta_G = self.deltaG(end)
                         # threshold = 3 or 3.6 or 3.96
                         if Loss > 3.6 or (delta_G < -5 and (end_d1 == end_d2)):
-                            dimer = True
-                            if dimer:
-                                break
-                if dimer:
-                    break
-            if dimer:
-                break
-        if dimer:
-            return True
-        else:
-            return False
+                            return True
+        return False
 
     ################# position of degenerate base #####################
     def dege_filter_in_term_N_bp(self, sequence):
@@ -530,35 +521,21 @@ class Primers_filter(object):
 
     ################# di_nucleotide #####################
     def di_nucleotide(self, primer):
-        Check = "False"
         primers = self.degenerate_seq(primer)
         for m in primers:
             for n in di_nucleotides:
                 if re.search(n, m):
-                    Check = "True"
-                    break
-                else:
-                    pass
-            if Check == "True":
-                break
-        if Check == "True":
-            return True
-        else:
-            return False
+                    return True
+        return False
 
     ################# di_nucleotide #####################
     def GC_clamp(self, primer, num=4, length=13):
-        check = False
         for i in range(num, (num + length)):
             s = primer[-i:]
             gc_fraction = self.GC_fraction(s)
             if gc_fraction > 0.6:
-                check = True
-                break
-        if check:
-            return True
-        else:
-            return False
+                return True
+        return False
 
     def pre_filter(self):
         limits = self.GC.split(",")
