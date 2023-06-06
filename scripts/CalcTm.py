@@ -9,6 +9,7 @@
 
 import math
 import sys
+import time
 from optparse import OptionParser
 
 
@@ -42,10 +43,20 @@ def argsParse():
                       type="float",
                       help="dntp concentration. Default: 0.25 mM.")
 
+    parser.add_option('-f', '--format',
+                      dest='format',
+                      default="fa",
+                      type="str",
+                      help='Format of primer file: fa or seq; default: fa. \n '
+                           'fa: fasta format. \n'
+                           'seq: sequence format. e.g. ATCCCG.')
+
     parser.add_option('-o', '--out',
                       dest='out',
-                      default="Tm.out",
-                      help='Output file.')
+                      default="primer_Tm.xls",
+                      type="str",
+                      help='Output. default: primer_Tm.xls.')
+
     (options, args) = parser.parse_args()
     if len(sys.argv) == 1:
         parser.print_help()
@@ -54,10 +65,6 @@ def argsParse():
         parser.print_help()
         print("Input file must be specified !!!")
         sys.exit(1)
-#    elif options.out is None:
-#        parser.print_help()
-#        print("No output file provided !!!")
-#        sys.exit(1)
     return parser.parse_args()
 
 
@@ -248,16 +255,44 @@ def Calc_Tm_v2(seq):
                         + correction) - Kelvin, 2)
     return Tm
 
+class Cal_Tm(object):
+    def __init__(self, primer_file="", output_file="", file_format="fa"):
+        self.primers_file = primer_file
+        self.output_file = output_file
+        self.file_format = file_format
+
+
+    def run(self):
+        if self.file_format == "fa":
+            with open(self.primers_file, "r") as f:
+                with open(self.output_file, "w") as o:
+                    for row in f:
+                        if row.startswith("#") or row == "\n":
+                            pass
+                        elif row.startswith(">"):
+                            primer_info = row.strip()
+                        else:
+                            primer = row.strip()
+                            Tm = Calc_Tm_v2(primer)
+                            o.write(primer_info + "\t" + primer + "\t" + str(Tm) + "\n")
+        else:
+            print("{}: {}".format(self.primers_file, Calc_Tm_v2(self.primers_file)))
+            with open(self.output_file, "w") as o:
+                Tm = Calc_Tm_v2(self.primers_file)
+                o.write(self.primers_file + "\t" + str(Tm) + "\n")
+def main():
+    (options, args) = argsParse()
+    results = Cal_Tm(primer_file=options.input, output_file=options.out, file_format=options.format)
+    results.run()
 
 if __name__ == "__main__":
+    e1 = time.time()
     (options, args) = argsParse()
     Mo_concentration = options.mono_conc
     Di_concentration = options.diva_conc
     dNTP_concentration = options.dntp_conc
     primer_concentration = options.primer_conc
-    melting_T = Calc_Tm_v2(options.input)
-    print(melting_T)
-    with open(options.out,"w") as f:
-        f.write(options.input + "\t" + str(melting_T))
-    f.close()
-    sys.exit()
+    main()
+    e2 = time.time()
+    print("INFO {} Total times: {}".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
+                                           round(float(e2 - e1), 2)))

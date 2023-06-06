@@ -11,8 +11,6 @@ __author__ = "Junbo Yang"
 __email__ = "yang_junbo_hi@126.com"
 __license__ = "MIT"
 
-
-
 """
 The MIT License (MIT)
 
@@ -36,7 +34,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
-
 
 import time
 from optparse import OptionParser
@@ -68,7 +65,29 @@ def argsParse():
                       type="str",
                       help='Output. default: primer_Tm.xls.')
 
+    parser.add_option('-p', '--primer_conc',
+                      dest='primer_conc',
+                      default="150",
+                      type="int",
+                      help='primer concentration. Default: 150 nM')
 
+    parser.add_option('-m', '--mono_conc',
+                      dest='mono_conc',
+                      default="50",
+                      type="int",
+                      help="monovalent concentration. Default: 50 nM.")
+
+    parser.add_option('-d', '--diva_conc',
+                      dest='diva_conc',
+                      default="1.5",
+                      type="float",
+                      help="divalent concentration. Default: 1.5 mM.")
+
+    parser.add_option('-n', '--dntp_conc',
+                      dest='dntp_conc',
+                      default="0.6",
+                      type="float",
+                      help="dntp concentration. Default: 0.6 mM.")
 
     (options, args) = parser.parse_args()
     if len(sys.argv) == 1:
@@ -90,11 +109,15 @@ def argsParse():
 
 
 class Cal_Tm(object):
-    def __init__(self, primer_file="", output_file="", file_format="fa"):
+    def __init__(self, primer_file="", output_file="", file_format="fa", Mo_concentration=50, Di_concentration=1.5,
+                 dNTP_concentration=0.25, primer_concentration=50):
         self.primers_file = primer_file
         self.output_file = output_file
         self.file_format = file_format
-
+        self.Mo_concentration = Mo_concentration
+        self.Di_concentration = Di_concentration
+        self.dNTP_concentration = dNTP_concentration
+        self.primer_concentration = primer_concentration
 
     def run(self):
         if self.file_format == "fa":
@@ -107,17 +130,27 @@ class Cal_Tm(object):
                             primer_info = row.strip()
                         else:
                             primer = row.strip()
-                            Tm = primer3.calcTm(primer)
+                            Tm = primer3.calcTm(primer, mv_conc=self.Mo_concentration, dv_conc=self.Di_concentration,
+                                                dntp_conc=self.dNTP_concentration, dna_conc=self.primer_concentration)
                             o.write(primer_info + "\t" + primer + "\t" + str(Tm) + "\n")
         else:
-            print("{}: {}".format(self.primers_file, primer3.calcTm(self.primers_file)))
+            print("{}: {}".format(self.primers_file, primer3.calcTm(self.primers_file, mv_conc=self.Mo_concentration,
+                                                                    dv_conc=self.Di_concentration,
+                                                                    dntp_conc=self.dNTP_concentration,
+                                                                    dna_conc=self.primer_concentration)))
             with open(self.output_file, "w") as o:
-                Tm = primer3.calcTm(self.primers_file)
+                Tm = primer3.calcTm(self.primers_file, mv_conc=self.Mo_concentration, dv_conc=self.Di_concentration,
+                                    dntp_conc=self.dNTP_concentration, dna_conc=self.primer_concentration)
                 o.write(self.primers_file + "\t" + str(Tm) + "\n")
+
+
 def main():
     (options, args) = argsParse()
-    results = Cal_Tm(primer_file=options.input, output_file=options.out, file_format=options.format)
+    results = Cal_Tm(primer_file=options.input, output_file=options.out, file_format=options.format,
+                     Mo_concentration=options.mono_conc, Di_concentration=options.diva_conc,
+                     dNTP_concentration=options.dntp_conc, primer_concentration=options.primer_conc)
     results.run()
+
 
 if __name__ == "__main__":
     e1 = time.time()
