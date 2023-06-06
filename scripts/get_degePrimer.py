@@ -1,1 +1,1 @@
-get_degePrimer_V5.py
+get_degePrimer_V6.py

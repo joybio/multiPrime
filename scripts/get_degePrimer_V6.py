@@ -49,7 +49,7 @@ import sys
 
 def argsParse():
     parser = OptionParser('Usage: %prog -i [input] -r [sequence.fa] -o [output] \n \
-                Options: {-f [0.6] -m [500] -n [200] -e [4] -p [9] -s [250,500] -g [0.4,0.6] -d [4] -a ","}' ,version="%prog 0.0.5")
+                Options: {-f [0.6] -m [500] -n [200] -e [4] -p [9] -s [250,500] -g [0.4,0.6] -d [4] -a ","}.')
     parser.add_option('-i', '--input',
                       dest='input',
                       help='Input file: degeprimer out.')
@@ -529,21 +529,22 @@ class Primers_filter(object):
         p.submit(
             self.primer_pairs(primer_pairs))  # This will submit all tasks to one place without blocking, and then each
         # thread in the thread pool will fetch tasks.
-        ID = str(self.outfile)
-        with open(self.outfile, "w") as fo:
-            # headers = ["Primer_F_seq", "Primer_R_seq", "Product length", "Target number", "Primer_start_end"]
-            # fo.write(ID + "\t" + "\t".join(headers) + "\t")
-            fo.write(ID + "\t")
-            for i in primer_pairs:
-                fo.write("\t".join(map(str, i)) + "\t")
-            # get results before shutdown. Synchronous call mode: call, wait for the return value, decouple, but slow.
-            fo.write("\n")
-            fo.close()
         p.shutdown()
         # After I run the main, I don't care whether the sub thread is alive or dead. With this parameter, after all
         # the sub threads are executed, the main function is executed get results after shutdown.
         # Asynchronous call mode: only call, unequal return values, coupling may exist, but the speed is fast.
 
+        ID = str(self.outfile)
+        primer_pairs_sort = sorted(primer_pairs, key=lambda k: k[3], reverse=True)
+        with open(self.outfile, "w") as fo:
+            # headers = ["Primer_F_seq", "Primer_R_seq", "Product length", "Target number", "Primer_start_end"]
+            # fo.write(ID + "\t" + "\t".join(headers) + "\t")
+            fo.write(ID + "\t")
+            for i in primer_pairs_sort:
+                fo.write("\t".join(map(str, i)) + "\t")
+            # get results before shutdown. Synchronous call mode: call, wait for the return value, decouple, but slow.
+            fo.write("\n")
+            fo.close()
 
 def main():
     options, args = argsParse()
