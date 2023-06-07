@@ -47,6 +47,7 @@ plac=1.3.5=pyhd8ed1ab_0
 pluggy=1.0.0=py37h89c1867_3
 ply=3.11=py_1
 prettytable=3.3.0=pyhd8ed1ab_0
+primer3=2.6.1
 protobuf=3.20.1=py37hd23a5d3_0
 psutil=5.9.1=py37h540881e_0
 pulp=2.6.0=py37h89c1867_1

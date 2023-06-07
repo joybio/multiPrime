@@ -18,3 +18,4 @@ bowtie=1.0.0
 fastani=1.33
 samtools=1.16.1
 perl=5.32.1
+primer3=2.6.1
