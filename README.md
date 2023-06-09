@@ -311,7 +311,7 @@ results: results directory
 	-Total_fa: genome file and cluster of genome file.
 
 	-Clusters_fa: genome file split by each cluster.
-		--*.fa: fasta of each cluster
+		--*.fa: fasta of each cluster, only acc_ID. For complete names, please refer to the files located in the "Clusters_target" directory.
 		--*.tfa: top N {default: 500 randomly selected. Always contain the representative seq} fasta of each cluster
 		--*.txt: accession id of each cluster
 		--*.db: directory of database (for bowtie2).
@@ -333,6 +333,9 @@ results: results directory
 		--*.fa: candidate primers in fa format
 		--*.txt: candidate primers in txt format (1 line)
 		--*.Check: tmp file; primers filter by bowtie2 (1 mismatch and mismatch position must 4bp away from 3'end at least.)
+
+	-Clusters_target: information of each cluster.
+		--*.txt: full name of each sequences in each cluster. You can get the full information of sequences from these files.
 
 	-Primers_set:
 		--candidate_primers_sets.txt: all candidate primers in each cluster
