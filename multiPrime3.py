@@ -54,9 +54,9 @@ rule seq_format:
 		python {params}/seq_format.py -i {input} -o {output}
 		'''
 #-------------------------------------------------------------------------------------------
-# build_dict 2: Dependency packages - None
+# build_info_dict 2: Dependency packages - None
 #-------------------------------------------------------------------------------------------
-rule build_dict:
+rule build_info_dict:
 	input:
 		config["results_dir"] + "/Total_fa/{virus}.format.fa"
 	output:
@@ -64,7 +64,7 @@ rule build_dict:
 	params:
 		config["scripts_dir"]
 	message:
-		"Step2: build dict form format sequences.."
+		"Step2: Build inofrmation dict form format sequences.."
 	shell:
 		'''
 		python {params}/prepare_fa_pickle.py -i {input} -t T -o {output}
@@ -83,22 +83,6 @@ rule rmdup:
 		'''
 		cd-hit -M 0 -T 0 -i {input} -o {output} -c 1
 		'''
-#-------------------------------------------------------------------------------------------
-# bowtie2-index rule 2: Dependency packages - bowtie2
-#-------------------------------------------------------------------------------------------
-#rule makedb:
-#	input:
-#		config["results_dir"] + "/Total_fa/{virus}.format.rmdup.cluster.fa"
-#	output:
-#		touch(config["results_dir"] + "/Bowtie_db/done")
-#	params:
-#		output_prefix=config["results_dir"] + "/Bowtie_db/genome"
-#	message:
-#		"Step2: Build index for BWT (bowtie2) .."
-#	shell:
-#		'''
-#		bowtie2-build {input} {params.output_prefix}
-#		'''
 #-------------------------------------------------------------------------------------------
 # cluster_by_identity rule 4: Dependency packages - cd-hit || suggest: identity=0.8
 #-------------------------------------------------------------------------------------------
@@ -147,22 +131,6 @@ checkpoint extract_cluster_fa:
 		python {params.script}/merge_cluster_by_ANI.py -i {output[0]} -p 20 -t {params.threshold} \
 			-o {output[3]} -d {params.drop} -a {params.ani}
 		'''
-
-#-------------------------------------------------------------------------------------------
-# merge_cluster 6: Dependency packages - fastANI
-#-------------------------------------------------------------------------------------------
-#rule merge_cluster:
-#	input:
-#		config["results_dir"] + "/cluster.txt"
-#	output:
-#		config["results_dir"] + "/history.txt"
-#	message:
-#		"Step6: Merging cluster by ANI.."
-#	shell:
-#		'''
-#		python {params.script}/merge_cluster_by_ANI.py -i {input} -p 20 -t 20 -o {output}
-#		'''
-
 #-------------------------------------------------------------------------------------------
 # alignment_by_muscle rule 6: Dependency packages - None
 #-------------------------------------------------------------------------------------------
@@ -181,9 +149,6 @@ rule alignment_by_muscle:
 		'''
 		python {params.script}/run_mafft.py -i {input} -o {output}
 		'''
-#		muscle -in {input} -out {output}
-#		for long input.
-#		mafft --auto {input} > {output}
 #-------------------------------------------------------------------------------------------
 # Cluster_virus rule 7: Dependency packages - None
 #-------------------------------------------------------------------------------------------
@@ -196,13 +161,13 @@ rule Cluster_virus:
 	params:
 		script = config["scripts_dir"]
 	message:
-		"Step6: targets information extraction .."
+		"Step7: Targets information extraction .."
 	shell:
 		'''
 		python {params.script}/extract_value_from_dict.py -i {input[0]} -d {input[1]} -o {output}
 		'''
 #-------------------------------------------------------------------------------------------
-# multiPrime rule 7: Dependency packages - multiPrime-core
+# multiPrime rule 8: Dependency packages - multiPrime-core
 #-------------------------------------------------------------------------------------------
 rule multiPrime:
 	input:
@@ -224,7 +189,7 @@ rule multiPrime:
 		GC = config["gc_content"],
 		coverage = config["coverage"]
 	message:
-		"Step7: Design primers by multiPrime .."
+		"Step8: Design primers by multiPrime .."
 	shell:
 		'''
 		python {params.script}/multiPrime-core_V16.py -i {input} -n {params.dege_number} \
@@ -233,7 +198,7 @@ rule multiPrime:
 			-o {output} -f {params.coverage} -p 1 2>&1 > {log}
 		'''
 #-------------------------------------------------------------------------------------------
-# get_degePrimer rule 8: Dependency packages - pandas, biopython, math, operator,functools
+# get_degePrimer rule 9: Dependency packages - pandas, biopython, math, operator,functools
 #-------------------------------------------------------------------------------------------
 rule get_multiPrime:
 	input:
@@ -255,7 +220,7 @@ rule get_multiPrime:
 		adaptor = config["adaptor"],
 		end = config["end"]
 	message:
-		"Step8: Filter candidate primeri pairs for each cluster (hairpin, dimer (F-R) check) .."
+		"Step9: Filter candidate primeri pairs for each cluster (hairpin, dimer (F-R) check) .."
 	shell:
 		'''
 		python {params.script}/get_multiPrime.py -i {input.primer} -r {input.ref_fa} \
@@ -265,7 +230,7 @@ rule get_multiPrime:
 		'''
 
 #-------------------------------------------------------------------------------------------
-# aggregate_candidate_primers rule 9: Dependency packages - None
+# aggregate_candidate_primers rule 10: Dependency packages - None
 #-------------------------------------------------------------------------------------------
 rule aggregate_candidate_primers:
 	input:
@@ -273,13 +238,13 @@ rule aggregate_candidate_primers:
 	output:
 		config["results_dir"] + "/Primers_set/candidate_primers_sets.txt"
 	message:
-		"Step9: Prepare all candidate primers for primer selection .."
+		"Step10: Prepare all candidate primers for primer selection .."
 	shell:
 		'''
 		cat {input} > {output}
 		'''
 #-------------------------------------------------------------------------------------------
-# get_candidate_primer_fa rule 10: Dependency packages - None
+# get_candidate_primer_fa rule 11: Dependency packages - None
 #-------------------------------------------------------------------------------------------
 rule get_candidate_primer_fa:
 	input:
@@ -291,7 +256,7 @@ rule get_candidate_primer_fa:
 		script = config["scripts_dir"],
 		step = config["step"]
 	message:
-		"Step10: Get candidate primers .."
+		"Step11: Get candidate primers .."
 	shell:
 		'''
 		python {params.script}/candidate_primer_txt2fa.py -i {input} -s {params.step} \
@@ -299,7 +264,7 @@ rule get_candidate_primer_fa:
 		'''
 
 #-------------------------------------------------------------------------------------------
-# get_Maxprimerset rule 11: Dependency packages - python, pandas, biopython
+# get_Maxprimerset rule 12: Dependency packages - python, pandas, biopython
 #-------------------------------------------------------------------------------------------
 rule get_Maxprimerset:
 	input:
@@ -313,7 +278,7 @@ rule get_Maxprimerset:
 		step = config["step"],
 		method = config["method"]
 	message:
-		"Step11: Try to find Max_primer_set..."
+		"Step12: Try to find Max_primer_set..."
 	shell:
 		'''
 		python {params.script}/get_Maxprimerset.py -i {input} -s {params.step} \
@@ -321,7 +286,7 @@ rule get_Maxprimerset:
 			 2>&1 > {log}
 		'''
 #-------------------------------------------------------------------------------------------
-# get_core_primer_set rule 12: Dependency packages - python
+# get_core_primer_set rule 13: Dependency packages - python
 #-------------------------------------------------------------------------------------------
 rule get_core_primer_set:
 	input:
@@ -329,7 +294,7 @@ rule get_core_primer_set:
 	output:
 		config["results_dir"] + "/Core_primers_set/core_candidate_primers_sets.txt"
 	message:
-		"step12: Extract core primer set..."
+		"step13: Extract core primer set..."
 	params:
 		script = config["scripts_dir"],
 		number = config["core_number"]
@@ -339,7 +304,7 @@ rule get_core_primer_set:
 			-n {params.number}
 		"""
 #-------------------------------------------------------------------------------------------
-# get_core_Maxprimerset rule 13: Dependency packages - python
+# get_core_Maxprimerset rule 14: Dependency packages - python
 #-------------------------------------------------------------------------------------------
 rule get_core_Maxprimerset:
 	input:
@@ -347,7 +312,7 @@ rule get_core_Maxprimerset:
 	output:
 		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.xls"
 	message:
-		"Step13: Try to find core Max_primer_set .."
+		"Step14: Try to find core Max_primer_set .."
 	params:
 		script = config["scripts_dir"],
 		step = config["step"],
@@ -361,7 +326,7 @@ rule get_core_Maxprimerset:
 			 2>&1 > {log}
 		"""
 #-------------------------------------------------------------------------------------------
-# format_transition rule 14: Dependency packages - python
+# format_transition rule 15: Dependency packages - python
 #-------------------------------------------------------------------------------------------
 rule format_transition:
 	input:
@@ -373,14 +338,14 @@ rule format_transition:
 		script = config["scripts_dir"],
 		step = config["step"]
 	message:
-		"Step14: Format transition .."
+		"Step15: Format transition .."
 	shell:
 		"""
 		python {params.script}/candidate_primer_txt2fa.py -i {input} -s {params.step} \
 			-o {output[0]} -n {output[1]}
 		"""
 #-------------------------------------------------------------------------------------------
-# get_all_PCR_product rule 15: Dependency packages - python
+# get_all_PCR_product rule 16: Dependency packages - python
 #-------------------------------------------------------------------------------------------
 rule get_all_PCR_product:
 	input:
@@ -392,14 +357,14 @@ rule get_all_PCR_product:
 	params:
 		config["scripts_dir"]
 	message:
-		"Step15: Extract PCR product from the input virus sequence (non-mismatch) .."
+		"Step16: Extract PCR product from the input virus sequence (non-mismatch) .."
 	shell:
 		'''
 		python {params}/extract_PCR_product.py -i {input[0]} -r {input[1]} -p 10 \
 			-f xls -o {output[0]} -s {output[1]}
 		'''
 #-------------------------------------------------------------------------------------------
-# get_core_PCR_product rule 16: Dependency packages - python
+# get_core_PCR_product rule 17: Dependency packages - python
 #-------------------------------------------------------------------------------------------
 rule get_core_PCR_product:
 	input:
@@ -411,14 +376,14 @@ rule get_core_PCR_product:
 	params:
 		config["scripts_dir"]
 	message:
-		"Step16: Extract core PCR product from the input virus sequence (non-mismatch) .."
+		"Step17: Extract core PCR product from the input virus sequence (non-mismatch) .."
 	shell:
 		'''
 		python {params}/extract_PCR_product.py -i {input[0]} -r {input[1]} -p 10 \
 			-f xls -o {output[0]} -s {output[1]}
 		'''
 #-------------------------------------------------------------------------------------------
-# mfeprimer_check rule 17: Dependency packages - mfeprimer-3.2.6
+# mfeprimer_check rule 18: Dependency packages - mfeprimer-3.2.6
 #-------------------------------------------------------------------------------------------
 rule all_mfeprimer_check:
 	input:
@@ -431,7 +396,7 @@ rule all_mfeprimer_check:
 	params:
 		config["scripts_dir"]
 	message:
-		"Step17: Hairpin and dimer check by mfeprimer .."
+		"Step18: Hairpin and dimer check by mfeprimer .."
 	
 	shell:
 		"""
@@ -441,7 +406,7 @@ rule all_mfeprimer_check:
 		python {params}/finDimer.py -i {output[0]} -o {output[3]}
 		"""
 #-------------------------------------------------------------------------------------------
-# core_mfeprimer_check rule 18: Dependency packages - mfeprimer-3.2.6
+# core_mfeprimer_check rule 19: Dependency packages - mfeprimer-3.2.6
 #-------------------------------------------------------------------------------------------
 rule core_mfeprimer_check:
 	input:
@@ -454,7 +419,7 @@ rule core_mfeprimer_check:
 	params:
 		config["scripts_dir"]
 	message:
-		"Step18: Hairpin and dimer check by mfeprimer.. "
+		"Step19: Hairpin and dimer check by mfeprimer.. "
 	shell:
 		"""
 		python {params}/primerset_format.py -i {input} -o {output[0]}
@@ -463,7 +428,7 @@ rule core_mfeprimer_check:
 		python {params}/finDimer.py -i {output[0]} -o {output[3]}
 		"""
 #-------------------------------------------------------------------------------------------
-# core_primer_coverage rule 19: Dependency packages - bowtie2 
+# core_primer_coverage rule 20: Dependency packages - bowtie2 
 #-------------------------------------------------------------------------------------------
 rule BWT_validation:
 	input:
@@ -475,7 +440,7 @@ rule BWT_validation:
 		script = config["scripts_dir"],
 		primer_len = config["primer_len"],
 	message:
-		"Step19: Primer coverage clculation .. "
+		"Step20: Primer coverage clculation .. "
 	shell:
 		"""
 		python {params.script}/primer_coverage_validation_by_BWT.py -i {input[0]}  -r {input[1]} \
