@@ -49,7 +49,7 @@ raw_dict = pickle.load(dictionary)
 number = int(options.num)
 data = open(options.input,"r")
 out = open(options.out,"w")
-print(raw_dict)
+#print(raw_dict)
 for i in data:
 	i = i.strip().split("\t")
 	key = i[number]
