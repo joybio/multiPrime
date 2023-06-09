@@ -26,6 +26,7 @@ rule all:
 #	snakemake was run locally.
 #	'''
 	input: 
+		config["results_dir"] + "/Clusters_target/",
 		config["results_dir"] + "/Primers_set/candidate_primers_sets.txt",
 		config["results_dir"] + "/Primers_set/final_maxprimers_set.xls",
 		config["results_dir"] + "/Primers_set/Coverage_stast.xls",
@@ -53,19 +54,21 @@ rule seq_format:
 		python {params}/seq_format.py -i {input} -o {output}
 		'''
 #-------------------------------------------------------------------------------------------
-# extract_ rule 2: Dependency packages - None
+# build_dict 2: Dependency packages - None
 #-------------------------------------------------------------------------------------------
-#rule extract_seq:
-#	input:
-#		config["results_dir"] + "/Total_fa/{virus}.format.fa"
-#	output:
-#		config["results_dir"] + "/Total_fa/{virus}.format.fa",
-#	message:
-#		"Step2: extract  from the raw fasta .."
-#	shell:
-#		'''
-#		cat {input} | grep -A 1 "" > {output[0]}
-#		'''
+rule build_dict:
+	input:
+		config["results_dir"] + "/Total_fa/{virus}.format.fa"
+	output:
+		config["results_dir"] + "/Total_fa/{virus}.format.dict"
+	params:
+		config["scripts_dir"]
+	message:
+		"Step2: build dict form format sequences.."
+	shell:
+		'''
+		python {params}/prepare_fa_pickle.py -i {input} -t T -o {output}
+		'''
 #-------------------------------------------------------------------------------------------
 # rmdup rule 3: Dependency packages - cd-hit
 #-------------------------------------------------------------------------------------------
@@ -181,6 +184,23 @@ rule alignment_by_muscle:
 #		muscle -in {input} -out {output}
 #		for long input.
 #		mafft --auto {input} > {output}
+#-------------------------------------------------------------------------------------------
+# Cluster_virus rule 7: Dependency packages - None
+#-------------------------------------------------------------------------------------------
+rule Cluster_virus:
+	input:
+		config["results_dir"] + "/Clusters_fa/{i}.tfa",
+		config["results_dir"] + "/Total_fa/{virus}.format.dict"
+	output:
+		config["results_dir"] + "/Clusters_target/{i}.txt"
+	params:
+		script = config["scripts_dir"]
+	message:
+		"Step6: targets information extraction .."
+	shell:
+		'''
+		python {params.script}/extract_value_from_dict.py -i {input[0]} -d {input[1]} -o {output}
+		'''
 #-------------------------------------------------------------------------------------------
 # multiPrime rule 7: Dependency packages - multiPrime-core
 #-------------------------------------------------------------------------------------------
