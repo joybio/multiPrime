@@ -78,8 +78,7 @@ def argsParse():
                       default="4",
                       type="int",
                       help="Filter primers by degenerate base position. e.g. [-t 4] means I dont want degenerate base "
-                           "appear at the end four bases when primer pre-filter. Default: 4. If you set -e 0, then it "
-                           "wont filter by degenerate base position")
+                           "appear at the end four bases when primer pre-filter. Default: 4.")
 
     parser.add_option('-p', '--proc',
                       dest='proc',
@@ -480,6 +479,7 @@ class Primers_filter(object):
     def dimer_check(self, primer_F, primer_R):
         current_end_set = set(self.current_end(primer_F)).union(set(self.current_end(primer_R)))
         primer_pairs = [primer_F, primer_R]
+        dimer = False
         for pp in primer_pairs:
             for end in current_end_set:
                 for p in self.degenerate_seq(pp):
@@ -494,8 +494,17 @@ class Primers_filter(object):
                         delta_G = self.deltaG(end)
                         # threshold = 3 or 3.6 or 3.96
                         if Loss > 3.6 or (delta_G < -5 and (end_d1 == end_d2)):
-                            return True
-        return False
+                            dimer = True
+                            if dimer:
+                                break
+                if dimer:
+                    break
+            if dimer:
+                break
+        if dimer:
+            return True
+        else:
+            return False
 
     ################# position of degenerate base #####################
     def dege_filter_in_term_N_bp(self, sequence):
@@ -521,21 +530,35 @@ class Primers_filter(object):
 
     ################# di_nucleotide #####################
     def di_nucleotide(self, primer):
+        Check = "False"
         primers = self.degenerate_seq(primer)
         for m in primers:
             for n in di_nucleotides:
                 if re.search(n, m):
-                    return True
-        return False
+                    Check = "True"
+                    break
+                else:
+                    pass
+            if Check == "True":
+                break
+        if Check == "True":
+            return True
+        else:
+            return False
 
     ################# di_nucleotide #####################
     def GC_clamp(self, primer, num=4, length=13):
+        check = False
         for i in range(num, (num + length)):
             s = primer[-i:]
             gc_fraction = self.GC_fraction(s)
             if gc_fraction > 0.6:
-                return True
-        return False
+                check = True
+                break
+        if check:
+            return True
+        else:
+            return False
 
     def pre_filter(self):
         limits = self.GC.split(",")
@@ -706,7 +729,7 @@ class Primers_filter(object):
                     for i in primer_pairs_sort:
                         fo.write("\t".join(map(str, i)) + "\t")
                         start_stop = i[4].split(":")
-                        fa.write(primer_ID + "_" + start_stop[0] + "F\n" + i[0] + "\n" + primer_ID + "_" + start_stop[1]
+                        fa.write(">" + primer_ID + "_" + start_stop[0] + "F\n" + i[0] + "\n>" + primer_ID + "_" + start_stop[1]
                                  + "R\n" + i[1] + "\n")
                     # get results before shutdown. Synchronous call mode: call, wait for the return value, decouple,
                     # but slow.
