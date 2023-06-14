@@ -21,14 +21,14 @@ Snakemake was used to facilitate the automated execution of all analysis steps. 
 
 Download/Provide all necessary files:
 
-# Comparison
+Comparison:
 DEGEPRIME-1.1.0: DOI: 10.1128/AEM.01403-14; Please cite: "DegePrime, a program for degenerate primer design for broad-taxonomic-range PCR in microbial ecology studies."
 		Links: https://github.com/EnvGen/DegePrime; please move this directory into scripts.
 
 mfeprimer-3.2.6: DOI: 10.1093/nar/gkz351; Please cite: "MFEprimer-3.0: quality control for PCR primers." please move this it into scripts. 
 Please add "execute" to mfeprimer-3.2.6
 
-# Programs we employed:
+Programs we employed:
 biopython: Not required in v1.0.1 and the subsequent version.
 
 The method for calculating Tm values in this study is a slightly modified version of primer3-py [here](https://github.com/libnano/primer3-py). Reference paper: Owczarzy et al., 2004; Owczarzy et al., 2008.
@@ -49,7 +49,7 @@ bowtie2: It is already in the requirement.txt. version=version 2.2.5. DOI:10.103
 		Links: https://www.nature.com/articles/nmeth.1923
 
 # Installation and Snakemake
-Snakemake is a workflow management system that helps to create and execute data processing pipelines. It requires python3 and dependent environment (multiPrime == multiPrime2) can be most easily installed via the bioconda package of the python anaconda distribution. 
+Snakemake is a workflow management system that helps to create and execute data processing pipelines. It requires python3 and dependent environment (multiPrime == multiPrime2 == multiPrime3) can be most easily installed via the bioconda package of the python anaconda distribution. 
 
   ```bash
   conda create -n multiPrime -c bioconda -c conda-forge --file requirement.txt
