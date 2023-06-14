@@ -352,6 +352,9 @@ results: results directory
 
 	-Core_primers_set:
 		--BWT_coverage: coverage of all primers in core primer set (up to 2-mismatch)
+			--*.out: the start and stop positions of each accession and its corresponding primer pair.
+			--*.pair.num: the target number of each primer.
+			--*.total.acc.num: the total target number of final primer sets.
 		--core_candidate_primers_sets.txt: core candidate primers in each cluster
 		--core_candidate_primers_sets:  directory contain all core candidate primers in fasta
 		--sort.core_candidate_primers_sets.txt: sorted by the number of core candidate primers in each line (cluster)
