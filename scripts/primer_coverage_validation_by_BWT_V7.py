@@ -423,7 +423,7 @@ def Bowtie_index(Input, method):
     Bowtie_file = Path(Input).parent.joinpath("Bowtie_DB")
     Bowtie_prefix = Path(Bowtie_file).joinpath(Path(Input).stem)
     bowtie_cmd = method + "-build"
-    if method == "bowtie2":
+    if re.search("bowtie2", method):
         ref_index = Path(Input).with_suffix(".1.bt2")
     else:
         ref_index = Path(Input).with_suffix(".1.bt1")
