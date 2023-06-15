@@ -189,9 +189,18 @@ def deltaG(sequence):
     return round(max(Delta_G_list), 2)
 
 
-def dimer_examination(primer_F, primer_R, primer_set):
-    def check_primer(primer, current_end_list):
-        for end in current_end_list:
+
+def dimer_examination(primer_F, primer_R, primer_list):
+    check = "F"
+    current_primer = set(degenerate_seq(primer_F) + degenerate_seq(primer_R))
+    Total_P_set = current_primer.union(primer_list)
+    tmp_current_end_list = []
+    for cp in Total_P_set:
+        tmp_current_end_list.extend(list(current_end(cp)))
+    # print(tmp_current_end_list)
+    current_end_list = sorted(list(set(tmp_current_end_list)), key=lambda i: len(i), reverse=True)
+    for end in current_end_list:
+        for primer in Total_P_set:
             idx = primer.find(RC(end))
             if idx >= 0:
                 end_length = len(end)
@@ -201,17 +210,8 @@ def dimer_examination(primer_F, primer_R, primer_set):
                 Loss = Penalty_points(
                     end_length, end_GC, end_d1, end_d2)
                 delta_G = deltaG(end)
-                if Loss >= 3.96 or (delta_G < -5 and (end_d1 == end_d2)):
+                if Loss >= 3 or (delta_G < -5 and (end_d1 == end_d2)):
                     return True
-        return False
-
-    current_primer = set(degenerate_seq(primer_F) + degenerate_seq(primer_R))
-    total_p_set = current_primer.union(primer_set)
-
-    # 判断是否存在二聚体
-    for p in current_primer:
-        if check_primer(p, total_p_set):
-            return True
     return False
 
 
