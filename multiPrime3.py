@@ -3,7 +3,7 @@ configfile:  "multiPrime3.yaml"
 #__date__ = "2023-4-20"
 #__author__ = "Junbo Yang"
 #__email__ = yang_junbo_hi@126.com; 1806389316@pku.edu.cn
-#__description__ = "A Snakemake workflow to design multiPCR primers and get Max_primerset"
+#__description__ = "A Snakemake workflow to design multiPCR primers and get Minimal_primer_set with max coverage."
 
 import os
 
