@@ -58,7 +58,7 @@ for i in data:
 		else:
 			value = line.strip()
 			for k in key_list:
-				pickle_dict[">"+k] = value
+				pickle_dict[k] = value
 
 		
 pickle.dump(pickle_dict,out)

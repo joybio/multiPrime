@@ -67,7 +67,7 @@ rule build_dict:
 		"Step2: build dict form format sequences.."
 	shell:
 		'''
-		python {params}/prepare_fa_pickle.py -i {input} -t T -o {output}
+		python {params}/prepare_fa_pickle.py -i {input} -o {output}
 		'''
 #-------------------------------------------------------------------------------------------
 # rmdup rule 3: Dependency packages - cd-hit
@@ -169,7 +169,7 @@ rule alignment_and_info_extraction:
 		python {params.script}/run_mafft.py -i {input[0]} -o {output[0]}
 
 		python {params.script}/extract_value_from_dict.py -i {input[0]} -d {input[1]} \
-                         -o {output[1]}
+                         -t T -o {output[1]}
 		'''
 #-------------------------------------------------------------------------------------------
 # multiPrime rule 7: Dependency packages - multiPrime-core
@@ -438,7 +438,8 @@ rule core_mfeprimer_check:
 rule BWT_validation:
 	input:
 		config["results_dir"] + "/Core_primers_set/core_final_maxprimers_set.fa",
-		expand(config["results_dir"] + "/Total_fa/{virus}.format.fa",virus = virus)
+		expand(config["results_dir"] + "/Total_fa/{virus}.format.fa",virus = virus),
+		expand(config["results_dir"] + "/Total_fa/{virus}.format.dict",virus = virus)
 	output:
 		config["results_dir"] + "/Core_primers_set/BWT_coverage/core_final_maxprimers_set.out"
 	params:
@@ -449,7 +450,7 @@ rule BWT_validation:
 	shell:
 		"""
 		python {params.script}/primer_coverage_validation_by_BWT.py -i {input[0]}  -r {input[1]} \
-			-l {params.primer_len} -t 1 -s 50,2000 -o {output}
+			-d {input[2]} -l {params.primer_len} -t 1 -s 50,2000 -o {output}
 		"""
 
 #-------------------------------------------------------------------------------------------

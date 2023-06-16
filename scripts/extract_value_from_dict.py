@@ -34,6 +34,11 @@ parser.add_option('-d','--dict',
                 help='defualt dict: /share/data3/yangjunbo/database/accession_taxid.dict; virus hash: keys = acc; values = line. \n \
 			you can construct your own dict by prepare_pickle.py.')
 
+parser.add_option('-t','--head',
+                dest='head',
+                default="F",
+                help='head information of the fasta, only use the title as the value of dict. default: F')
+
 parser.add_option('-o','--out',
                 dest='out',
                 help='Out file')
@@ -51,13 +56,15 @@ data = open(options.input,"r")
 out = open(options.out,"w")
 #print(raw_dict)
 for i in data:
-	i = i.strip().split("\t")
-	key = i[number]
-	if key in raw_dict.keys():
-		#print(raw_dict[key])
-		out.write(raw_dict[key] + "\n")
-	else:
-		pass
+	if i.startswith(">"):
+		i = i.lstrip(">").strip().split("\t")
+		key = i[number]
+		if key in raw_dict.keys():
+			#raw_dict[key]
+			if options.head != "F":
+				out.write(raw_dict[key])
+			else:
+				out.write(raw_dict[key].split("\n")[0] + "\n")
 data.close()
 dictionary.close()
 out.close()

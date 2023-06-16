@@ -310,13 +310,16 @@ results: results directory
 	-history.txt:  history of clusters with rare sequence numbers are compared with others by average nucleotide identity.
 	
 	-Total_fa: genome file and cluster of genome file.
+		--Bowtie_DB: the Bowtie_DB is a pre-built index of a reference genome that is created from an input FASTA file. 
+		--*.format.fa: reformat input fasta file. This process involves modifying the structure of the file to ensure compatibility with downstream analysis tools.
+		--*.dict: binary dict of input fasta file. 
+		--*.filtered.fa: filtered fasta. These fasta will not used in the downstream steps.
+		--*.clstr: cluster information
 
 	-Clusters_fa: genome file split by each cluster.
 		--*.fa: fasta of each cluster, only acc_ID. For complete names, please refer to the files located in the "Clusters_target" directory.
 		--*.tfa: top N {default: 500 randomly selected. Always contain the representative seq} fasta of each cluster
 		--*.txt: accession id of each cluster
-		--*.db: directory of database (for bowtie2).
-		--*.number: number of fasta in each cluster
 
 	-Clusters_msa: alginment by muscle
 		--*.tmsa: muscle output of the top N {default: 500 randomly selected. Always contain the representative seq}
@@ -330,10 +333,8 @@ results: results directory
 		--*.non_coverage_seq_id_json: Positions and non-contained sequences caused by others.
 
 	-Clusters_cprimer: candidate primers for each cluster.
-		--*.bed: candidate PCR product (1 mismatch and mismatch position must 4bp away from 3'end at least.)
 		--*.fa: candidate primers in fa format
 		--*.txt: candidate primers in txt format (1 line)
-		--*.Check: tmp file; primers filter by bowtie2 (1 mismatch and mismatch position must 4bp away from 3'end at least.)
 
 	-Clusters_target: information of each cluster.
 		--*.txt: full name of each sequences in each cluster. You can get the full information of sequences from these files.
@@ -355,6 +356,7 @@ results: results directory
 			--*.out: the start and stop positions of each accession and its corresponding primer pair.
 			--*.pair.num: the target number of each primer.
 			--*.total.acc.num: the total target number of final primer sets.
+			--*.unmatched.fa: the sequences that were not captured by the core primer set with setting mismatches.
 		--core_candidate_primers_sets.txt: core candidate primers in each cluster
 		--core_candidate_primers_sets:  directory contain all core candidate primers in fasta
 		--sort.core_candidate_primers_sets.txt: sorted by the number of core candidate primers in each line (cluster)
