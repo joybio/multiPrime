@@ -1,0 +1,74 @@
+MFEprimer-3.0 Dimer Reports (2023-06-16 13:33:19)
+
+Primer ID                      Sequence (5'-->3')                    Length     GC      Tm      Dg     
+                                                                      (bp)      (%)    (°C)  (kcal/mol)
+
+Cluster_0_20727_F.1            GGTATGGTTTCAGGCATC                        18   50.00   53.15    -17.99
+Cluster_0_20727_F.2            GGTATGGTTTCAGACATC                        18   44.44   50.06    -16.70
+Cluster_0_20727_F.3            GGTATGGTCTCAGGCATC                        18   55.56   54.59    -18.61
+Cluster_0_20727_F.4            GGTATGGTCTCAGACATC                        18   50.00   51.50    -17.31
+Cluster_0_20727_F.5            GGTATGGCTTCAGGCATC                        18   55.56   55.64    -19.07
+Cluster_0_20727_F.6            GGTATGGCTTCAGACATC                        18   50.00   52.56    -17.77
+Cluster_0_20727_F.7            GGTATGGCCTCAGGCATC                        18   61.11   57.68    -19.90
+Cluster_0_20727_F.8            GGTATGGCCTCAGACATC                        18   55.56   54.59    -18.61
+Cluster_0_20727_F.9            GGTACGGTTTCAGGCATC                        18   55.56   55.92    -19.28
+Cluster_0_20727_F.10           GGTACGGTTTCAGACATC                        18   50.00   52.88    -17.98
+Cluster_0_20727_F.11           GGTACGGTCTCAGGCATC                        18   61.11   57.33    -19.89
+Cluster_0_20727_F.12           GGTACGGTCTCAGACATC                        18   55.56   54.29    -18.60
+Cluster_0_20727_F.13           GGTACGGCTTCAGGCATC                        18   61.11   58.35    -20.35
+Cluster_0_20727_F.14           GGTACGGCTTCAGACATC                        18   55.56   55.32    -19.06
+Cluster_0_20727_F.15           GGTACGGCCTCAGGCATC                        18   66.67   60.38    -21.18
+Cluster_0_20727_F.16           GGTACGGCCTCAGACATC                        18   61.11   57.33    -19.89
+Cluster_0_20727_R.1            CGACGTATTTCTCGAGGT                        18   50.00   54.32    -18.65
+Cluster_0_20727_R.2            CGACGTATTTCTCTAGGT                        18   44.44   50.83    -17.06
+Cluster_0_20727_R.3            CGACGTATTTCTCAAGGT                        18   44.44   52.13    -17.63
+Cluster_0_20727_R.4            CGACATATTTCTCGAGGT                        18   44.44   51.55    -17.37
+Cluster_0_20727_R.5            CGACATATTTCTCTAGGT                        18   38.89   47.96    -15.77
+Cluster_0_20727_R.6            CGACATATTTCTCAAGGT                        18   38.89   49.29    -16.34
+Cluster_0_20727_R.7            CAACGTATTTCTCGAGGT                        18   44.44   52.13    -17.63
+Cluster_0_20727_R.8            CAACGTATTTCTCTAGGT                        18   38.89   48.55    -16.03
+Cluster_0_20727_R.9            CAACGTATTTCTCAAGGT                        18   38.89   49.87    -16.60
+Cluster_0_20727_R.10           CAACATATTTCTCGAGGT                        18   38.89   49.29    -16.34
+Cluster_0_20727_R.11           CAACATATTTCTCTAGGT                        18   33.33   45.60    -14.75
+Cluster_0_20727_R.12           CAACATATTTCTCAAGGT                        18   33.33   46.96    -15.32
+
+
+
+Dimer List (0)
+
+No dimer found.
+
+
+
+Parameters
+
+                   Primer file: core_final_maxprimers_set.fa
+                  Score cutoff: 5
+                Delta G cutoff: 0.00
+                Tm cutoff (°C): 0.00
+                      MisMatch: 2
+                   Primer mode: false
+       Monovalent cations [mM]: 50.00
+         Divalent cations [mM]: 1.50
+                    dNTPs [mM]: 0.25
+         Annealing oligos [nM]: 50.00
+
+
+
+Cite
+
+Kun Wang, Haiwei Li, Yue Xu, Qianzhi Shao, Jianming Yi, Ruichao Wang, Wanshi Cai, Xingyi Hang, 
+Chenggang Zhang, Haoyang Cai, Wubin Qu, MFEprimer-3.0: quality control for PCR primers, 
+Nucleic Acids Research, Volume 47, Issue W1, 02 July 2019, Pages W610–W613, 
+https://doi.org/10.1093/nar/gkz351
+
+
+
+Web & Contact
+
+https://www.mfeprimer.com
+Wubin Qu <quwubin@gmail.com>
+
+
+
+Total time used: 6.653627ms.

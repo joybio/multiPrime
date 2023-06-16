@@ -4,14 +4,14 @@
 ################################################################################
 # directory, where is/are the input virus fasta file(s) located
 # absolute path
-input_dir: /share/data3/yangjunbo/multiPCR/2023/202306/20230607
+input_dir: /share/data3/yangjunbo/git_storage/multiPrime/test_data
 
 # directory, in which the pipeline writes all output files (relative to current directory)
 # (this also includes the summary files)
-results_dir: /share/data3/yangjunbo/multiPCR/2023/202306/20230607/results
+results_dir: /share/data3/yangjunbo/git_storage/multiPrime/test_data/results
 
 # directory to write the log-files, created during processing, to 
-log_dir: /share/data3/yangjunbo/multiPCR/2023/202306/20230607/logs
+log_dir: /share/data3/yangjunbo/git_storage/multiPrime/test_data/logs
 
 # directory of scripts.
 scripts_dir: /share/data3/yangjunbo/git_storage/multiPrime/scripts
@@ -23,7 +23,7 @@ scripts_dir: /share/data3/yangjunbo/git_storage/multiPrime/scripts
 # please type here: sample1
 # this name is used throughout the entire pipeline as name for the output samples
 virus:
-  - Cluster_110_36
+  - CDS_20727
 ################################################################################
 # preprocessing
 ################################################################################

@@ -433,13 +433,15 @@ class off_targets(object):
                 target_seq = target_seq.union(primer_pair_acc_set)
                 fo.write(k[0] + "\t" + str(k[1]) + "\t" + str(len(primer_pair_acc_set)) + "\n")
         with open(self.outfile + ".total.acc.num", "w") as fo2:
-            fo2.write("total coverage of primer set (PS) is: {}".format(len(acc_id)))
+            fo2.write("total coverage of primer set (PS) is: {}\n".format(len(acc_id)))
         if self.targets != "None":
             with open(self.outfile + ".unmatched.fa", "w") as out:
                 raw_total_seq_dict = open(self.targets, "rb")
                 total_dict = pickle.load(raw_total_seq_dict)
                 print(len(set(total_dict.keys())), len(target_seq))
                 unmatched_seq_set = set(total_dict.keys()) - target_seq
+                with open(self.outfile + ".total.acc.num", "a+") as fo3:
+                    fo3.write("total target number is: {}\n".format(len(total_dict.keys())))
                 for unmatch in unmatched_seq_set:
                     out.write(total_dict[unmatch])
 
