@@ -240,7 +240,7 @@ for i in bases:
 
 
 def Penalty_points(length, GC, d1, d2):
-    return log10((2 ** length * 2 ** GC) / ((d1 + 0.1) * (d2 + 0.1)))
+    return log10((2 ** length * 2 ** GC) / ((2 ** d1 - 0.9) * (2 ** d2 - 0.9)))
 
 
 di_nucleotides = set()
@@ -531,7 +531,6 @@ class NN_degenerate(object):
     def dimer_check(self, primer):
         current_end = self.current_end(primer)
         current_end_sort = sorted(current_end, key=lambda i: len(i), reverse=True)
-        dimer = False
         for end in current_end_sort:
             for p in self.degenerate_seq(primer):
                 idx = p.find(RC(end))
