@@ -22,7 +22,8 @@ Snakemake was used to facilitate the automated execution of all analysis steps. 
 Download/Provide all necessary files:
 
 Comparison:
-DEGEPRIME-1.1.0: DOI: 10.1128/AEM.01403-14; Please cite: "DegePrime, a program for degenerate primer design for broad-taxonomic-range PCR in microbial ecology studies."
+
+DEGEPRIME-1.1.0 (multiPrime1): DOI: 10.1128/AEM.01403-14; Please cite: "DegePrime, a program for degenerate primer design for broad-taxonomic-range PCR in microbial ecology studies."
 		Links: https://github.com/EnvGen/DegePrime; please move this directory into scripts.
 
 mfeprimer-3.2.6: DOI: 10.1093/nar/gkz351; Please cite: "MFEprimer-3.0: quality control for PCR primers." please move this it into scripts. 
