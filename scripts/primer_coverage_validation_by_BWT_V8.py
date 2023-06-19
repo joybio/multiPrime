@@ -77,9 +77,12 @@ def argsParse():
 
     parser.add_option('-l', '--len',
                       dest='len',
-                      default=18,
+                      default=0,
                       type="int",
-                      help='Length of primer, which is used for mapping. Default: 18')
+                      help='Length of primer, which is used for mapping. '
+                           'If the length of the primer used for mapping is set to 0, '
+                           'the entire length of the primer will be utilized. '
+                           'Default: 0')
 
     parser.add_option('-t', '--term',
                       dest='term',
@@ -223,7 +226,7 @@ def closest(my_list, my_number1, my_number2):
 
 
 class off_targets(object):
-    def __init__(self, primer_file, term_length=9, reference_file="", mismatch_num=1, term_threshold=4, bowtie="",
+    def __init__(self, primer_file, term_length=18, reference_file="", mismatch_num=1, term_threshold=4, bowtie="",
                  PCR_product_size="150,2000", outfile="", nproc=10, targets="None"):
         #  If an attribute in a Python class does not want to be accessed externally,
         #  we can start with a double underscore (__) when naming the attribute,
@@ -266,8 +269,12 @@ class off_targets(object):
                 if i.startswith(">"):
                     value = i.strip().lstrip(">")
                 else:
-                    key = i.strip()[-l:]
-                    term_list[key].append(value)
+                    if l == 0:
+                        key = i.strip()
+                        term_list[key].append(value)
+                    else:
+                        key = i.strip()[-l:]
+                        term_list[key].append(value)
 
         for k in term_list.keys():
             sequence = k
@@ -450,24 +457,21 @@ def Bowtie_index(Input, method):
     Bowtie_prefix = Path(Bowtie_file).joinpath(Path(Input).stem)
     bowtie_cmd = method + "-build"
     if re.search("bowtie2", method):
-        ref_index = Path(Input).with_suffix(".1.bt2")
+        ref_index = Path(Bowtie_file).joinpath(Input).with_suffix(".1.bt2")
+    elif re.search("bowtie", method):
+        ref_index = Path(Bowtie_file).joinpath(Input).with_suffix(".1.ebwt")
     else:
-        ref_index = Path(Input).with_suffix(".1.bt1")
+        print("bowtie1 or bowtie2 must be specified !!!")
+        sys.exit(1)
     if ref_index.exists():
-        return Input
+        return Bowtie_prefix
     else:
         if Bowtie_file.exists():
-            size = os.listdir(Bowtie_file)
-            if not size:
-                print("No Bowtie index found, start building ...")
-                os.system("{} {} {}".format(bowtie_cmd, Input, Bowtie_prefix))
-            else:
-                print("Bowtie index is OK.")
-                pass
+            print("No Bowtie index found, start building ...")
         else:
             os.mkdir(Bowtie_file)
-            os.system("{} {} {}".format(bowtie_cmd, Input, Bowtie_prefix))
-        return Path(Input).parent.joinpath("Bowtie_DB").joinpath(Path(Input).stem)
+        os.system("{} {} {}".format(bowtie_cmd, Input, Bowtie_prefix))
+        return Bowtie_prefix
 
 
 def main():
