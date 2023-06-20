@@ -11,7 +11,6 @@ __author__ = "Junbo Yang"
 __email__ = "yang_junbo_hi@126.com"
 __license__ = "MIT"
 
-
 """
 The MIT License (MIT)
 
@@ -55,14 +54,15 @@ import numpy as np
 import pandas as pd
 from numpy import array
 
+
 # Melting temperature between 55-80◦C reduces the occurrence of hairpins
 # Runs of three or more Cs or Gs at the 3'-ends of primers may promote mispriming at G or C-rich sequences
 # (because of stability of annealing), and should be avoided.
 def argsParse():
     parser = OptionParser('Usage: %prog -i input -o output -p 10\n \
                         Options: { -l [18] -n [4] -d [10] -v [1] -g [0.2,0.7] -f [0.8] -c [4] -p [10] -a [4] }',
-                        version="%prog 1.0.16",
-                        description="Degenerate primer design program.")
+                          version="%prog 1.0.16",
+                          description="Degenerate primer design program.")
 
     parser.add_option('-i', '--input',
                       dest='input',
@@ -256,6 +256,7 @@ for i in base2bit.keys():
                 tri = (i + j + k) * 3
                 di_nucleotides.add(tri)
 
+
 def score_trans(sequence):
     return reduce(mul, [math.floor(score_table[x]) for x in list(sequence)])
 
@@ -263,7 +264,9 @@ def score_trans(sequence):
 def dege_number(sequence):
     return sum(math.floor(score_table[x]) > 1 for x in list(sequence))
 
+
 TRANS = str.maketrans("ATGC", "TACG")
+
 
 def RC(seq):
     return seq.translate(TRANS)[::-1]
@@ -380,6 +383,8 @@ def Calc_Tm_v2(seq):
         Tm = round(1 / ((1 / (delta_H / (delta_S + 1.9872 * math.log(primer_concentration / (4 * pow(10, 9)), math.e))))
                         + correction) - Kelvin, 2)
     return Tm
+
+
 ##############################################################################################
 
 
@@ -498,7 +503,6 @@ class NN_degenerate(object):
                         seq_dict[acc_id] += sequence
         return seq_dict, len(seq_dict)
 
-
     def current_end(self, primer, adaptor="", num=5, length=14):
         primer_extend = adaptor + primer
         end_seq = []
@@ -515,7 +519,8 @@ class NN_degenerate(object):
             Delta_G = 0
             for n in range(len(seq) - 1):
                 base_i, base_j = base2bit[seq[n + 1]], base2bit[seq[n]]
-                Delta_G += freedom_of_H_37_table[base_i][base_j] * H_bonds_number[base_i][base_j] + penalty_of_H_37_table[base_i][base_j]
+                Delta_G += freedom_of_H_37_table[base_i][base_j] * H_bonds_number[base_i][base_j] + \
+                           penalty_of_H_37_table[base_i][base_j]
             term5 = sequence[-2:]
             if term5 == "TA":
                 Delta_G += adjust_initiation[seq[0]] + adjust_initiation[seq[-1]] + adjust_terminal_TA
@@ -681,7 +686,7 @@ class NN_degenerate(object):
                   "coverage! Non candidate primers !!!".format(self.coverage))
             sys.exit(1)
         else:
-            return [start, stop, stop-start]
+            return [start, stop, stop - start]
 
     def entropy_threshold_adjust(self, length):
         if length < 5000:
@@ -691,7 +696,6 @@ class NN_degenerate(object):
                 return self.raw_entropy_threshold * 0.95
             else:
                 return self.raw_entropy_threshold * 0.9
-
 
     def get_primers(self, sequence_dict, primer_start):  # , primer_info, non_cov_primer_out
         # record sequence and acc id
@@ -936,7 +940,9 @@ class NN_degenerate(object):
             if optimal_NN_coverage_update == optimal_NN_coverage:
                 # NN_coverage not change means bugs or there are continuous positions mismatch
                 break
-            elif degeneracy >= self.score_of_dege_bases or number_of_degenerate >= self.number_of_dege_bases:
+            # If the degeneracy exceeds the threshold, the loop will break.
+            elif 2 * degeneracy > self.score_of_dege_bases or 3 * degeneracy / 2 > self.score_of_dege_bases \
+                    or number_of_degenerate == self.number_of_dege_bases:
                 break
             else:
                 optimal_NN_coverage = optimal_NN_coverage_update
@@ -1177,7 +1183,8 @@ class NN_degenerate(object):
         n = 0
         candidate_list, non_cov_primer_out, gap_seq_id_out = [], [], []
         with open(self.outfile, "w") as fo:
-            headers = ["Position", "Entropy of cover (bit)", "Entropy of total (bit)", "Optimal_primer", "primer_degenerate_number",
+            headers = ["Position", "Entropy of cover (bit)", "Entropy of total (bit)", "Optimal_primer",
+                       "primer_degenerate_number",
                        "nonsense_primer_number", "Optimal_coverage", "Mis-F-coverage", "Mis-R-coverage", "Tm",
                        "Information"]
             fo.write("\t".join(map(str, headers)) + "\n")

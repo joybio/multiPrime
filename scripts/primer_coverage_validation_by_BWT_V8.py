@@ -457,9 +457,9 @@ def Bowtie_index(Input, method):
     Bowtie_prefix = Path(Bowtie_file).joinpath(Path(Input).stem)
     bowtie_cmd = method + "-build"
     if re.search("bowtie2", method):
-        ref_index = Path(Bowtie_file).joinpath(Input).with_suffix(".1.bt2")
+        ref_index = Path(Bowtie_file).joinpath(Path(Input).name).with_suffix(".1.bt2")
     elif re.search("bowtie", method):
-        ref_index = Path(Bowtie_file).joinpath(Input).with_suffix(".1.ebwt")
+        ref_index = Path(Bowtie_file).joinpath(Path(Input).name).with_suffix(".1.ebwt")
     else:
         print("bowtie1 or bowtie2 must be specified !!!")
         sys.exit(1)

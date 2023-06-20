@@ -197,7 +197,7 @@ rule multiPrime:
 		"Step7: Design primers by multiPrime .."
 	shell:
 		'''
-		python {params.script}/multiPrime-core_V16.py -i {input} -n {params.dege_number} \
+		python {params.script}/multiPrime-core.py -i {input} -n {params.dege_number} \
 			-d {params.degeneracy} -v {params.variation} -c {params.coordinate} \
 			-g {params.GC} -s {params.min_PCR_size} -l {params.primer_len} \
 			-o {output} -f {params.coverage} -p 1 2>&1 > {log}
