@@ -4,7 +4,7 @@ The potential applications of multiPrime's primers include the detection of sing
 # Multi PCR primer pairs design processing pipeline
 MultiPrime is a pipeline designed for broad-spectrum detection of target sequences using tNGS. It is implemented in Python and Snakemake and takes a FASTA format file as input. The pipeline has three main steps: classification by identity, primer design, and primer set combination. In the classification step, redundant sequences are removed and clusters are formed by identity. Rare sequence clusters are compared to others by average nucleotide identity, and if they are deemed similar enough, they are merged. In the primer design step, multi-alignment is performed using MUSCLE or MAFFT, and candidate primers are designed using the nearest-neighbor model. Primer pairs are selected based on PCR product length, melting temperature, dimer examination, coverage with errors, and other factors. Finally, a greedy algorithm is used to combine primer pairs into a minimal primer set according to dimer examination.
 
-If you only require primer design without the need for primer set combination, you may use the primer design module of MultiPrime, which is accessible through scripts/multiPrime-core.py or pip install multiPrime (version >=2.3.8) and utilize the DPrime function.
+If you only require primer design without the need for primer set combination, you may use the primer design module of MultiPrime, which is accessible through scripts/multiPrime-core.py or pip install multiPrime (version >=2.4.5) and utilize the DPrime function.
 
 multiPrime1: Degenerate primer design by DEGEPRIME (MC-DPD).
 
@@ -118,7 +118,7 @@ Once you set up your configuration file, running the pipeline locally on your co
 # Start a run independently
 Setting default parameters may not always be suitable for all conditions. If you want to design primers with more flexible parameters, you can install the multiPrime package through PyPI (Python Package Index) using pip.
   ```bash
-  pip install multiPrime==2.3.8 (make sure version >=2.3.8)
+  pip install multiPrime==2.4.5 (make sure version >=2.4.5)
   ```
   ```bash
   multiPrime --help
@@ -280,19 +280,22 @@ For example:
   -i INPUT_FILE, --input=INPUT_FILE
                         input file: primer.fa.
   -r REF, --ref=REF     reference file: template fasta or reference fasta.
-  -l LEN, --len=LEN     Length of primer, which is used for mapping. Default:
-                        18
+  -l LEN, --len=LEN     Length of primer, which is used for mapping. If the length of the primer used for 
+                        mapping is set to 0,the entire length of the primer will be utilized. Default: 0
   -t TERM, --term=TERM  Position of mismatch is not allowed in the 3 term of
                         primer. Default: 4
   -s SIZE, --s=SIZE     Length of PCR product, default: 150,2000.
   -p PROC, --proc=PROC  Number of process. Default: 20
   -b BOWTIE, --bowtie=BOWTIE
-                        bowtie or bowtie2 was employed for mapping. Default:
-                        bowtie2
+                        bowtie/ABS_path(bowtie) or bowtie2/ABS_path(bowtie2) was employed for mapping. 
+                        Default: bowtie2
   -m SEEDMMS, --seedmms=SEEDMMS
                         Bowtie: Mismatches in seed (can be 0 - 3, default: -n
                         1).Bowtie2: Gap or mismatches in seed (can be 0 - 1,
                         default: -n 1).
+  -d DICT, --dict=DICT
+                        Dictionary of targets sequences, binary format. Default: None.
+                        It can be obtained from prepare_fa_pickle.py (https://github.com/joybio/multiPrime).
   -o OUT, --out=OUT     Prodcut of PCR product with primers.
 
   ```
