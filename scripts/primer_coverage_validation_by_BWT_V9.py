@@ -9,7 +9,6 @@ __author__ = "Junbo Yang"
 __email__ = "yang_junbo_hi@126.com"
 __license__ = "MIT"
 
-
 """
 The MIT License (MIT)
 
@@ -40,11 +39,9 @@ from collections import defaultdict
 import os
 import multiprocessing
 from itertools import product
-from multiprocessing import Process
 import time
 import numpy as np
-import pandas as pd
-from optparse import OptionParser
+import argparse
 from pathlib import Path
 import math
 from math import log10
@@ -56,92 +53,39 @@ from concurrent.futures import ProcessPoolExecutor
 import pickle
 
 
-# Path(path).parent, Path(path).name, Path(path).suffix, Path(path).stem, Path(path).iterdir(), Path(path).joinpath()
-# Path(path).is_absolute(), Path(path).is_dir(), Path(path).is_file(), Path(path).exists(), Path(path).with_suffix
+def parseArg():
+    parser = argparse.ArgumentParser(description="For mismatch coverage stastic.")
+    parser.add_argument("-i", "--input", type=str, required=True,
+                        help="input file: primer.fa.", metavar="<file>")
+    parser.add_argument("-r", "--ref", type=str, required=True,
+                        help='Reference sequence file: Reference file. The program will first search for Bowtie index '
+                             'files using the parameter you provided as the prefix. If the files are not found, '
+                             'it will build an index using the prefix you provided. Otherwise, '
+                             'the program will use the Bowtie index prefix you provided.',
+                        metavar="<str>")
+    parser.add_argument("-l", "--len", type=int, default=0,
+                        help='Length of primer, which is used for mapping. If the length of the primer used for '
+                             'mapping is set to 0, the entire length of the primer will be utilized. Default: 0',
+                        metavar="<int>")
+    parser.add_argument("-t", "--term", type=int, default=4,
+                        help='Position of mismatch is not allowed in the 3 term of primer. Default: 4', metavar="<int>")
+    parser.add_argument("-s", "--size", type=str, default="100,1500",
+                        help='Length of PCR product, default: 100,1500.', metavar="<str>")
+    parser.add_argument("-p", "--proc", type=int, default=20,
+                        help='Number of process to launch. Default: 20.', metavar="<int>")
 
-
-def argsParse():
-    parser = OptionParser('Usage: %prog -i [input] -r [reference fasta] -l [150,2000] -p [10]-o [output]',
-                          version="%prog 0.0.8")
-
-    parser.add_option('-i', '--input',
-                      dest='input_file',
-                      help='input file: primer.fa.')
-
-    parser.add_option('-r', '--ref',
-                      dest='ref',
-                      help='Reference file.The program will first search for Bowtie index files using the parameter '
-                           'you provided as the prefix.'
-                           'If the files are not found, it will build an index using the prefix you provided. '
-                           'else, the program will use the Bowtie index prefix you provided.')
-
-    parser.add_option('-l', '--len',
-                      dest='len',
-                      default=0,
-                      type="int",
-                      help='Length of primer, which is used for mapping. '
-                           'If the length of the primer used for mapping is set to 0, '
-                           'the entire length of the primer will be utilized. '
-                           'Default: 0')
-
-    parser.add_option('-t', '--term',
-                      dest='term',
-                      default=4,
-                      type="int",
-                      help='Position of mismatch is not allowed in the 3 term of primer. Default: 4')
-
-    parser.add_option('-s', '--s',
-                      dest='size',
-                      default="100,1500",
-                      type="str",
-                      help='Length of PCR product, default: 100,1500.')
-
-    parser.add_option('-p', '--proc',
-                      dest='proc',
-                      default="20",
-                      type="int",
-                      help='Number of process. Default: 20')
-
-    parser.add_option('-b', '--bowtie',
-                      dest='bowtie',
-                      default="bowtie2",
-                      type="str",
-                      help='bowtie/ABS_path(bowtie) or bowtie2/ABS_path(bowtie2) was employed for mapping. '
-                           'Default: bowtie2')
-
-    parser.add_option('-m', '--seedmms',
-                      dest='seedmms',
-                      default="1",
-                      type="int",
-                      help='Bowtie: Mismatches in seed (can be 0 - 3, default: -n 1).'
-                           'Bowtie2: Gap or mismatches in seed (can be 0 - 1, default: -n 1).')
-
-    parser.add_option('-d', '--dict',
-                      dest='dict',
-                      default="None",
-                      help='Dictionary of targets sequences, binary format. '
-                           'It can be obtained from prepare_fa_pickle.py.')
-
-    parser.add_option('-o', '--out',
-                      dest='out',
-                      help='Prodcut of PCR product with primers.')
-
-    (options, args) = parser.parse_args()
-    if len(sys.argv) == 1:
-        parser.print_help()
-        sys.exit(1)
-    elif options.input_file is None:
-        parser.print_help()
-        print("Input file must be specified !!!")
-        sys.exit(1)
-    elif options.ref is None:
-        parser.print_help()
-        print("reference (fasta) must be specified !!!")
-        sys.exit(1)
-    elif options.out is None:
-        parser.print_help()
-        print("No output file provided !!!")
-        sys.exit(1)
+    parser.add_argument("-b", "--bowtie", type=str, default="bowtie2",
+                        help='bowtie/ABS_path(bowtie) or bowtie2/ABS_path(bowtie2) was employed for mapping. '
+                             'Default: bowtie2', metavar="<str>")
+    parser.add_argument("-m", "--seedmms", type=int, default=1,
+                        help='Bowtie: Mismatches in seed (can be 0 - 3, default: -n 1).'
+                             'Bowtie2: Gap or mismatches in seed (can be 0 - 1, default: -n 1)',
+                        metavar="<int>")
+    parser.add_argument("-d", "--dict", type=str, default="None",
+                        help='Dictionary of targets sequences, binary format. '
+                             'It can be obtained from prepare_fa_pickle.py.', metavar="<str>")
+    parser.add_argument("-o", "--out", type=str, required=True,
+                        help='Output file: Prodcut of PCR product with primers.', metavar="<file>")
     return parser.parse_args()
 
 
@@ -226,8 +170,8 @@ def closest(my_list, my_number1, my_number2):
 
 
 class off_targets(object):
-    def __init__(self, primer_file, term_length=int, reference_file=str, mismatch_num=1, term_threshold=4, bowtie="",
-                 PCR_product_size="150,2000", outfile="", nproc=10, targets="None"):
+    def __init__(self, primer_file, term_length=int, reference_file=str, mismatch_num=int, term_threshold=int, bowtie="",
+                 PCR_product_size=str, outfile="", nproc=10, targets="None"):
         #  If an attribute in a Python class does not want to be accessed externally,
         #  we can start with a double underscore (__) when naming the attribute,
         #  Then the attribute cannot be accessed with the original variable name, making it private.
@@ -452,6 +396,7 @@ class off_targets(object):
                 for unmatch in unmatched_seq_set:
                     out.write(total_dict[unmatch])
 
+
 def Bowtie_index(Input, method):
     Bowtie_file = Path(Input).parent.joinpath("Bowtie_DB")
     Bowtie_prefix = Path(Bowtie_file).joinpath(Path(Input).stem)
@@ -480,12 +425,12 @@ def Bowtie_index(Input, method):
 
 
 def main():
-    options, args = argsParse()
-    ref_index = Bowtie_index(options.ref, options.bowtie)
-    prediction = off_targets(primer_file=options.input_file, term_length=options.len, reference_file=ref_index,
-                             PCR_product_size=options.size, mismatch_num=options.seedmms, outfile=options.out,
-                             term_threshold=options.term, bowtie=options.bowtie, nproc=options.proc,
-                             targets=options.dict)
+    args = parseArg()
+    ref_index = Bowtie_index(args.ref, args.bowtie)
+    prediction = off_targets(primer_file=args.input, term_length=args.len, reference_file=ref_index,
+                             PCR_product_size=args.size, mismatch_num=args.seedmms, outfile=args.out,
+                             term_threshold=args.term, bowtie=args.bowtie, nproc=args.proc,
+                             targets=args.dict)
     prediction.run()
 
 
