@@ -382,6 +382,7 @@ class Primers_filter(object):
                 for l in left:
                     if re.search(reversecomplement(k), l):
                         return True
+            n += 1
         return False
 
     ################# current_end #####################

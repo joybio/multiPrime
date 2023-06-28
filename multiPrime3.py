@@ -191,8 +191,10 @@ rule multiPrime:
 		min_PCR_size = config["PRODUCT_size"].split(",")[0],
 		variation = config["variation"],
 		coordinate = config["coordinate"],
+		entropy = config["entropy"],
 		GC = config["gc_content"],
-		coverage = config["coverage"]
+		coverage = config["coverage"],
+		nproc = config["nproc"]
 	message:
 		"Step7: Design primers by multiPrime .."
 	shell:
@@ -200,7 +202,8 @@ rule multiPrime:
 		python {params.script}/multiPrime-core.py -i {input} -n {params.dege_number} \
 			-d {params.degeneracy} -v {params.variation} -c {params.coordinate} \
 			-g {params.GC} -s {params.min_PCR_size} -l {params.primer_len} \
-			-o {output} -f {params.coverage} -p 1 2>&1 > {log}
+			-e {params.entropy} -o {output} -f {params.coverage} -p {params.nproc} \
+			2>&1 > {log}
 		'''
 #-------------------------------------------------------------------------------------------
 # get_degePrimer rule 8: Dependency packages - pandas, biopython, math, operator,functools
