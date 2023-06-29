@@ -106,8 +106,8 @@ degenerate_base = {"-": ["-"], "A": ["A"], "G": ["G"], "C": ["C"], "T": ["T"], "
                    "M": ["A", "C"], "K": ["G", "T"], "S": ["G", "C"], "W": ["A", "T"], "H": ["A", "T", "C"],
                    "B": ["G", "T", "C"], "V": ["G", "A", "C"], "D": ["G", "A", "T"], "N": ["A", "T", "G", "C"]}
 
-score_table = {"-": 100, "#": 0, "A": 1, "G": 1.11, "C": 1.21, "T": 1.4, "R": 2.11, "Y": 2.61, "M": 2.21,
-               "K": 2.51, "S": 2.32, "W": 2.4, "H": 3.61, "B": 3.72, "V": 3.32, "D": 3.51, "N": 4.72}
+score_table = {"-": 100, "#": 0.00, "A": 1, "G": 1.11, "C": 1.21, "T": 1.40, "R": 2.11, "Y": 2.61, "M": 2.21,
+               "K": 2.51, "S": 2.32, "W": 2.40, "H": 3.61, "B": 3.72, "V": 3.32, "D": 3.51, "N": 4.72}
 
 trans_score_table = {v: k for k, v in score_table.items()}
 
@@ -216,7 +216,8 @@ def RC(seq):
 ##############################################################################################
 def Y_distance(seq1, seq2):
     seq_diff = list(np.array([score_table[x] for x in list(seq1)]) - np.array([score_table[x] for x in list(seq2)]))
-    m_dist = [idx for idx in range(len(seq_diff)) if seq_diff[idx] not in score_table.values()]
+    m_dist = [idx for idx in range(len(seq_diff)) if round(seq_diff[idx], 2) not in score_table.values()]
+    # print(seq_diff)
     return m_dist
 
 
@@ -715,6 +716,7 @@ class NN_degenerate(object):
                 primers_db = pd.DataFrame(primers_db)
                 # frequency matrix
                 freq_matrix = self.state_matrix(primers_db)
+                # print(freq_matrix)
                 colSum = np.sum(freq_matrix, axis=0)
                 a, b = freq_matrix.shape
                 # a < 4 means base composition of this region is less than 4 (GC bias).
@@ -757,75 +759,27 @@ class NN_degenerate(object):
         # If a primer is located in the start region, there is no need to calculate its coverage for primer-R#
         ## here is a suggestion. we can assert candidate primer as primer-F or primer-R by primer attribute ##
         ######################################################################################################
-        if self.pre_degenerate_primer_check(full_degenerate_primer):
-            information = self.primer_pre_filter(full_degenerate_primer)
-            optimal_primer_current = full_degenerate_primer
-            F_mis_cover_cover, F_non_cover_in_cover, R_mis_cover_cover, R_non_cover_in_cover = \
-                self.mis_primer_check(cover_primer_set, full_degenerate_primer, cover,
-                                      non_gap_seq_id)
-            F_non_cover.update(F_non_cover_in_cover)
-            R_non_cover.update(R_non_cover_in_cover)
-            covered_primer_set = cover_primer_set.intersection(set(self.degenerate_seq(full_degenerate_primer)))
-            optimal_coverage_init = 0
-            for seq in covered_primer_set:
-                optimal_coverage_init += cover[seq]
-            F_mis_cover = optimal_coverage_init + F_mis_cover_cover
-            R_mis_cover = optimal_coverage_init + R_mis_cover_cover
-        else:
-            NN_matrix = self.trans_matrix(cover)
-            if len(cover_for_MM) != 0:
-                optimal_primer_index_NM = self.get_optimal_primer_by_viterbi(freq_matrix, NN_matrix)
-                optimal_primer_index_MM = self.get_optimal_primer_by_MM(cover_for_MM)
-                # print(optimal_primer_index_NM.tolist()) # array
-                # print(optimal_primer_index_MM) # list
-                #  if (optimal_primer_index_NM == optimal_primer_index_MM).all():
-                if optimal_primer_index_NM.tolist() == optimal_primer_index_MM:
-                    optimal_primer_index = optimal_primer_index_NM
-                    row_names = np.array(freq_matrix.index.values).reshape(1, -1)
-                    # build a list to store init base information in each position.
-                    optimal_primer_list = row_names[:, optimal_primer_index][0].tolist()
-                    # initiation coverage (optimal primer, used as base coverage)
-                    optimal_coverage_init = cover["".join(optimal_primer_list)]
-                    optimal_primer_current, F_mis_cover, R_mis_cover, information, F_non_cover, R_non_cover = \
-                        self.coverage_stast(cover, optimal_primer_index, NN_matrix, optimal_coverage_init, cover_number,
-                                            optimal_primer_list, cover_primer_set, non_gap_seq_id, F_non_cover,
-                                            R_non_cover)
-                else:
-                    F_non_cover_NM, R_non_cover_NM, F_non_cover_MM, R_non_cover_MM = {}, {}, {}, {}
-                    row_names = np.array(freq_matrix.index.values).reshape(1, -1)
-                    # build a list to store init base information in each position.
-                    optimal_primer_list_NM = row_names[:, optimal_primer_index_NM][0].tolist()
-                    # initiation coverage (optimal primer, used as base coverage)
-                    optimal_coverage_init_NM = cover["".join(optimal_primer_list_NM)]
-                    NN_matrix_NM = NN_matrix.copy()
-                    optimal_primer_current_NM, F_mis_cover_NM, R_mis_cover_NM, information_NM, F_non_cover_NM, \
-                    R_non_cover_NM = self.coverage_stast(cover, optimal_primer_index_NM, NN_matrix_NM,
-                                                         optimal_coverage_init_NM, cover_number, optimal_primer_list_NM,
-                                                         cover_primer_set, non_gap_seq_id, F_non_cover_NM,
-                                                         R_non_cover_NM)
-                    optimal_primer_list_MM = row_names[:, optimal_primer_index_MM][0].tolist()
-                    # initiation coverage (optimal primer, used as base coverage)
-                    optimal_coverage_init_MM = cover["".join(optimal_primer_list_MM)]
-                    NN_matrix_MM = NN_matrix.copy()
-                    optimal_primer_current_MM, F_mis_cover_MM, R_mis_cover_MM, information_MM, F_non_cover_MM, \
-                    R_non_cover_MM = self.coverage_stast(cover, optimal_primer_index_MM, NN_matrix_MM,
-                                                         optimal_coverage_init_MM, cover_number,
-                                                         optimal_primer_list_MM, cover_primer_set, non_gap_seq_id,
-                                                         F_non_cover_MM, R_non_cover_MM)
-                    if (F_mis_cover_NM + R_mis_cover_NM) > (F_mis_cover_MM + R_mis_cover_MM):
-                        optimal_primer_current, F_mis_cover, R_mis_cover, information, optimal_coverage_init, \
-                        F_non_cover, R_non_cover, NN_matrix = optimal_primer_current_NM, F_mis_cover_NM, \
-                                                              R_mis_cover_NM, information_NM, optimal_coverage_init_NM, \
-                                                              F_non_cover_NM, R_non_cover_NM, NN_matrix_NM
-                    else:
-                        optimal_primer_current, F_mis_cover, R_mis_cover, information, optimal_coverage_init, \
-                        F_non_cover, R_non_cover, NN_matrix = optimal_primer_current_MM, F_mis_cover_MM, \
-                                                              R_mis_cover_MM, information_MM, optimal_coverage_init_MM, \
-                                                              F_non_cover_MM, R_non_cover_MM, NN_matrix_MM
-                    # print(F_mis_cover)
-                    # print(R_mis_cover)
+        NN_matrix = self.trans_matrix(cover)
+        if len(cover_for_MM) != 0:
+            optimal_primer_index_NM = self.get_optimal_primer_by_viterbi(freq_matrix, NN_matrix)
+            optimal_primer_index_MM = self.get_optimal_primer_by_MM(cover_for_MM)
+            # print(optimal_primer_index_NM.tolist()) # array
+            # print(optimal_primer_index_MM) # list
+            #  if (optimal_primer_index_NM == optimal_primer_index_MM).all():
+            if optimal_primer_index_NM.tolist() == optimal_primer_index_MM:
+                optimal_primer_index = optimal_primer_index_NM
+                row_names = np.array(freq_matrix.index.values).reshape(1, -1)
+                # build a list to store init base information in each position.
+                optimal_primer_list = row_names[:, optimal_primer_index][0].tolist()
+                # initiation coverage (optimal primer, used as base coverage)
+                optimal_coverage_init = cover["".join(optimal_primer_list)]
+                optimal_primer_current, F_mis_cover, R_mis_cover, information, F_non_cover, R_non_cover = \
+                    self.coverage_stast(cover, optimal_primer_index, NN_matrix, optimal_coverage_init, cover_number,
+                                        optimal_primer_list, cover_primer_set, non_gap_seq_id, F_non_cover,
+                                        R_non_cover)
+                # print(F_mis_cover)
+                # print(R_mis_cover)
             else:
-                optimal_primer_index_NM = self.get_optimal_primer_by_viterbi(freq_matrix, NN_matrix)
                 F_non_cover_NM, R_non_cover_NM, F_non_cover_MM, R_non_cover_MM = {}, {}, {}, {}
                 row_names = np.array(freq_matrix.index.values).reshape(1, -1)
                 # build a list to store init base information in each position.
@@ -836,10 +790,47 @@ class NN_degenerate(object):
                 optimal_primer_current_NM, F_mis_cover_NM, R_mis_cover_NM, information_NM, F_non_cover_NM, \
                 R_non_cover_NM = self.coverage_stast(cover, optimal_primer_index_NM, NN_matrix_NM,
                                                      optimal_coverage_init_NM, cover_number, optimal_primer_list_NM,
-                                                     cover_primer_set, non_gap_seq_id, F_non_cover_NM, R_non_cover_NM)
-                optimal_primer_current, F_mis_cover, R_mis_cover, information, optimal_coverage_init, F_non_cover, \
-                R_non_cover, NN_matrix = optimal_primer_current_NM, F_mis_cover_NM, R_mis_cover_NM, information_NM, \
-                                         optimal_coverage_init_NM, F_non_cover_NM, R_non_cover_NM, NN_matrix_NM
+                                                     cover_primer_set, non_gap_seq_id, F_non_cover_NM,
+                                                     R_non_cover_NM)
+                optimal_primer_list_MM = row_names[:, optimal_primer_index_MM][0].tolist()
+                # initiation coverage (optimal primer, used as base coverage)
+                optimal_coverage_init_MM = cover["".join(optimal_primer_list_MM)]
+                NN_matrix_MM = NN_matrix.copy()
+                optimal_primer_current_MM, F_mis_cover_MM, R_mis_cover_MM, information_MM, F_non_cover_MM, \
+                R_non_cover_MM = self.coverage_stast(cover, optimal_primer_index_MM, NN_matrix_MM,
+                                                     optimal_coverage_init_MM, cover_number,
+                                                     optimal_primer_list_MM, cover_primer_set, non_gap_seq_id,
+                                                     F_non_cover_MM, R_non_cover_MM)
+                if (F_mis_cover_NM + R_mis_cover_NM) > (F_mis_cover_MM + R_mis_cover_MM):
+                    optimal_primer_current, F_mis_cover, R_mis_cover, information, optimal_coverage_init, \
+                    F_non_cover, R_non_cover, NN_matrix = optimal_primer_current_NM, F_mis_cover_NM, \
+                                                          R_mis_cover_NM, information_NM, optimal_coverage_init_NM, \
+                                                          F_non_cover_NM, R_non_cover_NM, NN_matrix_NM
+                else:
+                    optimal_primer_current, F_mis_cover, R_mis_cover, information, optimal_coverage_init, \
+                    F_non_cover, R_non_cover, NN_matrix = optimal_primer_current_MM, F_mis_cover_MM, \
+                                                          R_mis_cover_MM, information_MM, optimal_coverage_init_MM, \
+                                                          F_non_cover_MM, R_non_cover_MM, NN_matrix_MM
+                # print(F_mis_cover)
+                # print(R_mis_cover)
+        else:
+            optimal_primer_index_NM = self.get_optimal_primer_by_viterbi(freq_matrix, NN_matrix)
+            F_non_cover_NM, R_non_cover_NM, F_non_cover_MM, R_non_cover_MM = {}, {}, {}, {}
+            row_names = np.array(freq_matrix.index.values).reshape(1, -1)
+            # build a list to store init base information in each position.
+            optimal_primer_list_NM = row_names[:, optimal_primer_index_NM][0].tolist()
+            # initiation coverage (optimal primer, used as base coverage)
+            optimal_coverage_init_NM = cover["".join(optimal_primer_list_NM)]
+            NN_matrix_NM = NN_matrix.copy()
+            optimal_primer_current_NM, F_mis_cover_NM, R_mis_cover_NM, information_NM, F_non_cover_NM, \
+            R_non_cover_NM = self.coverage_stast(cover, optimal_primer_index_NM, NN_matrix_NM,
+                                                 optimal_coverage_init_NM, cover_number, optimal_primer_list_NM,
+                                                 cover_primer_set, non_gap_seq_id, F_non_cover_NM, R_non_cover_NM)
+            optimal_primer_current, F_mis_cover, R_mis_cover, information, optimal_coverage_init, F_non_cover, \
+            R_non_cover, NN_matrix = optimal_primer_current_NM, F_mis_cover_NM, R_mis_cover_NM, information_NM, \
+                                     optimal_coverage_init_NM, F_non_cover_NM, R_non_cover_NM, NN_matrix_NM
+            # print(F_mis_cover)
+            # print(R_mis_cover)
         nonsense_primer_number = len(set(self.degenerate_seq(optimal_primer_current)) - set(cover.keys()))
         primer_degenerate_number = dege_number(optimal_primer_current)
         Tm, coverage = [], []
@@ -891,7 +882,7 @@ class NN_degenerate(object):
                 # If there is no increase in NN_coverage,
                 # it suggests the presence of bugs or a mismatch in continuous positions.
                 # Is this step necessary? or shall we use DegePrime method? or shall we use machine learning?
-                if F_mis_cover_cover == R_mis_cover_cover == cover_number - optimal_coverage_init:
+                if max(F_mis_cover_cover, R_mis_cover_cover) == cover_number:
                     break
                 elif optimal_NN_coverage_update == optimal_NN_coverage:
                     break
@@ -905,7 +896,6 @@ class NN_degenerate(object):
         # the process will backtrack and assess the original optimal primer.
         # print(optimal_primer_list)
         optimal_primer_current = ''.join(optimal_primer_list)
-        # print(optimal_primer_current)
         information = self.primer_pre_filter(optimal_primer_current)
         # F_mis_cover_cover, F_non_cover_in_cover, R_mis_cover_cover, R_non_cover_in_cover = \
         #     self.mis_primer_check(cover_primer_set, optimal_primer_current, cover,
@@ -914,6 +904,7 @@ class NN_degenerate(object):
         R_non_cover.update(R_non_cover_in_cover)
         F_mis_cover = optimal_coverage_init + F_mis_cover_cover
         R_mis_cover = optimal_coverage_init + R_mis_cover_cover
+        # print(F_mis_cover)
         return optimal_primer_current, F_mis_cover, R_mis_cover, information, F_non_cover, R_non_cover
 
     def refine_by_NN_array(self, optimal_primer_list, optimal_coverage_init, cover,
@@ -1095,7 +1086,7 @@ class NN_degenerate(object):
             else:
                 Y_strict.append(self.primer_length + y_index + 1)
                 Y_strict_R.append(-y_index + 1)
-        return Y_strict, Y_strict_R
+        return set(Y_strict), set(Y_strict_R)
 
     def mis_primer_check(self, all_primers, optimal_primer, cover, non_gap_seq_id):
         # uncoverage sequence in cover dict
@@ -1105,6 +1096,9 @@ class NN_degenerate(object):
         F_mis_cover, R_mis_cover = 0, 0
         for uncover_primer in uncover_primer_set:
             Y_dist = Y_distance(optimal_primer, uncover_primer)
+            # print(uncover_primer)
+            # print(Y_dist)
+            # print(set(Y_dist))
             if len(Y_dist) > self.variation:
                 # record sequence and acc_ID which will never mis-coverage. too many mismatch!
                 F_non_cover[uncover_primer] = non_gap_seq_id[uncover_primer]
@@ -1119,6 +1113,8 @@ class NN_degenerate(object):
                     R_non_cover[uncover_primer] = non_gap_seq_id[uncover_primer]
                 else:
                     R_mis_cover += cover[uncover_primer]
+        # print(optimal_primer)
+        # print(F_mis_cover)
         return F_mis_cover, F_non_cover, R_mis_cover, R_non_cover
 
     ################# get_primers #####################
