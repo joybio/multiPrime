@@ -4,14 +4,14 @@
 ################################################################################
 # directory, where is/are the input virus fasta file(s) located
 # absolute path
-input_dir: /share/data3/yangjunbo/multiPCR/multiPrime2/virus_sequence/Rhinovirus
+input_dir: /share/data3/yangjunbo/git_storage/multiPrime/test_data
 
 # directory, in which the pipeline writes all output files (relative to current directory)
 # (this also includes the summary files)
-results_dir: /share/data3/yangjunbo/multiPCR/multiPrime2/virus_sequence/Rhinovirus/multiPrime1.results
+results_dir: /share/data3/yangjunbo/git_storage/multiPrime/test_data/results
 
 # directory to write the log-files, created during processing, to 
-log_dir: /share/data3/yangjunbo/multiPCR/multiPrime2/virus_sequence/Rhinovirus/multiPrime1.logs
+log_dir: /share/data3/yangjunbo/git_storage/multiPrime/test_data/logs
 
 # directory of scripts.
 scripts_dir: /share/data3/yangjunbo/git_storage/multiPrime/scripts
@@ -23,10 +23,14 @@ scripts_dir: /share/data3/yangjunbo/git_storage/multiPrime/scripts
 # please type here: sample1
 # this name is used throughout the entire pipeline as name for the output samples
 virus:
-  - Rhinovirus
+  - CDS_20727
 ################################################################################
 # preprocessing
 ################################################################################
+#Model selection: [fast] or [normal]. 
+#The degeneracy of the fast model would be higher than normal. However, the advantage of the
+#fast model is that it has a shorter running time compared to the normal model.
+#Model: normal
 
 #-------------------------------------------------------------------------------
 # cluster by cd-hit
@@ -35,6 +39,20 @@ virus:
 #If the identity of sequences in your input file is very high, you can set this param as 0.9.
 #BUG (dont use 1): If you set this param as 1. It will generate primers by no-cluster methods.
 identity: 0.7
+
+# minmum sequence number in cluster 
+# multiPrime will try to merge those clusters with less than {seq_number_ANI} into those clusters
+# greater than {seq_number_ANI}. It is used to reduce cluster number. 
+# If seq_number_ANI = 0, then all clusters will be processed 
+# If seq_number_ANI = 1, then no clusters will be processed
+# Suggestion: 10 or 0
+seq_number_ANI: 1
+# Threshold of average nucleotide identity, minimum:0.7.
+ani: 0.8
+# Merge or drop those clusters with rare sequences and shows high ANI with others. T: drop; F: merge into others
+# Carefully use "F".
+drop: "F"
+
 #Max sequence number of each cluster used in multi-alignment {muscle}. 
 #We randomly choose {maxseq} sequences in cluster for next steps.
 #It wont affect the calculation of primer coverage in the final primer set, 
@@ -42,27 +60,38 @@ identity: 0.7
 max_seq: 500
 
 #-------------------------------------------------------------------------------
-## primer design by degePrimer
+## primer design by multiPrime
 ##-------------------------------------------------------------------------------
-#param in DegePrime.pl -d {}. number of the degenerate nucleotide
+#param in multiPrime-core -n {}. number of the degenerate nucleotide
+dege_number: 4
+#param in multiPrime-core -d {}. degeneracy
 degeneracy: 10 
-#param in DegePrime.pl -l {}. length of the degenerate primers
+#param in multiPrime-core -l {}. length of the degenerate primers
 primer_len: 18
+#variation. max mis-match in the calculation of mis-coverage
+variation: 1
+#Number of process to launch
+nproc: 1
+#entropyEntropy is actually a measure of disorder. This parameter is used to judge whether the window 
+#is conservation. Entropy of primer-length window. Default: 3.6.
+entropy: 3.6
+#coordinate:. mis-match position is not allowed in the term -c {} in the calculation of mis-coverage
+coordinate: 2,3,-1
 
 #-------------------------------------------------------------------------------
-## get candidate primers from degePrimer output
+## get candidate primers from multiPrime output
 ##-------------------------------------------------------------------------------
-#param of get_degePrimer.
+#param of get_multiPrime.
 #Filter primers by match rate: 
 #[Number of sequences that match the selected primer] / [Number of sequences that span the selected primer].
 #Only primers with fraction [> frac] will retain. default: 0.6.
 #Sometimes the sequence number of some clusters is less than 10.
 #coverage threshold [0.6] is not suitable. you can reset this threshold.
 #If sequence number of some clusters is very large {> 100000}. it will take {500} sequences randomly to get output
-#Details are list in the usage of get_degePrimer.py
-coverage: 0.5
+#Details are list in the usage of get_multiPrime.py
+coverage: 0.7
 
-#PCR PRODUCT SIZE. Filter primers by PRODUCT size.default [150,400].
+#PCR PRODUCT SIZE. Filter primers by PRODUCT size.default [250,700].
 PRODUCT_size: 150,1200
 
 #Filter primers by GC content. default [0.45,0.65].
@@ -71,9 +100,6 @@ gc_content: 0.2,0.7
 #Filter param of hairpin, which means distance of the minimal paired bases. Default: 4. Example:(number of X) AGCT[XXXX]AGCT
 distance: 4
 
-#Filter primers by rank number (match number): 
-#Number of sequences from degePrime.
-rank_number: 1000
 #Filter primers by degenerate base position. e.g. [-t 4] means I dont want degenerate base
 #appear at the end four bases when primer pre-filter. Default: 4.
 end: 4
@@ -90,7 +116,7 @@ adaptor: "TCTTTCCCTACACGACGCTCTTCCGATCT,TGGAGTTCAGACGTGTGCTCTTCCGATCT"
 # min sequence in each cluster. 
 core_number: 10
 #-------------------------------------------------------------------------------
-## get max primer set from get_degePrimer
+## get max primer set from get_multiPrime
 ##-------------------------------------------------------------------------------
 #params of get_Maxprimerset_V4. 
 #This step will not consider the dimer formation of 5' (primers), cause it is designed for the NGS. 

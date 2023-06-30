@@ -1,7 +1,7 @@
 #!/bin/bsh
-#snakemake --configfile multiPrime.yaml -s multiPrime.py --cores 10 --resources mem_mb=80000
+#snakemake --configfile multimulti-DegePrime.yaml -s multi-DegePrime.py --cores 10 --resources mem_mb=80000
 
-#snakemake --configfile multiPrime2.yaml -s multiPrime2.py --cores 10 --resources mem_mb=80000
+#snakemake --configfile multiPrime-orinal.yaml -s multiPrime-orignal.py --cores 10 --resources mem_mb=80000
 
-snakemake --configfile multiPrime3.yaml -s multiPrime3.py --cores 10 --resources mem_mb=80000
+snakemake --configfile multiPrime.yaml -s multiPrime.py --cores 10 --resources mem_mb=80000
 

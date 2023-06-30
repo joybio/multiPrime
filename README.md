@@ -6,11 +6,11 @@ MultiPrime is a pipeline designed for broad-spectrum detection of target sequenc
 
 If you only require primer design without the need for primer set combination, you may use the primer design module of MultiPrime, which is accessible through scripts/multiPrime-core.py or pip install multiPrime (version >=2.4.5) and utilize the DPrime function.
 
-multiPrime1: Degenerate primer design by DEGEPRIME (MC-DPD).
+multi-DegePrime: Degenerate primer design by DEGEPRIME (MC-DPD).
 
-mulitPrime2: Degenerate primer design by multiPrime-core (MC-EDPD or MC-DPD). It allows for avoidance of mismatches at 3'end region.
+multiPrime-original: Degenerate primer design by multiPrime-core (MC-EDPD or MC-DPD). It allows for avoidance of mismatches at 3'end region.
 
-mulitPrime3: It is similar to multiPrime2, but it allows for easy avoidance of mismatches at any position, making it flexible for experienced users.
+multiPrime: It is similar to multiPrime2, but it allows for easy avoidance of mismatches at any position, making it flexible for experienced users.
 
 Scripts and pipelines provided in this repository aid to design multiplex PCR primer and return a minimal primerset for multi-PCR. It contains all scripts to allow a self-assembled processing and additionally provides pipeline scripts that run the entire processing automatically.
 
@@ -23,7 +23,7 @@ Download/Provide all necessary files:
 
 Comparison:
 
-DEGEPRIME-1.1.0 (multiPrime1): DOI: 10.1128/AEM.01403-14; Please cite: "DegePrime, a program for degenerate primer design for broad-taxonomic-range PCR in microbial ecology studies."
+DEGEPRIME-1.1.0 (multi-DegePrime): DOI: 10.1128/AEM.01403-14; Please cite: "DegePrime, a program for degenerate primer design for broad-taxonomic-range PCR in microbial ecology studies."
 		Links: https://github.com/EnvGen/DegePrime; please move this directory into scripts.
 
 mfeprimer-3.2.6: DOI: 10.1093/nar/gkz351; Please cite: "MFEprimer-3.0: quality control for PCR primers." please move this it into scripts. 
@@ -51,7 +51,7 @@ bowtie2: It is already in the requirement.txt. version=version 2.2.5. DOI:10.103
 		Links: https://www.nature.com/articles/nmeth.1923
 
 # Installation and Snakemake
-Snakemake is a workflow management system that helps to create and execute data processing pipelines. It requires python3 and dependent environment (multiPrime == multiPrime2 == multiPrime3) can be most easily installed via the bioconda package of the python anaconda distribution. 
+Snakemake is a workflow management system that helps to create and execute data processing pipelines. It requires python3 and dependent environment (multi-DegePrime == multiPrime-original == multiPrime) can be most easily installed via the bioconda package of the python anaconda distribution. 
 
   ```bash
   conda create -n multiPrime -c bioconda -c conda-forge --file requirement.txt
@@ -74,7 +74,7 @@ Snakemake is a workflow management system that helps to create and execute data 
 
 # Configure input parameters
 
-The working directory contains files named `multiPrime.yaml`, `multiPrime2.yaml` and `multiPrime3.yaml`. These are the central file in which all user settings, paramter values and path specifications are stored. `multiPrime.yaml` employs DEGEPRIME-1.1.0 for maximum coverage degenerate primer design (MC-DPD), `multiPrime2.yaml` and `multiPrime3.yaml` use multiPrime-core.py for MC-DPD or MC-DPD with error. During a run, all steps of the pipeline will retrieve their paramter values from these file. It follows the yaml syntax (find more information about yaml and it's syntax [here](http://www.yaml.org/)) what makes it easy to read and edit. The main principles are:
+The working directory contains files named `multi-DegePrime.yaml`, `multiPrime-original.yaml` and `multiPrime.yaml`. These are the central file in which all user settings, paramter values and path specifications are stored. `multiPrime.yaml` employs DEGEPRIME-1.1.0 for maximum coverage degenerate primer design (MC-DPD), `multiPrime2.yaml` and `multiPrime3.yaml` use multiPrime-core.py for MC-DPD or MC-DPD with error. During a run, all steps of the pipeline will retrieve their paramter values from these file. It follows the yaml syntax (find more information about yaml and it's syntax [here](http://www.yaml.org/)) what makes it easy to read and edit. The main principles are:
   - everything that comes after a `#` symbol is considered as comment and will not be interpreted
   - paramters are given as key-value pair, with `key` being the name and `value` the value of any paramter
 
@@ -99,7 +99,7 @@ Once you set up your configuration file, running the pipeline locally on your co
   ```
   maximal coverage degenerate primer design (MC-DPD). The approach employed DegePrime to design degenerate primers for the target sequence.
   ```bash
-  snakemake --configfile multiPrime.yaml -s multiPrime.py --cores 10 --resources disk_mb=80000
+  snakemake --configfile multi-DegePrime.yaml -s multi-DegePrime.py --cores 10 --resources disk_mb=80000
   ```
   maximal coverage degenerate primer design with errors tolerant (MC-EDPD) or MC-DPD. MultiPrime2 is capable of avoiding mismatches that occur at the 3'end position. The approach used in multiPrime2.yaml depends on the value of the "variation" parameter.
 
@@ -107,11 +107,11 @@ Once you set up your configuration file, running the pipeline locally on your co
 
   If "variation" is set to a value greater than 0, then multiPrime uses the MC-EDPD approach to design degenerate primers with errors (mismatches) tolerance (1-mismatch or 2-mismatches). In this approach, the primer sequences are allowed to contain a limited number of errors (mismatches), which increases the probability of finding suitable primer sequences for the target sequence.
   ```bash
-  snakemake --configfile multiPrime2.yaml -s multiPrime2.py --cores 10 --resources disk_mb=80000
+  snakemake --configfile multiPrime-orignal.yaml -s multiPrime-orignal.py --cores 10 --resources disk_mb=80000
   ```
   multiPrime3 is similiar to multiPrime2, but it enables easy avoidance of mismatches at any position.
   ```bash
-  snakemake --configfile multiPrime3.yaml -s multiPrime3.py --cores 10 --resources disk_mb=80000
+  snakemake --configfile multiPrime.yaml -s multiPrime.py --cores 10 --resources disk_mb=80000
   ```
 
 
