@@ -75,7 +75,7 @@ nproc: 1
 #entropyEntropy is actually a measure of disorder. This parameter is used to judge whether the window 
 #is conservation. Entropy of primer-length window. Default: 3.6.
 entropy: 3.6
-#coordinate:. mis-match position is not allowed in the term -c {} in the calculation of mis-coverage
+#coordinate:. mis-match position is not allowed to locate at these sites of a primer in the calculation of mis-coverage
 coordinate: 2,3,-1
 
 #-------------------------------------------------------------------------------
