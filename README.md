@@ -1,9 +1,6 @@
 multiPrime: version 2.1.1
 The potential applications of multiPrime's primers include the detection of single or multiple genes, exons, antisense strands, RNA, or other specific DNA segments.
 
-# Citation
-If you used this script, please cited:
-
 [**MultiPrime: A Reliable and Efficient Tool for Targeted Next-Generation Sequencing**](https://doi.org/10.21203/rs.3.rs-2893323/v3)
 
 
@@ -388,4 +385,8 @@ The project was conceptualized and scripted by Junbo Yang.Please send comments, 
 # Todo
 This repository is updated frequently. Expect breaking changes. More functions will be improved in the future and a new version is comming.
 
+# Citation
+If you used this script, please cited:
+
+[**MultiPrime: A Reliable and Efficient Tool for Targeted Next-Generation Sequencing**](https://doi.org/10.21203/rs.3.rs-2893323/v3)
 
