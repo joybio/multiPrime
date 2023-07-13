@@ -35,85 +35,109 @@ virus:
 #-------------------------------------------------------------------------------
 # cluster by cd-hit
 #-------------------------------------------------------------------------------
-#Params in cd-hit -c {}. Suggestion: 0.7. minimum: 0.65 
-#If the identity of sequences in your input file is very high, you can set this param as 0.9.
-#BUG (dont use 1): If you set this param as 1. It will generate primers by no-cluster methods.
+# identity: This parameter is linked to the "-c" option in CD-HIT, with a range of 0.65 to 1. 
+# We recommend setting it as 0.7 or 0.8. 
+# If there is a considerable similarity among the sequences in your input file, 
+# you may consider increasing this parameter to 0.9. 
+# However, it's important to note that setting it to 1 will generate primers for each individual sequence.
 identity: 0.7
 
-# minmum sequence number in cluster 
-# multiPrime will try to merge those clusters with less than {seq_number_ANI} into those clusters
-# greater than {seq_number_ANI}. It is used to reduce cluster number. 
-# If seq_number_ANI = 0, then all clusters will be processed 
-# If seq_number_ANI = 1, then no clusters will be processed
-# Suggestion: 10 or 0
+# seq_number_ANI: The minimum sequence number in a cluster. 
+# multiPrime aims to merge clusters with a size smaller than {seq_number_ANI} into larger clusters. 
+# This parameter helps in reducing the total number of clusters. 
+# If seq_number_ANI is set to 0, all clusters will be processed. 
+# Conversely, if seq_number_ANI is set to 1, no clusters will undergo processing.
 seq_number_ANI: 1
-# Threshold of average nucleotide identity, minimum:0.7.
+# ani: This parameter corresponds to the whole-genome Average Nucleotide Identity (ANI). 
+# It defines the threshold for merging clusters, 
+# where only clusters with an ANI value greater than {ani} will be merged. 
+# The minimum value for the ANI threshold is 0.7.
 ani: 0.8
-# Merge or drop those clusters with rare sequences and shows high ANI with others. T: drop; F: merge into others
-# Carefully use "F".
+# drop: This parameter determines whether to merge or drop clusters with rare sequences 
+# that exhibit high ANI with other clusters. If set to "T," the clusters will be dropped. 
+# If set to "F," the clusters will be merged into others.
 drop: "F"
 
-#Max sequence number of each cluster used in multi-alignment {muscle}. 
-#We randomly choose {maxseq} sequences in cluster for next steps.
-#It wont affect the calculation of primer coverage in the final primer set, 
-#cause we used all sequence in cluster to check the final coverage. 
+# max_seq: This parameter specifies the maximum number of sequences to be used 
+# from each cluster for multi-alignment using tools such as MUSCLE or MAFFT. 
+# In this step, {maxseq} sequences are randomly selected from each cluster. 
+# It is important to note that this selection does not impact the 
+# calculation of primer coverage in the final primer set. 
+# The coverage calculation considers all sequences within the cluster to ensure accurate results.
 max_seq: 500
 
 #-------------------------------------------------------------------------------
 ## primer design by multiPrime
 ##-------------------------------------------------------------------------------
-#param in multiPrime-core -n {}. number of the degenerate nucleotide
+# dege_number: This parameter, represented as "-n {}" in multiPrime-core, 
+# specifies the maximum number of degenerate nucleotides allowed in a primer.
 dege_number: 4
-#param in multiPrime-core -d {}. degeneracy
+# degeneracy: This parameter, represented as "-d {}" in multiPrime-core, 
+# denotes the maximum degeneracy allowed in a primer.
 degeneracy: 10 
-#param in multiPrime-core -l {}. length of the degenerate primers
+# primer_len: This parameter, represented as "-l {}" in multiPrime-core, 
+# determines the length of the degenerate primers.
 primer_len: 18
-#variation. max mis-match in the calculation of mis-coverage
+# variation: This parameter, represented as "-v {}" in multiPrime-core, 
+# indicates the maximum number of mismatches allowed during the calculation of mis-coverage.
 variation: 1
-#Number of process to launch
+# nproc: This parameter, represented as "-p {}" in multiPrime-core, 
+# defines the number of processes to be launched.
 nproc: 1
-#entropyEntropy is actually a measure of disorder. This parameter is used to judge whether the window 
-#is conservation. Entropy of primer-length window. Default: 3.6.
+# entropy: This parameter, represented as "-e {}" in multiPrime-core, 
+# measures the level of disorder or variability. 
+# It is used to evaluate whether a window is conserved. 
+# Any primer-length window with an entropy less than 
+# the specified value of {entropy} will be processed. The default value is 3.6.
 entropy: 3.6
-#coordinate:. mis-match position is not allowed to locate at these sites of a primer in the calculation of mis-coverage
+# coordinate: This parameter, represented as "-c {}" in multiPrime-core, 
+# ensures that mismatch positions are not allowed at specific sites 
+# within a primer during the calculation of mis-coverage.
 coordinate: 2,3,-1
 
 #-------------------------------------------------------------------------------
 ## get candidate primers from multiPrime output
 ##-------------------------------------------------------------------------------
-#param of get_multiPrime.
-#Filter primers by match rate: 
-#[Number of sequences that match the selected primer] / [Number of sequences that span the selected primer].
-#Only primers with fraction [> frac] will retain. default: 0.6.
-#Sometimes the sequence number of some clusters is less than 10.
-#coverage threshold [0.6] is not suitable. you can reset this threshold.
-#If sequence number of some clusters is very large {> 100000}. it will take {500} sequences randomly to get output
-#Details are list in the usage of get_multiPrime.py
+# coverage: This parameter filters primers based on their match rate, 
+# which is calculated as the number of sequences that match the selected primer 
+# divided by the number of sequences that span the selected primer. 
+# Only primers with a match rate greater than the specified fraction (default: 0.6) will be retained. 
+# However, if the sequence number in some clusters is less than 10, 
+# the default coverage threshold may not be suitable. 
+# In such cases, you can reset the threshold. 
+# Additionally, if the sequence number in some clusters is very large (greater than 100,000), 
+# only a random subset of 500 sequences will be used to generate the output.
 coverage: 0.7
 
-#PCR PRODUCT SIZE. Filter primers by PRODUCT size.default [250,700].
+# PRODUCT_size: This parameter filters primers based on the desired PCR product size. 
+# Primers with a product size outside the specified range (default: [250, 700]) will be filtered out.
 PRODUCT_size: 150,1200
 
-#Filter primers by GC content. default [0.45,0.65].
+# gc_content: This parameter filters primers based on their GC content. 
+# Primers with a GC content outside the specified range (default: [0.45, 0.65]) will be filtered out.
 gc_content: 0.2,0.7
 
-#Filter param of hairpin, which means distance of the minimal paired bases. Default: 4. Example:(number of X) AGCT[XXXX]AGCT
+# distance: This parameter is a filter for hairpin structures and 
+# represents the minimum distance between the paired bases. 
+# The default value is 4, and it is used to detect hairpin structures in the primer sequence. 
+# For example, (number of X) AGCT[XXXX]AGCT.
 distance: 4
 
-#Filter primers by degenerate base position. e.g. [-t 4] means I dont want degenerate base
-#appear at the end four bases when primer pre-filter. Default: 4.
+# end: This parameter filters primers based on the presence of degenerate bases at the end. 
+# For example, setting it to "-t 4" means that degenerate bases should not appear at the last four positions 
+# during the primer pre-filtering step. The default value is 4.
 end: 4
 
-#Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for adaptor--primer.
-#For example: TCTTTCCCTACACGACGCTCTTCCGATCT,TCTTTCCCTACACGACGCTCTTCCGATCT. if None, use comma.
-#If you don't know which adaptor will be used, and you really need an adaptor for next sequencing. you can use the example sequence to instead.
-#because adaptor sequence will not affect primer set generally.
-#If you don't need adaptor for the next step. set adaptor: ",".
+# adaptor: This parameter represents the adaptor sequence used for NGS (Next-Generation Sequencing) purposes. 
+# It is used for hairpin or dimer detection between the adaptor and primer. 
+# Multiple adaptor sequences can be specified, separated by commas. 
+# If the adaptor sequence is unknown but an adaptor is needed for subsequent sequencing, 
+# the provided example sequence can be used. If no adaptor is needed, the parameter should be set as ",".
 adaptor: "TCTTTCCCTACACGACGCTCTTCCGATCT,TGGAGTTCAGACGTGTGCTCTTCCGATCT"
-#-------------------------------------------------------------------------------
-### get core primer set
 ###-------------------------------------------------------------------------------
-# min sequence in each cluster. 
+#### get core primer set
+###-------------------------------------------------------------------------------
+# core_number: This parameter specifies the minimum number of sequences required in each cluster.
 core_number: 10
 #-------------------------------------------------------------------------------
 ## get max primer set from get_multiPrime
@@ -126,10 +150,12 @@ core_number: 10
 #GTGTGCTCGTGACCTTGA   CCACAATTGCCACGTTAG      159              3            1.0        GTGTGCTCGTGACCTTGA      GGTGTCTTGTTGGAAGGG      181                3
 #    primer1_F             Primer1_R       Product_len    number_match    coverage        primer2_F               primer2_R      Product_len     number_match
 #       1                    2                 3               4             5             next(1)                     2               3                 4
-
+# step: This parameter represents the distance between primers and should not be changed.
 step: 5
 
-#maximal maximum
+# method: This parameter determines the method used for primer selection.
+# If set to "T" (true), the greedy method will be used for maximal primer selection.
+# If set to "F" (false), the maximum method will be used for primer selection.
 method: T
 
 
