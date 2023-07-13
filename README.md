@@ -343,6 +343,7 @@ results: results directory
 	-Clusters_cprimer: candidate primers for each cluster.
 		--*.fa: candidate primers in fa format
 		--*.txt: candidate primers in txt format (1 line)
+		--*.xls: candidate primers in xls format
 
 	-Clusters_target: information of each cluster.
 		--*.txt: full name of each sequences in each cluster. You can get the full information of sequences from these files.

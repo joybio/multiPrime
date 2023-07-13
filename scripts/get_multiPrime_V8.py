@@ -637,24 +637,28 @@ class Primers_filter(object):
             ID = str(self.outfile)
             primer_ID = str(self.outfile).split("/")[-1].rstrip(".txt")
             with open(self.outfile, "w") as fo:
-                # headers = ["Primer_F_seq", "Primer_R_seq", "Product length:Tm:coverage_percentage",
-                # "Target number", "Primer_start_end"]
-                # fo.write(ID + "\t" + "\t".join(headers) + "\t")
-                with open(self.outfile + ".fa", "w") as fa:
-                    fo.write(ID + "\t")
-                    primer_pairs_sort = sorted(primer_pairs, key=lambda k: k[3], reverse=True)
-                    for i in primer_pairs_sort:
-                        fo.write("\t".join(map(str, i)) + "\t")
-                        start_stop = i[4].split(":")
-                        fa.write(
-                            ">" + primer_ID + "_" + start_stop[0] + "F\n" + i[0] + "\n>" + primer_ID + "_" + start_stop[
-                                1]
-                            + "R\n" + i[1] + "\n")
-                    # get results before shutdown. Synchronous call mode: call, wait for the return value, decouple,
-                    # but slow.
-                    fo.write("\n")
-                    fo.close()
-                    fa.close()
+                with open(self.outfile.strip(".txt") + ".xls", "w") as fo_xls:
+                    headers = ["Primer_F_seq", "Primer_R_seq", "Product length:Tm:coverage_percentage",
+                               "Target number", "Primer_start_end"]
+                    fo_xls.write("\t".join(headers) + "\n")
+                    with open(self.outfile.strip(".txt") + ".fa", "w") as fa:
+                        fo.write(ID + "\t")
+                        primer_pairs_sort = sorted(primer_pairs, key=lambda k: k[3], reverse=True)
+                        for i in primer_pairs_sort:
+                            fo.write("\t".join(map(str, i)) + "\t")
+                            fo_xls.write("\t".join(map(str, i)) + "\n")
+                            start_stop = i[4].split(":")
+                            fa.write(
+                                ">" + primer_ID + "_" + start_stop[0] + "F\n" + i[0] + "\n>" + primer_ID + "_" +
+                                start_stop[
+                                    1]
+                                + "R\n" + i[1] + "\n")
+                        # get results before shutdown. Synchronous call mode: call, wait for the return value, decouple,
+                        # but slow.
+                        fo.write("\n")
+                        fo.close()
+                        fo_xls.close()
+                        fa.close()
 
 
 def main():
