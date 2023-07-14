@@ -1,8 +1,0 @@
-Config file multiPrime3.yaml is extended by additional config specified via the command line.
-Building DAG of jobs...
-MissingInputException in line 43 of /share/data3/yangjunbo/git_storage/multiPrime/multiPrime3.py:
-Missing input files for rule seq_format:
-    output: /share/data3/yangjunbo/git_storage/multiPrime/test_data/results/Total_fa/1000.format.fa
-    wildcards: virus=1000
-    affected files:
-        /share/data3/yangjunbo/git_storage/multiPrime/test_data/1000.fa
