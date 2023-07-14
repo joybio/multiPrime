@@ -66,7 +66,7 @@ def parseArg():
                              'window is conservation. Entropy of primer-length window. Default: 3.6.',
                         metavar="<float>")
     parser.add_argument("-e", "--end", type=int, default=4,
-                        help='Filter primers by degenerate base position. e.g. [-t 4] means I dont want degenerate base'
+                        help='Filter primers by degenerate base position. e.g. [-e 4] means I dont want degenerate base'
                              'appear at the end four bases when primer pre-filter. Default: 4.', metavar="<int>")
     parser.add_argument("-g", "--gc", type=str, default="0.2,0.7",
                         help='Filter primers by GC content. Default [0.2,0.7].', metavar="<str>")
@@ -1426,7 +1426,7 @@ class Primers_filter(object):
             primer_ID = str(self.outfile).split("/")[-1].split(".")[0]
             with open(self.outfile.strip(".txt") + ".xls", "w") as fo_xls:
                 headers = ["Primer_F_seq", "Primer_R_seq", "Product length:Tm:coverage_percentage",
-                           "Target number", "Primer_start_end"]
+                           "Target number", "Primer_start_end", "Uncovered ID"]
                 fo_xls.write("\t".join(headers) + "\n")
                 with open(self.outfile.strip(".txt") + ".fa", "w") as fa:
                     primer_pairs_sort = sorted(primer_pairs, key=lambda k: k[3], reverse=True)
