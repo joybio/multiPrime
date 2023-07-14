@@ -50,7 +50,7 @@ import pandas as pd
 
 
 def parseArg():
-    parser = argparse.ArgumentParser(description="For degenerate primer design")
+    parser = argparse.ArgumentParser(description="For degenerate primer pair design")
     parser.add_argument("-i", "--input", type=str, required=True,
                         help="Input file: multi-alignment output (muscle or others).", metavar="<file>")
     parser.add_argument("-l", "--plen", type=int, default=18,
@@ -72,14 +72,12 @@ def parseArg():
                         help='Filter primers by GC content. Default [0.2,0.7].', metavar="<str>")
     parser.add_argument("-s", "--size", type=str, default="250,500",
                         help='Filter primers by PRODUCT size. Default [250,500].', metavar="<str>")
-    parser.add_argument("--predictSize", type=str, default="50,1500",
-                        help='Predict of PCR product with primers, default: 50,1500.', metavar="<str>")
     parser.add_argument("-t", "--Tm", type=int, default=4,
                         help='Difference of Tm between primer-F and primer-R. Default: 4.', metavar="<int>")
     parser.add_argument("--adaptor", type=str, default="TCTTTCCCTACACGACGCTCTTCCGATCT,"
                                                        "TCTTTCCCTACACGACGCTCTTCCGATCT",
                         help='Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for ['
-                             'adaptor--primer]. For example: TCTTTCCCTACACGACGCTCTTCCGATCT,'
+                             'adaptor--primer]. Default: TCTTTCCCTACACGACGCTCTTCCGATCT,'
                              'TCTTTCCCTACACGACGCTCTTCCGATCT (Default). If you dont want adaptor, use [","]',
                         metavar="<str>")
     parser.add_argument("-f", "--fraction", type=float, default=0.6,
@@ -102,16 +100,10 @@ def parseArg():
                              'Example:(number of X) AGCT[XXXX]AGCT. '
                              'Primers should not have complementary sequences (no consecutive 4 bp complementarities),'
                              'otherwise the primers themselves will fold into hairpin structure.', metavar="<int>")
-    parser.add_argument("-b", "--bowtie", type=str, required=True, help='ABS_path(bowtie2) was employed for mapping. ',
-                        metavar="<str>")
-    parser.add_argument("--dict", type=str, default="None", help='Dictionary of targets sequences, binary format. '
-                                                                 'It can be obtained from prepare_fa_pickle.py.'
-                                                                 'defualt: None.',
-                        metavar="<str>")
     parser.add_argument("--out1", type=str, required=True,
                         help='output file: single primer file', metavar="<file>")
     parser.add_argument("-o", "--out2", type=str, required=True,
-                        help='Output file: Primer pair file, candidate primers. e.g. [*].candidate.primers.txt.'
+                        help='Output file: Primer pair file, candidate primers pairs. e.g. [*].candidate.primers.txt.'
                              'Header of output: Primer_F_seq, Primer_R_seq, Product length:Tm:coverage_percentage,'
                              'coverage_number, Primer_start_end', metavar="<file>")
     return parser.parse_args()
