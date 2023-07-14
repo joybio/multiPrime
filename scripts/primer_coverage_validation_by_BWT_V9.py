@@ -75,8 +75,8 @@ def parseArg():
                         help='Number of process to launch. Default: 20.', metavar="<int>")
 
     parser.add_argument("-b", "--bowtie", type=str, default="bowtie2",
-                        help='bowtie/ABS_path(bowtie) or bowtie2/ABS_path(bowtie2) was employed for mapping. '
-                             'Default: bowtie2', metavar="<str>")
+                        help='bowtie index/bowtie/ABS_path(bowtie) or bowtie2 index/bowtie2/ABS_path(bowtie2) was '
+                             'employed for mapping. Default: bowtie2', metavar="<str>")
     parser.add_argument("-m", "--seedmms", type=int, default=1,
                         help='Bowtie: Mismatches in seed (can be 0 - 3, default: -n 1).'
                              'Bowtie2: Gap or mismatches in seed (can be 0 - 1, default: -n 1)',

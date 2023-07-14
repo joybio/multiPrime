@@ -1,11 +1,4 @@
 #!/bin/python
-# Bug fixed.
-# Sometimes, positons have no bases except "-", and columns in frequency array become [0,0,0,0],
-# which is not proper for primer design, especially for Tm calculation,
-# we repalce "-" in the start and stop region with the flanking nucloetides.
-# we also set H and S to 0 in this situation to continue Tm calculation.
-
-
 __date__ = "2023-7-13"
 __author__ = "Junbo Yang"
 __email__ = "yang_junbo_hi@126.com"
@@ -60,7 +53,13 @@ import pandas as pd
 
 
 def parseArg():
-    parser = argparse.ArgumentParser(description="For degenerate primer design")
+    parser = argparse.ArgumentParser(description="This is specifically designed for degenerate primer pair design.\n"
+                                                 "The required parameters are as follows:\n"
+                                                 "multiPrime_onestep.py -i {multi-alignment files} -r {Reference "
+                                                 "sequence file} -b {bowtie} -out1 {tmp file: single primer} -o {"
+                                                 "primer pairs} \n"
+                                                 "Other parameters are optional and can be adjusted based on specific "
+                                                 "requirements.")
     parser.add_argument("-i", "--input", type=str, required=True,
                         help="Input file: multi-alignment output (muscle or others).", metavar="<file>")
     parser.add_argument("-r", "--ref", type=str, required=True,
