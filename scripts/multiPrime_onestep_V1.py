@@ -50,7 +50,7 @@ import pandas as pd
 
 
 def parseArg():
-    parser = argparse.ArgumentParser(description="For degenerate primer pair design")
+    parser = argparse.ArgumentParser(description="For degenerate primer pair design, not primer set.")
     parser.add_argument("-i", "--input", type=str, required=True,
                         help="Input file: multi-alignment output (muscle or others).", metavar="<file>")
     parser.add_argument("-l", "--plen", type=int, default=18,
