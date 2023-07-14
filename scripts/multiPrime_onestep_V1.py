@@ -78,7 +78,7 @@ def parseArg():
                                                        "TCTTTCCCTACACGACGCTCTTCCGATCT",
                         help='Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for ['
                              'adaptor--primer]. Default: TCTTTCCCTACACGACGCTCTTCCGATCT,'
-                             'TCTTTCCCTACACGACGCTCTTCCGATCT (Default). If you dont want adaptor, use [","]',
+                             'TCTTTCCCTACACGACGCTCTTCCGATCT. If you dont want adaptor, use [","]',
                         metavar="<str>")
     parser.add_argument("-f", "--fraction", type=float, default=0.6,
                         help='Filter primers by match fraction. If you set -s lower than 0.8, make sure that'
