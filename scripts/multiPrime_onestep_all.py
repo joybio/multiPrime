@@ -114,11 +114,8 @@ def parseArg():
                              'Example:(number of X) AGCT[XXXX]AGCT. '
                              'Primers should not have complementary sequences (no consecutive 4 bp complementarities),'
                              'otherwise the primers themselves will fold into hairpin structure.', metavar="<int>")
-    parser.add_argument("-b", "--bowtie", type=str, required=True, help='ABS_path(bowtie2) was employed for mapping. ',
-                        metavar="<str>")
-    parser.add_argument("--dict", type=str, default="None", help='Dictionary of targets sequences, binary format. '
-                                                                 'It can be obtained from prepare_fa_pickle.py.'
-                                                                 'defualt: None.',
+    parser.add_argument("-b", "--bowtie", type=str, required=True, help='bowtie2 index or bowtie2 or ABS_path(bowtie2) '
+                                                                        'was employed for mapping. ',
                         metavar="<str>")
     parser.add_argument("--out1", type=str, required=True,
                         help='output file: single primer file', metavar="<file>")
@@ -1863,7 +1860,7 @@ def main():
     prediction = off_targets(primer_file=args.out2.strip(".txt") + ".fa", term_length=args.plen,
                              reference_file=ref_index, PCR_product_size=args.predictSize, mismatch_num=args.variation,
                              outfile=args.out2.strip(".txt") + "_target", term_threshold=args.end, bowtie=args.bowtie,
-                             nproc=args.proc, targets=args.dict)
+                             nproc=args.proc)
     prediction.run()
 
 
