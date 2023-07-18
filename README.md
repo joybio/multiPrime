@@ -387,7 +387,9 @@ The project was conceptualized and scripted by Junbo Yang.Please send comments, 
 This repository is updated frequently. Expect breaking changes. More functions will be improved in the future and a new version is comming.
 
 # Citation
-If you used this script, please cited:
+If you find multiPrime helpful for your research or project, we kindly request that you cite the following publication:
 
 [**MultiPrime: A Reliable and Efficient Tool for Targeted Next-Generation Sequencing**](https://doi.org/10.21203/rs.3.rs-2893323/v3)
+
+Citing the publication will acknowledge the contribution of multiPrime to your work and help us in further development and improvement of the tool. Thank you for your support!
 
