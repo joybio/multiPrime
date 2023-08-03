@@ -1,15 +1,7 @@
 multiPrime: version 2.1.1
-The potential applications of multiPrime's primers include the detection of single or multiple genes, exons, antisense strands, RNA, or other specific DNA segments.
-
-[**MultiPrime: A Reliable and Efficient Tool for Targeted Next-Generation Sequencing**](https://doi.org/10.21203/rs.3.rs-2893323/v3)
-
-# Why multiPrime
-1) MultiPrime is a user-friendly and one-step tool for designing tNGS primer sets (cluster-specific primers or ultra multiplex PCR). 
-2) It integrates degenerate primer design theory with mismatch handling, resulting in improved accuracy and specificity in detecting broad spectrum sequences.
-3) It outperformed conventional programs in terms of run time, primer number, and primer coverage.
-4) The versatility and potential of multiPrime is highlighted by its potential application in detecting single or multiple genes, exons, antisense strands, RNA, or other specific DNA segments.
 
 # Multi PCR primer pairs design processing pipeline
+
 MultiPrime is a pipeline designed for broad-spectrum detection of target sequences using tNGS. It is implemented in Python and Snakemake and takes a FASTA format file as input. The pipeline has three main steps: classification by identity, primer design, and primer set combination. In the classification step, redundant sequences are removed and clusters are formed by identity. Rare sequence clusters are compared to others by average nucleotide identity, and if they are deemed similar enough, they are merged. In the primer design step, multi-alignment is performed using MUSCLE or MAFFT, and candidate primers are designed using the nearest-neighbor model. Primer pairs are selected based on PCR product length, melting temperature, dimer examination, coverage with errors, and other factors. Finally, a greedy algorithm is used to combine primer pairs into a minimal primer set according to dimer examination.
 
 If you only require primer design without the need for primer set combination, you may use the primer design module of MultiPrime, which is accessible through scripts/multiPrime-core.py or pip install multiPrime (version >=2.4.8) and utilize the DPrime function.
@@ -21,6 +13,13 @@ multiPrime-original: Degenerate primer design by multiPrime-core (MC-EDPD or MC-
 multiPrime: It is an update of original. New multiPrime allows for easy avoidance of mismatches at any position, making it flexible for experienced users.
 
 Scripts and pipelines provided in this repository aid to design multiplex PCR primer and return a minimal primerset for multi-PCR. It contains all scripts to allow a self-assembled processing and additionally provides pipeline scripts that run the entire processing automatically.
+
+# Why multiPrime
+
+1) MultiPrime is a user-friendly and one-step tool for designing tNGS primer sets (cluster-specific primers or ultra multiplex PCR).
+2) It integrates degenerate primer design theory with mismatch handling, resulting in improved accuracy and specificityin detecting broad spectrum sequences.
+3) It outperformed conventional programs in terms of run time, primer number, and primer coverage.
+4) The versatility and potential of multiPrime is highlighted by its potential application in detecting single or multiple genes, exons, antisense strands, RNA, or other specific DNA segments.
 
 # Requirements
 
