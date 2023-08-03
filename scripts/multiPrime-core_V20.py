@@ -109,6 +109,18 @@ degenerate_base = {"-": ["-"], "A": ["A"], "G": ["G"], "C": ["C"], "T": ["T"], "
 score_table = {"-": 100, "#": 0.00, "A": 1, "G": 1.11, "C": 1.21, "T": 1.40, "R": 2.11, "Y": 2.61, "M": 2.21,
                "K": 2.51, "S": 2.32, "W": 2.40, "H": 3.61, "B": 3.72, "V": 3.32, "D": 3.51, "N": 4.72}
 
+#######################################################################################################################
+# This is used for the new version of multiPrime. it is not used in this version of the program.
+non_score_table2 = {0.11: 0, 0.21: 0, 0.4: 0, 1.61: 0, 1.51: 0, 1.32: 0, 2.72: 0, -1: 0, -99: 0,
+                    -0.4: 3, -0.19: 3, -0.29: 3, 0.71: 3, 0.81: 3, 0.92: 3, 1.92: 3, -1.4: 3, -98.6: 3,
+                    -0.21: 1, 0.19: 1, -0.1: 1, 0.9: 1, 1.3: 1, 1.19: 1, 2.3: 1, -1.21: 1, -98.79: 1,
+                    -0.11: 2, 0.29: 2, 0.1: 2, 1.5: 2, 1.1: 2, 1.29: 2, 2.5: 2, -1.11: 2, -98.89: 2}
+non_score_table = {0.11: "A", 0.21: "A", 0.4: "A", 1.61: "A", 1.51: "A", 1.32: "A", 2.72: "A", -1: "A", -99: "A",
+                   -0.4: "T", -0.19: "T", -0.29: "T", 0.71: "T", 0.81: "T", 0.92: "T", 1.92: "T", -1.4: "T", -98.6: "T",
+                   -0.21: "C", 0.19: "C", -0.1: "C", 0.9: "C", 1.3: "C", 1.19: "C", 2.3: "C", -1.21: "C", -98.79: "C",
+                   -0.11: "G", 0.29: "G", 0.1: "G", 1.5: "G", 1.1: "G", 1.29: "G", 2.5: "G", -1.11: "G", -98.89: "G"}
+#######################################################################################################################
+
 trans_score_table = {v: k for k, v in score_table.items()}
 
 ##############################################################################################
@@ -203,7 +215,7 @@ def dege_number(sequence):
     return sum(math.floor(score_table[x]) > 1 for x in list(sequence))
 
 
-TRANS = str.maketrans("ATGC", "TACG")
+TRANS = str.maketrans("ATGCRYMKSWHBVDN", "TACGYRKMSWDVBHN")
 
 
 def RC(seq):
@@ -747,7 +759,7 @@ class NN_degenerate(object):
     def degenerate_by_NN_algorithm(self, primer_start, freq_matrix, cover, non_gap_seq_id, cover_for_MM,
                                    cover_number, cBit, tBit):
         # full degenerate primer
-        full_degenerate_primer = self.full_degenerate_primer(freq_matrix)
+        # full_degenerate_primer = self.full_degenerate_primer(freq_matrix)
         # unique covered primers, which is used to calculate coverage and
         # mis-coverage in the following step.
         cover_primer_set = set(cover.keys())

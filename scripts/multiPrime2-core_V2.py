@@ -61,6 +61,13 @@ def parseArg():
                         help='Max number of degenerate. Default: 4.', metavar="<int>")
     parser.add_argument("-d", "--degeneracy", type=int, default=10,
                         help='Max degeneracy of primer. Default: 10.', metavar="<int>")
+    parser.add_argument("--di_nucleotide", type=int, default=4,
+                        help='The term "di_nucleotide" refers to a pair of nucleotides that are consecutive in a DNA '
+                             'sequence. It indicates the maximum number of consecutive identical bases that are '
+                             'allowed in the sequence. For example, if the di_nucleotide value is set to 3, '
+                             'it means that up to three consecutive identical bases are allowed in the sequence. Any '
+                             'more than three consecutive identical bases would not be allowed according to the '
+                             'di_nucleotide constraint. Default: 4.', metavar="<int>")
     parser.add_argument("-v", "--variation", type=int, default=1,
                         help='Max mismatch number of primer. Default: 1', metavar="<int>")
     parser.add_argument("--entropy", type=float, default=3.6,
@@ -68,17 +75,19 @@ def parseArg():
                              'window is conservation. Entropy of primer-length window. Default: 3.6.',
                         metavar="<float>")
     parser.add_argument("-e", "--end", type=int, default=4,
-                        help='Filter primers by degenerate base position. e.g. [-e 4] means I dont want degenerate base'
-                             'appear at the end four bases when primer pre-filter. Default: 4.', metavar="<int>")
+                        help='Filter primers by degenerate base position, you can use the option [-e 4]. '
+                             'This means that you do not want any degenerate bases to appear at the end four bases'
+                             ' when performing primer pre-filtering. By default, the filter is set to 4. '
+                             'If you want to disable this filter, you can use [-e 0].', metavar="<int>")
     parser.add_argument("-g", "--gc", type=str, default="0.2,0.7",
                         help='Filter primers by GC content. Default [0.2,0.7].', metavar="<str>")
     parser.add_argument("-s", "--size", type=str, default="250,500",
                         help='Filter primers by PRODUCT size. Default [250,500].', metavar="<str>")
     parser.add_argument("-m", "--method", type=str, default="multiPrime1",
-                        help='multiPrime1 is a local optimum algorithom, which is faster. '
+                        help='multiPrim1 or multiPrime2. multiPrime1 is a local optimum algorithom, which is faster. '
                              'while multiPrime2 is a global optimum algorithm. Default: multiPrime1', metavar="<str>")
-    parser.add_argument("-t", "--Tm", type=int, default=4,
-                        help='Difference of Tm between primer-F and primer-R. Default: 4.', metavar="<int>")
+    parser.add_argument("-t", "--Tm", type=int, default=2,
+                        help='Difference of Tm between primer-F and primer-R. Default: 2.', metavar="<int>")
     parser.add_argument("--adaptor", type=str, default="TCTTTCCCTACACGACGCTCTTCCGATCT,"
                                                        "TCTTTCCCTACACGACGCTCTTCCGATCT",
                         help='Adaptor sequence, which is used for NGS next. Hairpin or dimer detection for ['
@@ -86,10 +95,10 @@ def parseArg():
                              'TCTTTCCCTACACGACGCTCTTCCGATCT. If you dont want adaptor, use [","]',
                         metavar="<str>")
     parser.add_argument("-f", "--fraction", type=float, default=0.6,
-                        help='Filter primers by match fraction. If you set -s lower than 0.8, make sure that'
+                        help='Filter primers by match fraction. If you set -s lower than 0.6, make sure that'
                              '--entropy greater than 3.6, because disorder region (entropy > 3.6) will not be processed'
                              'in multiPrime. Even these regions can design coverage with error greater than your '
-                             'threshold, it wont be processed. Default: 0.8.', metavar="<float>")
+                             'threshold, it wont be processed. Default: 0.6.', metavar="<float>")
     parser.add_argument("-c", "--coordinate", type=str, default="1,2,-1",
                         help='Mismatch index is not allowed to locate in your specific positions.'
                              'otherwise, it wont be regard as the mis-coverage. With this param, '
@@ -97,7 +106,7 @@ def parseArg():
                              'when calculate coverage with error. coordinate>0: 5\'==>3\'; coordinate<0: 3\'==>5\'.'
                              'You can set this param to any value that you prefer. Default: 1,2,-1. '
                              '1:  I dont want mismatch at the 2nd position, start from 0.'
-                             '-1: I dont want mismatch at the -1st position, start fro -1.', metavar="<str>")
+                             '-1: I dont want mismatch at the -1st position, start from -1.', metavar="<str>")
     parser.add_argument("-p", "--proc", type=int, default=20,
                         help='Number of process to launch. Default: 20.', metavar="<int>")
     parser.add_argument("-a", "--away", type=int, default=4,
@@ -111,7 +120,13 @@ def parseArg():
                         help='Output file: Primer pair file, candidate primers pairs. e.g. [*].candidate.primers.txt.'
                              'Header of output: Primer_F_seq, Primer_R_seq, Product length:Tm:coverage_percentage,'
                              'coverage_number, Primer_start_end', metavar="<file>")
+    parser.add_argument("--version", action="version", version=get_version(),
+                        help='Display version')
     return parser.parse_args()
+
+
+def get_version():
+    return "0.0.2"
 
 
 degenerate_base = {"-": ["-"], "A": ["A"], "G": ["G"], "C": ["C"], "T": ["T"], "R": ["A", "G"], "Y": ["C", "T"],
@@ -206,18 +221,21 @@ def Penalty_points(length, GC, d1, d2):
     return log10((2 ** length * 2 ** GC) / ((2 ** d1 - 0.9) * (2 ** d2 - 0.9)))
 
 
-di_nucleotides = set()
-for i in base2bit.keys():
-    single = i * 4
-    di_nucleotides.add(single)
-    for j in base2bit.keys():
-        if i != j:
-            di = (i + j) * 4
-            di_nucleotides.add(di)
-        for k in base2bit.keys():
-            if i != j != k:
-                tri = (i + j + k) * 3
-                di_nucleotides.add(tri)
+def get_di_nucleotides(n):
+    di_nucleotides = set()
+    if n != 0:
+        for i in base2bit.keys():
+            single = i * n
+            di_nucleotides.add(single)
+            for j in base2bit.keys():
+                if i != j:
+                    di = (i + j) * n
+                    di_nucleotides.add(di)
+                for k in base2bit.keys():
+                    if i != j != k:
+                        tri = (i + j + k) * (n - 1)
+                        di_nucleotides.add(tri)
+    return di_nucleotides
 
 
 def score_trans(sequence):
@@ -245,11 +263,14 @@ def Y_distance(seq1, seq2):
     # print(seq_diff)
     return m_dist
 
+
 def Y_position(seq1, seq2):
     seq_diff = list(np.array([score_table[x] for x in list(seq1)]) - np.array([score_table[x] for x in list(seq2)]))
-    m_dist = [str(idx)+"|"+ non_score_table[round(seq_diff[idx], 2)] for idx in range(len(seq_diff)) if round(seq_diff[idx], 2) not in score_table.values()]
+    m_dist = [str(idx) + "|" + non_score_table[round(seq_diff[idx], 2)] for idx in range(len(seq_diff)) if
+              round(seq_diff[idx], 2) not in score_table.values()]
     # print(seq_diff)
     return m_dist
+
 
 ##############################################################################################
 def symmetry(seq):
@@ -391,16 +412,6 @@ def GC_fraction(sequence):
     return GC_average
 
 
-################# di_nucleotide #####################
-def di_nucleotide(primer):
-    primers = degenerate_seq(primer)
-    for m in primers:
-        for n in di_nucleotides:
-            if re.search(n, m):
-                return True
-    return False
-
-
 ################## GC Clamp ######################
 def GC_clamp(primer, num=4, length=13):
     for i in range(num, (num + length)):
@@ -518,14 +529,15 @@ def degenerate_merge(optimal_primer, degenerate_index):
     for i in degenerate_index:
         i = i.split("|")
         if i[1] not in degenerate_base[optimal_primer_list[int(i[0])]]:
-            optimal_primer_list[int(i[0])] = trans_score_table[round(score_table[optimal_primer_list[int(i[0])]] + score_table[i[1]], 2)]
+            optimal_primer_list[int(i[0])] = trans_score_table[
+                round(score_table[optimal_primer_list[int(i[0])]] + score_table[i[1]], 2)]
     return ''.join(optimal_primer_list)
 
 
 class NN_degenerate(object):
     def __init__(self, Seq_dict, Total_sequence_number, primer_length=18, coverage=0.8, number_of_dege_bases=18,
-                 score_of_dege_bases=1000, product_len="200,500", position="2,-1", variation=2, method="multiPrime1",
-                 raw_entropy_threshold=3.6, distance=4, GC="0.4,0.6", nproc=10, outfile=""):
+                 score_of_dege_bases=1000, product_len="200,500", position="2,-1", variation=1, method="multiPrime1",
+                 raw_entropy_threshold=3.6, distance=4, GC="0.4,0.6", di_nucl=0, nproc=10, outfile=""):
         self.primer_length = primer_length  # primer length
         self.coverage = coverage  # min coverage
         self.number_of_dege_bases = number_of_dege_bases
@@ -543,6 +555,7 @@ class NN_degenerate(object):
         self.start_position = self.position_list[0]
         self.stop_position = self.position_list[1]
         self.length = self.position_list[2]
+        self.di_nucl = di_nucl
         self.raw_entropy_threshold = raw_entropy_threshold
         self.entropy_threshold = self.entropy_threshold_adjust(self.length)
         self.outfile = outfile
@@ -556,7 +569,7 @@ class NN_degenerate(object):
         primer_GC_content = GC_fraction(primer)
         if not float(min_GC) <= primer_GC_content <= float(max_GC):
             information.append("GC_out_of_range (" + str(primer_GC_content) + ")")
-        if di_nucleotide(primer):
+        if self.di_nucleotide(primer):
             information.append("di_nucleotide")
         if hairpin_check(primer, self.distance):
             information.append("hairpin")
@@ -565,6 +578,16 @@ class NN_degenerate(object):
             return primer_GC_content
         else:
             return '|'.join(information)
+
+    ################# di_nucleotide #####################
+    def di_nucleotide(self, primer):
+        di_nucleotides = get_di_nucleotides(self.di_nucl)
+        primers = degenerate_seq(primer)
+        for m in primers:
+            for n in di_nucleotides:
+                if re.search(n, m):
+                    return True
+        return False
 
     ####################################################################
     # if full degenerate primer is ok, we don't need to continue NN-array
@@ -672,12 +695,12 @@ class NN_degenerate(object):
             start_dict[acc_id] = t_length - len(Input_dict[acc_id].lstrip("-"))
             stop_dict[acc_id] = len(Input_dict[acc_id].rstrip("-"))
             # start position should contain [coverage] sequences at least.
-        start = np.quantile(np.array(list(start_dict.values())).reshape(1, -1), self.coverage, interpolation="higher")
+        # start = np.quantile(np.array(list(start_dict.values())).reshape(1, -1), self.coverage, interpolation="higher")
         # for python 3.9.9
-        # start = np.quantile(np.array(list(start_dict.values())).reshape(1, -1), self.coverage, method="higher")
+        start = np.quantile(np.array(list(start_dict.values())).reshape(1, -1), self.coverage, method="higher")
         # stop position should contain [coverage] sequences at least.
-        stop = np.quantile(np.array(list(stop_dict.values())).reshape(1, -1), self.coverage, interpolation="lower")
-        # stop = np.quantile(np.array(list(stop_dict.values())).reshape(1, -1), self.coverage, method="lower")
+        # stop = np.quantile(np.array(list(stop_dict.values())).reshape(1, -1), self.coverage, interpolation="lower")
+        stop = np.quantile(np.array(list(stop_dict.values())).reshape(1, -1), self.coverage, method="lower")
         min_len = self.product.split(",")
         if stop - start < int(self.product[0]):
             print("Error: max length of PCR product is shorter than the default min Product length with {} "
@@ -715,13 +738,13 @@ class NN_degenerate(object):
             if sequence == "-" * self.primer_length:
                 pass
             else:
-                if sequence.startswith("-"):
+                if sequence.endswith("-"):
                     sequence_narrow = sequence.lstrip("-")
                     append_base_length = len(sequence) - len(sequence_narrow)
                     left_seq = sequence_dict[seq_id][0:primer_start].replace("-", "")
                     if len(left_seq) >= append_base_length:
                         sequence = left_seq[len(left_seq) - append_base_length:] + sequence_narrow
-                if sequence.endswith("-"):
+                if sequence.startswith("-"):
                     sequence_narrow = sequence.rstrip("-")
                     append_base_length = len(sequence) - len(sequence_narrow)
                     right_seq = sequence_dict[seq_id][primer_start + self.primer_length:].replace("-", "")
@@ -804,7 +827,7 @@ class NN_degenerate(object):
                         # else:
                         #     self.resQ.put([mismatch_coverage, non_cov_primer_info, gap_seq_id_info])
                     elif self.method == "multiPrime2":
-                        mismatch_coverage, non_cov_primer_info =\
+                        mismatch_coverage, non_cov_primer_info = \
                             self.refine_by_multiPrime2(primer_start, freq_matrix, cover, non_gap_seq_id, cover_for_MM,
                                                        cover_number, cBit, tBit)
                         sequence = mismatch_coverage[1][2]
@@ -910,9 +933,11 @@ class NN_degenerate(object):
         Tm_average = round(mean(Tm), 2)
         degeneracy = score_trans(optimal_primer_current)
         perfect_coverage = sum(coverage)
-        out_mismatch_coverage = [primer_start, [cBit, tBit, optimal_primer_current, primer_degenerate_number,degeneracy,
-                                                nonsense_primer_number, perfect_coverage, F_mis_cover,
-                                                R_mis_cover, Tm_average, information]]
+        out_mismatch_coverage = [primer_start,
+                                 [str(cBit) + ":" + str(cover_number), str(tBit) + ":" + str(len(self.seq_dict)),
+                                  optimal_primer_current, primer_degenerate_number, degeneracy,
+                                  nonsense_primer_number, perfect_coverage, F_mis_cover,
+                                  R_mis_cover, Tm_average, information]]
         non_cov_primer_info = [primer_start, [F_non_cover, R_non_cover]]
         return out_mismatch_coverage, non_cov_primer_info
 
@@ -1155,64 +1180,60 @@ class NN_degenerate(object):
     ##############################################################################################################
     ##############################################################################################################
     def refine_by_multiPrime2(self, primer_start, freq_matrix, cover, non_gap_seq_id, cover_for_MM,
-                                       cover_number, cBit, tBit):
-            cover_primer_set = set(cover.keys())
-            NN_matrix = self.trans_matrix(cover)
-            row_names = np.array(freq_matrix.index.values).reshape(1, -1)
-            if len(cover_for_MM) != 0:
-                optimal_primer_index_NM = self.get_optimal_primer_by_viterbi(freq_matrix, NN_matrix)
-                optimal_primer_index_MM = self.get_optimal_primer_by_MM(cover_for_MM)
-                # build a list to store init base information in each position.
-                optimal_primer_NM = ''.join(row_names[:, optimal_primer_index_NM][0].tolist())
-                optimal_primer_MM = ''.join(row_names[:, optimal_primer_index_MM][0].tolist())
-                # print(optimal_primer_NM)
-                # print(optimal_primer_MM)
-                if optimal_primer_NM == optimal_primer_MM:
-                    optimal_primer_current = optimal_primer_NM
-                    optimal_degenerate_primer, coverage = self.get_Y_position(optimal_primer_current, cover_primer_set,
-                                                                              cover_number)
-                    F_mis_cover, F_non_cover, R_mis_cover, R_non_cover = \
-                        self.mis_primer_check(cover_primer_set, optimal_degenerate_primer, cover, non_gap_seq_id)
-                else:
-                    optimal_degenerate_primer_NM, NM_coverage = self.get_Y_position(optimal_primer_NM,
-                                                                                    cover_primer_set, cover_number)
-                    optimal_degenerate_primer_MM, MM_coverage = self.get_Y_position(optimal_primer_MM,
-                                                                                    cover_primer_set, cover_number)
-                    if NM_coverage >= MM_coverage:
-                        optimal_degenerate_primer = optimal_degenerate_primer_NM
-                        F_mis_cover, F_non_cover, R_mis_cover, R_non_cover = \
-                            self.mis_primer_check(cover_primer_set, optimal_degenerate_primer, cover, non_gap_seq_id)
-                        coverage = NM_coverage
-                    else:
-                        optimal_degenerate_primer = optimal_degenerate_primer_MM
-                        F_mis_cover, F_non_cover, R_mis_cover, R_non_cover = \
-                            self.mis_primer_check(cover_primer_set, optimal_degenerate_primer, cover, non_gap_seq_id)
-                        coverage = MM_coverage
+                              cover_number, cBit, tBit):
+        cover_primer_set = set(cover.keys())
+        NN_matrix = self.trans_matrix(cover)
+        row_names = np.array(freq_matrix.index.values).reshape(1, -1)
+        if len(cover_for_MM) != 0:
+            optimal_primer_index_NM = self.get_optimal_primer_by_viterbi(freq_matrix, NN_matrix)
+            optimal_primer_index_MM = self.get_optimal_primer_by_MM(cover_for_MM)
+            # build a list to store init base information in each position.
+            optimal_primer_NM = ''.join(row_names[:, optimal_primer_index_NM][0].tolist())
+            optimal_primer_MM = ''.join(row_names[:, optimal_primer_index_MM][0].tolist())
+            # print(optimal_primer_NM)
+            # print(optimal_primer_MM)
+            if optimal_primer_NM == optimal_primer_MM:
+                optimal_primer_current = optimal_primer_NM
+                optimal_degenerate_primer, coverage = self.get_Y_position(optimal_primer_current, cover_primer_set,
+                                                                          cover_number, cover)
             else:
-                optimal_primer_index_NM = self.get_optimal_primer_by_viterbi(freq_matrix, NN_matrix)
-                optimal_primer_NM = ''.join(row_names[:, optimal_primer_index_NM][0].tolist())
-                optimal_degenerate_primer, coverage = self.get_Y_position(optimal_primer_NM, cover_primer_set,
-                                                                       cover_number)
-                F_mis_cover, F_non_cover, R_mis_cover, R_non_cover = \
-                    self.mis_primer_check(cover_primer_set, optimal_degenerate_primer, cover, non_gap_seq_id)
-            nonsense_primer_number = len(set(degenerate_seq(optimal_degenerate_primer)) - set(cover.keys()))
-            primer_degenerate_number = dege_number(optimal_degenerate_primer)
-            Tm, coverage_list = [], []
-            for seq in degenerate_seq(optimal_degenerate_primer):
-                Tm.append(Calc_Tm_v2(seq))
-                coverage_list.append(cover[seq])
-            Tm_average = round(mean(Tm), 2)
-            perfect_coverage = sum(coverage_list)
-            degeneracy = score_trans(optimal_degenerate_primer)
-            information = self.primer_pre_filter(optimal_degenerate_primer)
-            out_mismatch_coverage = [primer_start, [cBit, tBit, optimal_degenerate_primer, primer_degenerate_number,degeneracy,
-                                                    nonsense_primer_number, perfect_coverage, perfect_coverage+F_mis_cover,
-                                                    perfect_coverage+R_mis_cover, Tm_average, information]]
-            non_cov_primer_info = [primer_start, [F_non_cover, R_non_cover]]
-            return out_mismatch_coverage, non_cov_primer_info
+                optimal_degenerate_primer_NM, NM_coverage = self.get_Y_position(optimal_primer_NM, cover_primer_set,
+                                                                                cover_number, cover)
+                optimal_degenerate_primer_MM, MM_coverage = self.get_Y_position(optimal_primer_MM, cover_primer_set,
+                                                                                cover_number, cover)
+                if NM_coverage >= MM_coverage:
+                    optimal_degenerate_primer = optimal_degenerate_primer_NM
+                else:
+                    optimal_degenerate_primer = optimal_degenerate_primer_MM
+        else:
+            optimal_primer_index_NM = self.get_optimal_primer_by_viterbi(freq_matrix, NN_matrix)
+            optimal_primer_NM = ''.join(row_names[:, optimal_primer_index_NM][0].tolist())
+            optimal_degenerate_primer, coverage = self.get_Y_position(optimal_primer_NM, cover_primer_set,
+                                                                      cover_number, cover)
+        F_mis_cover, F_non_cover, R_mis_cover, R_non_cover = \
+            self.mis_primer_check(cover_primer_set, optimal_degenerate_primer, cover, non_gap_seq_id)
+        nonsense_primer_number = len(set(degenerate_seq(optimal_degenerate_primer)) - set(cover.keys()))
+        primer_degenerate_number = dege_number(optimal_degenerate_primer)
+        Tm, coverage_list = [], []
+        for seq in degenerate_seq(optimal_degenerate_primer):
+            Tm.append(Calc_Tm_v2(seq))
+            coverage_list.append(cover[seq])
+        Tm_average = round(mean(Tm), 2)
+        perfect_coverage = sum(coverage_list)
+        degeneracy = score_trans(optimal_degenerate_primer)
+        information = self.primer_pre_filter(optimal_degenerate_primer)
+        primer_F = perfect_coverage + F_mis_cover
+        primer_R = perfect_coverage + R_mis_cover
+        out_mismatch_coverage = [primer_start,
+                                 [str(cBit) + ":" + str(cover_number), str(tBit) + ":" + str(len(self.seq_dict)),
+                                  optimal_degenerate_primer, primer_degenerate_number, degeneracy,
+                                  nonsense_primer_number, perfect_coverage, primer_F,
+                                  primer_R, Tm_average, information]]
+        non_cov_primer_info = [primer_start, [F_non_cover, R_non_cover]]
+        return out_mismatch_coverage, non_cov_primer_info
 
     #####################################################################
-    def get_Y_position(self, optimal_primer, all_primers, cover_number):
+    def get_Y_position(self, optimal_primer, all_primers, cover_number, cover):
         optimal_primer_set = set(degenerate_seq(optimal_primer))
         uncover_primer_set = all_primers - optimal_primer_set
         # length: Y_distance
@@ -1223,7 +1244,7 @@ class NN_degenerate(object):
             # Y_dist is list
             Y_dist = Y_position(optimal_primer, uncover_seq)
             # key is a set
-            Y_dist_number["_".join(Y_dist)] += 1
+            Y_dist_number["_".join(Y_dist)] += cover[uncover_seq]
             # print(Y_dist)
             # print(len(Y_dist))
             if Y_dist not in Y_dist_len_collection.values():
@@ -1249,8 +1270,8 @@ class NN_degenerate(object):
                     for tmp in Y_dist_len_collection[variation_length]:
                         temp_set = temp_set.union(set(tmp))
             # print(temp_set)
-            if len(temp_set) > degenerate_number:
-                for comb in itertools.combinations(temp_set, degenerate_number-1):
+            if len(temp_set) >= degenerate_number:
+                for comb in itertools.combinations(temp_set, degenerate_number - 1):
                     count = 0
                     for Y_dist in temp_variation:
                         # print(Y_dist)
@@ -1268,6 +1289,7 @@ class NN_degenerate(object):
                 max_subset = temp_set
         # print(max_count, max_subset)
         return max_count, max_subset
+
     ##############################################################################################################
     ##############################################################################################################
     ##############################################################################################################
@@ -1292,6 +1314,9 @@ class NN_degenerate(object):
         # uncoverage sequence in cover dict
         optimal_primer_set = set(degenerate_seq(optimal_primer))
         uncover_primer_set = all_primers - optimal_primer_set
+        # print(all_primers)
+        # print(optimal_primer_set)
+        # print(uncover_primer_set)
         F_non_cover, R_non_cover = {}, {}
         F_mis_cover, R_mis_cover = 0, 0
         for uncover_primer in uncover_primer_set:
@@ -1309,6 +1334,7 @@ class NN_degenerate(object):
                     F_non_cover[uncover_primer] = non_gap_seq_id[uncover_primer]
                 else:
                     F_mis_cover += cover[uncover_primer]
+                    # print(F_mis_cover)
                 if len(set(Y_dist).intersection(self.Y_strict_R)) > 0:
                     R_non_cover[uncover_primer] = non_gap_seq_id[uncover_primer]
                 else:
@@ -1325,7 +1351,7 @@ class NN_degenerate(object):
         stop_primer = self.stop_position
         # primer_info = Manager().list()
         # non_cov_primer_out = Manager().list()
-        # for position in range(1245,  stop_primer - self.primer_length):
+        # for position in range(1245,  1246):
         for position in range(start_primer, stop_primer - self.primer_length):
             # print(position)
             p.submit(self.get_primers(sequence_dict, position))  # , primer_info, non_cov_primer_out
@@ -1334,7 +1360,7 @@ class NN_degenerate(object):
         n = 0
         candidate_list, non_cov_primer_out, gap_seq_id_out = [], [], []
         with open(self.outfile, "w") as fo:
-            headers = ["Position", "Entropy of cover (bit)", "Entropy of total (bit)", "Optimal_primer",
+            headers = ["Position", "Entropy of cover (bit):start:stop", "Entropy of total (bit):seq number", "Optimal_primer",
                        "Primer_degenerate_number", "Degeneracy",
                        "Nonsense_primer_number", "Optimal_coverage", "Mis-F-coverage", "Mis-R-coverage", "Tm",
                        "Information"]
@@ -1369,8 +1395,8 @@ class NN_degenerate(object):
 
 
 class Primers_filter(object):
-    def __init__(self, Total_sequence_number, primer_file, adaptor, rep_seq_number=0, distance=4, outfile="", diff_Tm=5,
-                 size="300,700", position=9, GC="0.4,0.6", nproc=10, fraction=0.6):
+    def __init__(self, Total_sequence_number, primer_file, adaptor, rep_seq_number=0, distance=4, outfile="", diff_Tm=2,
+                 size="300,700", position=9, GC="0.4,0.6", nproc=10, di_nucl=0, fraction=0.6):
         self.nproc = nproc
         self.primer_file = primer_file
         self.adaptor = adaptor
@@ -1383,6 +1409,7 @@ class Primers_filter(object):
         self.rep_seq_number = rep_seq_number
         self.number = Total_sequence_number
         self.position = position
+        self.di_nucl = di_nucl
         self.primers, self.gap_id, self.non_cover_id = self.parse_primers()
         self.resQ = Manager().Queue()
         self.pre_filter_primers = self.pre_filter()
@@ -1432,6 +1459,17 @@ class Primers_filter(object):
                             return True
         return False
 
+    ################# di_nucleotide #####################
+
+    def di_nucleotide(self, primer):
+        di_nucleotides = get_di_nucleotides(self.di_nucl)
+        primers = degenerate_seq(primer)
+        for m in primers:
+            for n in di_nucleotides:
+                if re.search(n, m):
+                    return True
+        return False
+
     def pre_filter(self):
         limits = self.GC.split(",")
         min = float(limits[0])
@@ -1446,7 +1484,7 @@ class Primers_filter(object):
                 pass
             elif GC_fraction(primer) > max or GC_fraction(primer) < min:
                 pass
-            elif di_nucleotide(primer):
+            elif self.di_nucleotide(primer):
                 pass
             else:
                 candidate_primers_position.append(primer_position)
@@ -1611,9 +1649,10 @@ def main():
                            coverage=args.fraction, number_of_dege_bases=args.dnum, score_of_dege_bases=args.degeneracy,
                            raw_entropy_threshold=args.entropy, product_len=args.size, position=args.coordinate,
                            variation=args.variation, distance=args.away, GC=args.gc, method=args.method,
-                           nproc=args.proc, outfile=args.out1)
+                           di_nucl=args.di_nucleotide, nproc=args.proc, outfile=args.out1)
     NN_APP.run()
     primer_pairs = Primers_filter(Total_sequence_number=Total_sequence_number, primer_file=args.out1,
+                                  di_nucl=args.di_nucleotide,
                                   adaptor=args.adaptor, distance=args.away, outfile=args.out2, size=args.size,
                                   position=args.end, fraction=args.fraction, diff_Tm=args.Tm, nproc=args.proc)
     primer_pairs.run()
