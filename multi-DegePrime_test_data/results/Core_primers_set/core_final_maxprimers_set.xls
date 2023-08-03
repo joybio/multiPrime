@@ -1,0 +1,2 @@
+#Primer	Primer_rank	Primer_F	Primer_R	PCR_product (Length:Tm:Coverage)	Coverage number with error in top N	Primer position (representative sequence)
+/share/data3/yangjunbo/git_storage/multiPrime/multi-DegePrime_test_data/results/Clusters_cprimer/Cluster_0_1000.candidate.primers.txt	1	CYGACCTCAAYTAYACAT	TYCCAYTCWTCTAGCGTT	450	364	57:506
