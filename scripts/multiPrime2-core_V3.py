@@ -106,7 +106,9 @@ def parseArg():
                              'when calculate coverage with error. coordinate>0: 5\'==>3\'; coordinate<0: 3\'==>5\'.'
                              'You can set this param to any value that you prefer. Default: 1,2,-1. '
                              '1:  I dont want mismatch at the 2nd position, start from 0.'
-                             '-1: I dont want mismatch at the -1st position, start from -1.', metavar="<str>")
+                             '-1: I dont want mismatch at the -1st position, start from -1. '
+                             'If you want to disable this filter, you can use [-c 1000].',
+                        metavar="<str>")
     parser.add_argument("-p", "--proc", type=int, default=20,
                         help='Number of process to launch. Default: 20.', metavar="<int>")
     parser.add_argument("-a", "--away", type=int, default=4,
@@ -1285,12 +1287,7 @@ class NN_degenerate(object):
                     if count > max_count:
                         max_count = count
                         max_subset = comb
-            # else:
-            #     max_count = cover_number
-            #     max_subset = temp_set
-
-        # print(max_count, max_subset)
-        return max_count+ initial_coverage, max_subset
+        return max_count + initial_coverage, max_subset
 
     # # subset 要仔细考虑，例如n=1时只需要考虑variation=2的情况，n=2时需要考虑variation=2,3的情况
     # def remove_elements(self, Y_dist_number, Y_dist_len_collection, initial_coverage, N, variation, cover_number):
