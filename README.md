@@ -17,7 +17,7 @@ Scripts and pipelines provided in this repository aid to design multiplex PCR pr
 # Why multiPrime
 
 1) MultiPrime is a user-friendly and one-step tool for designing tNGS primer sets (cluster-specific primers or ultra multiplex PCR).
-2) It integrates degenerate primer design theory with mismatch handling, resulting in improved accuracy and specificityin detecting broad spectrum sequences.
+2) It integrates degenerate primer design theory with mismatch handling, resulting in improved accuracy and specificity in detecting broad spectrum sequences.
 3) It outperformed conventional programs in terms of run time, primer number, and primer coverage.
 4) The versatility and potential of multiPrime is highlighted by its potential application in detecting single or multiple genes, exons, antisense strands, RNA, or other specific DNA segments.
 
