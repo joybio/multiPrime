@@ -14,6 +14,8 @@ multiPrime: It is an update of original. New multiPrime allows for easy avoidanc
 
 Scripts and pipelines provided in this repository aid to design multiplex PCR primer and return a minimal primerset for multi-PCR. It contains all scripts to allow a self-assembled processing and additionally provides pipeline scripts that run the entire processing automatically.
 
+We have provided a video tutorial at [here](https://figshare.com/articles/media/Installation_video_of_multiPrime/23904159) to assist you with the installation and usage of multiPrime.
+
 # Why multiPrime
 
 1) MultiPrime is a user-friendly and one-step tool for designing tNGS primer sets (cluster-specific primers or ultra multiplex PCR).
