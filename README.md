@@ -6,19 +6,19 @@ MultiPrime is a pipeline designed for broad-spectrum detection of target sequenc
 
 Overview of multiPrime
 
-![image](https://github.com/joybio/multiPrime/tree/main/images/multiPrime-flowchart.png)
+![image](https://github.com/joybio/multiPrime/tree/main/images/multiPrime-flowchart.jpg)
 
 Pipeline of multiPrime
 
-![image](https://github.com/joybio/multiPrime/tree/main/images/multiPrime-pipeline.png)
+![image](https://github.com/joybio/multiPrime/tree/main/images/multiPrime-pipeline.jpg)
 
 Theory of multiPrime
 
-![image](https://github.com/joybio/multiPrime/tree/main/images/multiPrime-theory1.png)
+![image](https://github.com/joybio/multiPrime/tree/main/images/multiPrime-theory1.jpg)
 
 Advantages of multiPrime
 
-![image](https://github.com/joybio/multiPrime/tree/main/images/Advantages.png)
+![image](https://github.com/joybio/multiPrime/tree/main/images/Advantages.jpg)
 
 If you only require primer design without the need for primer set combination, you may use the primer design module of MultiPrime, which is accessible through scripts/multiPrime-core.py or pip install multiPrime (version >=2.4.8) and utilize the DPrime function.
 
