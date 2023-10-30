@@ -56,6 +56,8 @@ def parseArg():
                         metavar="<str>")
     parser.add_argument("-g", "--gc", type=str, default="0.2,0.7",
                         help='Filter primers by GC content. Default [0.2,0.7].', metavar="<str>")
+    parser.add_argument("-c", "--clamp", type=float, default=0.6,
+                        help='Filter primers by GC clamp in 3-term. Default 0.6.', metavar="<float>")
     parser.add_argument("-f", "--fraction", type=float, default=0.6,
                         help='Filter primers by match fraction.Sometimes you need a small fraction to get output.'
                              'Default: 0.6.', metavar="<float>")
@@ -301,7 +303,7 @@ def Penalty_points(length, GC, d1, d2):
 
 
 class Primers_filter(object):
-    def __init__(self, ref_file, primer_file, adaptor, rep_seq_number=500, distance=4, outfile="", diff_Tm=5,
+    def __init__(self, ref_file, primer_file, adaptor, rep_seq_number=500, distance=4, outfile="", diff_Tm=5, clamp=0.6,
                  size="300,700", position=9, GC="0.4,0.6", nproc=10, fraction=0.6):
         self.nproc = nproc
         self.primer_file = primer_file
@@ -313,6 +315,7 @@ class Primers_filter(object):
         self.fraction = fraction
         self.GC = GC
         self.diff_Tm = diff_Tm
+        self.clamp = clamp
         self.rep_seq_number = rep_seq_number
         self.number = self.get_number()
         self.position = position
@@ -472,12 +475,13 @@ class Primers_filter(object):
         for i in range(num, (num + length)):
             s = primer[-i:]
             gc_fraction = self.GC_fraction(s)
-            if gc_fraction > 0.6:
+            if gc_fraction > self.clamp:
                 return True
         return False
 
     def pre_filter(self):
         limits = self.GC.split(",")
+        print(limits)
         min = float(limits[0])
         max = float(limits[1])
         # min_cov = self.fraction
@@ -487,10 +491,13 @@ class Primers_filter(object):
             primer = primer_info[primer_position][0]
             # coverage = primer_info[primer_position][1]
             if self.hairpin_check(primer):
+                print("hairpin")
                 pass
             elif self.GC_fraction(primer) > max or self.GC_fraction(primer) < min:
+                print("GC")
                 pass
             elif self.di_nucleotide(primer):
+                print("di_nucleotide")
                 pass
             else:
                 candidate_primers_position.append(primer_position)
@@ -506,16 +513,17 @@ class Primers_filter(object):
             index_right = bisect_left(my_list, my_number2) - 1
         return index_left, index_right
 
-    def primer_pairs(self, start, adaptor, min_len, max_len, candidate_position, primer_pairs, threshold):
+    def primer_pairs_selction(self, start, adaptor, min_len, max_len, candidate_position, primer_pairs, threshold):
+        # print(threshold)
         primerF_extend = adaptor[0] + self.primers[candidate_position[start]][0]
         if self.hairpin_check(primerF_extend):
-            # print("hairpin!")
+            print("hairpin!")
             pass
         elif self.dege_filter_in_term_N_bp(self.primers[candidate_position[start]][0]):
-            # print("term N!")
+            print("term N!")
             pass
         elif self.GC_clamp(self.primers[candidate_position[start]][0]):
-            # print("GC_clamp!")
+            print("GC_clamp!")
             pass
         else:
             start_index, stop_index = self.closest(candidate_position, candidate_position[start] + min_len,
@@ -526,12 +534,14 @@ class Primers_filter(object):
                 for stop in range(start_index, stop_index + 1):
                     primerR_extend = adaptor[1] + reversecomplement(self.primers[candidate_position[stop]][0])
                     if self.hairpin_check(primerR_extend):
-                        # print("self hairpin!")
+                        print("self hairpin!")
                         pass
                     elif self.dege_filter_in_term_N_bp(
                             reversecomplement(self.primers[candidate_position[stop]][0])):
+                        print("term N!")
                         pass
                     elif self.GC_clamp(reversecomplement(self.primers[candidate_position[stop]][0])):
+                        print("GC_clamp!")
                         pass
                     else:
                         distance = int(candidate_position[stop]) - int(candidate_position[start]) + 1
@@ -554,9 +564,9 @@ class Primers_filter(object):
                                     pass
                                 else:
                                     start_pos = str(candidate_position[start])
-                                    # print(start_pos)
+                                    print(start_pos)
                                     stop_pos = str(candidate_position[stop])
-                                    # print(stop_pos)
+                                    print(stop_pos)
                                     un_cover_list = []
                                     for o in list(dict(self.gap_id[start_pos]).values()):
                                         un_cover_list.extend(set(o))
@@ -606,6 +616,7 @@ class Primers_filter(object):
         primer_pairs = Manager().list()
         # print(candidate_position)
         coverage_threshold = 1 - self.fraction
+        # print(coverage_threshold)
         if int(candidate_position[-1]) - int(candidate_position[0]) < min_len:
             print("Max PCR product legnth < min len!")
             ID = str(self.outfile)
@@ -616,9 +627,9 @@ class Primers_filter(object):
                 fo.write(ID + "\n")
         else:
             for start in range(len(candidate_position)):
-                print(start)
-                p.submit(self.primer_pairs(start, adaptor, min_len, max_len, candidate_position, primer_pairs,
-                                           coverage_threshold))
+                print(candidate_position[start])
+                p.submit(self.primer_pairs_selction(start, adaptor, min_len, max_len, candidate_position,
+                                                    primer_pairs, threshold=coverage_threshold))
                 # This will submit all tasks to one place without blocking, and then each
                 # thread in the thread pool will fetch tasks.
             p.shutdown()
@@ -627,10 +638,12 @@ class Primers_filter(object):
             # Asynchronous call mode: only call, unequal return values, coupling may exist, but the speed is fast.
             if len(primer_pairs) < 10:
                 new_p = ProcessPoolExecutor(self.nproc)
-                coverage_threshold += 0.1
+                coverage_threshold -= 0.1
+                # print(coverage_threshold)
                 for start in range(len(candidate_position)):
-                    new_p.submit(self.primer_pairs(start, adaptor, min_len, max_len, candidate_position, primer_pairs,
-                                                   coverage_threshold))
+                    print(start)
+                    new_p.submit(self.primer_pairs_selction(start, adaptor, min_len, max_len, candidate_position,
+                                                            primer_pairs, threshold=coverage_threshold))
                     # This will submit all tasks to one place without blocking, and then each
                     # thread in the thread pool will fetch tasks.
                 new_p.shutdown()
@@ -663,8 +676,8 @@ class Primers_filter(object):
 
 def main():
     args = parseArg()
-    primer_pairs = Primers_filter(ref_file=args.ref, primer_file=args.input, adaptor=args.adaptor,
-                                  rep_seq_number=args.maxseq, distance=args.dist, outfile=args.out,
+    primer_pairs = Primers_filter(ref_file=args.ref, primer_file=args.input, adaptor=args.adaptor,GC=args.gc,
+                                  rep_seq_number=args.maxseq, distance=args.dist, outfile=args.out,clamp=args.clamp,
                                   size=args.size, position=args.end, fraction=args.fraction,
                                   diff_Tm=args.Tm, nproc=args.proc)
     primer_pairs.run()
