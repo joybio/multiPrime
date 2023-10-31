@@ -69,6 +69,13 @@ Snakemake is a workflow management system that helps to create and execute data 
   ```bash
   conda create -n multiPrime -c bioconda -c conda-forge --file requirement2.txt
   ```
+  or
+ Copy multiPrime.tar.gz files from the ENV directory to your Conda environment directory and then unpack them.
+  ```
+  cp ENV/multiPrime.tar.gz  ${/path/to/your/conda/env}
+  tar -xzvf multiPrime.tar.gz 
+  conda activate multiPrime
+  ```
 
 # Activate and exit the environment
   To activate the envitoment
