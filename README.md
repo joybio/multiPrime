@@ -23,6 +23,11 @@ We have provided a video tutorial at [here](https://figshare.com/articles/media/
 3) It outperformed conventional programs in terms of run time, primer number, and primer coverage.
 4) The versatility and potential of multiPrime is highlighted by its potential application in detecting single or multiple genes, exons, antisense strands, RNA, or other specific DNA segments.
 
+# Cite
+
+If you have found multiPrime to be a valuable resource, kindly reference the following publication:
+Xia, Han, Zhang, Zhe, Luo, Chen, Wei, Kangfei, Li, Xuming, Mu, Xiyu, Duan, Meilin, et al. 2023. ["MultiPrime: A Reliable and Efficient Tool for Targeted Next-Generation Sequencing.” iMeta e143. https://doi.org/10.1002/imt2.143"](https://doi.org/10.1002/imt2.143).
+
 # Requirements
 
 To run this pipeline, your computer requires **30 GB of available memory (RAM)** to process larger number of sequence (e.g. 1,000,000). **Note:** We **don't suggest** that Input sequences contains those sequences whose **length is greater than 100K**,  if necessary, you'd better set the Maxseq in yaml file as small as possible, but **do not smaller than 200**. Alternatively, you may consider using conserved genes/regions instead of whole genomes. 
