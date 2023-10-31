@@ -26,6 +26,7 @@ We have provided a video tutorial at [here](https://figshare.com/articles/media/
 # Cite
 
 If you have found multiPrime to be a valuable resource, kindly reference the following publication:
+
 Xia, Han, Zhang, Zhe, Luo, Chen, Wei, Kangfei, Li, Xuming, Mu, Xiyu, Duan, Meilin, et al. 2023. ["MultiPrime: A Reliable and Efficient Tool for Targeted Next-Generation Sequencing.” iMeta e143. https://doi.org/10.1002/imt2.143"](https://doi.org/10.1002/imt2.143).
 
 # Requirements
