@@ -6,7 +6,7 @@
 biopython=1.79
 blast=2.13.0
 cd-hit=4.8.1
-mafft=7.515
+mafft
 muscle=3.8.1551
 numpy=1.21.6
 pandas=1.3.5
