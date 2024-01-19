@@ -53,10 +53,10 @@ def argsParse():
 			dest='out',
 			help='Out file: format.fa')
 	parser.add_option('-c','--c',
-                        dest='complete',
+						dest='complete',
 			default="F",
 			type='str',
-                        help='Only complete CDS or genome is used, defalut: F. use other word (T), if you want this param.')
+						help='Only complete CDS or genome is used, defalut: F. use other word (T), if you want this param.')
 	parser.add_option('-l','--length',
 			dest='length',
 			default=300,
@@ -92,8 +92,9 @@ def seq_format(Input):
 	with open(Input,"r") as In:
 		for i in In:
 			if i.startswith(">"):
-				key = i
-				if re.search("complete", key):
+				key = i.strip().split(" ")[0]
+				key = key.split(":")[0].split("-")[0] + "\n"
+				if re.search("complete", i):
 					complete_number += 1
 			elif i == "^--\n":
 				pass
