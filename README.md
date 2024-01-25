@@ -78,7 +78,7 @@ Snakemake is a workflow management system that helps to create and execute data 
   ```
 
 # Activate and exit the environment
-  To activate the envitoment
+  To activate the environment 
   ```bash
   source activate multiPrime
   ```
