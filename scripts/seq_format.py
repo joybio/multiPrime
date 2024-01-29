@@ -52,6 +52,10 @@ def argsParse():
 	parser.add_option('-o','--out',
 			dest='out',
 			help='Out file: format.fa')
+	parser.add_option('-g','--gc',
+						dest='gc',
+						default=0.8,
+						help='Filter those fasta whose GC (AT) content is greate than this param. Default: 0.8')
 	parser.add_option('-c','--c',
 						dest='complete',
 			default="F",
@@ -109,6 +113,7 @@ if __name__ == "__main__":
 	(options, args) = argsParse()
 	seq, length, c_number = seq_format(options.input)
 	temp = open(options.out.rstrip("fa")+"filtered.fa", "w")	
+	GC_threshold = options.gc
 	with open(options.out,"w") as Out:
 		# if ID dont have string complete, then use all.
 		if c_number == 0:
@@ -116,7 +121,11 @@ if __name__ == "__main__":
 				if length[i] < options.length:
 					temp.write(i + seq[i] + "\n")
 				else:
-					Out.write(i + seq[i] + "\n")
+					GC = (list(seq[i]).count("G") + list(seq[i]).count("C"))/len(seq[i])
+					if GC > GC_threshold or GC < 1-GC_threshold:
+						temp.write(i + seq[i] + "\n")
+					else:
+						Out.write(i + seq[i] + "\n")
 		else:
 			if options.complete == "T":
 				for i in length.keys():
@@ -124,14 +133,20 @@ if __name__ == "__main__":
 						if length[i] < options.length:
 							pass
 						else:
-							Out.write(i + seq[i] + "\n")
+							GC = (list(seq[i]).count("G") + list(seq[i]).count("C"))/len(seq[i])
+							if GC > GC_threshold or GC < 1 - GC_threshold:
+								pass
+							else:
+								Out.write(i + seq[i] + "\n")
 			else:
 				for i in length.keys():
 					if length[i] < options.length:
 						pass
-				#	elif re.search("partial", i):
-				#		pass
 					else:
-						Out.write(i + seq[i] + "\n")
+						GC = (list(seq[i]).count("G") + list(seq[i]).count("C"))/len(seq[i])
+						if GC > GC_threshold or GC < 1 - GC_threshold:
+							pass
+						else:
+							Out.write(i + seq[i] + "\n")
 	Out.close()
 

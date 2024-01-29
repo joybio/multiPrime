@@ -606,6 +606,7 @@ class Primers_filter(object):
         primer_pairs = Manager().list()
         # print(candidate_position)
         coverage_threshold = 1 - self.fraction
+        print("Candidata degenerate primer number is: {}".format(len(candidate_position)))
         if int(candidate_position[-1]) - int(candidate_position[0]) < min_len:
             print("Max PCR product legnth < min len!")
             ID = str(self.outfile)
