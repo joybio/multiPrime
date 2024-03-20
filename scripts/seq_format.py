@@ -98,6 +98,8 @@ def seq_format(Input):
 			if i.startswith(">"):
 				key = i.strip().split(" ")[0]
 				key = key.split(":")[0].split("-")[0] + "\n"
+				if len(key) > 20:
+					key = key[:20]
 				if re.search("complete", i):
 					complete_number += 1
 			elif i == "^--\n":
