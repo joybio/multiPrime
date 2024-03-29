@@ -97,9 +97,9 @@ def seq_format(Input):
 		for i in In:
 			if i.startswith(">"):
 				key = i.strip().split(" ")[0]
-				key = key.split(":")[0].split("-")[0] + "\n"
+				key = key.split(":")[0].split("-")[0].split("|")[0] + "\n"
 				if len(key) > 20:
-					key = key[:20]
+					key = key[:9] + "_" + key[-9:]
 				if re.search("complete", i):
 					complete_number += 1
 			elif i == "^--\n":
