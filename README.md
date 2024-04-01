@@ -35,7 +35,7 @@ Citing the publication will acknowledge the contribution of multiPrime to your w
 To run this pipeline, your computer requires **30 GB of available memory (RAM)** to process larger number of sequence (e.g. 1,000,000). **Note:** We **don't suggest** that Input sequences contains those sequences whose **length is greater than 100K**,  if necessary, you'd better set the Maxseq in yaml file as small as possible, but **do not smaller than 200**. Alternatively, you may consider using conserved genes/regions instead of whole genomes. 
 Snakemake was used to facilitate the automated execution of all analysis steps. The easiest way to make use of the pipeline is to set up a python 3.9 virtual environment and run the pipeline in this environment. 
 
-Download/Provide all necessary files:
+Download/Provide all necessary files (The requirements file is all set. [Simply clone this repository and install via conda](https://figshare.com/articles/media/Installation_video_of_multiPrime/23904159).):
 
 Comparison:
 
