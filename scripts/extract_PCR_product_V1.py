@@ -48,10 +48,10 @@ from itertools import (takewhile, repeat)
 
 
 def argsParse():
-    parser = OptionParser('Usage: %prog -i [input] -p [primerF,primerR] -f [format] -o [output]', version="%prog 0.0.2")
+    parser = OptionParser('Usage: %prog -r [input] -i [primerF,primerR] -f [format] -o [output]', version="%prog 0.0.2")
     parser.add_option('-r', '--ref',
                       dest='ref',
-                      help='referebce file: template fasta or reference fasta.')
+                      help='reference file: template fasta or reference fasta.')
 
     parser.add_option('-i', '--input',
                       dest='input',
