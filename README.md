@@ -399,6 +399,32 @@ results: results directory
 		--core_final_maxprimers_set.fa.hairpin: hairpin check by mfePrimer
 		--core_PCR_product: core PCR product of each primer
 
+# File Content Description: core_final_maxprimers_set.xls
+
+    --Column 1: Primer Information
+    Format: Cluster_X_Y
+    X: Index number of the cluster (e.g., Cluster_1, Cluster_2).
+    Y: Total number of sequences within the cluster.
+
+    --Column 2: Primer-F Sequence
+    Nucleotide sequence of the forward primer.
+
+    --Column 3: Primer-R Sequence
+    Nucleotide sequence of the reverse primer.
+
+    --Column 4: PCR Parameters
+    Format: Length:Annealing_Temperature:Primer_Coverage
+    Length: Amplicon size (base pairs).
+    Annealing Temperature: Optimal temperature (°C) for primer binding.
+    Primer Coverage: Percentage of target sequences covered by the primer pair.
+
+    --Column 5: Capture Efficiency
+    Number of sequences captured or amplified by the primer pair.
+
+    --Column 6: Binding Coordinates
+    Start and end positions of the primer pair relative to the reference sequence (e.g., 120:250).
+
+
 
 # Contact
 The project was conceptualized and scripted by Junbo Yang.Please send comments, suggestions, bug reports and bug fixes to 1806389316@pku.edu.cn / yang_junbo_hi@126.com.

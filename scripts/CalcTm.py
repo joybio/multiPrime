@@ -1,3 +1,4 @@
+#!/bin/python
 # This CalcTm.py is similar with primer3
 # reference:
 # A unified view of polymer, dumbbell, and oligonucleotide DNA nearest-neighbor thermodynamics
