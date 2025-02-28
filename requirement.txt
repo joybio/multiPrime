@@ -1,5 +1,5 @@
 # This file may be used to create an environment using:
-# $ conda create --name <env> --file <this file>
+# conda create --name <env> --file <this file>
 # platform: linux-64
 aioeasywebdav=2.4.0=py37h89c1867_1001
 aiohttp=3.8.1=py37h540881e_1

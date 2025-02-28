@@ -1,5 +1,5 @@
 # This file may be used to create an environment using:
-# $ conda create --name <env> --file <this file>
+# conda create --name <env> --file <this file>
 # platform: linux-64
 # tabulate=0.8.9 is very import !!! Most of the errors is caused by tabulate=0.9.0
 
