@@ -36,72 +36,60 @@ import time
 import re
 from optparse import OptionParser
 from collections import defaultdict
-def argsParse():
-	parser = OptionParser('Usage: %prog -i [input.fa] -o [output.fa] -s [script]'
-				'options: {-l 18 -d 4}')
-	parser.add_option('-i','--input',
-			dest='input',
-			help='Input file')
-	parser.add_option('-o','--out',
-			dest='out',
-			help='Out file')
-	parser.add_option('-s','--script',
-                        dest='script',
-                        help='dir of script')
-	parser.add_option('-l','--length',
-                        dest='length',
-			default='18',
-			type="int",
-                        help='primer length')
-	parser.add_option('-d','--deg',
-                        dest='deg',
-			default='4',
-			type="int",
-                        help='primer degeneracy')
 
-	(options,args) = parser.parse_args()
-	import sys
-	from sys import argv
-	if len(sys.argv) == 1:
-		parser.print_help()
-		sys.exit(1)
-	elif options.input is None:
-		parser.print_help()
-		print("Input file must be specified !!!")
-		sys.exit(1)
-	elif options.out is None:
-		parser.print_help()
-		print("No output file provided !!!")
-		sys.exit(1)
-	return parser.parse_args()
+
+def argsParse():
+    parser = OptionParser('Usage: %prog -i [input.fa] -o [output.fa] -s [script]'
+                          'options: {-l 18 -d 4}')
+    parser.add_option('-i', '--input',
+                      dest='input',
+                      help='Input file')
+    parser.add_option('-o', '--out',
+                      dest='out',
+                      help='Out file')
+    parser.add_option('-s', '--script',
+                      dest='script',
+                      help='dir of script')
+    parser.add_option('-l', '--length',
+                      dest='length',
+                      default='18',
+                      type="int",
+                      help='primer length')
+    parser.add_option('-d', '--deg',
+                      dest='deg',
+                      default='4',
+                      type="int",
+                      help='primer degeneracy')
+
+    (options, args) = parser.parse_args()
+    import sys
+    from sys import argv
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(1)
+    elif options.input is None:
+        parser.print_help()
+        print("Input file must be specified !!!")
+        sys.exit(1)
+    elif options.out is None:
+        parser.print_help()
+        print("No output file provided !!!")
+        sys.exit(1)
+    return parser.parse_args()
+
 
 if __name__ == "__main__":
-	(options, args) = argsParse()
-	In = options.input
-	script = options.script
-	Out_tmp = options.out + ".tmp"
-	length = options.length
-	degeneracy = options.deg
-	e1 = time.time()
-	os.system("perl {}/DEGEPRIME-1.1.0/DegePrime.pl -i {} \
-                        -d {} -l {} -o {}".format(script,In,degeneracy,length,Out_tmp))
-	
-	os.rename(Out_tmp, options.out)
-	e2 = time.time()
-	print("INFO {} Total times: {}".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
+    (options, args) = argsParse()
+    In = options.input
+    script = options.script
+    Out_tmp = options.out + ".tmp"
+    length = options.length
+    degeneracy = options.deg
+    e1 = time.time()
+    os.system("perl {}/DEGEPRIME-1.1.0/DegePrime.pl -i {} \
+                        -d {} -l {} -o {}".format(script, In, degeneracy, length, Out_tmp))
+
+    os.rename(Out_tmp, options.out)
+    e2 = time.time()
+    print("INFO {} Total times: {}".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
                                            round(float(e2 - e1), 2)))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

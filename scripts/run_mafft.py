@@ -36,61 +36,48 @@ import time
 import re
 from optparse import OptionParser
 from collections import defaultdict
+
+
 def argsParse():
-	parser = OptionParser('Usage: %prog -i [input.fa] -o [output.fa] ')
-	parser.add_option('-i','--input',
-			dest='input',
-			help='Input file')
-	parser.add_option('-o','--out',
-			dest='out',
-			help='Out file')
-	(options,args) = parser.parse_args()
-	import sys
-	from sys import argv
-	if len(sys.argv) == 1:
-		parser.print_help()
-		sys.exit(1)
-	elif options.input is None:
-		parser.print_help()
-		print("Input file must be specified !!!")
-		sys.exit(1)
-	elif options.out is None:
-		parser.print_help()
-		print("No output file provided !!!")
-		sys.exit(1)
-	return parser.parse_args()
+    parser = OptionParser('Usage: %prog -i [input.fa] -o [output.fa] ')
+    parser.add_option('-i', '--input',
+                      dest='input',
+                      help='Input file')
+    parser.add_option('-o', '--out',
+                      dest='out',
+                      help='Out file')
+    (options, args) = parser.parse_args()
+    import sys
+    from sys import argv
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(1)
+    elif options.input is None:
+        parser.print_help()
+        print("Input file must be specified !!!")
+        sys.exit(1)
+    elif options.out is None:
+        parser.print_help()
+        print("No output file provided !!!")
+        sys.exit(1)
+    return parser.parse_args()
+
 
 def run_mafft(Input, Output):
-	info = Input.rstrip(".tfa").split("_")
-	#print(info[-1])
-	if info[-1] == "1" or info[-1] == 1:
-		os.system("muscle -in {} -out {}".format(Input, Output))
-	else:
-		os.system("mafft --auto {} > {}".format(Input, Output))
-	
+    info = Input.rstrip(".tfa").split("_")
+    #print(info[-1])
+    if info[-1] == "1" or info[-1] == 1:
+        os.system("muscle -in {} -out {}".format(Input, Output))
+    else:
+        os.system("mafft --auto {} > {}".format(Input, Output))
 
 
 if __name__ == "__main__":
-	(options, args) = argsParse()
-	In = options.input
-	Out = options.out
-	e1 = time.time()
-	run_mafft(In, Out)
-	e2 = time.time()
-	print("INFO {} Total times: {}".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
+    (options, args) = argsParse()
+    In = options.input
+    Out = options.out
+    e1 = time.time()
+    run_mafft(In, Out)
+    e2 = time.time()
+    print("INFO {} Total times: {}".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
                                            round(float(e2 - e1), 2)))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

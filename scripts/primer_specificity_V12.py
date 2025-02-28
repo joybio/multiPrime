@@ -60,7 +60,8 @@ from concurrent.futures import ProcessPoolExecutor
 
 
 def argsParse():
-    parser = OptionParser('Usage: %prog -i [input] -r [bowtie index] -l [150,2000] -p [10]-o [output]',version = "%prog 0.1.2")
+    parser = OptionParser('Usage: %prog -i [input] -r [bowtie index] -l [150,2000] -p [10]-o [output]',
+                          version="%prog 0.1.2")
 
     parser.add_option('-i', '--input',
                       dest='input_file',
@@ -177,10 +178,13 @@ def RC(seq):
 def Penalty_points(length, GC, d1, d2):
     return log10((2 ** length * 2 ** GC) / ((d1 + 0.1) * (d2 + 0.1)))
 
+
 def nan_removing(pre_list):
     while np.nan in pre_list:
         pre_list.remove(np.nan)
     return pre_list
+
+
 ####################################################
 
 def build_dict(Input):
@@ -215,7 +219,7 @@ def closest(my_list, my_number1, my_number2):
 
 
 class off_targets(object):
-    def __init__(self, primer_file, term_length=9, reference_file="",mismatch_num=1,
+    def __init__(self, primer_file, term_length=9, reference_file="", mismatch_num=1,
                  PCR_product_size="150,2000", outfile="", nproc=10):
         #  If an attribute in a Python class does not want to be accessed externally,
         #  we can start with a double underscore (__) when naming the attribute,
@@ -320,8 +324,8 @@ class off_targets(object):
         else:
             for start in range(len(position_start)):
                 stop_index_start, stop_index_stop = closest(position_stop,
-                                                                 position_start[start] + int(product_len[0]),
-                                                                 position_start[start] + int(product_len[1]))
+                                                            position_start[start] + int(product_len[0]),
+                                                            position_start[start] + int(product_len[1]))
                 if stop_index_start > stop_index_stop:  # caution: all(var) > stop_index_start in bisect_left,
                     # you need to stop immediately when stop_index_start > Product length
                     break
